@@ -1,0 +1,6 @@
+weapon/howitzer1.ogg
+weapon/howitzer2.ogg
+weapon/howitzer3.ogg
+weapon/howitzerDistant1.ogg
+weapon/howitzerDistant2.ogg
+weapon/howitzerDistant3.ogg

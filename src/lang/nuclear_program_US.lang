@@ -1,0 +1,26 @@
+
+tile.nuclear_program/blockCopper.name=Block of Copper
+tile.nuclear_program/blockAluminium.name=Block of Aluminium
+tile.nuclear_program/blockLead.name=Block of Lead
+tile.nuclear_program/blockTitanium.name=Block of Titanium
+tile.nuclear_program/blockTungsten.name=Block of Tungsten
+tile.nuclear_program/blockSteel.name=Block of Steel
+tile.nuclear_program/blockElectrum.name=Block of Electrum
+tile.nuclear_program/blockKaupium.name=Block of Kaupium
+tile.nuclear_program/blockYanoizedKaupium.name=Block of Yanoized Kaupium
+tile.nuclear_program/workbenchIron.name=Iron Workbench
+tile.nuclear_program/workbenchSteel.name=Steel Workbench
+tile.nuclear_program/furnaceBuilder.name=Builder's Furnace
+tile.nuclear_program/potatoes.name=Potatoes
+
+item.nuclear_program/ingotCopper.name=Copper Ingot
+item.nuclear_program/ingotAluminium.name=Aluminium Ingot
+item.nuclear_program/ingotLead.name=Lead Ingot
+item.nuclear_program/ingotTitanium.name=Titanium Ingot
+item.nuclear_program/ingotTungsten.name=Tungsten Ingot
+item.nuclear_program/ingotSteel.name=Steel Ingot
+item.nuclear_program/ingotElectrum.name=Electrum Ingot
+item.nuclear_program/ingotKaupium.name=Kaupium Ingot
+item.nuclear_program/ingotYanoizedKaupium.name=Yanoized Kaupium Ingot
+item.nuclear_program/potato.name=Potato
+item.nuclear_program/potatoCooked.name=Baked Potato

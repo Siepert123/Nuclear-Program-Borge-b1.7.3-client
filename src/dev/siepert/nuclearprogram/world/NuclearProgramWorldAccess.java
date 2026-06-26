@@ -1,0 +1,84 @@
+package dev.siepert.nuclearprogram.world;
+
+import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
+import net.minecraft.client.Minecraft;
+import net.minecraft.src.*;
+
+public class NuclearProgramWorldAccess implements IWorldAccess {
+	public static final NuclearProgramWorldAccess INSTANCE = new NuclearProgramWorldAccess();
+
+	private final Minecraft mc = Minecraft.getTheMinecraft();
+	private World worldObj;
+
+	public void setWorld(World world) {
+		if (this.worldObj != null) this.worldObj.removeWorldAccess(this);
+		if (world != null) world.addWorldAccess(this);
+		this.worldObj = world;
+	}
+
+	@Override
+	public void markBlockAndNeighborsNeedsUpdate(int x, int y, int z) {
+
+	}
+
+	@Override
+	public void markBlockRangeNeedsUpdate(int x1, int y1, int z1, int x2, int y2, int z2) {
+
+	}
+
+	@Override
+	public void playSound(String name, double x, double y, double z, float volume, float pitch) {
+
+	}
+
+	@Override
+	public void spawnParticle(String name, double x, double y, double z, double dx, double dy, double dz) {
+
+	}
+
+	@Override
+	public void obtainEntitySkin(Entity entity) {
+		if (entity.getClass() == EntityHowitzerShell.class) {
+			System.out.println("Howitzer shell loaded!");
+		}
+	}
+
+	@Override
+	public void releaseEntitySkin(Entity entity) {
+		if (entity.getClass() == EntityHowitzerShell.class) {
+			System.out.println("Howitzer shell unloaded!");
+		}
+	}
+
+	@Override
+	public void updateAllRenderers() {
+
+	}
+
+	@Override
+	public void playRecord(String name, int x, int y, int z) {
+
+	}
+
+	@Override
+	public void doNothingWithTileEntity(int x, int y, int z, TileEntity te) {
+
+	}
+
+	@Override
+	public void playEvent(EntityPlayer player, int type, int x, int y, int z, int data) {
+		if (type == 2137) {
+			if (data == 0) {
+				player = Minecraft.getTheMinecraft().thePlayer;
+				double distance = player != null ? player.getDistance(x, y, z) : 0.0;
+				String sound = distance > 128.0 ? "weapon.howitzerDistant" : "weapon.howitzer";
+				float pitch;
+				if (distance > 600.0) {
+					double delta = ((distance - 600) / 1000.0);
+					pitch = 1.0F - (float) (delta * delta);
+				} else pitch = 1.0F;
+				this.worldObj.playSoundEffect(x, y, z, sound, 100.0F, pitch);
+			}
+		}
+	}
+}

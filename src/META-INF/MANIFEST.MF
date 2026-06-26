@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Mod-Id: nuclear_program
+Mod-Name: Siepert's Nuclear Program
+Mod-Description: <peak>
+Mod-Version: 0.0.0
+Mod-Lifecycle-Listener: dev.siepert.nuclearprogram.NuclearProgram
