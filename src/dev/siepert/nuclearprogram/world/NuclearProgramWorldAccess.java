@@ -1,6 +1,7 @@
 package dev.siepert.nuclearprogram.world;
 
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
+import dev.siepert.nuclearprogram.world.te.TileEntityHatch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 
@@ -78,6 +79,26 @@ public class NuclearProgramWorldAccess implements IWorldAccess {
 					pitch = 1.0F - (float) (delta * delta);
 				} else pitch = 1.0F;
 				this.worldObj.playSoundEffect(x, y, z, sound, 100.0F, pitch);
+			}
+			if (data == 1) {
+				this.worldObj.playSoundEffect(x + 0.5, y + 1.0, z + 0.5, "block.yanoDoor",
+						1.0F, 0.9F + this.worldObj.rand.nextFloat() * 0.2F);
+			}
+			if (data == 2) {
+				this.worldObj.playSoundEffect(x + 0.5, y, z + 0.5, "block.hatchOpen",
+						1.0F, 1.0F);
+				if (this.worldObj.multiplayerWorld) {
+					TileEntityHatch te = (TileEntityHatch) this.worldObj.getBlockTileEntity(x, y, z);
+					te.setOpen(true);
+				}
+			}
+			if (data == 3) {
+				this.worldObj.playSoundEffect(x + 0.5, y, z + 0.5, "block.hatchClose",
+						1.0F, 1.0F);
+				if (this.worldObj.multiplayerWorld) {
+					TileEntityHatch te = (TileEntityHatch) this.worldObj.getBlockTileEntity(x, y, z);
+					te.setOpen(false);
+				}
 			}
 		}
 	}

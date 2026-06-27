@@ -2,11 +2,16 @@ package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.world.te.TileEntityFurnaceBuilder;
+import dev.siepert.nuclearprogram.world.te.TileEntityHatch;
+import dev.siepert.nuclearprogram.world.te.render.RenderHatch;
 import net.minecraft.src.TileEntity;
+import net.minecraft.src.TileEntityRenderer;
 
 public class TileEntityInit {
 
 	public static void register() {
 		TileEntity.addMapping(TileEntityFurnaceBuilder.class, NuclearProgram.MODID + "/furnaceBuilder");
+		TileEntity.addMapping(TileEntityHatch.class, NuclearProgram.MODID + "/hatch");
+		TileEntityRenderer.instance.addRenderer(TileEntityHatch.class, RenderHatch.RENDERER);
 	}
 }

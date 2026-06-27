@@ -8,6 +8,7 @@ import dev.siepert.nuclearprogram.world.block.BlockWorkbench;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
+import net.minecraftborge.loader.DyeHelper;
 import net.minecraftborge.loader.FurnaceRecipesFix;
 import net.minecraftborge.loader.Ingredient;
 import net.minecraftborge.loader.event.register.AddRecipesEvent;
@@ -106,6 +107,19 @@ public class RecipeInit {
 				"##", "##",
 				'#', ItemInit.firebrick
 		);
+
+		recipes.addShapedRecipe(new ItemStack(BlockInit.concreteBrick, 4),
+				" # ", "#X#", " # ",
+				'#', BlockInit.concrete,
+				'X', Item.clay
+		);
+		for (int i = 0; i < 16; i++) {
+			recipes.addShapedRecipe(new ItemStack(BlockInit.concreteColored, 8, i),
+					"###", "#X#", "###",
+					'#', BlockInit.concrete,
+					'X', Ingredient.of("dye" + DyeHelper.COLOR_NAMES[i])
+			);
+		}
 
 		recipes.addShapedRecipe(new ItemStack(BlockInit.workbench, 1, BlockWorkbench.IRON),
 				"#X#", "#C#", "###",
