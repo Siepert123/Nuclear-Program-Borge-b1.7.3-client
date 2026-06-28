@@ -38,7 +38,8 @@ tile.nuclear_program/concreteLightBlue.name=Light Blue Concrete
 tile.nuclear_program/concreteMagenta.name=Magenta Concrete
 tile.nuclear_program/concreteOrange.name=Orange Concrete
 tile.nuclear_program/concreteWhite.name=White Concrete
-tile.nuclear_program/hatch.name=Sealed Hatch
+tile.nuclear_program/hatch.name=Bulkhead Hatch
+tile.nuclear_program/sealedDoor.name=Sliding Blast Door
 
 item.nuclear_program/ingotCopper.name=Copper Ingot
 item.nuclear_program/ingotAluminium.name=Aluminium Ingot

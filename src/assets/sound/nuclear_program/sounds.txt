@@ -2,7 +2,8 @@ block/catwalkMove.ogg
 block/catwalkStop1.ogg
 block/catwalkStop2.ogg
 block/hatchClose.ogg
-block/hatchOpen.ogg
+#block/hatchOpen1.ogg
+block/hatchOpen2.ogg
 block/sealedDoorClose.ogg
 block/sealedDoorOpen.ogg
 block/yanoDoor1.ogg

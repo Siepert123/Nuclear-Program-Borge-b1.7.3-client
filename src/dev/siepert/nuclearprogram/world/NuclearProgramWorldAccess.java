@@ -2,6 +2,7 @@ package dev.siepert.nuclearprogram.world;
 
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
 import dev.siepert.nuclearprogram.world.te.TileEntityHatch;
+import dev.siepert.nuclearprogram.world.te.TileEntitySealedDoor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 
@@ -85,19 +86,31 @@ public class NuclearProgramWorldAccess implements IWorldAccess {
 						1.0F, 0.9F + this.worldObj.rand.nextFloat() * 0.2F);
 			}
 			if (data == 2) {
-				this.worldObj.playSoundEffect(x + 0.5, y, z + 0.5, "block.hatchOpen",
-						1.0F, 1.0F);
+				this.worldObj.playSoundEffect(x + 0.5, y, z + 0.5, "block.hatchOpen", 1.0F, 1.0F);
 				if (this.worldObj.multiplayerWorld) {
 					TileEntityHatch te = (TileEntityHatch) this.worldObj.getBlockTileEntity(x, y, z);
-					te.setOpen(true);
+					if (te != null) te.setOpen(true);
 				}
 			}
 			if (data == 3) {
-				this.worldObj.playSoundEffect(x + 0.5, y, z + 0.5, "block.hatchClose",
-						1.0F, 1.0F);
+				this.worldObj.playSoundEffect(x + 0.5, y, z + 0.5, "block.hatchClose", 1.0F, 1.0F);
 				if (this.worldObj.multiplayerWorld) {
 					TileEntityHatch te = (TileEntityHatch) this.worldObj.getBlockTileEntity(x, y, z);
-					te.setOpen(false);
+					if (te != null) te.setOpen(false);
+				}
+			}
+			if (data == 4) {
+				this.worldObj.playSoundEffect(x + 0.5, y + 1.0, z + 0.5, "block.sealedDoorOpen", 1.0F, 1.0F);
+				if (this.worldObj.multiplayerWorld) {
+					TileEntitySealedDoor te = (TileEntitySealedDoor) this.worldObj.getBlockTileEntity(x, y, z);
+					if (te != null) te.setOpen(true);
+				}
+			}
+			if (data == 5) {
+				this.worldObj.playSoundEffect(x + 0.5, y + 1.0, z + 0.5, "block.sealedDoorClose", 1.0F, 1.0F);
+				if (this.worldObj.multiplayerWorld) {
+					TileEntitySealedDoor te = (TileEntitySealedDoor) this.worldObj.getBlockTileEntity(x, y, z);
+					if (te != null) te.setOpen(false);
 				}
 			}
 		}

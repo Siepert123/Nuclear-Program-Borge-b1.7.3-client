@@ -31,6 +31,7 @@ public class BlockInit {
 	public static Block concreteBrick;
 	public static BlockConcreteColored concreteColored;
 	public static BlockHatch hatch;
+	public static BlockSealedDoor sealedDoor;
 
 	public static void register(IdAllocationEvent<Block> event) {
 		Helper helper = new Helper(NuclearProgram.MODID, event);
@@ -108,6 +109,12 @@ public class BlockInit {
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(10.0F)
 				.setResistance(128.0F)
+				.setStepSound(soundMetal2Footstep)
+		);
+		sealedDoor = helper.register("sealedDoor", id -> new BlockSealedDoor(id)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(10.0F)
+				.setResistance(512.0F)
 				.setStepSound(soundMetal2Footstep)
 		);
 
