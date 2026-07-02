@@ -2,9 +2,7 @@ package dev.siepert.nuclearprogram.world.te.render;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.util.Easing;
-import dev.siepert.nuclearprogram.util.SingletonBlockAccess;
 import dev.siepert.nuclearprogram.util.Vec2f;
-import dev.siepert.nuclearprogram.world.block.BlockSealedDoor;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockSealedDoor;
 import dev.siepert.nuclearprogram.world.te.TileEntitySealedDoor;
 import net.minecraft.src.*;

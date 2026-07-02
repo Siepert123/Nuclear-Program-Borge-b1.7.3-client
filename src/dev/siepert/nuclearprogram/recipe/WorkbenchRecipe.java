@@ -7,7 +7,6 @@ import net.minecraft.src.ItemStack;
 import net.minecraftborge.loader.Ingredient;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public final class WorkbenchRecipe {
 	private final ItemStack display;

@@ -2,7 +2,10 @@ package dev.siepert.nuclearprogram.recipe;
 
 import net.minecraftborge.loader.Namespace;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class WorkbenchRecipes {
 	private static final WorkbenchRecipes instance = new WorkbenchRecipes();

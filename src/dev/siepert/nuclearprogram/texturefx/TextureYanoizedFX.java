@@ -1,6 +1,5 @@
 package dev.siepert.nuclearprogram.texturefx;
 
-import dev.siepert.nuclearprogram.NuclearProgram;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.TextureFX;
 import net.minecraftborge.MinecraftBorge;

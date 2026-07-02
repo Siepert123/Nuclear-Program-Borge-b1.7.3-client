@@ -1,7 +1,6 @@
 package dev.siepert.nuclearprogram.world.block;
 
 import net.minecraft.src.Block;
-import net.minecraft.src.Material;
 import net.minecraftborge.loader.DyeHelper;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.IconRegister;
