@@ -32,4 +32,9 @@ public abstract class BlockNuke extends BlockContainer implements IDetonateBehav
 	public Callback detonate(World world, int x, int y, int z) {
 		return Callback.MISSING_COMPONENTS;
 	}
+
+	@Override
+	public void onNeighborBlockChange(World world, int x, int y, int z, int neighborBlockID) {
+		if (world.isBlockGettingPowered(x, y, z)) this.detonate(world, x, y, z);
+	}
 }

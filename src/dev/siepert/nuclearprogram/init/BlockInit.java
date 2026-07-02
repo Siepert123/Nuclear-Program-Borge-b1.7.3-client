@@ -33,6 +33,9 @@ public class BlockInit {
 	public static BlockHatch hatch;
 	public static BlockSealedDoor sealedDoor;
 
+	public static BlockNukestone nukestone;
+	public static BlockNuke nukeNuclearCharge;
+
 	public static void register(IdAllocationEvent<Block> event) {
 		Helper helper = new Helper(NuclearProgram.MODID, event);
 
@@ -118,9 +121,21 @@ public class BlockInit {
 				.setStepSound(soundMetal2Footstep)
 		);
 
+		nukestone = helper.register("nukestone", id -> new BlockNukestone(id)
+				.setHarvestLevel("pickaxe", 0)
+				.setHardness(Block.stone.getHardness())
+				.setResistance(Block.stone.getExplosionResistance(null))
+		);
+		nukeNuclearCharge = helper.register("nukeNuclearCharge", id -> new BlockNuclearCharge(id)
+				.setHarvestLevel("pickaxe", 2)
+				.setHardness(10.0F)
+				.setResistance(64.0F)
+				.setStepSound(soundMetal2Footstep)
+		);
+
 		available = true;
 
-		Block.obsidian.setResistance(256.0F);
+		Block.obsidian.setResistance(Block.stone.getExplosionResistance(null) * 3.0F);
 	}
 
 	public static void registerItemBlocks() {

@@ -48,7 +48,9 @@ public class ItemDetonator extends Item {
 					break;
 			}
 			player.addChatMessage("[DETONATOR] " + status);
-			return stack.copy();
+			ItemStack ret = stack.copy();
+			ret.itemNBT = stack.itemNBT;
+			return ret;
 		}
 		return stack;
 	}

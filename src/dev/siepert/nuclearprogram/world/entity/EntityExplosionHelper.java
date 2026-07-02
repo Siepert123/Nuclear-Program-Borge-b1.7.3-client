@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.world.entity;
 
+import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.weapon.*;
 import net.minecraft.src.*;
 
@@ -303,7 +304,93 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 			return;
 		}
 		if (!this.nuclearRemainsPlaced) {
-			this.nuclearRemainsPlaced = true;
+			if (this.orderedChunks == null) {
+				if (this.nukeType.getNuclearRemainsRadius() <= 0) {
+					this.nuclearRemainsPlaced = true;
+					return;
+				}
+				System.out.println("Starting nuclear remains");
+				int c = (this.nukeType.getNuclearRemainsRadius() + 15) >> 4;
+				this.affectedMinCX = this.chunkCoordX - c;
+				this.affectedMaxCX = this.chunkCoordX + c;
+				this.affectedMinCZ = this.chunkCoordZ - c;
+				this.affectedMaxCZ = this.chunkCoordZ + c;
+				this.orderedChunks = new ArrayList<>((this.affectedMaxCX-this.affectedMinCX)*(this.affectedMaxCZ-this.affectedMinCZ));
+				for (int x = this.affectedMinCX; x <= this.affectedMaxCX; ++x) {
+					for (int z = this.affectedMinCZ; z <= this.affectedMaxCZ; ++z) {
+						this.orderedChunks.add(new ChunkCoordIntPair(x, z));
+					}
+				}
+
+				this.orderedChunks.sort((cp1, cp2) -> {
+					int d1 = this.chessboardDistance(cp1);
+					int d2 = this.chessboardDistance(cp2);
+
+					return d1 - d2;
+				});
+				return;
+			}
+			if (this.orderedChunks.isEmpty()) {
+				this.orderedChunks = null;
+				this.nuclearRemainsPlaced = true;
+			} else {
+				this.worldObj.editingBlocks = true;
+				float quart = this.nukeType.getNuclearRemainsRadius() * 0.25F;
+				float quart2 = quart * 2.0F;
+				float quart3 = quart * 3.0F;
+				int max = Math.max(EXPLOSION_CALCULATION_FACTOR / 20, 1);
+				for (int i = 0; (i < max && !this.orderedChunks.isEmpty()); i++) {
+					ChunkCoordIntPair cp = this.orderedChunks.remove(0);
+					int x, y, z, x2, z2;
+					int d = this.nukeType.getNuclearRemainsRadius();
+					int d2 = d * d;
+					int d3 = (d + 16) * (d + 16);
+					int darkness;
+					for (x = 0; x < 16; x++) {
+						for (z = 0; z < 16; z++) {
+							x2 = x + (cp.chunkXPos << 4);
+							z2 = z + (cp.chunkZPos << 4);
+							{
+								int x1 = (x2 - (int)this.posX);
+								int z1 = (z2 - (int)this.posZ);
+								int sqr = x1 * x1 + z1 * z1;
+								if (sqr > d3) continue;
+								if (sqr > d2 && this.rand.nextBoolean()) continue;
+								if (this.nukeType.hasDarkenedNuclearRemains()) {
+									float dist = MathHelper.sqrt_float(sqr);
+									if (dist < quart) {
+										darkness = 3;
+									} else if (dist < quart2) {
+										darkness = 2;
+									} else if (dist < quart3) {
+										darkness = 1;
+									} else darkness = 0;
+								} else {
+									darkness = 0;
+								}
+							}
+							y = this.worldObj.getHeightValue(x2, z2) - 1;
+							int blockID;
+
+							blockID = this.worldObj.getBlockId(x2, y, z2);
+							if (blockID == Block.oreCoal.blockID || blockID == Block.oreDiamond.blockID) {
+								this.worldObj.setBlockWithNotify(x2, y, z2, Block.oreDiamond.blockID);
+							} else this.worldObj.setBlockAndMetadataWithNotify(x2, y, z2, BlockInit.nukestone.blockID, darkness);
+							y--;
+							blockID = this.worldObj.getBlockId(x2, y, z2);
+							if (blockID == Block.oreCoal.blockID || blockID == Block.oreDiamond.blockID) {
+								this.worldObj.setBlockWithNotify(x2, y, z2, Block.oreDiamond.blockID);
+							} else this.worldObj.setBlockAndMetadataWithNotify(x2, y, z2, BlockInit.nukestone.blockID, darkness);
+							y--;
+							blockID = this.worldObj.getBlockId(x2, y, z2);
+							if (blockID == Block.oreCoal.blockID || blockID == Block.oreDiamond.blockID) {
+								this.worldObj.setBlockWithNotify(x2, y, z2, Block.oreDiamond.blockID);
+							} else this.worldObj.setBlockAndMetadataWithNotify(x2, y, z2, BlockInit.nukestone.blockID, darkness);
+						}
+					}
+				}
+				this.worldObj.editingBlocks = false;
+			}
 			return;
 		}
 		if (!this.waterRefilled) {
