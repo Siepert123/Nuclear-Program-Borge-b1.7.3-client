@@ -10,7 +10,7 @@ public class BlockConcreteColored extends Block {
 	public final Icon[] blockTextures = new Icon[16];
 
 	public BlockConcreteColored(int blockID) {
-		super(blockID, Material.rock);
+		super(blockID, NPMaterials.concrete);
 	}
 
 	@Override

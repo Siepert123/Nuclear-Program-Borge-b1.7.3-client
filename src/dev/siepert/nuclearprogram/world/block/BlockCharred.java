@@ -1,32 +1,47 @@
 package dev.siepert.nuclearprogram.world.block;
 
-import dev.siepert.nuclearprogram.util.RandomTextures;
+import dev.siepert.nuclearprogram.NuclearProgram;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.IconRegister;
+import net.minecraftborge.loader.Side;
 
 import java.util.Random;
 
-public class BlockNukestone extends Block {
-	private static final int[] textureIndices = RandomTextures.generateIndexArray(2137L, 8);
+public class BlockCharred extends Block {
+	public Icon blockTextureLog, blockTextureLogTop;
 
-	public final Icon[] blockTextures = new Icon[8];
-
-	public BlockNukestone(int blockID) {
-		super(blockID, Material.rock);
+	public BlockCharred(int blockID) {
+		super(blockID, NPMaterials.charred);
 	}
 
 	@Override
 	public void registerIcons(IconRegister register) {
-		super.registerIcons(register);
-		for (int i = 0; i < 8; i++) {
-			this.blockTextures[i] = register.getTexture(this.getSimpleName() + i, 16, 16);
-		}
+		this.blockTexture = register.getTexture(NuclearProgram.path("planksCharred"), 16, 16);
+		this.blockTextureLog = register.getTexture(NuclearProgram.path("logCharred"), 16, 16);
+		this.blockTextureLogTop = register.getTexture(NuclearProgram.path("logCharredTop"), 16, 16);
 	}
 
 	@Override
-	public Icon getBlockIcon(IBlockAccess world, int x, int y, int z, int side) {
-		return this.blockTextures[textureIndices[RandomTextures.getIndex(x, y, z)]];
+	public Icon getBlockIconFromSideAndMetadata(int side, int meta) {
+		if (meta != 0) return this.blockTexture;
+		return side == Side.UP || side == Side.DOWN ? this.blockTextureLogTop : this.blockTextureLog;
+	}
+
+	@Override
+	public int idDropped(int meta, Random random) {
+		return Item.coal.shiftedIndex;
+	}
+
+	@Override
+	protected int damageDropped(int meta) {
+		return 1;
+	}
+
+	@Override
+	public int quantityDropped(int meta, Random random) {
+		if (meta == 0) return 1;
+		return random.nextInt(4) == 0 ? 1 : 0;
 	}
 
 	@Override
@@ -67,18 +82,6 @@ public class BlockNukestone extends Block {
 					world.setBlockWithNotify(x, y, z, this.blockID);
 				}
 			}
-		}
-	}
-
-	@Override
-	public int colorMultiplier(IBlockAccess world, int x, int y, int z) {
-		if (world == null) return 0xFFFFFF;
-		int meta = world.getBlockMetadata(x, y, z);
-		switch (meta) {
-			case 1: return 0xDDDDDD;
-			case 2: return 0xBBBBBB;
-			case 3: return 0x999999;
-			default:return 0xFFFFFF;
 		}
 	}
 }

@@ -34,7 +34,10 @@ public class BlockInit {
 	public static BlockSealedDoor sealedDoor;
 
 	public static BlockNukestone nukestone;
+	public static BlockCharred charredWood;
 	public static BlockNuke nukeNuclearCharge;
+	public static BlockNuke nukeLittleBoy;
+	public static BlockNuke nukeCaseoh;
 
 	public static void register(IdAllocationEvent<Block> event) {
 		Helper helper = new Helper(NuclearProgram.MODID, event);
@@ -90,13 +93,13 @@ public class BlockInit {
 				.setHarvestLevel("pickaxe", 2)
 				.setStepSound(soundMetal2Footstep)
 		);
-		concrete = helper.register("concrete", id -> new Block(id, Material.rock)
+		concrete = helper.register("concrete", id -> new Block(id, NPMaterials.concrete)
 				.setHarvestLevel("pickaxe", 2)
 				.setHardness(15.0F)
 				.setResistance(256.0F)
 				.setStepSound(Block.soundStoneFootstep)
 		);
-		concreteBrick = helper.register("concreteBrick", id -> new Block(id, Material.rock)
+		concreteBrick = helper.register("concreteBrick", id -> new Block(id, NPMaterials.concrete)
 				.setHarvestLevel("pickaxe", 2)
 				.setHardness(concrete.getHardness())
 				.setResistance(concrete.getExplosionResistance(null))
@@ -126,11 +129,23 @@ public class BlockInit {
 				.setHardness(Block.stone.getHardness())
 				.setResistance(Block.stone.getExplosionResistance(null))
 		);
+		charredWood = helper.register("charredWood", id -> new BlockCharred(id)
+				.setHarvestLevel("axe", 0)
+				.setHardness(Block.wood.getHardness() / 2)
+				.setResistance(Block.wood.getExplosionResistance(null) / 2)
+				.setStepSound(Block.soundWoodFootstep)
+		);
 		nukeNuclearCharge = helper.register("nukeNuclearCharge", id -> new BlockNuclearCharge(id)
 				.setHarvestLevel("pickaxe", 2)
 				.setHardness(10.0F)
 				.setResistance(64.0F)
 				.setStepSound(soundMetal2Footstep)
+		);
+		nukeLittleBoy = helper.register("nukeLittleBoy", id -> new BlockLittleBoy(id)
+				.setHarvestLevel("pickaxe", 2)
+				.setHardness(10.0F)
+				.setResistance(64.0F)
+				.setStepSound(Block.soundMetalFootstep)
 		);
 
 		available = true;

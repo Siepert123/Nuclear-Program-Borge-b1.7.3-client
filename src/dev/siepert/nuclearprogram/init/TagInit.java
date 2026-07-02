@@ -1,6 +1,7 @@
 package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
+import dev.siepert.nuclearprogram.world.block.BlockMetalOre;
 import net.minecraft.src.ItemStack;
 import net.minecraftborge.loader.tag.ItemTags;
 
@@ -10,6 +11,11 @@ public class TagInit {
 	}
 
 	public static void registerItemTags() {
+		ItemTags.tag("oreCopper", new ItemStack(BlockInit.oreMetal, 1, BlockMetalOre.COPPER));
+		ItemTags.tag("oreLead", new ItemStack(BlockInit.oreMetal, 1, BlockMetalOre.LEAD));
+		ItemTags.tag("oreTitanium", new ItemStack(BlockInit.oreMetal, 1, BlockMetalOre.TITANIUM));
+		ItemTags.tag("oreTungsten", new ItemStack(BlockInit.oreMetal, 1, BlockMetalOre.TUNGSTEN));
+
 		ItemTags.tag("blockCopper", new ItemStack(BlockInit.blockMetal, 1, BlockMetal.COPPER));
 		ItemTags.tag("blockAluminium", new ItemStack(BlockInit.blockMetal, 1, BlockMetal.ALUMINIUM));
 		ItemTags.tag("blockLead", new ItemStack(BlockInit.blockMetal, 1, BlockMetal.LEAD));

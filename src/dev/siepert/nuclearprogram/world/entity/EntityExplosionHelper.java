@@ -300,7 +300,76 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 			return;
 		}
 		if (!this.treesCharred) {
-			this.treesCharred = true;
+			if (this.orderedChunks == null) {
+				if (this.nukeType.getCharredTreesRadius() <= 0) {
+					this.treesCharred = true;
+					return;
+				}
+				System.out.println("Starting charred trees");
+				int c = (this.nukeType.getCharredTreesRadius() + 15) >> 4;
+				this.affectedMinCX = this.chunkCoordX - c;
+				this.affectedMaxCX = this.chunkCoordX + c;
+				this.affectedMinCZ = this.chunkCoordZ - c;
+				this.affectedMaxCZ = this.chunkCoordZ + c;
+				this.orderedChunks = new ArrayList<>((this.affectedMaxCX-this.affectedMinCX)*(this.affectedMaxCZ-this.affectedMinCZ));
+				for (int x = this.affectedMinCX; x <= this.affectedMaxCX; ++x) {
+					for (int z = this.affectedMinCZ; z <= this.affectedMaxCZ; ++z) {
+						this.orderedChunks.add(new ChunkCoordIntPair(x, z));
+					}
+				}
+
+				this.orderedChunks.sort((cp1, cp2) -> {
+					int d1 = this.chessboardDistance(cp1);
+					int d2 = this.chessboardDistance(cp2);
+
+					return d1 - d2;
+				});
+				return;
+			}
+			if (this.orderedChunks.isEmpty()) {
+				this.orderedChunks = null;
+				this.treesCharred = true;
+			} else {
+				this.worldObj.editingBlocks = true;
+				int d = this.nukeType.getCharredTreesRadius();
+				int d2 = d * d;
+				int d3 = (d+16) * (d+16);
+				int max = Math.max(EXPLOSION_CALCULATION_FACTOR / 100, 1);
+				for (int i = 0; (i < max && !this.orderedChunks.isEmpty()); i++) {
+					ChunkCoordIntPair cp = this.orderedChunks.remove(0);
+					int x, y, z;
+					int x2, z2, x1, z1;
+					int sqr, blockID;
+					Material material;
+					for (x = 0; x < 16; x++) {
+						for (z = 0; z < 16; z++) {
+							x2 = x + (cp.chunkXPos << 4);
+							z2 = z + (cp.chunkZPos << 4);
+							x1 = x2 - (int)this.posX;
+							z1 = z2 - (int)this.posZ;
+							sqr = x1 * x1 + z1 * z1;
+							if (sqr > d3) continue;
+							for (y = 60; y < 128; y++) {
+								if (sqr > d2 && this.rand.nextBoolean()) continue;
+								blockID = this.worldObj.getBlockId(x2, y, z2);
+								if (blockID > 0) {
+									material = Block.blocksList[blockID].blockMaterial;
+									if (material == Material.wood) {
+										if (blockID == Block.wood.blockID) {
+											this.worldObj.setBlockAndMetadataWithNotify(x2, y, z2, BlockInit.charredWood.blockID, 0);
+										} else {
+											this.worldObj.setBlockAndMetadataWithNotify(x2, y, z2, BlockInit.charredWood.blockID, 1);
+										}
+									} else if (blockID == Block.grass.blockID) {
+										this.worldObj.setBlockWithNotify(x2, y, z2, Block.dirt.blockID);
+									}
+								}
+							}
+						}
+					}
+				}
+				this.worldObj.editingBlocks = false;
+			}
 			return;
 		}
 		if (!this.nuclearRemainsPlaced) {
@@ -375,17 +444,23 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 							blockID = this.worldObj.getBlockId(x2, y, z2);
 							if (blockID == Block.oreCoal.blockID || blockID == Block.oreDiamond.blockID) {
 								this.worldObj.setBlockWithNotify(x2, y, z2, Block.oreDiamond.blockID);
-							} else this.worldObj.setBlockAndMetadataWithNotify(x2, y, z2, BlockInit.nukestone.blockID, darkness);
+							} else if (this.validNuclearRemains(blockID, 250.0F)) {
+								this.worldObj.setBlockAndMetadataWithNotify(x2, y, z2, BlockInit.nukestone.blockID, darkness);
+							}
 							y--;
 							blockID = this.worldObj.getBlockId(x2, y, z2);
 							if (blockID == Block.oreCoal.blockID || blockID == Block.oreDiamond.blockID) {
 								this.worldObj.setBlockWithNotify(x2, y, z2, Block.oreDiamond.blockID);
-							} else this.worldObj.setBlockAndMetadataWithNotify(x2, y, z2, BlockInit.nukestone.blockID, darkness);
+							} else if (this.validNuclearRemains(blockID, 150.0F)) {
+								this.worldObj.setBlockAndMetadataWithNotify(x2, y, z2, BlockInit.nukestone.blockID, darkness);
+							}
 							y--;
 							blockID = this.worldObj.getBlockId(x2, y, z2);
 							if (blockID == Block.oreCoal.blockID || blockID == Block.oreDiamond.blockID) {
 								this.worldObj.setBlockWithNotify(x2, y, z2, Block.oreDiamond.blockID);
-							} else this.worldObj.setBlockAndMetadataWithNotify(x2, y, z2, BlockInit.nukestone.blockID, darkness);
+							} else if (this.validNuclearRemains(blockID, 50.0F)) {
+								this.worldObj.setBlockAndMetadataWithNotify(x2, y, z2, BlockInit.nukestone.blockID, darkness);
+							}
 						}
 					}
 				}
@@ -396,6 +471,7 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 		if (!this.waterRefilled) {
 			if (this.orderedChunks == null) {
 				System.out.println("Starting refill 1");
+				this.waterRefilled2 = true;
 				int c = (this.nukeType.getBlastRadius() + 15) >> 4;
 				this.affectedMinCX = this.chunkCoordX - c;
 				this.affectedMaxCX = this.chunkCoordX + c;
@@ -420,6 +496,7 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 							material = this.worldObj.getBlockMaterial(x + (cp.chunkXPos << 4), y, z + (cp.chunkZPos << 4));
 							if (material.isReplaceable()) {
 								if (checkWater(this.worldObj, x + (cp.chunkXPos << 4), y, z + (cp.chunkZPos << 4))) {
+									this.waterRefilled2 = false;
 									this.worldObj.setBlockWithNotify(x + (cp.chunkXPos << 4), y, z + (cp.chunkZPos << 4), waterID);
 								}
 							}
@@ -432,7 +509,8 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 		}
 		if (!this.waterRefilled2) {
 			if (this.orderedChunks == null) {
-				System.out.println("Starting refill 1");
+				System.out.println("Starting refill 2");
+				this.waterRefilled3 = true;
 				int c = (this.nukeType.getBlastRadius() + 15) >> 4;
 				this.affectedMinCX = this.chunkCoordX - c;
 				this.affectedMaxCX = this.chunkCoordX + c;
@@ -457,6 +535,7 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 							material = this.worldObj.getBlockMaterial(x + (cp.chunkXPos << 4), y, z + (cp.chunkZPos << 4));
 							if (material.isReplaceable()) {
 								if (checkWater(this.worldObj, x + (cp.chunkXPos << 4), y, z + (cp.chunkZPos << 4))) {
+									this.waterRefilled3 = false;
 									this.worldObj.setBlockWithNotify(x + (cp.chunkXPos << 4), y, z + (cp.chunkZPos << 4), waterID);
 								}
 							}
@@ -469,7 +548,8 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 		}
 		if (!this.waterRefilled3) {
 			if (this.orderedChunks == null) {
-				System.out.println("Starting refill 1");
+				System.out.println("Starting refill 3");
+				this.waterRefilled4 = true;
 				int c = (this.nukeType.getBlastRadius() + 15) >> 4;
 				this.affectedMinCX = this.chunkCoordX - c;
 				this.affectedMaxCX = this.chunkCoordX + c;
@@ -494,6 +574,7 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 							material = this.worldObj.getBlockMaterial(x + (cp.chunkXPos << 4), y, z + (cp.chunkZPos << 4));
 							if (material.isReplaceable()) {
 								if (checkWater(this.worldObj, x + (cp.chunkXPos << 4), y, z + (cp.chunkZPos << 4))) {
+									this.waterRefilled4 = false;
 									this.worldObj.setBlockWithNotify(x + (cp.chunkXPos << 4), y, z + (cp.chunkZPos << 4), waterID);
 								}
 							}
@@ -506,7 +587,7 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 		}
 		if (!this.waterRefilled4) {
 			if (this.orderedChunks == null) {
-				System.out.println("Starting refill 1");
+				System.out.println("Starting refill 4");
 				int c = (this.nukeType.getBlastRadius() + 15) >> 4;
 				this.affectedMinCX = this.chunkCoordX - c;
 				this.affectedMaxCX = this.chunkCoordX + c;
@@ -554,6 +635,15 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 	public void notifyExplosionFinished() {
 		System.out.println("Explosion finished");
 		this.explosionFinished = true;
+	}
+
+	private boolean validNuclearRemains(int blockID, float resistance) {
+		if (blockID == 0) return false;
+		Block block = Block.blocksList[blockID];
+		if (block == null) return false;
+		if (block.getExplosionResistance(this) >= resistance) return false;
+		Material material = block.blockMaterial;
+		return !material.isReplaceable() && !(material == Material.water || material == Material.lava);
 	}
 
 	private static final int waterID = Block.waterStill.blockID;
