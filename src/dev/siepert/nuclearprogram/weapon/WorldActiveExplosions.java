@@ -53,6 +53,7 @@ public class WorldActiveExplosions extends MapDataBase {
 		if (cache != null) cache.tick0();
 	}
 	public void tick0() {
+		this.setDirty(true);
 		for (BackendExplosionHandler batched : this.explosions) {
 			batched.cacheChunksTick(20);
 			batched.destructionTick(20);

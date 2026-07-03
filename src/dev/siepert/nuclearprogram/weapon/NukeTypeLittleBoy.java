@@ -40,7 +40,7 @@ public class NukeTypeLittleBoy extends NukeType {
 
 	@Override
 	public int getFalloutRadius() {
-		return 0;
+		return 150;
 	}
 
 	@Override

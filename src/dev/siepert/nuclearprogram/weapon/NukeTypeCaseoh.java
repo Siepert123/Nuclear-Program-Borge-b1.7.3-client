@@ -40,7 +40,7 @@ public class NukeTypeCaseoh extends NukeType {
 
 	@Override
 	public int getFalloutRadius() {
-		return 0;
+		return 300;
 	}
 
 	@Override

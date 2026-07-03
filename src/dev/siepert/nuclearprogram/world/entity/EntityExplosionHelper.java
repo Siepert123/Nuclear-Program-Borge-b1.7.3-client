@@ -2,6 +2,7 @@ package dev.siepert.nuclearprogram.world.entity;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.weapon.*;
+import dev.siepert.nuclearprogram.world.mapdata.WorldFalloutClouds;
 import net.minecraft.src.*;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.stream.StreamSupport;
 
 public class EntityExplosionHelper extends Entity implements ExploderParent {
 	public static final int EXPLOSION_CALCULATION_FACTOR = 500;
-	public static final boolean ENABLE_ENTITY_DAMAGE = true;
+	public static final boolean ENABLE_ENTITY_DAMAGE = false;
 	public static final boolean ENABLE_CHUNK_PREGENERATION = true;
 	public static final int CHUNK_PREGENERATION_BUDGET = 20;
 	public static final boolean ENABLE_WATER_REFILL = false;
@@ -416,6 +417,8 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 		}
 		if (!this.nuclearRemainsPlaced) {
 			if (this.orderedChunks == null) {
+				WorldFalloutClouds.get(this.worldObj).add(this, this.nukeType);
+
 				if (this.nukeType.getNuclearRemainsRadius() <= 0) {
 					this.nuclearRemainsPlaced = true;
 					return;

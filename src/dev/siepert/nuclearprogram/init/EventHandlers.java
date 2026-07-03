@@ -2,28 +2,38 @@ package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.Nothing;
 import dev.siepert.nuclearprogram.NuclearProgram;
+import dev.siepert.nuclearprogram.util.SaveHandlerHook;
 import dev.siepert.nuclearprogram.weapon.BackendExplosionHandler;
 import dev.siepert.nuclearprogram.weapon.NukeTypes;
 import dev.siepert.nuclearprogram.weapon.WorldActiveExplosions;
 import dev.siepert.nuclearprogram.world.NuclearProgramWorldAccess;
 import dev.siepert.nuclearprogram.world.entity.EntityExplosionHelper;
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.EntityZombie;
-import net.minecraft.src.World;
+import dev.siepert.nuclearprogram.world.mapdata.WorldFalloutClouds;
+import net.minecraft.client.Minecraft;
+import net.minecraft.src.*;
+import net.minecraftborge.loader.BorgeMath;
 import net.minecraftborge.loader.event.Event;
 import net.minecraftborge.loader.event.EventBusSubscriber;
 import net.minecraftborge.loader.event.EventHandler;
 import net.minecraftborge.loader.event.entity.EntityDropLootEvent;
+import net.minecraftborge.loader.event.entity.player.PlayerTickEvent;
 import net.minecraftborge.loader.event.gui.RenderOverlayGuiEvent;
 import net.minecraftborge.loader.event.misc.ChatCommandEvent;
+import net.minecraftborge.loader.event.render.GetFOVModifierEvent;
+import net.minecraftborge.loader.event.render.GetFogColorEvent;
+import net.minecraftborge.loader.event.render.RenderRainSnowEvent;
 import net.minecraftborge.loader.event.world.ChangeWorldEvent;
 import net.minecraftborge.loader.event.world.WorldTickEvent;
 import org.lwjgl.opengl.GL11;
 
+import java.util.List;
+import java.util.Random;
+
 @EventBusSubscriber(NuclearProgram.MODID)
 public class EventHandlers {
+	private static final Random rnd = new Random();
+
 	@EventHandler
 	public static void worldChanged(ChangeWorldEvent event) {
 		NuclearProgramWorldAccess.INSTANCE.setWorld(event.getWorld());
@@ -115,9 +125,7 @@ public class EventHandlers {
 				return;
 			}
 			if (cmd.startsWith("/goon2")) {
-				event.setCanceled(true);
-				EntityExplosionHelper entity = new EntityExplosionHelper(world, sender.posX, sender.posY, sender.posZ, NukeTypes.CHARGE);
-				world.entityJoinedWorld(entity);
+				BackendExplosionHandler.shockwaveTicks = 80;
 				return;
 			}
 			Nothing.none();
@@ -137,19 +145,48 @@ public class EventHandlers {
 
 	@EventHandler
 	public static void changeWorld(ChangeWorldEvent event) {
+		SaveHandlerHook.set(event.getWorld());
 		if (event.getWorld() == null) {
 			WorldActiveExplosions.cache = null;
+			WorldFalloutClouds.cache = null;
 		} else {
 			WorldActiveExplosions.cache = WorldActiveExplosions.get(event.getWorld());
 			WorldActiveExplosions.cache.setWorld(event.getWorld());
+
+			WorldFalloutClouds.cache = WorldFalloutClouds.get(event.getWorld());
 		}
 	}
 
 	@EventHandler
 	public static void tickWorld(WorldTickEvent event) {
 		if (event.getPhase() == Event.Phase.POST) {
+			World world = event.getWorld();
 			WorldActiveExplosions.tick();
+			WorldFalloutClouds.tick(world);
 			if (BackendExplosionHandler.shockwaveTicks > 0) BackendExplosionHandler.shockwaveTicks--;
+
+			if (WorldFalloutClouds.cache != null && (world.getWorldTime() % 100) == 0) {
+				for (WorldFalloutClouds.CloudData cloud : WorldFalloutClouds.cache.clouds) {
+					int chunkX = cloud.x * 2;
+					int chunkZ = cloud.z * 2;
+					int range = (int)(cloud.radius * 2);
+					float r2 = cloud.radius * cloud.radius * 64;
+					for (int x = chunkX - range; x <= chunkX + range; x++) {
+						for (int z = chunkZ - range; z <= chunkZ; z++) {
+							if (world.blockExists(x << 4, 64, z << 4)) {
+								int cx = x << 4 + world.rand.nextInt(16);
+								int cz = z << 4 + world.rand.nextInt(16);
+								if ((cx * cx) + (cz * cz) < r2) {
+									int cy = world.getHeightValue(cx, cz);
+									if (world.getBlockMaterial(cx, cy-1, cz).isSolid()) {
+										world.setBlockWithNotify(cx, cy, cz, Block.snow.blockID);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -161,6 +198,91 @@ public class EventHandlers {
 				double mul = ticks * 0.05;
 				double time = Math.toIntExact(System.currentTimeMillis() % 2000) * 0.003 * Math.PI;
 				GL11.glTranslated(Math.sin(time * 2) * mul, Math.sin(time) * mul, 0.0);
+			}
+		}
+	}
+
+	@EventHandler
+	public static void getFOV(GetFOVModifierEvent event) {
+		int ticks = BackendExplosionHandler.shockwaveTicks;
+		if (ticks > 0) {
+			if ((ticks & 1) == 0) {
+				double larp = ticks / 80.0;
+				event.setFOV(BorgeMath.clampedLerp(event.getFOV(), event.getFOV() - 15.0F, larp));
+			}
+		}
+	}
+
+	@EventHandler
+	public static void renderRainSnow(RenderRainSnowEvent event) {
+		if (WorldFalloutClouds.cache != null) {
+			List<WorldFalloutClouds.CloudData> clouds = WorldFalloutClouds.cache.clouds;
+			int playerX = MathHelper.floor_double(event.getCamera().posX * 0.125);
+			int playerZ = MathHelper.floor_double(event.getCamera().posZ * 0.125);
+			if (WorldFalloutClouds.CloudData.anyInRange(clouds, playerX, playerZ)) {
+				Minecraft mc = event.getMC();
+				float pt = event.getPartialTick();
+				float ticksRan = Minecraft.getTicksRan() + pt;
+				Entity cam = event.getCamera();
+				World world = mc.theWorld;
+
+				event.setCanceled(true);
+				GL11.glDisable(GL11.GL_CULL_FACE);
+				GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+				GL11.glEnable(GL11.GL_BLEND);
+				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+				GL11.glAlphaFunc(GL11.GL_GREATER, 0.01F);
+				GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("/environment/snow.png"));
+				int px = MathHelper.floor_double(cam.posX);
+				int py = MathHelper.floor_double(cam.posY);
+				int pz = MathHelper.floor_double(cam.posZ);
+				double x = cam.lastTickPosX + (cam.posX - cam.lastTickPosX) * pt;
+				double y = cam.lastTickPosY + (cam.posY - cam.lastTickPosY) * pt;
+				double z = cam.lastTickPosZ + (cam.posZ - cam.lastTickPosZ) * pt;
+
+				byte range = (byte) (mc.gameSettings.fancyGraphics ? 10 : 5);
+
+				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+				Tessellator tes = Tessellator.instance;
+				tes.startDrawingQuads();
+				tes.setColorOpaque_F(0.4F, 0.4F, 0.4F);
+				tes.setTranslationD(-x, -y, -z);
+				int max = py + 64;
+				for (int bx = px - range; bx <= px + range; bx++) {
+					for (int bz = pz - range; bz <= pz + range; bz++) {
+						int by = world.findTopSolidBlock(bx, bz);
+						int height = max - by;
+						if (height > 0) {
+							rnd.setSeed(bx * bx * 2137L + bz * bz * 42069L + 12345L);
+							double offY = (ticksRan * 0.001) + (rnd.nextGaussian());
+							double offX = rnd.nextInt(32) * 0.0625 * 0.5;
+							tes.addVertexWithUV(bx, by, bz + 0.5, 0.0F + offX, offY);
+							tes.addVertexWithUV(bx + 1, by, bz + 0.5, 1.0F + offX, offY);
+							tes.addVertexWithUV(bx + 1, max, bz + 0.5, 1.0F + offX, height * 0.25 + offY);
+							tes.addVertexWithUV(bx, max, bz + 0.5, 0.0F + offX, height * 0.25 + offY);
+							tes.addVertexWithUV(bx + 0.5, by, bz, 0.0F + offX, offY);
+							tes.addVertexWithUV(bx + 0.5, by, bz + 1, 1.0F + offX, offY);
+							tes.addVertexWithUV(bx + 0.5, max, bz + 1, 1.0F + offX, height * 0.25 + offY);
+							tes.addVertexWithUV(bx + 0.5, max, bz, 0.0F + offX, height * 0.25 + offY);
+						}
+					}
+				}
+				tes.setTranslationD(0.0, 0.0, 0.0);
+				tes.draw();
+
+				GL11.glEnable(GL11.GL_CULL_FACE);
+			}
+		}
+	}
+
+	@EventHandler
+	public static void getFogColor(GetFogColorEvent event) {
+		if (WorldFalloutClouds.cache != null) {
+			List<WorldFalloutClouds.CloudData> clouds = WorldFalloutClouds.cache.clouds;
+			int playerX = MathHelper.floor_double(event.getCamera().posX * 0.125);
+			int playerZ = MathHelper.floor_double(event.getCamera().posZ * 0.125);
+			if (WorldFalloutClouds.CloudData.anyInRange(clouds, playerX, playerZ)) {
+				event.getColor().set(0.1F, 0.1F, 0.1F);
 			}
 		}
 	}
