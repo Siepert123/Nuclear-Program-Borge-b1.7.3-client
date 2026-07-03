@@ -5,4 +5,5 @@ public class NukeTypes {
 
 	public static final NukeType CHARGE = new NukeTypeCharge(0);
 	public static final NukeType LITTLE_BOY = new NukeTypeLittleBoy(1);
+	public static final NukeType CASEOH = new NukeTypeCaseoh(2);
 }

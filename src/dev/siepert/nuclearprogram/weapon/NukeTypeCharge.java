@@ -69,11 +69,6 @@ public class NukeTypeCharge extends NukeType {
 	}
 
 	@Override
-	public int getSoundDistance() {
-		return 512;
-	}
-
-	@Override
 	public int getEventData() {
 		return 7;
 	}

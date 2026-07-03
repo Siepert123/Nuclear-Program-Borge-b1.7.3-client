@@ -3,24 +3,24 @@ package dev.siepert.nuclearprogram.weapon;
 import dev.siepert.nuclearprogram.util.Easing;
 import dev.siepert.nuclearprogram.util.IEasing;
 
-public class NukeTypeLittleBoy extends NukeType {
-	public NukeTypeLittleBoy(int registryID) {
+public class NukeTypeCaseoh extends NukeType {
+	public NukeTypeCaseoh(int registryID) {
 		super(registryID);
 	}
 
 	@Override
 	public int getBlastRadius() {
-		return 128;
+		return 256;
 	}
 
 	@Override
 	public int getCharredTreesRadius() {
-		return 256;
+		return 512;
 	}
 
 	@Override
 	public int getDestroyedLeavesRadius() {
-		return 256;
+		return 512;
 	}
 
 	@Override
@@ -60,6 +60,6 @@ public class NukeTypeLittleBoy extends NukeType {
 
 	@Override
 	public float getMushroomCloudSize() {
-		return 10;
+		return 20;
 	}
 }

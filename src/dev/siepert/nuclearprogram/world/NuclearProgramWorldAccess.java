@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.world;
 
+import dev.siepert.nuclearprogram.weapon.BackendExplosionHandler;
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
 import dev.siepert.nuclearprogram.world.te.TileEntityHatch;
 import dev.siepert.nuclearprogram.world.te.TileEntitySealedDoor;
@@ -115,6 +116,7 @@ public class NuclearProgramWorldAccess implements IWorldAccess {
 			}
 			if (data == 6) {
 				this.worldObj.playSoundEffect(x, y, z, "weapon.explosionNuclear", 128.0F, 1.0F);
+				BackendExplosionHandler.shockwaveTicks = 20 * 8;
 			}
 			if (data == 7) {
 				this.worldObj.playSoundEffect(x, y, z, "weapon.explosionLarge", 32.0F, 1.0F);

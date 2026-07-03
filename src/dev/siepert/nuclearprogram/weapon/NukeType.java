@@ -26,7 +26,6 @@ public abstract class NukeType {
 	public abstract boolean hasShockwave();
 	public abstract boolean isSoulType();
 	public abstract float getMushroomCloudSize();
-	public abstract int getSoundDistance();
 	public int getEntityBlowRadius() {
 		return this.getBlastRadius() * 2;
 	}
@@ -62,5 +61,11 @@ public abstract class NukeType {
 
 	public boolean grantsAchievement() {
 		return true;
+	}
+
+	public int getAffectedRange() {
+		int blocks = Math.max(Math.max(this.getBlastRadius(), this.getNuclearRemainsRadius()), Math.max(this.getCharredTreesRadius(), this.getDestroyedLeavesRadius()));
+		int biomes = Math.max(Math.max(this.getMinimalBiomeRadius(), this.getNormalBiomeRadius()), this.getSevereBiomeRadius());
+		return Math.max(blocks, biomes);
 	}
 }

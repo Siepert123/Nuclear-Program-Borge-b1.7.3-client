@@ -2,6 +2,7 @@ package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.Nothing;
 import dev.siepert.nuclearprogram.NuclearProgram;
+import dev.siepert.nuclearprogram.weapon.BackendExplosionHandler;
 import dev.siepert.nuclearprogram.weapon.NukeTypes;
 import dev.siepert.nuclearprogram.weapon.WorldActiveExplosions;
 import dev.siepert.nuclearprogram.world.NuclearProgramWorldAccess;
@@ -15,9 +16,11 @@ import net.minecraftborge.loader.event.Event;
 import net.minecraftborge.loader.event.EventBusSubscriber;
 import net.minecraftborge.loader.event.EventHandler;
 import net.minecraftborge.loader.event.entity.EntityDropLootEvent;
+import net.minecraftborge.loader.event.gui.RenderOverlayGuiEvent;
 import net.minecraftborge.loader.event.misc.ChatCommandEvent;
 import net.minecraftborge.loader.event.world.ChangeWorldEvent;
 import net.minecraftborge.loader.event.world.WorldTickEvent;
+import org.lwjgl.opengl.GL11;
 
 @EventBusSubscriber(NuclearProgram.MODID)
 public class EventHandlers {
@@ -146,6 +149,19 @@ public class EventHandlers {
 	public static void tickWorld(WorldTickEvent event) {
 		if (event.getPhase() == Event.Phase.POST) {
 			WorldActiveExplosions.tick();
+			if (BackendExplosionHandler.shockwaveTicks > 0) BackendExplosionHandler.shockwaveTicks--;
+		}
+	}
+
+	@EventHandler
+	public static void renderGUI(RenderOverlayGuiEvent event) {
+		if (event.getLayer() == RenderOverlayGuiEvent.Layer.PRE) {
+			int ticks = BackendExplosionHandler.shockwaveTicks;
+			if (ticks > 0) {
+				double mul = ticks * 0.05;
+				double time = Math.toIntExact(System.currentTimeMillis() % 2000) * 0.003 * Math.PI;
+				GL11.glTranslated(Math.sin(time * 2) * mul, Math.sin(time) * mul, 0.0);
+			}
 		}
 	}
 }

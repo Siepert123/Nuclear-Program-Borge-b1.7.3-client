@@ -8,6 +8,8 @@ import java.util.*;
 
 // property of bob
 public class BackendExplosionHandler {
+	public static int shockwaveTicks = 0;
+
 	public HashMap<ChunkCoordIntPair, List<Vec3F>> perChunk = new HashMap<>();
 	public List<ChunkCoordIntPair> orderedChunks = new ArrayList<>();
 	private final CoordComparator comparator = new CoordComparator();

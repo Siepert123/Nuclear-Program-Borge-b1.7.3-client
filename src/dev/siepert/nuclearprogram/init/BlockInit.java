@@ -87,10 +87,14 @@ public class BlockInit {
 		);
 		doorOffice = helper.register("doorOffice", id -> new BlockYanoDoor(id, Material.wood)
 				.setHarvestLevel("axe", 0)
+				.setHardness(5.0F)
+				.setResistance(15.0F)
 				.setStepSound(Block.soundWoodFootstep)
 		);
 		doorBunker = helper.register("doorBunker", id -> new BlockYanoDoor(id, Material.iron)
 				.setHarvestLevel("pickaxe", 2)
+				.setHardness(15.0F)
+				.setResistance(256.0F)
 				.setStepSound(soundMetal2Footstep)
 		);
 		concrete = helper.register("concrete", id -> new Block(id, NPMaterials.concrete)
@@ -142,6 +146,12 @@ public class BlockInit {
 				.setStepSound(soundMetal2Footstep)
 		);
 		nukeLittleBoy = helper.register("nukeLittleBoy", id -> new BlockLittleBoy(id)
+				.setHarvestLevel("pickaxe", 2)
+				.setHardness(10.0F)
+				.setResistance(64.0F)
+				.setStepSound(Block.soundMetalFootstep)
+		);
+		nukeCaseoh = helper.register("nukeCaseoh", id -> new BlockCaseoh(id)
 				.setHarvestLevel("pickaxe", 2)
 				.setHardness(10.0F)
 				.setResistance(64.0F)
