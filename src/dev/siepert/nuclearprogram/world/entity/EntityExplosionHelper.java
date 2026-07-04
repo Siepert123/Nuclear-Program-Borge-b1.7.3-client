@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.world.entity;
 
+import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.weapon.*;
 import dev.siepert.nuclearprogram.world.mapdata.WorldFalloutClouds;
@@ -166,7 +167,7 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 					entity.attackEntityFrom(this, (int) (inv * this.nukeType.entityDamageMultiplier()));
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				e.printStackTrace(System.err);
 			}
 		}
 		if (!this.hasSpawnedCloud) {
@@ -238,9 +239,9 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 				this.orderedChunks = null;
 				this.waterEvaporated = true;
 			} else {
-				int max = Math.max(EXPLOSION_CALCULATION_FACTOR / 50, 1);
+				long limit = System.currentTimeMillis() + NuclearProgram.EXPLOSION_MS_BUDGET;
 				this.worldObj.editingBlocks = true;
-				for (int i = 0; (i < max && !this.orderedChunks.isEmpty()); i++) {
+				while ((System.currentTimeMillis() < limit && !this.orderedChunks.isEmpty())) {
 					ChunkCoordIntPair cp = this.orderedChunks.remove(0);
 					int x, y, z;
 					Material material;
@@ -313,9 +314,9 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 				this.orderedChunks = null;
 				this.leavesDestroyed = true;
 			} else {
-				int max = Math.max(EXPLOSION_CALCULATION_FACTOR / 100, 1);
+				long limit = System.currentTimeMillis() + NuclearProgram.EXPLOSION_MS_BUDGET;
 				this.worldObj.editingBlocks = true;
-				for (int i = 0; (i < max && !this.orderedChunks.isEmpty()); i++) {
+				while ((System.currentTimeMillis() < limit && !this.orderedChunks.isEmpty())) {
 					ChunkCoordIntPair cp = this.orderedChunks.remove(0);
 					int x, y, z;
 					int x1, z1, sqr;
@@ -377,8 +378,8 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 				int d = this.nukeType.getCharredTreesRadius();
 				int d2 = d * d;
 				int d3 = (d+16) * (d+16);
-				int max = Math.max(EXPLOSION_CALCULATION_FACTOR / 100, 1);
-				for (int i = 0; (i < max && !this.orderedChunks.isEmpty()); i++) {
+				long limit = System.currentTimeMillis() + NuclearProgram.EXPLOSION_MS_BUDGET;
+				while ((System.currentTimeMillis() < limit && !this.orderedChunks.isEmpty())) {
 					ChunkCoordIntPair cp = this.orderedChunks.remove(0);
 					int x, y, z;
 					int x2, z2, x1, z1;
@@ -452,8 +453,8 @@ public class EntityExplosionHelper extends Entity implements ExploderParent {
 				float quart = this.nukeType.getNuclearRemainsRadius() * 0.25F;
 				float quart2 = quart * 2.0F;
 				float quart3 = quart * 3.0F;
-				int max = Math.max(EXPLOSION_CALCULATION_FACTOR / 20, 1);
-				for (int i = 0; (i < max && !this.orderedChunks.isEmpty()); i++) {
+				long limit = System.currentTimeMillis() + NuclearProgram.EXPLOSION_MS_BUDGET;
+				while ((System.currentTimeMillis() < limit && !this.orderedChunks.isEmpty())) {
 					ChunkCoordIntPair cp = this.orderedChunks.remove(0);
 					int x, y, z, x2, z2;
 					int d = this.nukeType.getNuclearRemainsRadius();

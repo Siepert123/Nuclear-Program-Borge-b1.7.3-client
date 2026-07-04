@@ -163,8 +163,7 @@ public class BackendExplosionHandler {
 		return Vec3D.createVector(dx, dy, dz);
 	}
 
-	public void collectTip(int count) {
-		int amountProcessed = 0;
+	public void collectTip(long limit) {
 		WorldActiveExplosions.get(this.worldObj).setDirty(true);
 
 		while (this.gspNumMax >= this.gspNum) {
@@ -217,8 +216,7 @@ public class BackendExplosionHandler {
 
 			this.generateGspUp();
 
-			amountProcessed++;
-			if (amountProcessed >= count) return;
+			if (System.currentTimeMillis() >= limit) return;
 		}
 
 		this.orderedChunks.addAll(this.perChunk.keySet());
@@ -313,7 +311,7 @@ public class BackendExplosionHandler {
 
 	public void cacheChunksTick(int msBudget) {
 		if (!this.collectionComplete) {
-			this.collectTip(this.speed * 10);
+			this.collectTip(System.currentTimeMillis() + msBudget);
 		}
 	}
 

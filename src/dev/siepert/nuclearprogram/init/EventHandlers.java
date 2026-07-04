@@ -169,17 +169,21 @@ public class EventHandlers {
 				for (WorldFalloutClouds.CloudData cloud : WorldFalloutClouds.cache.clouds) {
 					int chunkX = cloud.x * 2;
 					int chunkZ = cloud.z * 2;
+					int ox = cloud.x / 8;
+					int oz = cloud.z / 8;
 					int range = (int)(cloud.radius * 2);
 					float r2 = cloud.radius * cloud.radius * 64;
 					for (int x = chunkX - range; x <= chunkX + range; x++) {
 						for (int z = chunkZ - range; z <= chunkZ; z++) {
 							if (world.blockExists(x << 4, 64, z << 4)) {
-								int cx = x << 4 + world.rand.nextInt(16);
-								int cz = z << 4 + world.rand.nextInt(16);
-								if ((cx * cx) + (cz * cz) < r2) {
+								int cx = (x << 4) + world.rand.nextInt(16);
+								int cz = (z << 4) + world.rand.nextInt(16);
+								int dx = cx - ox;
+								int dz = cz - oz;
+								if ((dx * dx) + (dz * dz) < r2) {
 									int cy = world.getHeightValue(cx, cz);
 									if (world.getBlockMaterial(cx, cy-1, cz).isSolid()) {
-										world.setBlockWithNotify(cx, cy, cz, Block.snow.blockID);
+										world.setBlockWithNotify(cx, cy, cz, BlockInit.fallout.blockID);
 									}
 								}
 							}
@@ -255,7 +259,7 @@ public class EventHandlers {
 						if (height > 0) {
 							rnd.setSeed(bx * bx * 2137L + bz * bz * 42069L + 12345L);
 							double offY = (ticksRan * 0.001) + (rnd.nextGaussian());
-							double offX = rnd.nextInt(32) * 0.0625 * 0.5;
+							double offX = rnd.nextInt(64) * 0.0625 * 0.25;
 							tes.addVertexWithUV(bx, by, bz + 0.5, 0.0F + offX, offY);
 							tes.addVertexWithUV(bx + 1, by, bz + 0.5, 1.0F + offX, offY);
 							tes.addVertexWithUV(bx + 1, max, bz + 0.5, 1.0F + offX, height * 0.25 + offY);

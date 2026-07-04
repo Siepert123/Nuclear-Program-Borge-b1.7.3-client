@@ -21,6 +21,7 @@ import net.minecraftborge.loader.event.register.*;
 
 @EventBusSubscriber(NuclearProgram.MODID)
 public class NuclearProgram implements IModLifecycleListener {
+	public static final int EXPLOSION_MS_BUDGET = 20;
 	public static final Minecraft mc = Minecraft.getTheMinecraft();
 	public static final String MODID = "nuclear_program";
 	public static String path(String path) {

@@ -35,6 +35,7 @@ public class BlockInit {
 
 	public static BlockNukestone nukestone;
 	public static BlockCharred charredWood;
+	public static BlockFallout fallout;
 	public static BlockNuke nukeNuclearCharge;
 	public static BlockNuke nukeLittleBoy;
 	public static BlockNuke nukeCaseoh;
@@ -138,6 +139,12 @@ public class BlockInit {
 				.setHardness(Block.wood.getHardness() / 2)
 				.setResistance(Block.wood.getExplosionResistance(null) / 2)
 				.setStepSound(Block.soundWoodFootstep)
+		);
+		fallout = helper.register("fallout", id -> new BlockFallout(id)
+				.setHarvestLevel("shovel", 0)
+				.setHardness(Block.snow.getHardness())
+				.setResistance(Block.snow.getExplosionResistance(null))
+				.setStepSound(Block.soundGravelFootstep)
 		);
 		nukeNuclearCharge = helper.register("nukeNuclearCharge", id -> new BlockNuclearCharge(id)
 				.setHarvestLevel("pickaxe", 2)

@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.weapon;
 
+import dev.siepert.nuclearprogram.NuclearProgram;
 import net.minecraft.src.MapDataBase;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
@@ -55,8 +56,8 @@ public class WorldActiveExplosions extends MapDataBase {
 	public void tick0() {
 		this.setDirty(true);
 		for (BackendExplosionHandler batched : this.explosions) {
-			batched.cacheChunksTick(20);
-			batched.destructionTick(20);
+			batched.cacheChunksTick(NuclearProgram.EXPLOSION_MS_BUDGET);
+			batched.destructionTick(NuclearProgram.EXPLOSION_MS_BUDGET);
 		}
 
 		this.explosions.removeIf(BackendExplosionHandler::isComplete);
