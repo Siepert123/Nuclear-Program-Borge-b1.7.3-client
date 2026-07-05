@@ -8,7 +8,7 @@ import net.minecraftborge.loader.IconRegister;
 public class ItemBlockYanoDoor extends ItemBlock {
 	private final BlockYanoDoor block;
 	public ItemBlockYanoDoor(BlockYanoDoor block) {
-		super(block.blockID - 256);
+		super(block.blockID - 4096);
 		this.block = block;
 	}
 

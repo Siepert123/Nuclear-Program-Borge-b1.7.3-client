@@ -33,6 +33,9 @@ public class BlockInit {
 	public static BlockHatch hatch;
 	public static BlockSealedDoor sealedDoor;
 
+	public static BlockBloomery bloomeryIdle;
+	public static BlockBloomery bloomeryLit;
+
 	public static BlockNukestone nukestone;
 	public static BlockCharred charredWood;
 	public static BlockFallout fallout;
@@ -127,6 +130,19 @@ public class BlockInit {
 				.setHardness(10.0F)
 				.setResistance(512.0F)
 				.setStepSound(soundMetal2Footstep)
+		);
+
+		bloomeryIdle = helper.register("bloomery", id -> new BlockBloomery(id, false)
+				.setHarvestLevel("pickaxe", 0)
+				.setHardness(Block.brick.getHardness())
+				.setResistance(Block.brick.getExplosionResistance(null))
+				.setStepSound(Block.soundStoneFootstep)
+		);
+		bloomeryLit = helper.register("bloomery", id -> new BlockBloomery(id, true)
+				.setHarvestLevel("pickaxe", 0)
+				.setHardness(Block.brick.getHardness())
+				.setResistance(Block.brick.getExplosionResistance(null))
+				.setStepSound(Block.soundStoneFootstep)
 		);
 
 		nukestone = helper.register("nukestone", id -> new BlockNukestone(id)

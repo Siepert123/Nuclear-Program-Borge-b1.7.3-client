@@ -9,6 +9,8 @@ import dev.siepert.nuclearprogram.texturefx.TextureYanoizedFX;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
 import dev.siepert.nuclearprogram.world.entity.render.RenderHowitzerShell;
+import dev.siepert.nuclearprogram.world.particle.EntityGasFX;
+import dev.siepert.nuclearprogram.world.particle.ParticleTextures;
 import net.minecraft.client.Minecraft;
 import net.minecraftborge.loader.FurnaceRecipesFix;
 import net.minecraftborge.loader.TerrainIcon;
@@ -35,6 +37,7 @@ public class NuclearProgram implements IModLifecycleListener {
 		event.registerGUIFactory(NuclearProgramRemoteGUI.INSTANCE);
 		event.registerNetHandler(NuclearProgramNetHandler.register());
 
+		AchievementInit.register();
 		TagInit.registerBlockTags();
 		TagInit.registerItemTags();
 		WorldGenInit.register();
@@ -67,6 +70,17 @@ public class NuclearProgram implements IModLifecycleListener {
 				path("mask_IngotYanoizedKaupium.png"), 1.0F));
 		event.register(new TextureYanoizedFX((TerrainIcon) BlockInit.blockMetal.blockTextures[BlockMetal.YANOIZED_KAUPIUM],
 				path("mask_BlockYanoizedKaupium.png"), 1.0F));
+	}
+
+	@EventHandler
+	public static void registerAdditionalIcons(TerrainStitchEvent event) {
+		ParticleTextures.gas = event.registerIcon(path("particle/gas"), 16, 16);
+		for (int i = 0; i < 8; i++) {
+			ParticleTextures.generic[i] = event.registerIcon(path("particle/generic" + i), 16, 16);
+		}
+		for (int i = 0; i < 8; i++) {
+			ParticleTextures.effect[i] = event.registerIcon(path("particle/effect" + i), 16, 16);
+		}
 	}
 
 	@EventHandler

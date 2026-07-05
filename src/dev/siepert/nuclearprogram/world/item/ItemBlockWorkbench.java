@@ -7,7 +7,7 @@ import net.minecraft.src.ItemStack;
 
 public class ItemBlockWorkbench extends ItemBlock {
 	public ItemBlockWorkbench(BlockWorkbench block) {
-		super(block.blockID - 256);
+		super(block.blockID - 4096);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 	}

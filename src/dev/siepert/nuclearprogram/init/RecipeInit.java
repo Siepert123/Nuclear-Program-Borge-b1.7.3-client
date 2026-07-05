@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.init;
 
+import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
@@ -152,19 +153,30 @@ public class RecipeInit {
 	}
 
 	public static void workbench(WorkbenchRecipes recipes) {
-		recipes.addRecipe("hbm/test", WorkbenchRecipe.builder()
+		recipes.addRecipe(NuclearProgram.path("test"), WorkbenchRecipe.builder()
 				.setResult(new ItemStack(Item.diamond))
 				.addIngredient(Ingredient.of(Block.dirt.blockID), 5)
 				.build());
-		recipes.addRecipe("hbm/workbenchIron", WorkbenchRecipe.builder()
+		recipes.addRecipe(NuclearProgram.path("workbenchIron"), WorkbenchRecipe.builder()
 				.setResult(new ItemStack(BlockInit.workbench, 1, BlockWorkbench.IRON))
 				.addIngredient(Ingredient.of(Block.workbench.blockID), 1)
 				.addIngredient(Ingredient.of("ingotIron"), 10)
 				.build());
-		recipes.addRecipe("hbm/workbenchSteel", WorkbenchRecipe.builder()
+		recipes.addRecipe(NuclearProgram.path("workbenchSteel"), WorkbenchRecipe.builder()
 				.setResult(new ItemStack(BlockInit.workbench, 1, BlockWorkbench.STEEL))
 				.addIngredient(Ingredient.of(Block.workbench.blockID), 1)
 				.addIngredient(Ingredient.of("ingotSteel"), 10)
+				.build());
+
+		recipes.addRecipe(NuclearProgram.path("bloomery"), WorkbenchRecipe.builder()
+				.setResult(new ItemStack(BlockInit.bloomeryIdle))
+				.addIngredient(Ingredient.of(Block.brick.blockID), 16)
+				.build());
+		recipes.addRecipe(NuclearProgram.path("blastfurnace"), WorkbenchRecipe.builder()
+				.setResult(new ItemStack(BlockInit.bloomeryLit))
+				.addIngredient(Ingredient.of(BlockInit.firebricks.blockID), 16)
+				.addIngredient(Ingredient.of("ingotSteel"), 16)
+				.setTier(1)
 				.build());
 
 		recipes.addRecipe("hbm/valve", WorkbenchRecipe.builder()

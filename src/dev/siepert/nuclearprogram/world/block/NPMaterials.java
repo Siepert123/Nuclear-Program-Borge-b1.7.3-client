@@ -6,4 +6,5 @@ import net.minecraft.src.Material;
 public class NPMaterials {
 	public static final Material charred = new Material(MapColor.stoneColor);
 	public static final Material concrete = new Material(MapColor.stoneColor).setImmovableMobility().setRequiresCorrectTool();
+	public static final Material fallout = new Material(MapColor.snowColor).setIsTranslucent().setReplaceable().setNoPushMobility();
 }

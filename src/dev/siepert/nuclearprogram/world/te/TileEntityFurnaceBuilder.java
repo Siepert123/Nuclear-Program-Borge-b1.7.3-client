@@ -106,8 +106,10 @@ public class TileEntityFurnaceBuilder extends TileEntity implements IInventory, 
 							break pleb;
 						}
 
-						if (this.inventory[1].stackSize-- == 0) this.inventory[1] = null;
-
+						this.inventory[1].stackSize--;
+						if (this.inventory[1].stackSize <= 0) {
+							this.inventory[1] = null;
+						}
 					}
 				}
 			}

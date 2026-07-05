@@ -7,7 +7,7 @@ import net.minecraft.src.ItemStack;
 
 public class ItemBlockMetalOre extends ItemBlock {
 	public ItemBlockMetalOre(BlockMetalOre block) {
-		super(block.blockID - 256);
+		super(block.blockID - 4096);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 	}

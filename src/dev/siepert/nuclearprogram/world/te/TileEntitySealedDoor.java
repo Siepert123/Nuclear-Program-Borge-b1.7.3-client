@@ -2,8 +2,9 @@ package dev.siepert.nuclearprogram.world.te;
 
 import net.minecraft.src.TileEntity;
 import net.minecraftborge.loader.BorgeMath;
+import net.minecraftborge.loader.ITickingTile;
 
-public class TileEntitySealedDoor extends TileEntity {
+public class TileEntitySealedDoor extends TileEntity implements ITickingTile {
 	public static final int DOOR_TRANSITION_TICKS = 40;
 	public static final int DOOR_UNSCREW_TICKS = 65;
 	public TileEntitySealedDoor() {

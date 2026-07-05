@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class BlockFallout extends Block {
 	public BlockFallout(int blockID) {
-		super(blockID, Material.snow);
+		super(blockID, NPMaterials.fallout);
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 2.0F / 16.0F, 1.0F);
 	}
 

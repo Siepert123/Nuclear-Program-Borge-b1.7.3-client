@@ -17,9 +17,12 @@ import net.minecraftborge.loader.event.Event;
 import net.minecraftborge.loader.event.EventBusSubscriber;
 import net.minecraftborge.loader.event.EventHandler;
 import net.minecraftborge.loader.event.entity.EntityDropLootEvent;
+import net.minecraftborge.loader.event.entity.player.PlayerCreateItemEvent;
 import net.minecraftborge.loader.event.entity.player.PlayerTickEvent;
 import net.minecraftborge.loader.event.gui.RenderOverlayGuiEvent;
 import net.minecraftborge.loader.event.misc.ChatCommandEvent;
+import net.minecraftborge.loader.event.misc.FurnaceBurnTimeEvent;
+import net.minecraftborge.loader.event.register.TerrainStitchEvent;
 import net.minecraftborge.loader.event.render.GetFOVModifierEvent;
 import net.minecraftborge.loader.event.render.GetFogColorEvent;
 import net.minecraftborge.loader.event.render.RenderRainSnowEvent;
@@ -37,6 +40,24 @@ public class EventHandlers {
 	@EventHandler
 	public static void worldChanged(ChangeWorldEvent event) {
 		NuclearProgramWorldAccess.INSTANCE.setWorld(event.getWorld());
+		SaveHandlerHook.set(event.getWorld());
+		if (event.getWorld() == null) {
+			WorldActiveExplosions.cache = null;
+			WorldFalloutClouds.cache = null;
+		} else {
+			WorldActiveExplosions.cache = WorldActiveExplosions.get(event.getWorld());
+			WorldActiveExplosions.cache.setWorld(event.getWorld());
+
+			WorldFalloutClouds.cache = WorldFalloutClouds.get(event.getWorld());
+		}
+	}
+
+	@EventHandler
+	public static void getItemBurnTime(FurnaceBurnTimeEvent event) {
+		if (event.isCanceled()) return;
+		int itemID = event.getStack().itemID;
+		if (itemID == ItemInit.cokeCoal.shiftedIndex) event.setBurnTime(3200);
+		if (itemID == ItemInit.cokePetroleum.shiftedIndex) event.setBurnTime(3200);
 	}
 
 	private static double parsePosition(String string, double offset) {
@@ -49,7 +70,6 @@ public class EventHandlers {
 		double pos = Double.parseDouble(string);
 		return pos + o;
 	}
-
 	@EventHandler
 	public static void processCommand(ChatCommandEvent event) {
 		if (event.isCanceled()) return;
@@ -80,9 +100,9 @@ public class EventHandlers {
 				world.playEvent(sender, eventID, x, y, z, data);
 				return;
 			}
-			if (cmd.startsWith("/goon ")) {
+			if (cmd.startsWith("/goon1")) {
 				event.setCanceled(true);
-				String[] params = cmd.substring("/goon ".length()).trim().split(" ");
+				String[] params = cmd.substring("/goon1".length()).trim().split(" ");
 				if (params.length < 3) {
 					event.sendStatus("Invalid 'xyz' arguments");
 					return;
@@ -125,7 +145,13 @@ public class EventHandlers {
 				return;
 			}
 			if (cmd.startsWith("/goon2")) {
+				event.setCanceled(true);
 				BackendExplosionHandler.shockwaveTicks = 80;
+				return;
+			}
+			if (cmd.startsWith("/goon3")) {
+				event.setCanceled(true);
+				world.spawnParticle("nuclear_program/pollution", sender.posX, sender.posY, sender.posZ, 0, 0, 0);
 				return;
 			}
 			Nothing.none();
@@ -144,16 +170,17 @@ public class EventHandlers {
 	}
 
 	@EventHandler
-	public static void changeWorld(ChangeWorldEvent event) {
-		SaveHandlerHook.set(event.getWorld());
-		if (event.getWorld() == null) {
-			WorldActiveExplosions.cache = null;
-			WorldFalloutClouds.cache = null;
-		} else {
-			WorldActiveExplosions.cache = WorldActiveExplosions.get(event.getWorld());
-			WorldActiveExplosions.cache.setWorld(event.getWorld());
+	public static void playerCraftItem(PlayerCreateItemEvent event) {
+		EntityPlayer player = event.getEntity();
+		ItemStack stack = event.getStack();
+		if (player == null || stack == null) return;
 
-			WorldFalloutClouds.cache = WorldFalloutClouds.get(event.getWorld());
+		int itemID = stack.itemID;
+		int metadata = stack.getItemDamage();
+		int count = stack.stackSize;
+
+		if (itemID == BlockInit.concrete.blockID) {
+			player.triggerAchievement(AchievementInit.instance.concrete);
 		}
 	}
 

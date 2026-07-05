@@ -10,6 +10,8 @@ import net.minecraftborge.loader.event.register.IdAllocationEvent;
 import java.util.function.IntFunction;
 
 public class ItemInit {
+	public static Item cokeCoal;
+	public static Item cokePetroleum;
 	public static Item ingotCopper;
 	public static Item ingotAluminium;
 	public static Item ingotLead;
@@ -38,6 +40,8 @@ public class ItemInit {
 	public static void register(IdAllocationEvent<Item> event) {
 		Helper helper = new Helper(NuclearProgram.MODID, event);
 
+		cokeCoal = helper.register("cokeCoal");
+		cokePetroleum = helper.register("cokePetroleum");
 		ingotCopper = helper.register("ingotCopper");
 		ingotAluminium = helper.register("ingotAluminium");
 		ingotLead = helper.register("ingotLead");

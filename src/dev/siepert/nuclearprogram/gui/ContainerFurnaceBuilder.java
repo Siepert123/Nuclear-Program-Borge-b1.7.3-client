@@ -14,7 +14,7 @@ public class ContainerFurnaceBuilder extends Container {
 		this.furnace = furnace;
 		this.addSlot(new Slot(furnace, 0, 56, 17));
 		this.addSlot(new Slot(furnace, 1, 56, 53));
-		this.addSlot(new SlotFurnace(inventory.player, furnace, 2, 116, 35));
+		this.addSlot(new SlotFurnaceBuilder(inventory.player, furnace, 2, 116, 35));
 
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 9; ++j) {

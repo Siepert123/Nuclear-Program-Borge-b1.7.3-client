@@ -1,6 +1,7 @@
 package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
+import dev.siepert.nuclearprogram.world.te.TileEntityBloomery;
 import dev.siepert.nuclearprogram.world.te.TileEntityFurnaceBuilder;
 import dev.siepert.nuclearprogram.world.te.TileEntityHatch;
 import dev.siepert.nuclearprogram.world.te.TileEntitySealedDoor;
@@ -19,5 +20,7 @@ public class TileEntityInit {
 
 		TileEntity.addMapping(TileEntitySealedDoor.class, NuclearProgram.MODID + "/sealedDoor");
 		TileEntityRenderer.instance.addRenderer(TileEntitySealedDoor.class, RenderSealedDoor.INSTANCE);
+
+		TileEntity.addMapping(TileEntityBloomery.class, NuclearProgram.path("bloomery"));
 	}
 }

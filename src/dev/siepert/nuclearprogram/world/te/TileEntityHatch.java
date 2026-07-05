@@ -2,10 +2,11 @@ package dev.siepert.nuclearprogram.world.te;
 
 import net.minecraft.src.TileEntity;
 import net.minecraftborge.loader.BorgeMath;
+import net.minecraftborge.loader.ITickingTile;
 
 import java.util.Random;
 
-public class TileEntityHatch extends TileEntity {
+public class TileEntityHatch extends TileEntity implements ITickingTile {
 	public static final int HATCH_VALVE_OPEN_TICKS = 50;
 	public static final int HATCH_TURN_OPEN_TICKS = 27;
 	public static final int HATCH_TURN_CLOSE_TICKS = 23;

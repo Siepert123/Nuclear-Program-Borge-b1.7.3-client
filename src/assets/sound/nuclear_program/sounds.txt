@@ -10,6 +10,12 @@ block/yanoDoor1.ogg
 block/yanoDoor2.ogg
 block/yanoDoor3.ogg
 
+random/blastfurnace1.ogg
+random/blastfurnace2.ogg
+random/blastfurnace3.ogg
+random/blastfurnace4.ogg
+random/blastfurnace5.ogg
+
 step/metalStep1.ogg
 step/metalStep2.ogg
 step/metalStep3.ogg

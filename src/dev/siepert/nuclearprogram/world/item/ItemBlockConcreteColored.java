@@ -8,7 +8,7 @@ import net.minecraftborge.loader.DyeHelper;
 public class ItemBlockConcreteColored extends ItemBlock {
 	private final BlockConcreteColored block;
 	public ItemBlockConcreteColored(BlockConcreteColored block) {
-		super(block.blockID - 256);
+		super(block.blockID - 4096);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 		this.block = block;
