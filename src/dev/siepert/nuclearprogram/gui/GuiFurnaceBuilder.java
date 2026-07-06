@@ -32,7 +32,7 @@ public class GuiFurnaceBuilder extends GuiContainer {
 			this.drawTexturedModalRect(x + 79, y + 34, 176, 14, scaled + 1, 16);
 		}
 
-		this.fontRenderer.drawString(this.furnace.getInvName(), x + (this.ySize / 2) - (this.fontRenderer.getStringWidth(this.furnace.getInvName()) / 2), y + 6, 0x404040);
+		this.fontRenderer.drawString(this.furnace.getInvName(), x + (this.xSize / 2) - (this.fontRenderer.getStringWidth(this.furnace.getInvName()) / 2), y + 6, 0x404040);
 		this.fontRenderer.drawString("Inventory", x + 8, y + this.ySize - 96 + 2, 0x404040);
 	}
 }

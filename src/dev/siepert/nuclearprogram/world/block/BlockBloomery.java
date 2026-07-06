@@ -1,7 +1,9 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.gui.GuiBloomery;
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.world.te.TileEntityBloomery;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.ContainerUtil;
 import net.minecraftborge.loader.Icon;
@@ -66,6 +68,16 @@ public class BlockBloomery extends BlockContainer {
 	public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
 		if (side == Side.DOWN && this.renderPass > 0) return false;
 		return super.shouldSideBeRendered(world, x, y, z, side);
+	}
+
+	@Override
+	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
+		if (player.isSneaking() && player.inventory.getCurrentItem() != null) return false;
+		if (!world.multiplayerWorld && player instanceof EntityPlayerSP) {
+			TileEntityBloomery te = (TileEntityBloomery) world.getBlockTileEntity(x, y, z);
+			Minecraft.getTheMinecraft().displayGuiScreen(new GuiBloomery(player.inventory, te));
+		}
+		return true;
 	}
 
 	public static void updateFurnaceBlockState(World world, int x, int y, int z, boolean lit) {

@@ -1,6 +1,7 @@
 package dev.siepert.nuclearprogram.world.te;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
+import dev.siepert.nuclearprogram.init.ItemInit;
 import dev.siepert.nuclearprogram.world.block.BlockBloomery;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.IFurnace;
@@ -9,7 +10,12 @@ import net.minecraftborge.loader.ITickingTile;
 import java.util.Arrays;
 
 public class TileEntityBloomery extends TileEntity implements IInventory, IFurnace, ITickingTile {
-	private final ItemStack[] inventory = new ItemStack[4];
+	private final ItemStack[] inventory = new ItemStack[4]; // 0 - fuel; 1 - iron ore; 2 - result; 3 - slag
+	public int fuelHeap = 0;
+	public int recipeTicks = 0;
+	public static final int COAL_TICKS = 100;
+	public static final int RECIPE_TICKS = 500;
+	public static final int MAX_FUEL_HEAP = RECIPE_TICKS * 8;
 
 	@Override
 	public int getSizeInventory() {
@@ -63,16 +69,60 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 		return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) == this;
 	}
 
-	private int pipeLength = 0;
+	public int pipeLength = 0;
 	private boolean fx = true;
 	@Override
 	public void updateEntity() {
-		if (this.pipeLength > 0 && (this.fx = !this.fx)) {
+		boolean couldSmelt = this.canSmelt();
+
+		if ((this.fx = !this.fx) && couldSmelt && this.getBlockType() == BlockInit.bloomeryLit) {
 			this.worldObj.spawnParticle("nuclear_program/pollution",
 					this.xCoord + 0.5, this.yCoord + this.pipeLength + 0.875, this.zCoord + 0.5,
 					0.25, 0.0, 0.0
 			);
 		}
+
+		boolean update = false;
+		if (!this.worldObj.multiplayerWorld) {
+			if (this.fuelHeap + COAL_TICKS <= MAX_FUEL_HEAP) {
+				if (this.inventory[0] != null && this.inventory[0].itemID == Item.coal.shiftedIndex) {
+					this.inventory[0].stackSize--;
+					if (this.inventory[0].stackSize <= 0) this.inventory[0] = null;
+					this.fuelHeap += COAL_TICKS;
+					update = true;
+				}
+			}
+
+			boolean wasHot = this.recipeTicks > 0;
+			if (this.canSmelt()) {
+				update = true;
+				this.fuelHeap--;
+				if (this.recipeTicks++ >= RECIPE_TICKS) {
+					this.inventory[1].stackSize--;
+					if (this.inventory[1].stackSize == 0) this.inventory[1] = null;
+
+					if (this.inventory[2] == null) this.inventory[2] = new ItemStack(ItemInit.ingotSteel);
+					else this.inventory[2].stackSize++;
+					if (this.inventory[3] == null) this.inventory[3] = new ItemStack(Block.gravel);
+					else this.inventory[3].stackSize++;
+				}
+			} else if (this.recipeTicks > 0) {
+				this.recipeTicks--;
+			}
+
+			if (wasHot != this.recipeTicks > 0) {
+				BlockBloomery.updateFurnaceBlockState(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.recipeTicks > 0);
+			}
+		}
+		if (update) this.onInventoryChanged();
+	}
+
+	private boolean canSmelt() {
+		if (this.pipeLength == 0) return false;
+		if (this.fuelHeap == 0) return false;
+		return (this.inventory[2] == null || this.inventory[2].stackSize < this.getInventoryStackLimit())
+				&& (this.inventory[3] == null || this.inventory[3].stackSize < this.getInventoryStackLimit())
+				&& (this.inventory[1] != null && this.inventory[1].itemID == Block.oreIron.blockID);
 	}
 
 	public void updatePipeLen() {

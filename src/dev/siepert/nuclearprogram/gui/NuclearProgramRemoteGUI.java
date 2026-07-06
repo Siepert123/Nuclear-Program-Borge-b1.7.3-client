@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.gui;
 
+import dev.siepert.nuclearprogram.world.te.TileEntityBloomery;
 import dev.siepert.nuclearprogram.world.te.TileEntityFurnaceBuilder;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiContainer;
@@ -19,6 +20,8 @@ public enum NuclearProgramRemoteGUI implements IModGUIFactory {
 				return new GuiWorkbench(player.inventory, player.worldObj, this.reader.readInt(), this.reader.readUnsignedByte(), this.reader.readInt());
 			case 1:
 				return new GuiFurnaceBuilder(player.inventory, new TileEntityFurnaceBuilder());
+			case 2:
+				return new GuiBloomery(player.inventory, new TileEntityBloomery());
 			default:
 				return null;
 		}

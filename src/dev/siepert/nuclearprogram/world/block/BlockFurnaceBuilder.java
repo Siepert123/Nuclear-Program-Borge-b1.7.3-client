@@ -79,7 +79,7 @@ public class BlockFurnaceBuilder extends BlockContainer {
 
 	@Override
 	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
-		if (player.isSneaking()) return false;
+		if (player.isSneaking() && player.inventory.getCurrentItem() != null) return false;
 		if (!world.multiplayerWorld && player instanceof EntityPlayerSP) {
 			TileEntityFurnaceBuilder te = (TileEntityFurnaceBuilder) world.getBlockTileEntity(x, y, z);
 			Minecraft.getTheMinecraft().displayGuiScreen(new GuiFurnaceBuilder(player.inventory, te));
