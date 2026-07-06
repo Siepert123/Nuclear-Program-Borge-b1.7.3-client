@@ -1,6 +1,7 @@
 package dev.siepert.nuclearprogram.world.te;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
+import dev.siepert.nuclearprogram.world.block.BlockBloomery;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.IFurnace;
 import net.minecraftborge.loader.ITickingTile;
@@ -62,14 +63,27 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 		return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) == this;
 	}
 
+	private int pipeLength = 0;
 	private boolean fx = true;
 	@Override
 	public void updateEntity() {
-		if (this.getBlockType() == BlockInit.bloomeryLit && (this.fx = !this.fx)) {
+		if (this.pipeLength > 0 && (this.fx = !this.fx)) {
 			this.worldObj.spawnParticle("nuclear_program/pollution",
-					this.xCoord + 0.5, this.yCoord + 2.875, this.zCoord + 0.5,
+					this.xCoord + 0.5, this.yCoord + this.pipeLength + 0.875, this.zCoord + 0.5,
 					0.25, 0.0, 0.0
 			);
+		}
+	}
+
+	public void updatePipeLen() {
+		int old = this.pipeLength;
+
+		int y = 1;
+		while (this.worldObj.getBlockId(this.xCoord, this.yCoord + y, this.zCoord) == BlockInit.bloomeryPipe.blockID) y++;
+		this.pipeLength = y - 1;
+
+		if (old != this.pipeLength) {
+			BlockBloomery.updateFurnaceBlockState(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.pipeLength > 0);
 		}
 	}
 
@@ -90,6 +104,8 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 				this.inventory[slot] = new ItemStack(compound);
 			}
 		}
+
+		this.pipeLength = nbt.getShort("pipeLen");
 	}
 
 	@Override
@@ -106,6 +122,8 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 			}
 		}
 		nbt.setTag("Inventory", items);
+
+		nbt.setShort("pipeLen", (short) this.pipeLength);
 	}
 
 	@Override

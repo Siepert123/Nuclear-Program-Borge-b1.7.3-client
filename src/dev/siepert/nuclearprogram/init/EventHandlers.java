@@ -182,6 +182,9 @@ public class EventHandlers {
 		if (itemID == BlockInit.concrete.blockID) {
 			player.triggerAchievement(AchievementInit.instance.concrete);
 		}
+		if (itemID == BlockInit.bloomeryIdle.blockID) {
+			player.triggerAchievement(AchievementInit.instance.bloomery);
+		}
 	}
 
 	@EventHandler

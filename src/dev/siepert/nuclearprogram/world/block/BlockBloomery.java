@@ -1,7 +1,6 @@
 package dev.siepert.nuclearprogram.world.block;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
-import dev.siepert.nuclearprogram.world.block.render.RenderBlockBloomery;
 import dev.siepert.nuclearprogram.world.te.TileEntityBloomery;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.ContainerUtil;
@@ -110,6 +109,14 @@ public class BlockBloomery extends BlockContainer {
 	}
 
 	@Override
+	public void onBlockAdded(World world, int x, int y, int z) {
+		super.onBlockAdded(world, x, y, z);
+		if (!keepFurnaceInventory) {
+			this.notifyPipeUpdate(world, x, y, z);
+		}
+	}
+
+	@Override
 	public void onBlockRemoval(World world, int x, int y, int z) {
 		if (!keepFurnaceInventory) {
 			IInventory te = (IInventory) world.getBlockTileEntity(x, y, z);
@@ -149,12 +156,14 @@ public class BlockBloomery extends BlockContainer {
 	}
 
 	@Override
-	public int getRenderType() {
-		return RenderBlockBloomery.RENDER_TYPE;
-	}
-
-	@Override
 	public int idDropped(int meta, Random random) {
 		return BlockInit.bloomeryIdle.blockID;
+	}
+
+	public void notifyPipeUpdate(World world, int x, int y, int z) {
+		TileEntityBloomery te = (TileEntityBloomery) world.getBlockTileEntity(x, y, z);
+		if (te != null) {
+			te.updatePipeLen();
+		}
 	}
 }

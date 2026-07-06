@@ -5,6 +5,8 @@ import net.minecraft.src.ItemBlock;
 import net.minecraft.src.ItemStack;
 import net.minecraftborge.loader.DyeHelper;
 
+import java.util.Collection;
+
 public class ItemBlockConcreteColored extends ItemBlock {
 	private final BlockConcreteColored block;
 	public ItemBlockConcreteColored(BlockConcreteColored block) {
@@ -22,5 +24,10 @@ public class ItemBlockConcreteColored extends ItemBlock {
 	@Override
 	public String getItemNameIS(ItemStack stack) {
 		return this.block.getBlockName() + DyeHelper.COLOR_NAMES[stack.getItemDamage()];
+	}
+
+	@Override
+	public void getSubItems(Collection<ItemStack> items) {
+		for (int i = 0; i < 16; i++) items.add(new ItemStack(this, 1, i));
 	}
 }

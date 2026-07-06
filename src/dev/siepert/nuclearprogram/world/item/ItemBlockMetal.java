@@ -5,6 +5,8 @@ import dev.siepert.nuclearprogram.world.block.BlockMetal;
 import net.minecraft.src.ItemBlock;
 import net.minecraft.src.ItemStack;
 
+import java.util.Collection;
+
 public class ItemBlockMetal extends ItemBlock {
 	public ItemBlockMetal(BlockMetal block) {
 		super(block.blockID - 4096);
@@ -20,5 +22,10 @@ public class ItemBlockMetal extends ItemBlock {
 	@Override
 	public String getItemNameIS(ItemStack stack) {
 		return "tile." + NuclearProgram.MODID + "/block" + BlockMetal.VARIANTS[stack.getItemDamage()];
+	}
+
+	@Override
+	public void getSubItems(Collection<ItemStack> items) {
+		for (int i = 0; i < BlockMetal.VARIANTS.length; i++) items.add(new ItemStack(this, 1, i));
 	}
 }

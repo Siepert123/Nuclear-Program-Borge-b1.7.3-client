@@ -1,5 +1,7 @@
 package dev.siepert.nuclearprogram;
 
+import dev.objlib.api.IObjModelFactory;
+import dev.siepert.nuclearprogram.gui.LoadingScreenRendererHints;
 import dev.siepert.nuclearprogram.gui.NuclearProgramRemoteGUI;
 import dev.siepert.nuclearprogram.init.*;
 import dev.siepert.nuclearprogram.network.NuclearProgramNetHandler;
@@ -9,25 +11,43 @@ import dev.siepert.nuclearprogram.texturefx.TextureYanoizedFX;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
 import dev.siepert.nuclearprogram.world.entity.render.RenderHowitzerShell;
-import dev.siepert.nuclearprogram.world.particle.EntityGasFX;
 import dev.siepert.nuclearprogram.world.particle.ParticleTextures;
 import net.minecraft.client.Minecraft;
 import net.minecraftborge.loader.FurnaceRecipesFix;
+import net.minecraftborge.loader.ModList;
 import net.minecraftborge.loader.TerrainIcon;
 import net.minecraftborge.loader.event.EventBusSubscriber;
 import net.minecraftborge.loader.event.EventHandler;
 import net.minecraftborge.loader.event.IModLifecycleListener;
 import net.minecraftborge.loader.event.lifecycle.ModInitializationEvent;
+import net.minecraftborge.loader.event.lifecycle.ModPostInitializationEvent;
+import net.minecraftborge.loader.event.lifecycle.ModPreInitializationEvent;
 import net.minecraftborge.loader.event.misc.ReplaceSimilarBlocksEvent;
 import net.minecraftborge.loader.event.register.*;
 
 @EventBusSubscriber(NuclearProgram.MODID)
 public class NuclearProgram implements IModLifecycleListener {
 	public static final int EXPLOSION_MS_BUDGET = 20;
-	public static final Minecraft mc = Minecraft.getTheMinecraft();
 	public static final String MODID = "nuclear_program";
 	public static String path(String path) {
 		return MODID + "/" + path;
+	}
+
+	public static IObjModelFactory OBJ_FACTORY;
+
+	@Override
+	public void modPreInit(ModPreInitializationEvent event) {
+		IObjModelFactory factory = null;
+		try {
+			if (ModList.get().getLoadedMods().contains("objlib")) {
+				factory = (IObjModelFactory) Class.forName("dev.objlib.OBJModelFactoryImpl").newInstance();
+			} else {
+				System.err.println("OBJ Library not present!");
+			}
+		} catch (Throwable e) {
+			System.err.println("Failed to detect OBJ Library: " + e);
+		}
+		OBJ_FACTORY = factory;
 	}
 
 	@Override
@@ -42,6 +62,12 @@ public class NuclearProgram implements IModLifecycleListener {
 		TagInit.registerItemTags();
 		WorldGenInit.register();
 		EntityInit.register();
+	}
+
+	@Override
+	public void modPostInit(ModPostInitializationEvent event) {
+		Minecraft mc = Minecraft.getTheMinecraft();
+		mc.loadingScreen = new LoadingScreenRendererHints(mc);
 	}
 
 	@EventHandler
@@ -74,7 +100,6 @@ public class NuclearProgram implements IModLifecycleListener {
 
 	@EventHandler
 	public static void registerAdditionalIcons(TerrainStitchEvent event) {
-		ParticleTextures.gas = event.registerIcon(path("particle/gas"), 16, 16);
 		for (int i = 0; i < 8; i++) {
 			ParticleTextures.generic[i] = event.registerIcon(path("particle/generic" + i), 16, 16);
 		}

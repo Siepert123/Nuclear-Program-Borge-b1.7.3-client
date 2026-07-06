@@ -74,12 +74,12 @@ public class GuiWorkbench extends GuiContainer {
 		if ((this.page * 2) + 10 >= this.recipeSlotMapping.size()) {
 			this.drawTexturedModalRect(x + 105, y + 24, 182, 0, 6, 36);
 		}
-		if (this.selectedRecipeSlot == -1) {
+		if (this.selectedRecipeSlot != -1) {
 			this.drawTexturedModalRect(x + 50, y + 61, 188, 0, 18, 18);
 			int i = this.selectedRecipeSlot - this.page * 2;
 			if (i >= 0 && i < 10) {
-				int slotX = 14 + (i / 2) * 18 + 1;
-				int slotY = 24 + (i & 1) * 18 + 1;
+				int slotX = 14 + (i / 2) * 18;
+				int slotY = 24 + (i & 1) * 18;
 				this.drawTexturedModalRect(x + slotX, y + slotY, 188, 18, 18, 18);
 			}
 		}
@@ -94,7 +94,7 @@ public class GuiWorkbench extends GuiContainer {
 		}
 
 		GL11.glDisable(GL11.GL_BLEND);
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		//GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		RenderHelper.enableStandardItemLighting();
 		for (int i = 0; i < 10; i++) {
 			WorkbenchRecipe recipe = this.cachedDisplayRecipes[i];

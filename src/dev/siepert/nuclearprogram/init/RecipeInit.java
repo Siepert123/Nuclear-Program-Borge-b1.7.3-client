@@ -5,6 +5,7 @@ import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
+import dev.siepert.nuclearprogram.world.block.BlockMetalOre;
 import dev.siepert.nuclearprogram.world.block.BlockWorkbench;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
@@ -139,6 +140,11 @@ public class RecipeInit {
 				'#', Ingredient.of("stone"),
 				'X', Ingredient.of(Block.stairSingle.blockID, 0)
 		);
+		recipes.addShapedRecipe(new ItemStack(BlockInit.bloomeryPipe),
+				"#X#", "#X#", "#X#",
+				'#', Block.brick,
+				'X', Ingredient.of("plateCopper")
+		);
 
 		recipes.addShapedRecipe(new ItemStack(BlockInit.hatch),
 				" X ", "###", " X ",
@@ -150,6 +156,11 @@ public class RecipeInit {
 	public static void furnace(FurnaceRecipesFix recipes) {
 		recipes.addSmelting(ItemInit.ballFireclay.shiftedIndex, new ItemStack(ItemInit.firebrick, 1));
 		recipes.addSmelting(ItemInit.potato.shiftedIndex, new ItemStack(ItemInit.potatoCooked, 1));
+
+		recipes.addSmelting(BlockInit.oreMetal.blockID, BlockMetalOre.COPPER, new ItemStack(ItemInit.ingotCopper, 1), 200);
+		recipes.addSmelting(BlockInit.oreMetal.blockID, BlockMetalOre.LEAD, new ItemStack(ItemInit.ingotLead, 1), 200);
+		recipes.addSmelting(BlockInit.oreMetal.blockID, BlockMetalOre.TITANIUM, new ItemStack(ItemInit.ingotTitanium, 1), 200);
+		recipes.addSmelting(BlockInit.oreMetal.blockID, BlockMetalOre.TUNGSTEN, new ItemStack(ItemInit.ingotTungsten, 1), 200);
 	}
 
 	public static void workbench(WorkbenchRecipes recipes) {

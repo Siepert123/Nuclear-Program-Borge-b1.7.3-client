@@ -88,7 +88,9 @@ public final class WorkbenchRecipe {
 			Random rnd = new Random();
 			for (ChancedStack stack : this.results()) {
 				if (stack.chance == 1.0F || rnd.nextFloat() < stack.chance) {
-					inventory.addItemStackToInventory(stack.stack.copy());
+					ItemStack result = stack.stack.copy();
+					inventory.addItemStackToInventory(result);
+					result.onCrafting(player.worldObj, player);
 				}
 			}
 

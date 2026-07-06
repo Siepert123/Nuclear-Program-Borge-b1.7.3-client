@@ -35,6 +35,7 @@ public class BlockInit {
 
 	public static BlockBloomery bloomeryIdle;
 	public static BlockBloomery bloomeryLit;
+	public static BlockBloomeryPipe bloomeryPipe;
 
 	public static BlockNukestone nukestone;
 	public static BlockCharred charredWood;
@@ -139,6 +140,12 @@ public class BlockInit {
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		bloomeryLit = helper.register("bloomery", id -> new BlockBloomery(id, true)
+				.setHarvestLevel("pickaxe", 0)
+				.setHardness(Block.brick.getHardness())
+				.setResistance(Block.brick.getExplosionResistance(null))
+				.setStepSound(Block.soundStoneFootstep)
+		);
+		bloomeryPipe = helper.register("bloomeryPipe", id -> new BlockBloomeryPipe(id)
 				.setHarvestLevel("pickaxe", 0)
 				.setHardness(Block.brick.getHardness())
 				.setResistance(Block.brick.getExplosionResistance(null))
