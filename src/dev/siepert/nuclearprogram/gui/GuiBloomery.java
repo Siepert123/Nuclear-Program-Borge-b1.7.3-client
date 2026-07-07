@@ -30,7 +30,11 @@ public class GuiBloomery extends GuiContainer {
 
 		if (this.furnace.fuelHeap > 0) {
 			int scaled = this.furnace.fuelHeap * 14 / (TileEntityBloomery.MAX_FUEL_HEAP+1) + 1;
-			this.drawTexturedModalRect(x+74, y+39+(14-scaled), 176, (this.furnace.recipeTicks > 0 ? 36 : 22), 28, scaled);
+			this.drawTexturedModalRect(x+74, y+39+(14-scaled), 176, (this.furnace.visuallyBurning() ? 36 : 22), 28, scaled);
+		}
+		if (this.furnace.recipeTicks > 0) {
+			int scaled = this.furnace.recipeTicks * 22 / (TileEntityBloomery.RECIPE_TICKS);
+			this.drawTexturedModalRect(x+97, y+12, 208, 0, scaled, 16);
 		}
 
 		this.drawTexturedModalRect(x+72, y+33, 176, 0, 32, 22);

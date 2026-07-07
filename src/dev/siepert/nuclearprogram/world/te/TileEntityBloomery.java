@@ -13,6 +13,7 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 	private final ItemStack[] inventory = new ItemStack[4]; // 0 - fuel; 1 - iron ore; 2 - result; 3 - slag
 	public int fuelHeap = 0;
 	public int recipeTicks = 0;
+	public int cooldown = 0;
 	public static final int COAL_TICKS = 100;
 	public static final int RECIPE_TICKS = 500;
 	public static final int MAX_FUEL_HEAP = RECIPE_TICKS * 8;
@@ -73,9 +74,7 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 	private boolean fx = true;
 	@Override
 	public void updateEntity() {
-		boolean couldSmelt = this.canSmelt();
-
-		if ((this.fx = !this.fx) && couldSmelt && this.getBlockType() == BlockInit.bloomeryLit) {
+		if ((this.fx = !this.fx) && this.visuallyBurning()) {
 			this.worldObj.spawnParticle("nuclear_program/pollution",
 					this.xCoord + 0.5, this.yCoord + this.pipeLength + 0.875, this.zCoord + 0.5,
 					0.25, 0.0, 0.0
@@ -93,11 +92,14 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 				}
 			}
 
-			boolean wasHot = this.recipeTicks > 0;
+			boolean wasHot = this.visuallyBurning();
 			if (this.canSmelt()) {
 				update = true;
+				this.cooldown = 3;
 				this.fuelHeap--;
 				if (this.recipeTicks++ >= RECIPE_TICKS) {
+					this.recipeTicks = 0;
+
 					this.inventory[1].stackSize--;
 					if (this.inventory[1].stackSize == 0) this.inventory[1] = null;
 
@@ -107,16 +109,23 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 					else this.inventory[3].stackSize++;
 				}
 			} else if (this.recipeTicks > 0) {
+				update = true;
 				this.recipeTicks--;
+			} else if (this.cooldown > 0) {
+				update = true;
+				this.cooldown--;
 			}
 
-			if (wasHot != this.recipeTicks > 0) {
-				BlockBloomery.updateFurnaceBlockState(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.recipeTicks > 0);
+			if (wasHot != this.visuallyBurning()) {
+				BlockBloomery.updateFurnaceBlockState(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.visuallyBurning());
 			}
 		}
 		if (update) this.onInventoryChanged();
 	}
 
+	public boolean visuallyBurning() {
+		return this.recipeTicks > 0 || this.cooldown > 0;
+	}
 	private boolean canSmelt() {
 		if (this.pipeLength == 0) return false;
 		if (this.fuelHeap == 0) return false;
@@ -126,15 +135,9 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 	}
 
 	public void updatePipeLen() {
-		int old = this.pipeLength;
-
 		int y = 1;
 		while (this.worldObj.getBlockId(this.xCoord, this.yCoord + y, this.zCoord) == BlockInit.bloomeryPipe.blockID) y++;
 		this.pipeLength = y - 1;
-
-		if (old != this.pipeLength) {
-			BlockBloomery.updateFurnaceBlockState(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.pipeLength > 0);
-		}
 	}
 
 	public int getBurnTime(ItemStack stack) {
@@ -156,6 +159,9 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 		}
 
 		this.pipeLength = nbt.getShort("pipeLen");
+		this.fuelHeap = nbt.getInteger("fuelHeap");
+		this.recipeTicks = nbt.getShort("recipeTicks");
+		this.cooldown = nbt.getByte("cooldown");
 	}
 
 	@Override
@@ -174,6 +180,9 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 		nbt.setTag("Inventory", items);
 
 		nbt.setShort("pipeLen", (short) this.pipeLength);
+		nbt.setInteger("fuelHeap", this.fuelHeap);
+		nbt.setShort("recipeTicks", (short) this.recipeTicks);
+		nbt.setByte("cooldown", (byte) this.cooldown);
 	}
 
 	@Override
