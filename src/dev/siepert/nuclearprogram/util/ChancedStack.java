@@ -10,4 +10,11 @@ public class ChancedStack {
 		this.stack = stack;
 		this.chance = chance;
 	}
+
+	public ItemStack stack() {
+		return this.stack;
+	}
+	public float chance() {
+		return this.chance;
+	}
 }
