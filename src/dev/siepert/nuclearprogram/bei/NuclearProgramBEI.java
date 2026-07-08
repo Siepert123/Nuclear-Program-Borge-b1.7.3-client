@@ -14,6 +14,7 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.StringTranslate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 	public void registerCategories(ICategoryRegistration registration) {
 		registration.registerCategory(NuclearProgram.path("smeltingBuilder"), new RecipeCategoryFurnaceBuilder());
 		registration.registerCategory(NuclearProgram.path("workbench"), new RecipeCategoryWorkbench());
+		registration.registerCategory(NuclearProgram.path("bloomery"), new RecipeCategoryBloomery());
 	}
 
 	@Override
@@ -54,6 +56,9 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		List<WorkbenchRecipe> workbenchRecipes = new ArrayList<>(WorkbenchRecipes.crafting().getRecipeList());
 		registration.addRecipes(workbench, workbenchRecipes);
 		System.out.println(workbenchRecipes.size() + " workbench recipes");
+
+		registration.addRecipes(registration.getCategoryByUID(NuclearProgram.path("bloomery")), Collections.singletonList(new Object()));
+		System.out.println("1 blooming recipe");
 	}
 
 	public static ItemStack unpack(int packed) {
