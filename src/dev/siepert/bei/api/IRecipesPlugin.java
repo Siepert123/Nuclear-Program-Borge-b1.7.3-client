@@ -1,4 +1,4 @@
-package dev.siepert.bei;
+package dev.siepert.bei.api;
 
 import dev.siepert.bei.api.reg.ICategoryRegistration;
 import dev.siepert.bei.api.reg.IRecipeRegistration;

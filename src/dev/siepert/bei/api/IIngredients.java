@@ -1,4 +1,4 @@
-package dev.siepert.bei;
+package dev.siepert.bei.api;
 
 import net.minecraft.src.ItemStack;
 import net.minecraftborge.loader.Ingredient;

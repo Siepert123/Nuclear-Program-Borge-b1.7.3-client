@@ -1,4 +1,4 @@
-package dev.siepert.bei;
+package dev.siepert.bei.api;
 
 public @interface RecipesPlugin {
 	String value();

@@ -1,4 +1,4 @@
-package dev.siepert.bei.reg;
+package dev.siepert.bei.api.reg;
 
 import dev.siepert.bei.api.IRecipeCategory;
 
