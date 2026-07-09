@@ -30,6 +30,7 @@ public class BlockInit {
 	public static BlockYanoDoor doorBunker;
 	public static Block concrete;
 	public static Block concreteBrick;
+	public static Block concreteFoundation;
 	public static BlockConcreteColored concreteColored;
 	public static BlockHatch hatch;
 	public static BlockSealedDoor sealedDoor;
@@ -114,6 +115,13 @@ public class BlockInit {
 				.setHardness(concrete.getHardness())
 				.setResistance(concrete.getExplosionResistance(null))
 				.setStepSound(Block.soundStoneFootstep)
+		);
+		concreteFoundation = helper.register("concreteFoundation",
+				id -> new BlockPillar(id, NPMaterials.concrete, NuclearProgram.path("concrete"), NuclearProgram.path("concreteFoundation"))
+						.setHarvestLevel("pickaxe", 2)
+						.setHardness(concrete.getHardness())
+						.setResistance(concrete.getExplosionResistance(null))
+						.setStepSound(Block.soundStoneFootstep)
 		);
 		concreteColored = helper.register("concrete", id -> new BlockConcreteColored(id)
 				.setHarvestLevel("pickaxe", 2)

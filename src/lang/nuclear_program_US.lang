@@ -22,6 +22,7 @@ tile.nuclear_program/doorOffice.name=Office Door
 tile.nuclear_program/doorBunker.name=Bunker Door
 tile.nuclear_program/concrete.name=Concrete
 tile.nuclear_program/concreteBrick.name=Concrete Bricks
+tile.nuclear_program/concreteFoundation.name=Concrete Foundation
 tile.nuclear_program/concreteBlack.name=Black Concrete
 tile.nuclear_program/concreteRed.name=Red Concrete
 tile.nuclear_program/concreteGreen.name=Green Concrete
