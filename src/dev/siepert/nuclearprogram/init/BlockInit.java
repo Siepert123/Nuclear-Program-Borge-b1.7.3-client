@@ -30,8 +30,12 @@ public class BlockInit {
 	public static BlockYanoDoor doorBunker;
 	public static Block concrete;
 	public static Block concreteBrick;
-	public static Block concreteFoundation;
+	public static BlockPillar concreteFoundation;
 	public static BlockConcreteColored concreteColored;
+	public static BlockStepConcrete slabConcreteSingle;
+	public static BlockStepConcrete slabConcreteDouble;
+	public static BlockStepConcreteColored slabConcreteColoredSingle;
+	public static BlockStepConcreteColored slabConcreteColoredDouble;
 	public static BlockHatch hatch;
 	public static BlockSealedDoor sealedDoor;
 
@@ -129,6 +133,30 @@ public class BlockInit {
 				.setResistance(concrete.getExplosionResistance(null))
 				.setStepSound(Block.soundStoneFootstep)
 		);
+		slabConcreteSingle = helper.register("slabConcrete", id -> new BlockStepConcrete(id, false)
+				.setHarvestLevel("pickaxe", 2)
+				.setHardness(concrete.getHardness())
+				.setResistance(concrete.getExplosionResistance(null))
+				.setStepSound(Block.soundStoneFootstep)
+		);
+		slabConcreteDouble = helper.register("slabConcrete", id -> new BlockStepConcrete(id, true)
+				.setHarvestLevel("pickaxe", 2)
+				.setHardness(concrete.getHardness())
+				.setResistance(concrete.getExplosionResistance(null))
+				.setStepSound(Block.soundStoneFootstep)
+		);
+		slabConcreteColoredSingle = helper.register("slabConcrete", id -> new BlockStepConcreteColored(id, false)
+				.setHarvestLevel("pickaxe", 2)
+				.setHardness(concrete.getHardness())
+				.setResistance(concrete.getExplosionResistance(null))
+				.setStepSound(Block.soundStoneFootstep)
+		);
+		slabConcreteColoredDouble = helper.register("slabConcrete", id -> new BlockStepConcreteColored(id, true)
+				.setHarvestLevel("pickaxe", 2)
+				.setHardness(concrete.getHardness())
+				.setResistance(concrete.getExplosionResistance(null))
+				.setStepSound(Block.soundStoneFootstep)
+		);
 		hatch = helper.register("hatch", id -> new BlockHatch(id)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(10.0F)
@@ -209,6 +237,10 @@ public class BlockInit {
 		Item.itemsList[doorOffice.blockID] = new ItemBlockYanoDoor(doorOffice);
 		Item.itemsList[doorBunker.blockID] = new ItemBlockYanoDoor(doorBunker);
 		Item.itemsList[concreteColored.blockID] = new ItemBlockConcreteColored(concreteColored);
+		Item.itemsList[slabConcreteSingle.blockID] = new ItemBlockStepConcrete(slabConcreteSingle);
+		Item.itemsList[slabConcreteDouble.blockID] = new ItemBlockStepConcrete(slabConcreteDouble);
+		Item.itemsList[slabConcreteColoredSingle.blockID] = new ItemBlockStepConcreteColored(slabConcreteColoredSingle);
+		Item.itemsList[slabConcreteColoredDouble.blockID] = new ItemBlockStepConcreteColored(slabConcreteColoredDouble);
 	}
 
 	@SuppressWarnings("unchecked")

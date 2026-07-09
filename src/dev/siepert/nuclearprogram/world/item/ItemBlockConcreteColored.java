@@ -25,9 +25,4 @@ public class ItemBlockConcreteColored extends ItemBlock {
 	public String getItemNameIS(ItemStack stack) {
 		return this.block.getBlockName() + DyeHelper.COLOR_NAMES[stack.getItemDamage()];
 	}
-
-	@Override
-	public void getSubItems(Collection<ItemStack> items) {
-		for (int i = 0; i < 16; i++) items.add(new ItemStack(this, 1, i));
-	}
 }
