@@ -14,6 +14,7 @@ import java.util.function.IntFunction;
 public class BlockInit {
 	public static final StepSoundPipe soundPipeFootstep = new StepSoundPipe(1.0F, 1.0F);
 	public static final StepSound soundMetal2Footstep = new StepSound("metalStep", 1.0F, 1.0F);
+	public static final StepSound soundChainFootstep = new StepSound("chain", 1.0F, 1.0F);
 
 	public static boolean available = false;
 

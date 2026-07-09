@@ -4,6 +4,7 @@ import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockBloomeryPipe;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.Icon;
+import net.minecraftborge.loader.IconRegister;
 import net.minecraftborge.loader.Side;
 
 public class BlockBloomeryPipe extends Block {
@@ -11,6 +12,11 @@ public class BlockBloomeryPipe extends Block {
 		super(blockID, Material.rock);
 		this.setBlockBounds(0.125F, 0.0F, 0.125F, 0.875F, 1.0F, 0.875F);
 		this.setLightOpacity(0);
+	}
+
+	@Override
+	public void registerIcons(IconRegister register) {
+		this.blockTexture = Block.brick.blockTexture;
 	}
 
 	@Override
