@@ -22,7 +22,7 @@ public class BlockStepConcreteColored extends Block {
 		if(!isDouble) {
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
 		}
-		this.setLightOpacity(255);
+		this.setLightOpacity(isDouble ? 255 : 0);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class BlockStepConcreteColored extends Block {
 			int metaBelow = world.getBlockMetadata(x, y-1, z);
 			if (blockBelow == this.blockID && metaBelow == meta) {
 				world.setBlockWithNotify(x, y, z, 0);
-				world.setBlockAndMetadataWithNotify(x, y-1, z, this.blockID, meta);
+				world.setBlockAndMetadataWithNotify(x, y-1, z, BlockInit.slabConcreteColoredDouble.blockID, meta);
 			}
 		}
 	}

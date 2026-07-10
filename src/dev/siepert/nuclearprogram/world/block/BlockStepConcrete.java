@@ -30,7 +30,7 @@ public class BlockStepConcrete extends Block {
 		if(!isDouble) {
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
 		}
-		this.setLightOpacity(255);
+		this.setLightOpacity(isDouble ? 255 : 0);
 	}
 
 	@Override
@@ -54,7 +54,12 @@ public class BlockStepConcrete extends Block {
 
 	@Override
 	public Icon getBlockIconFromSideAndMetadata(int side, int meta) {
-		return this.blockTextures[meta & 3 + (side == Side.UP || side == Side.DOWN ? 0 : 4)];
+		return this.blockTextures[(meta & 3) + (side == Side.UP || side == Side.DOWN ? 0 : 4)];
+	}
+
+	@Override
+	public Icon getBlockIconFromSide(int side) {
+		return this.getBlockIconFromSideAndMetadata(side, 0);
 	}
 
 	@Override
@@ -84,7 +89,7 @@ public class BlockStepConcrete extends Block {
 			int metaBelow = world.getBlockMetadata(x, y-1, z);
 			if (blockBelow == this.blockID && metaBelow == meta) {
 				world.setBlockWithNotify(x, y, z, 0);
-				world.setBlockAndMetadataWithNotify(x, y-1, z, this.blockID, meta);
+				world.setBlockAndMetadataWithNotify(x, y-1, z, BlockInit.slabConcreteDouble.blockID, meta);
 			}
 		}
 	}
