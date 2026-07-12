@@ -187,6 +187,7 @@ public class BlockInit {
 				.setHardness(Block.brick.getHardness())
 				.setResistance(Block.brick.getExplosionResistance(null))
 				.setStepSound(Block.soundStoneFootstep)
+				.disableResizeItem()
 		);
 
 		nukestone = helper.register("nukestone", id -> new BlockNukestone(id)

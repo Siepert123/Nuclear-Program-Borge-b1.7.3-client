@@ -1,6 +1,5 @@
 package dev.siepert.nuclearprogram.world.block;
 
-import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.init.BlockInit;
 import net.minecraft.src.Block;
 import net.minecraft.src.IBlockAccess;
@@ -29,8 +28,10 @@ public class BlockStepConcrete extends Block {
 		this.isDouble = isDouble;
 		if(!isDouble) {
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
+			this.setUseAboveLight(true);
+			this.disableResizeItem();
 		}
-		this.setLightOpacity(isDouble ? 255 : 0);
+		this.setLightOpacity(255);
 	}
 
 	@Override
