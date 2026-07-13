@@ -105,7 +105,7 @@ public class BlockInit {
 		doorBunker = helper.register("doorBunker", id -> new BlockYanoDoor(id, Material.iron)
 				.setHarvestLevel("pickaxe", 2)
 				.setHardness(15.0F)
-				.setResistance(256.0F)
+				.setResistance(128.0F)
 				.setStepSound(soundMetal2Footstep)
 		);
 		concrete = helper.register("concrete", id -> new Block(id, NPMaterials.concrete)

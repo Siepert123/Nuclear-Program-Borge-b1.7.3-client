@@ -5,7 +5,9 @@ import dev.siepert.bei.api.IRecipesPlugin;
 import dev.siepert.bei.api.RecipesPlugin;
 import dev.siepert.bei.api.reg.ICategoryRegistration;
 import dev.siepert.bei.api.reg.IRecipeRegistration;
+import dev.siepert.bei.api.reg.IScreenRegistration;
 import dev.siepert.nuclearprogram.NuclearProgram;
+import dev.siepert.nuclearprogram.gui.GuiFurnaceBuilder;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
@@ -59,6 +61,11 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 
 		registration.addRecipes(registration.getCategoryByUID(NuclearProgram.path("bloomery")), Collections.singletonList(new Object()));
 		System.out.println("1 blooming recipe");
+	}
+
+	@Override
+	public void registerScreenHandlers(IScreenRegistration registration) {
+		registration.addScreenHandler(GuiFurnaceBuilder.class, 79, 34, 24, 17, NuclearProgram.path("smeltingBuilder"), "furnaceFuel");
 	}
 
 	public static ItemStack unpack(int packed) {
