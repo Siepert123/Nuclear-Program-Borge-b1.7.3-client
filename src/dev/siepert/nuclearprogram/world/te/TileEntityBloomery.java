@@ -14,9 +14,9 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 	public int fuelHeap = 0;
 	public int recipeTicks = 0;
 	public int cooldown = 0;
-	public static final int COAL_TICKS = 100;
-	public static final int RECIPE_TICKS = 500;
-	public static final int MAX_FUEL_HEAP = RECIPE_TICKS * 8;
+	public static final int COAL_TICKS = 500;
+	public static final int RECIPE_TICKS = COAL_TICKS * 4;
+	public static final int MAX_FUEL_HEAP = RECIPE_TICKS * 2;
 
 	@Override
 	public int getSizeInventory() {
@@ -97,7 +97,7 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 				update = true;
 				this.cooldown = 3;
 				this.fuelHeap--;
-				if (this.recipeTicks++ >= RECIPE_TICKS) {
+				if (++this.recipeTicks >= RECIPE_TICKS) {
 					this.recipeTicks = 0;
 
 					this.inventory[1].stackSize--;
@@ -111,6 +111,7 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 			} else if (this.recipeTicks > 0) {
 				update = true;
 				this.recipeTicks--;
+				if (this.cooldown > 0) this.cooldown--;
 			} else if (this.cooldown > 0) {
 				update = true;
 				this.cooldown--;
@@ -124,7 +125,7 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 	}
 
 	public boolean visuallyBurning() {
-		return this.recipeTicks > 0 || this.cooldown > 0;
+		return this.cooldown > 0;
 	}
 	private boolean canSmelt() {
 		if (this.pipeLength == 0) return false;

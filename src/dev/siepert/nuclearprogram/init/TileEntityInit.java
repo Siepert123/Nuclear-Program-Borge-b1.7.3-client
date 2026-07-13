@@ -17,7 +17,6 @@ public class TileEntityInit {
 
 		TileEntity.addMapping(TileEntityHatch.class, NuclearProgram.MODID + "/hatch");
 		TileEntityRenderer.instance.addRenderer(TileEntityHatch.class, RenderHatch.RENDERER);
-
 		TileEntity.addMapping(TileEntitySealedDoor.class, NuclearProgram.MODID + "/sealedDoor");
 		TileEntityRenderer.instance.addRenderer(TileEntitySealedDoor.class, RenderSealedDoor.INSTANCE);
 

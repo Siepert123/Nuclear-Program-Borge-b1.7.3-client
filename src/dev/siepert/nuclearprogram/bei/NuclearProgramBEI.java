@@ -7,13 +7,13 @@ import dev.siepert.bei.api.reg.ICategoryRegistration;
 import dev.siepert.bei.api.reg.IRecipeRegistration;
 import dev.siepert.bei.api.reg.IScreenRegistration;
 import dev.siepert.nuclearprogram.NuclearProgram;
+import dev.siepert.nuclearprogram.gui.GuiBloomery;
 import dev.siepert.nuclearprogram.gui.GuiFurnaceBuilder;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.StringTranslate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,9 +29,9 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 
 	@Override
 	public void registerCategories(ICategoryRegistration registration) {
-		registration.registerCategory(NuclearProgram.path("smeltingBuilder"), new RecipeCategoryFurnaceBuilder());
-		registration.registerCategory(NuclearProgram.path("workbench"), new RecipeCategoryWorkbench());
-		registration.registerCategory(NuclearProgram.path("bloomery"), new RecipeCategoryBloomery());
+		registration.registerCategory(NPRecipeCategories.SMELTING_BUILDER, new RecipeCategoryFurnaceBuilder());
+		registration.registerCategory(NPRecipeCategories.WORKBENCH, new RecipeCategoryWorkbench());
+		registration.registerCategory(NPRecipeCategories.BLOOMERY, new RecipeCategoryBloomery());
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		int skip;
 
 		BuilderFurnaceRecipes smelting = BuilderFurnaceRecipes.smelting();
-		IRecipeCategory<RecipeFurnaceBuilder> smeltingBuilder = registration.getCategoryByUID(NuclearProgram.path("smeltingBuilder"));
+		IRecipeCategory<RecipeFurnaceBuilder> smeltingBuilder = registration.getCategoryByUID(NPRecipeCategories.SMELTING_BUILDER);
 		List<RecipeFurnaceBuilder> smeltingBuilderRecipes = new ArrayList<>();
 		skip = 0;
 		for (Map.Entry<Integer, BuilderFurnaceRecipes.Result> entry : smelting.getSmeltingList().entrySet()) {
@@ -54,18 +54,19 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		registration.addRecipes(smeltingBuilder, smeltingBuilderRecipes);
 		System.out.println(smeltingBuilderRecipes.size() + " builder's smelting recipes" + (skip != 0 ? " (" + skip + " skipped)" : ""));
 
-		IRecipeCategory<WorkbenchRecipe> workbench = registration.getCategoryByUID(NuclearProgram.path("workbench"));
+		IRecipeCategory<WorkbenchRecipe> workbench = registration.getCategoryByUID(NPRecipeCategories.WORKBENCH);
 		List<WorkbenchRecipe> workbenchRecipes = new ArrayList<>(WorkbenchRecipes.crafting().getRecipeList());
 		registration.addRecipes(workbench, workbenchRecipes);
 		System.out.println(workbenchRecipes.size() + " workbench recipes");
 
-		registration.addRecipes(registration.getCategoryByUID(NuclearProgram.path("bloomery")), Collections.singletonList(new Object()));
+		registration.addRecipes(registration.getCategoryByUID(NPRecipeCategories.BLOOMERY), Collections.singletonList(new Object()));
 		System.out.println("1 blooming recipe");
 	}
 
 	@Override
 	public void registerScreenHandlers(IScreenRegistration registration) {
-		registration.addScreenHandler(GuiFurnaceBuilder.class, 79, 34, 24, 17, NuclearProgram.path("smeltingBuilder"), "furnaceFuel");
+		registration.addScreenHandler(GuiFurnaceBuilder.class, 79, 34, 24, 17, NPRecipeCategories.SMELTING_BUILDER, "furnaceFuel");
+		registration.addScreenHandler(GuiBloomery.class, 97, 13, 22, 15, NPRecipeCategories.BLOOMERY);
 	}
 
 	public static ItemStack unpack(int packed) {
