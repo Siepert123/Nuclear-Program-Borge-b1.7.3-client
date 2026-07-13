@@ -12,12 +12,15 @@ public class ItemDetonator extends Item {
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side) {
 		if (!player.isSneaking() || stack == null) return false;
-		NBTTagCompound nbt = stack.itemNBT != null ? stack.itemNBT : new NBTTagCompound(3);
-		nbt.setInteger("targetX", x);
-		nbt.setInteger("targetY", y);
-		nbt.setInteger("targetZ", z);
-		nbt.setBoolean("hasTarget", true);
-		stack.itemNBT = nbt;
+		if (!world.multiplayerWorld) {
+			NBTTagCompound nbt = stack.itemNBT != null ? stack.itemNBT : new NBTTagCompound(3);
+			nbt.setInteger("targetX", x);
+			nbt.setInteger("targetY", y);
+			nbt.setInteger("targetZ", z);
+			nbt.setBoolean("hasTarget", true);
+			stack.itemNBT = nbt;
+			player.addChatMessage("[DETONATOR] Position set!");
+		}
 		return true;
 	}
 
@@ -47,7 +50,7 @@ public class ItemDetonator extends Item {
 					status = "Unknown detonation error!";
 					break;
 			}
-			player.addChatMessage("[DETONATOR] " + status);
+			if (!world.multiplayerWorld) player.addChatMessage("[DETONATOR] " + status);
 			ItemStack ret = stack.copy();
 			ret.itemNBT = stack.itemNBT;
 			return ret;

@@ -2,6 +2,7 @@ package dev.siepert.nuclearprogram.gui;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.world.te.TileEntityBloomery;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiContainer;
 import net.minecraft.src.InventoryPlayer;
 import org.lwjgl.opengl.GL11;

@@ -74,7 +74,7 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 	private boolean fx = true;
 	@Override
 	public void updateEntity() {
-		if ((this.fx = !this.fx) && this.visuallyBurning()) {
+		if ((this.fx = !this.fx) && (this.worldObj != null && this.worldObj.multiplayerWorld ? (this.getBlockType() == BlockInit.bloomeryLit) : this.visuallyBurning())) {
 			this.worldObj.spawnParticle("nuclear_program/pollution",
 					this.xCoord + 0.5, this.yCoord + this.pipeLength + 0.875, this.zCoord + 0.5,
 					0.25, 0.0, 0.0
