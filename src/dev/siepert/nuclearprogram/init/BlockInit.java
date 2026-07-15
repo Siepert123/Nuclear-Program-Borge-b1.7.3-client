@@ -22,6 +22,9 @@ public class BlockInit {
 	public static BlockMetal blockMetal;
 	public static BlockFireclay fireclay;
 	public static Block firebricks;
+	public static BlockResourceRock resourceRock;
+	public static BlockResourceRock resourceDeposit;
+
 	public static BlockWorkbench workbench;
 	public static BlockFurnaceBuilder furnaceBuilderIdle;
 	public static BlockFurnaceBuilder furnaceBuilderLit;
@@ -79,6 +82,17 @@ public class BlockInit {
 				.setResistance(Block.brick.getExplosionResistance(null))
 				.setStepSound(Block.soundStoneFootstep)
 		);
+		resourceRock = helper.register("resourceRock", id -> new BlockResourceRock(id)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(Block.oreIron.getHardness())
+				.setResistance(Block.oreIron.getExplosionResistance(null))
+				.setStepSound(Block.soundStoneFootstep)
+		);
+		resourceDeposit = helper.register("resourceDeposit", id -> new BlockResourceRock(id)
+				.setBlockUnbreakable()
+				.setStepSound(Block.soundStoneFootstep)
+		);
+
 		workbench = helper.register("workbench", BlockWorkbench::new);
 		furnaceBuilderIdle = helper.register("furnaceBuilder", id -> new BlockFurnaceBuilder(id, false)
 				.setHarvestLevel("pickaxe", 0)
@@ -234,6 +248,8 @@ public class BlockInit {
 	public static void registerItemBlocks() {
 		Item.itemsList[oreMetal.blockID] = new ItemBlockMetalOre(oreMetal);
 		Item.itemsList[blockMetal.blockID] = new ItemBlockMetal(blockMetal);
+		Item.itemsList[resourceRock.blockID] = new ItemBlockResourceRock(resourceRock);
+		Item.itemsList[resourceDeposit.blockID] = new ItemBlockResourceRock(resourceDeposit);
 		Item.itemsList[workbench.blockID] = new ItemBlockWorkbench(workbench);
 		Item.itemsList[doorOffice.blockID] = new ItemBlockYanoDoor(doorOffice);
 		Item.itemsList[doorBunker.blockID] = new ItemBlockYanoDoor(doorBunker);

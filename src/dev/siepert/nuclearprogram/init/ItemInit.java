@@ -32,6 +32,11 @@ public class ItemInit {
 	public static ItemConsumableSeeds potato;
 	public static ItemFood potatoCooked;
 
+	public static Item resourceBrickHematite;
+	public static Item resourceBrickMalachite;
+	public static Item resourceBrickBauxite;
+	public static Item resourceBrickDirtyCoal;
+
 	public static Item valve;
 
 	public static Item screwdriver;
@@ -62,6 +67,11 @@ public class ItemInit {
 		potato = helper.register("potato", id -> new ItemConsumableSeeds(id, BlockInit.potatoes.blockID, 1, false));
 		potatoCooked = helper.register("potatoCooked", id -> new ItemFood(id, 4, false)
 				.setMaxStackSize(64));
+
+		resourceBrickHematite = helper.register("resourceBrickHematite");
+		resourceBrickMalachite = helper.register("resourceBrickMalachite");
+		resourceBrickBauxite = helper.register("resourceBrickBauxite");
+		resourceBrickDirtyCoal = helper.register("resourceBrickDirtyCoal");
 
 		valve = helper.register("valve");
 
