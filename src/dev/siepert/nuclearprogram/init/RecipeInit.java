@@ -115,11 +115,34 @@ public class RecipeInit {
 				'#', BlockInit.concrete,
 				'X', Item.clay
 		);
+		recipes.addShapedRecipe(new ItemStack(BlockInit.concreteFoundation, 1),
+				"#", "#",
+				'#', Ingredient.of(BlockInit.slabConcreteSingle.blockID, 0)
+		);
 		for (int i = 0; i < 16; i++) {
 			recipes.addShapedRecipe(new ItemStack(BlockInit.concreteColored, 8, i),
 					"###", "#X#", "###",
 					'#', BlockInit.concrete,
 					'X', Ingredient.of("dye" + DyeHelper.COLOR_NAMES[i])
+			);
+		}
+
+		recipes.addShapedRecipe(new ItemStack(BlockInit.slabConcreteSingle, 6, 0),
+				"###",
+				'#', BlockInit.concrete
+		);
+		recipes.addShapedRecipe(new ItemStack(BlockInit.slabConcreteSingle, 6, 1),
+				"###",
+				'#', BlockInit.concreteBrick
+		);
+		recipes.addShapedRecipe(new ItemStack(BlockInit.slabConcreteSingle, 6, 2),
+				"###",
+				'#', BlockInit.concreteFoundation
+		);
+		for (int i = 0; i < 16; i++) {
+			recipes.addShapedRecipe(new ItemStack(BlockInit.slabConcreteColoredSingle, 6, i),
+					"###",
+					'#', Ingredient.of(BlockInit.concreteColored.blockID, i)
 			);
 		}
 

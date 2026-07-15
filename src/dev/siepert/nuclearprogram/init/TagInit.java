@@ -3,6 +3,7 @@ package dev.siepert.nuclearprogram.init;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
 import dev.siepert.nuclearprogram.world.block.BlockMetalOre;
 import net.minecraft.src.ItemStack;
+import net.minecraftborge.loader.DyeHelper;
 import net.minecraftborge.loader.tag.ItemTags;
 
 public class TagInit {
@@ -25,6 +26,14 @@ public class TagInit {
 		ItemTags.tag("blockElectrum", new ItemStack(BlockInit.blockMetal, 1, BlockMetal.ELECTRUM));
 		ItemTags.tag("blockKaupium", new ItemStack(BlockInit.blockMetal, 1, BlockMetal.KAUPIUM));
 		ItemTags.tag("blockYanoizedKaupium", new ItemStack(BlockInit.blockMetal, 1, BlockMetal.YANOIZED_KAUPIUM));
+
+		ItemTags.tag("concrete", new ItemStack(BlockInit.concrete));
+		ItemTags.tag("concreteColorless", new ItemStack(BlockInit.concrete));
+
+		ItemTags.tag("concrete", new ItemStack(BlockInit.concreteColored, 1, -1));
+		for (int i = 0; i < 16; i++) {
+			ItemTags.tag("concreteColored" + DyeHelper.COLOR_NAMES[i], new ItemStack(BlockInit.concreteColored, 1, i));
+		}
 
 		ItemTags.tag("ingotCopper", ItemInit.ingotCopper);
 		ItemTags.tag("ingotAluminium", ItemInit.ingotAluminium);
