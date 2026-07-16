@@ -53,6 +53,8 @@ public class BlockInit {
 	public static BlockNuke nukeLittleBoy;
 	public static BlockNuke nukeCaseoh;
 
+	public static BlockExtractionTest extractionTest;
+
 	public static void register(IdAllocationEvent<Block> event) {
 		Helper helper = new Helper(NuclearProgram.MODID, event);
 
@@ -238,6 +240,13 @@ public class BlockInit {
 				.setHardness(10.0F)
 				.setResistance(64.0F)
 				.setStepSound(Block.soundMetalFootstep)
+		);
+
+		extractionTest = helper.register("extractionTest", id -> new BlockExtractionTest(id, Material.iron)
+				.setHarvestLevel("pickaxe", 0)
+				.setHardness(1.0F)
+				.setResistance(1.0F)
+				.setStepSound(soundChainFootstep)
 		);
 
 		available = true;

@@ -9,6 +9,7 @@ import dev.siepert.bei.api.reg.IScreenRegistration;
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.gui.GuiBloomery;
 import dev.siepert.nuclearprogram.gui.GuiFurnaceBuilder;
+import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
@@ -38,6 +39,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 	public void registerRecipes(IRecipeRegistration registration) {
 		int skip;
 
+		// Builder's Smelting category
 		BuilderFurnaceRecipes smelting = BuilderFurnaceRecipes.smelting();
 		IRecipeCategory<RecipeFurnaceBuilder> smeltingBuilder = registration.getCategoryByUID(NPRecipeCategories.SMELTING_BUILDER);
 		List<RecipeFurnaceBuilder> smeltingBuilderRecipes = new ArrayList<>();
@@ -54,13 +56,29 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		registration.addRecipes(smeltingBuilder, smeltingBuilderRecipes);
 		System.out.println(smeltingBuilderRecipes.size() + " builder's smelting recipes" + (skip != 0 ? " (" + skip + " skipped)" : ""));
 
+		// Workbench category
 		IRecipeCategory<WorkbenchRecipe> workbench = registration.getCategoryByUID(NPRecipeCategories.WORKBENCH);
 		List<WorkbenchRecipe> workbenchRecipes = new ArrayList<>(WorkbenchRecipes.crafting().getRecipeList());
 		registration.addRecipes(workbench, workbenchRecipes);
 		System.out.println(workbenchRecipes.size() + " workbench recipes");
 
-		registration.addRecipes(registration.getCategoryByUID(NPRecipeCategories.BLOOMERY), Collections.singletonList(new Object()));
-		System.out.println("1 blooming recipe");
+		// Blooming category
+		BloomeryRecipes blooming = BloomeryRecipes.blooming();
+		IRecipeCategory<RecipeBloomery> bloomery = registration.getCategoryByUID(NPRecipeCategories.BLOOMERY);
+		List<RecipeBloomery> bloomingRecipes = new ArrayList<>();
+		skip = 0;
+		for (Map.Entry<Integer, BloomeryRecipes.Result> entry : blooming.getSmeltingList().entrySet()) {
+			ItemStack in = unpack(entry.getKey());
+			ItemStack result = entry.getValue().item;
+			ItemStack byproduct = entry.getValue().byproduct;
+			if (in == null || result == null) {
+				skip++;
+				continue;
+			}
+			bloomingRecipes.add(new RecipeBloomery(in, result, byproduct, entry.getValue().recipeTime));
+		}
+		registration.addRecipes(bloomery, bloomingRecipes);
+		System.out.println(bloomingRecipes.size() + " blooming recipes" + (skip != 0 ? " (" + skip + " skipped)" : ""));
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import dev.siepert.nuclearprogram.gui.LoadingScreenRendererHints;
 import dev.siepert.nuclearprogram.gui.NuclearProgramRemoteGUI;
 import dev.siepert.nuclearprogram.init.*;
 import dev.siepert.nuclearprogram.network.NuclearProgramNetHandler;
+import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
 import dev.siepert.nuclearprogram.texturefx.TextureYanoizedFX;
@@ -88,6 +89,7 @@ public class NuclearProgram implements IModLifecycleListener {
 		RecipeInit.furnace(FurnaceRecipesFix.smelting());
 		RecipeInit.workbench(WorkbenchRecipes.crafting());
 		RecipeInit.builderFurnace(BuilderFurnaceRecipes.smelting());
+		RecipeInit.bloomery(BloomeryRecipes.blooming());
 	}
 
 	@EventHandler

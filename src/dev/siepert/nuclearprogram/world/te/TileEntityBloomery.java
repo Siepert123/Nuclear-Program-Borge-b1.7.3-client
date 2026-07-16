@@ -2,6 +2,7 @@ package dev.siepert.nuclearprogram.world.te;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.init.ItemInit;
+import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
 import dev.siepert.nuclearprogram.world.block.BlockBloomery;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.IFurnace;
@@ -70,6 +71,7 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 		return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) == this;
 	}
 
+	private BloomeryRecipes.Recipe lastRecipe = null;
 	public int pipeLength = 0;
 	private boolean fx = true;
 	@Override
@@ -97,16 +99,20 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 				update = true;
 				this.cooldown = 3;
 				this.fuelHeap--;
-				if (++this.recipeTicks >= RECIPE_TICKS) {
+				if (++this.recipeTicks >= this.lastRecipe.recipeTime) {
 					this.recipeTicks = 0;
 
 					this.inventory[1].stackSize--;
 					if (this.inventory[1].stackSize == 0) this.inventory[1] = null;
 
-					if (this.inventory[2] == null) this.inventory[2] = new ItemStack(ItemInit.ingotSteel);
-					else this.inventory[2].stackSize++;
-					if (this.inventory[3] == null) this.inventory[3] = new ItemStack(Block.gravel);
-					else this.inventory[3].stackSize++;
+					BloomeryRecipes.Result result = BloomeryRecipes.blooming().getSmeltingResult(this.inventory[1]);
+
+					if (this.inventory[2] == null) this.inventory[2] = result.item.copy();
+					else this.inventory[2].stackSize += result.item.stackSize;
+					if (result.byproduct != null) {
+						if (this.inventory[3] == null) this.inventory[3] = result.byproduct.copy();
+						else this.inventory[3].stackSize += result.byproduct.stackSize;
+					}
 				}
 			} else if (this.recipeTicks > 0) {
 				update = true;
@@ -128,11 +134,33 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 		return this.cooldown > 0;
 	}
 	private boolean canSmelt() {
-		if (this.pipeLength == 0) return false;
-		if (this.fuelHeap == 0) return false;
-		return (this.inventory[2] == null || this.inventory[2].stackSize < this.getInventoryStackLimit())
-				&& (this.inventory[3] == null || this.inventory[3].stackSize < this.getInventoryStackLimit())
-				&& (this.inventory[1] != null && this.inventory[1].itemID == Block.oreIron.blockID);
+		if (this.pipeLength == 0 || this.fuelHeap == 0) {
+			this.lastRecipe = null;
+			return false;
+		}
+		if (this.lastRecipe != null) {
+			int pack = BloomeryRecipes.pack(this.inventory[1]);
+			if (pack == this.lastRecipe.recipeID) return true;
+			this.lastRecipe = null;
+		}
+
+		BloomeryRecipes.Result result = BloomeryRecipes.blooming().getSmeltingResult(this.inventory[1]);
+		if (result == null) return false;
+		if (this.inventory[2] != null) {
+			if (!this.inventory[2].isItemEqual(result.item)) return false;
+			if (this.inventory[2].stackSize + result.item.stackSize > this.getInventoryStackLimit()) return false;
+			if (this.inventory[2].stackSize + result.item.stackSize > this.inventory[2].getMaxStackSize()) return false;
+		}
+		if (this.inventory[3] != null && result.byproduct != null) {
+			if (!this.inventory[3].isItemEqual(result.byproduct)) return false;
+			if (this.inventory[3].stackSize + result.byproduct.stackSize > this.getInventoryStackLimit()) return false;
+			if (this.inventory[3].stackSize + result.byproduct.stackSize > this.inventory[3].getMaxStackSize()) return false;
+		}
+		this.lastRecipe = new BloomeryRecipes.Recipe(
+				BloomeryRecipes.pack(this.inventory[1]),
+				result.recipeTime
+		);
+		return true;
 	}
 
 	public void updatePipeLen() {

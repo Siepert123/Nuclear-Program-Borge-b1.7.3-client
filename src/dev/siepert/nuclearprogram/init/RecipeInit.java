@@ -1,6 +1,7 @@
 package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
+import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
@@ -223,5 +224,13 @@ public class RecipeInit {
 
 	public static void builderFurnace(BuilderFurnaceRecipes recipes) {
 		recipes.addSmelting(ItemInit.ballFireclay.shiftedIndex, 0, new ItemStack(ItemInit.firebrick, 1), 50);
+	}
+
+	public static void bloomery(BloomeryRecipes recipes) {
+		recipes.addSmelting(Block.oreIron.blockID, new ItemStack(ItemInit.ingotSteel, 1), new ItemStack(Block.gravel, 1));
+		recipes.addSmelting(ItemInit.resourceBrickHematite.shiftedIndex, 0, new ItemStack(Item.ingotIron), null, 500);
+		recipes.addSmelting(ItemInit.resourceBrickMalachite.shiftedIndex, 0, new ItemStack(ItemInit.ingotCopper), null, 500);
+		recipes.addSmelting(ItemInit.resourceBrickBauxite.shiftedIndex, 0, new ItemStack(ItemInit.ingotAluminium), null, 500);
+		recipes.addSmelting(ItemInit.resourceBrickDirtyCoal.shiftedIndex, 0, new ItemStack(Item.coal), null, 500);
 	}
 }

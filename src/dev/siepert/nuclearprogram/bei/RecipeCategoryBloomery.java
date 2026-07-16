@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.Ingredient;
 
-public class RecipeCategoryBloomery implements IRecipeCategory<Object> {
+public class RecipeCategoryBloomery implements IRecipeCategory<RecipeBloomery> {
 	private final ItemStack icon = new ItemStack(BlockInit.bloomeryIdle);
 	private final ItemStack[] machines = new ItemStack[]{this.icon};
 
@@ -41,26 +41,27 @@ public class RecipeCategoryBloomery implements IRecipeCategory<Object> {
 	}
 
 	@Override
-	public void getItems(IIngredients ingredients, Object recipe) {
-		ingredients.addInput(8, 2, Ingredient.of(Block.oreIron.blockID, 0));
-		ingredients.addResult(48, 2, new ItemStack(ItemInit.ingotSteel));
-		ingredients.addResult(48, 23, new ItemStack(Block.gravel));
+	public void getItems(IIngredients ingredients, RecipeBloomery recipe) {
+		ingredients.addInput(8, 2, Ingredient.of(recipe.in));
+		ingredients.addResult(48, 2, recipe.out.copy());
+		if (recipe.byproduct != null) ingredients.addResult(48, 23, recipe.byproduct.copy());
 	}
 
 	@Override
-	public void drawBackdrop(Minecraft mc, Tessellator tes, int x, int y, Object recipe, float pt) {
+	public void drawBackdrop(Minecraft mc, Tessellator tes, int x, int y, RecipeBloomery recipe, float pt) {
 		this.drawTexturedModalRect(tes, x, y, 72, 10, this.getWidth(), this.getHeight());
-		int scaled = ((Minecraft.getTicksRan() % 200) * 22) / 200;
+		int scaled = ((Minecraft.getTicksRan() % recipe.ticks) * 22) / recipe.ticks;
 		this.drawTexturedModalRect(tes, x+25, y+2, 208, 0, scaled, 16);
 		this.drawTexturedModalRect(tes, x+2, y+29, 176, 36, 28, 14);
 	}
 	@Override
-	public void drawExtras(Minecraft mc, RenderEngine textures, int x, int y, double mouseX, double mouseY, Object recipe, float pt) {
+	public void drawExtras(Minecraft mc, RenderEngine textures, int x, int y, double mouseX, double mouseY, RecipeBloomery recipe, float pt) {
 
 	}
 	@Override
-	public void drawTexts(Minecraft mc, FontRenderer font, int x, int y, double mouseX, double mouseY, Object recipe, float pt) {
-
+	public void drawTexts(Minecraft mc, FontRenderer font, int x, int y, double mouseX, double mouseY, RecipeBloomery recipe, float pt) {
+		String seconds = (recipe.ticks * 0.05F) + "s";
+		font.drawString(seconds, x + this.getWidth() - font.getStringWidth(seconds) - 2, y + this.getHeight() - 10, 0xFFFFFF);
 	}
 
 	public void drawTexturedModalRect(Tessellator tes, int x, int y, int srcX, int srcY, int w, int h) {
