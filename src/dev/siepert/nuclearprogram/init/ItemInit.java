@@ -23,6 +23,8 @@ public class ItemInit {
 	public static Item ingotElectrum;
 	public static Item ingotKaupium;
 	public static Item ingotYanoizedKaupium;
+	public static Item plateIron;
+	public static Item plateGold;
 	public static Item plateCopper;
 	public static Item plateAluminium;
 	public static Item plateLead;
@@ -60,6 +62,8 @@ public class ItemInit {
 		ingotElectrum = helper.register("ingotElectrum");
 		ingotKaupium = helper.register("ingotKaupium");
 		ingotYanoizedKaupium = helper.register("ingotYanoizedKaupium");
+		plateIron = helper.register("plateIron");
+		plateGold = helper.register("plateGold");
 		plateCopper = helper.register("plateCopper");
 		plateAluminium = helper.register("plateAluminium");
 		plateLead = helper.register("plateLead");

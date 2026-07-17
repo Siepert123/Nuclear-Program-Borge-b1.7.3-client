@@ -177,6 +177,14 @@ public class RecipeInit {
 		);
 
 
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateIron, 1),
+				ItemInit.hammer,
+				Ingredient.of("ingotIron")
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateGold, 1),
+				ItemInit.hammer,
+				Ingredient.of("ingotGold")
+		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateCopper, 1),
 				ItemInit.hammer,
 				Ingredient.of("ingotCopper")
