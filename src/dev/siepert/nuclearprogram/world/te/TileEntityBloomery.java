@@ -1,7 +1,6 @@
 package dev.siepert.nuclearprogram.world.te;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
-import dev.siepert.nuclearprogram.init.ItemInit;
 import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
 import dev.siepert.nuclearprogram.world.block.BlockBloomery;
 import net.minecraft.src.*;

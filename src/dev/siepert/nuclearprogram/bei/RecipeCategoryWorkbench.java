@@ -7,7 +7,10 @@ import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
 import dev.siepert.nuclearprogram.util.ChancedStack;
 import dev.siepert.nuclearprogram.world.block.BlockWorkbench;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.*;
+import net.minecraft.src.FontRenderer;
+import net.minecraft.src.ItemStack;
+import net.minecraft.src.RenderEngine;
+import net.minecraft.src.Tessellator;
 import net.minecraftborge.loader.Ingredient;
 
 import java.util.Map;

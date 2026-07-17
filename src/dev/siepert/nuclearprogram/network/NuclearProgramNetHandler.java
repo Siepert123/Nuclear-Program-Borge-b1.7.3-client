@@ -1,7 +1,6 @@
 package dev.siepert.nuclearprogram.network;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
-import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
 import net.minecraft.src.NetHandler;
 import net.minecraftborge.loader.ByteArrayReader;
 import net.minecraftborge.loader.ModList;
@@ -9,7 +8,6 @@ import net.minecraftborge.loader.net.ModNetHandler;
 import net.minecraftborge.loader.net.Packet143Custom;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

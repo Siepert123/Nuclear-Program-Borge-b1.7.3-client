@@ -2,7 +2,8 @@ package dev.siepert.nuclearprogram.recipe;
 
 import net.minecraftborge.loader.Namespace;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public final class WorkbenchRecipes {
 	private static final WorkbenchRecipes instance = new WorkbenchRecipes();

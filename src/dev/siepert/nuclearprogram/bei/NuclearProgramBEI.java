@@ -17,7 +17,6 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 

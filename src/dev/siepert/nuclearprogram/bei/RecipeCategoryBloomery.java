@@ -3,9 +3,11 @@ package dev.siepert.nuclearprogram.bei;
 import dev.siepert.bei.api.IIngredients;
 import dev.siepert.bei.api.IRecipeCategory;
 import dev.siepert.nuclearprogram.init.BlockInit;
-import dev.siepert.nuclearprogram.init.ItemInit;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.*;
+import net.minecraft.src.FontRenderer;
+import net.minecraft.src.ItemStack;
+import net.minecraft.src.RenderEngine;
+import net.minecraft.src.Tessellator;
 import net.minecraftborge.loader.Ingredient;
 
 public class RecipeCategoryBloomery implements IRecipeCategory<RecipeBloomery> {

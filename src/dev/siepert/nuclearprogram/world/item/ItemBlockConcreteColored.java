@@ -5,8 +5,6 @@ import net.minecraft.src.ItemBlock;
 import net.minecraft.src.ItemStack;
 import net.minecraftborge.loader.DyeHelper;
 
-import java.util.Collection;
-
 public class ItemBlockConcreteColored extends ItemBlock {
 	private final BlockConcreteColored block;
 	public ItemBlockConcreteColored(BlockConcreteColored block) {
