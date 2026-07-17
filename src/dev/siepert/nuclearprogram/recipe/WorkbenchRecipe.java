@@ -106,7 +106,7 @@ public final class WorkbenchRecipe {
 	public static class Builder {
 		private ItemStack result = null;
 		private int tier = 0;
-		private final Map<Ingredient, Integer> ingredients = new HashMap<>();
+		private final Map<Ingredient, Integer> ingredients = new LinkedHashMap<>();
 
 		private Builder() {}
 

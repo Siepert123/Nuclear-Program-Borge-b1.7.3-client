@@ -218,8 +218,6 @@ public class RecipeInit {
 				.setResult(new ItemStack(ItemInit.valve, 1))
 				.addIngredient(Ingredient.of("ingotSteel"), 4)
 				.build());
-
-		recipes.reindex();
 	}
 
 	public static void builderFurnace(BuilderFurnaceRecipes recipes) {

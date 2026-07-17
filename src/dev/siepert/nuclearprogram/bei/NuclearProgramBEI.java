@@ -58,7 +58,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 
 		// Workbench category
 		IRecipeCategory<WorkbenchRecipe> workbench = registration.getCategoryByUID(NPRecipeCategories.WORKBENCH);
-		List<WorkbenchRecipe> workbenchRecipes = new ArrayList<>(WorkbenchRecipes.crafting().getRecipeList());
+		List<WorkbenchRecipe> workbenchRecipes = new ArrayList<>(WorkbenchRecipes.crafting().getRecipes().values());
 		registration.addRecipes(workbench, workbenchRecipes);
 		System.out.println(workbenchRecipes.size() + " workbench recipes");
 

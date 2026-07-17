@@ -10,6 +10,7 @@ import net.minecraftborge.loader.net.Packet143Custom;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class NuclearProgramNetHandler extends ModNetHandler {
@@ -41,19 +42,19 @@ public class NuclearProgramNetHandler extends ModNetHandler {
 
 	public void handleWorkbenchSyncPacket() throws IOException {
 		int entries = this.reader.readInt();
-		Map<String, Integer> remote = new HashMap<>(entries);
+		Map<String, Integer> remote = new LinkedHashMap<>(entries);
 		for (int i = 0; i < entries; ++i) {
 			String key = ByteArrayReader.readString(this.reader, 64);
 			int index = this.reader.readInt();
 			remote.put(key, index);
 		}
-		WorkbenchRecipes.crafting().setRemote(remote);
+		//WorkbenchRecipes.crafting().setRemote(remote);
 	}
 
-	public Packet143Custom createWorkbenchPacket(String recipeID, boolean massProduce) {
+	public Packet143Custom createWorkbenchPacket(String recipeID, boolean massProduce) throws IOException {
 		this.writer.reset();
 		this.writer.writeByte(0);
-		this.writer.writeInt(WorkbenchRecipes.crafting().getRemoteIndex(recipeID));
+		this.writer.writeUTF(recipeID);
 		this.writer.writeBoolean(massProduce);
 		return new Packet143Custom(this.modIndex, this.writer.finish());
 	}

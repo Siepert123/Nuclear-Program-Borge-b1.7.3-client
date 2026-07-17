@@ -10,10 +10,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GuiWorkbench extends GuiContainer {
 	private static final RenderItem itemRenderer = new RenderItem();
@@ -26,7 +23,7 @@ public class GuiWorkbench extends GuiContainer {
 	private WorkbenchRecipe cachedSelectedRecipe = null;
 	private final WorkbenchRecipe[] cachedDisplayRecipes = new WorkbenchRecipe[10];
 	private int page = 0;
-	private final Map<Integer, String> recipeSlotMapping = new HashMap<>();
+	private final ArrayList<WorkbenchRecipe> recipesList = new ArrayList<>();
 	public GuiWorkbench(InventoryPlayer inventory, World world, int x, int y, int z) {
 		super(new ContainerWorkbench(inventory, world, x, y, z));
 		this.world = world;
@@ -44,18 +41,15 @@ public class GuiWorkbench extends GuiContainer {
 		this.selectedRecipeSlot = -1;
 		this.cachedSelectedRecipe = null;
 		this.page = 0;
-		this.recipeSlotMapping.clear();
+		this.recipesList.clear();
 
-		Map<String, Integer> lookup = WorkbenchRecipes.crafting().getLookupMap();
-		List<WorkbenchRecipe> list = WorkbenchRecipes.crafting().getRecipeList();
-		int counter = 0;
-		for (Map.Entry<String, Integer> entry : lookup.entrySet()) {
-			String key = entry.getKey();
-			int index = entry.getValue();
-			WorkbenchRecipe recipe = list.get(index);
+		LinkedHashMap<String, WorkbenchRecipe> recipes = WorkbenchRecipes.crafting().getRecipes();
+		this.recipesList.ensureCapacity(recipes.size());
+		for (WorkbenchRecipe recipe : recipes.values()) {
 			if (tier < recipe.tier()) continue;
-			this.recipeSlotMapping.put(counter++, key);
+			this.recipesList.add(recipe);
 		}
+		this.recipesList.trimToSize();
 		this.reindexCache();
 	}
 
@@ -71,7 +65,7 @@ public class GuiWorkbench extends GuiContainer {
 		if (this.page == 0) {
 			this.drawTexturedModalRect(x + 7, y + 24, 176, 0, 6, 36);
 		}
-		if ((this.page * 2) + 10 >= this.recipeSlotMapping.size()) {
+		if ((this.page * 2) + 10 >= this.recipesList.size()) {
 			this.drawTexturedModalRect(x + 105, y + 24, 182, 0, 6, 36);
 		}
 		if (this.selectedRecipeSlot != -1) {
@@ -94,8 +88,11 @@ public class GuiWorkbench extends GuiContainer {
 		}
 
 		GL11.glDisable(GL11.GL_BLEND);
-		//GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		GL11.glPushMatrix();
+		GL11.glRotatef(120.0F, 1.0F, 0.0F, 0.0F);
 		RenderHelper.enableStandardItemLighting();
+		GL11.glPopMatrix();
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		for (int i = 0; i < 10; i++) {
 			WorkbenchRecipe recipe = this.cachedDisplayRecipes[i];
 			if (recipe != null) {
@@ -154,9 +151,14 @@ public class GuiWorkbench extends GuiContainer {
 					if (this.selectedRecipeSlot != -1) {
 						boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
 						if (this.interact instanceof EntityClientPlayerMP) {
-							((EntityClientPlayerMP)this.interact).sendQueue.addToSendQueue(NuclearProgramNetHandler.instance.createWorkbenchPacket(
-									this.recipeSlotMapping.get(this.selectedRecipeSlot), shift
-							));
+							try {
+								Map<WorkbenchRecipe, String> names = WorkbenchRecipes.crafting().getIdentifiers();
+								((EntityClientPlayerMP) this.interact).sendQueue.addToSendQueue(NuclearProgramNetHandler.instance.createWorkbenchPacket(
+										names.get(this.recipesList.get(this.selectedRecipeSlot)), shift
+								));
+							} catch (Exception e) {
+								throw new RuntimeException("Network error", e);
+							}
 						} else {
 							this.cachedSelectedRecipe.process(this.interact, shift ? 64 : 1);
 						}
@@ -171,9 +173,9 @@ public class GuiWorkbench extends GuiContainer {
 				if (x >= slotX && x < slotX + 18) {
 					if (y >= slotY && y < slotY + 18) {
 						int recipeSlot = this.page * 2 + i;
-						if (recipeSlot < this.recipeSlotMapping.size()) {
+						if (recipeSlot < this.recipesList.size()) {
 							this.selectedRecipeSlot = recipeSlot;
-							this.cachedSelectedRecipe = WorkbenchRecipes.crafting().getRecipe(this.recipeSlotMapping.get(this.selectedRecipeSlot));
+							this.cachedSelectedRecipe = this.recipesList.get(this.selectedRecipeSlot);
 						}
 						this.playClickSound();
 						return;
@@ -190,7 +192,7 @@ public class GuiWorkbench extends GuiContainer {
 					return;
 				}
 				if (x >= 105 && x < 105 + 6) {
-					if (this.page * 2 + 10 < this.recipeSlotMapping.size()) {
+					if (this.page * 2 + 10 < this.recipesList.size()) {
 						this.page++;
 						this.reindexCache();
 						this.playClickSound();
@@ -209,8 +211,8 @@ public class GuiWorkbench extends GuiContainer {
 	private void reindexCache() {
 		Arrays.fill(this.cachedDisplayRecipes, null);
 		for (int i = 0; i < 10; i++) {
-			if (this.page * 2 + i < this.recipeSlotMapping.size()) {
-				this.cachedDisplayRecipes[i] = WorkbenchRecipes.crafting().getRecipe(this.recipeSlotMapping.get(this.page * 2 + i));
+			if (this.page * 2 + i < this.recipesList.size()) {
+				this.cachedDisplayRecipes[i] = this.recipesList.get(this.page * 2 + i);
 			}
 		}
 	}
