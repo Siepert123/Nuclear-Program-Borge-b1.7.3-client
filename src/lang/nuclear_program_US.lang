@@ -104,6 +104,8 @@ item.nuclear_program/resourceBrickMalachite.name=Malachite Brick
 item.nuclear_program/resourceBrickBauxite.name=Bauxite Brick
 item.nuclear_program/resourceBrickDirtyCoal.name=Dirty Coal Brick
 item.nuclear_program/valve.name=Valve Handle
+item.nuclear_program/hammer.name=Hammer
+item.nuclear_program/cutters.name=Wire Cutters
 item.nuclear_program/screwdriver.name=Screwdriver
 item.nuclear_program/detonator.name=Detonator
 
