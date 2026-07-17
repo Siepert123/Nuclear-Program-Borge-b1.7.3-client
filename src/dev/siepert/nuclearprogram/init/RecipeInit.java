@@ -231,6 +231,5 @@ public class RecipeInit {
 		recipes.addSmelting(ItemInit.resourceBrickHematite.shiftedIndex, 0, new ItemStack(Item.ingotIron), null, 500);
 		recipes.addSmelting(ItemInit.resourceBrickMalachite.shiftedIndex, 0, new ItemStack(ItemInit.ingotCopper), null, 500);
 		recipes.addSmelting(ItemInit.resourceBrickBauxite.shiftedIndex, 0, new ItemStack(ItemInit.ingotAluminium), null, 500);
-		//recipes.addSmelting(ItemInit.resourceBrickDirtyCoal.shiftedIndex, 0, new ItemStack(Item.coal), null, 500);
 	}
 }
