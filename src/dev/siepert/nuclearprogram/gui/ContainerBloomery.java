@@ -8,6 +8,7 @@ public class ContainerBloomery extends Container {
 	private int cookTime = 0;
 	private int burnTime = 0;
 	private int cooldown = 0;
+	private int maxCookTime = 0;
 
 	public ContainerBloomery(InventoryPlayer inventory, TileEntityBloomery furnace) {
 		this.furnace = furnace;
@@ -44,11 +45,16 @@ public class ContainerBloomery extends Container {
 			if (this.cooldown != this.furnace.cooldown) {
 				listener.sendData(this, 2, this.furnace.cooldown);
 			}
+
+			if (this.maxCookTime != (this.furnace.lastRecipe != null ? this.furnace.lastRecipe.recipeTime : 0)) {
+				listener.sendData(this, 2, this.furnace.lastRecipe != null ? this.furnace.lastRecipe.recipeTime : 0);
+			}
 		}
 
 		this.cookTime = this.furnace.recipeTicks;
 		this.burnTime = this.furnace.fuelHeap;
 		this.cooldown = this.furnace.cooldown;
+		this.maxCookTime = this.furnace.lastRecipe != null ? this.furnace.lastRecipe.recipeTime : 0;
 	}
 
 	@Override
@@ -63,6 +69,10 @@ public class ContainerBloomery extends Container {
 
 		if (id == 2) {
 			this.furnace.cooldown = value;
+		}
+
+		if (id == 3) {
+			this.furnace.recipeTicksMax = value;
 		}
 	}
 

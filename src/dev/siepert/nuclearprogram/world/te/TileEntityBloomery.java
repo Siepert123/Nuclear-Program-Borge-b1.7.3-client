@@ -14,10 +14,11 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 	private final ItemStack[] inventory = new ItemStack[4]; // 0 - fuel; 1 - iron ore; 2 - result; 3 - slag
 	public int fuelHeap = 0;
 	public int recipeTicks = 0;
+	public int recipeTicksMax = 0;
 	public int cooldown = 0;
-	public static final int COAL_TICKS = 500;
+	public static final int COAL_TICKS = 1000;
 	public static final int RECIPE_TICKS = COAL_TICKS * 4;
-	public static final int MAX_FUEL_HEAP = RECIPE_TICKS * 2;
+	public static final int MAX_FUEL_HEAP = RECIPE_TICKS;
 
 	@Override
 	public int getSizeInventory() {
@@ -71,7 +72,7 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 		return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) == this;
 	}
 
-	private BloomeryRecipes.Recipe lastRecipe = null;
+	public BloomeryRecipes.Recipe lastRecipe = null;
 	public int pipeLength = 0;
 	private boolean fx = true;
 	@Override
@@ -99,13 +100,14 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 				update = true;
 				this.cooldown = 3;
 				this.fuelHeap--;
-				if (++this.recipeTicks >= this.lastRecipe.recipeTime) {
+				this.recipeTicks += Math.min(this.pipeLength, 4);
+				if (this.recipeTicks >= this.lastRecipe.recipeTime) {
 					this.recipeTicks = 0;
+
+					BloomeryRecipes.Result result = BloomeryRecipes.blooming().getSmeltingResult(this.inventory[1]);
 
 					this.inventory[1].stackSize--;
 					if (this.inventory[1].stackSize == 0) this.inventory[1] = null;
-
-					BloomeryRecipes.Result result = BloomeryRecipes.blooming().getSmeltingResult(this.inventory[1]);
 
 					if (this.inventory[2] == null) this.inventory[2] = result.item.copy();
 					else this.inventory[2].stackSize += result.item.stackSize;
@@ -135,6 +137,10 @@ public class TileEntityBloomery extends TileEntity implements IInventory, IFurna
 	}
 	private boolean canSmelt() {
 		if (this.pipeLength == 0 || this.fuelHeap == 0) {
+			this.lastRecipe = null;
+			return false;
+		}
+		if (this.inventory[1] == null) {
 			this.lastRecipe = null;
 			return false;
 		}

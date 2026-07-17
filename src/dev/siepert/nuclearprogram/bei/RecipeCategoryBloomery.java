@@ -60,8 +60,7 @@ public class RecipeCategoryBloomery implements IRecipeCategory<RecipeBloomery> {
 	}
 	@Override
 	public void drawTexts(Minecraft mc, FontRenderer font, int x, int y, double mouseX, double mouseY, RecipeBloomery recipe, float pt) {
-		String seconds = (recipe.ticks * 0.05F) + "s";
-		font.drawString(seconds, x + this.getWidth() - font.getStringWidth(seconds) - 2, y + this.getHeight() - 10, 0xFFFFFF);
+
 	}
 
 	public void drawTexturedModalRect(Tessellator tes, int x, int y, int srcX, int srcY, int w, int h) {
