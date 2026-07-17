@@ -159,21 +159,47 @@ public class RecipeInit {
 				'X', Ingredient.of("blockSteel"),
 				'C', Ingredient.of(BlockInit.workbench.blockID, BlockWorkbench.IRON)
 		);
-		recipes.addShapedRecipe(new ItemStack(BlockInit.furnaceBuilderIdle),
+		recipes.addShapedRecipe(new ItemStack(BlockInit.furnaceBuilderIdle, 1),
 				"###", "# #", "XXX",
 				'#', Ingredient.of("stone"),
 				'X', Ingredient.of(Block.stairSingle.blockID, 0)
 		);
-		recipes.addShapedRecipe(new ItemStack(BlockInit.bloomeryPipe),
+		recipes.addShapedRecipe(new ItemStack(BlockInit.bloomeryPipe, 1),
 				"#X#", "#X#", "#X#",
 				'#', Block.brick,
 				'X', Ingredient.of("plateCopper")
 		);
 
-		recipes.addShapedRecipe(new ItemStack(BlockInit.hatch),
+		recipes.addShapedRecipe(new ItemStack(BlockInit.hatch, 1),
 				" X ", "###", " X ",
 				'#', Ingredient.of("ingotSteel"),
 				'X', ItemInit.valve
+		);
+
+
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateCopper, 1),
+				ItemInit.hammer,
+				Ingredient.of("ingotCopper")
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateAluminium, 1),
+				ItemInit.hammer,
+				Ingredient.of("ingotAluminium")
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateLead, 1),
+				ItemInit.hammer,
+				Ingredient.of("ingotLead")
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateTitanium, 1),
+				ItemInit.hammer,
+				Ingredient.of("ingotTitanium")
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateTungsten, 1),
+				ItemInit.hammer,
+				Ingredient.of("ingotTungsten")
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateSteel, 1),
+				ItemInit.hammer,
+				Ingredient.of("ingotSteel")
 		);
 	}
 

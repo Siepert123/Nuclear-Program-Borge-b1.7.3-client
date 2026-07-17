@@ -2,7 +2,9 @@ package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.world.item.ItemConsumableSeeds;
+import dev.siepert.nuclearprogram.world.item.ItemCraftingTool;
 import dev.siepert.nuclearprogram.world.item.ItemDetonator;
+import net.minecraft.src.EnumToolMaterial;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemFood;
 import net.minecraftborge.loader.event.register.IdAllocationEvent;
@@ -39,6 +41,8 @@ public class ItemInit {
 
 	public static Item valve;
 
+	public static ItemCraftingTool hammer;
+	public static ItemCraftingTool cutters;
 	public static Item screwdriver;
 	public static ItemDetonator detonator;
 
@@ -75,6 +79,12 @@ public class ItemInit {
 
 		valve = helper.register("valve");
 
+		hammer = helper.register("hammer", id -> new ItemCraftingTool(id)
+				.setMaxDamage(256)
+		);
+		cutters = helper.register("cutters", id -> new ItemCraftingTool(id)
+				.setMaxDamage(256)
+		);
 		screwdriver = helper.register("screwdriver");
 		detonator = helper.register("detonator", ItemDetonator::new);
 	}
