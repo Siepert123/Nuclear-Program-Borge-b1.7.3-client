@@ -9,6 +9,7 @@ import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
 import dev.siepert.nuclearprogram.texturefx.TextureYanoizedFX;
+import dev.siepert.nuclearprogram.util.SingletonWorld;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
 import dev.siepert.nuclearprogram.world.entity.render.RenderHowitzerShell;
@@ -49,6 +50,8 @@ public class NuclearProgram implements IModLifecycleListener {
 			System.err.println("Failed to detect OBJ Library: " + e);
 		}
 		OBJ_FACTORY = factory;
+
+		SingletonWorld.get(0, 0);
 	}
 
 	@Override

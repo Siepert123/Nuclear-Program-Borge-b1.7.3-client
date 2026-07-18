@@ -1,25 +1,26 @@
 package dev.siepert.nuclearprogram.world.block.render;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
+import dev.siepert.nuclearprogram.util.SingletonBlockAccess;
+import dev.siepert.nuclearprogram.util.SingletonWorld;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
 import dev.siepert.nuclearprogram.world.block.BlockSealedDoor;
-import net.minecraft.src.Block;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.RenderBlocks;
-import net.minecraft.src.Tessellator;
+import dev.siepert.nuclearprogram.world.te.TileEntitySealedDoor;
+import dev.siepert.nuclearprogram.world.te.render.RenderSealedDoor;
+import net.minecraft.src.*;
 import net.minecraftborge.loader.BlockRenderType;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.Side;
+import org.lwjgl.opengl.GL11;
 
 // I have a lot of regrets
 public class RenderBlockSealedDoor implements BlockRenderType {
 	public static final RenderBlockSealedDoor INSTANCE = new RenderBlockSealedDoor();
 	public static final int RENDER_TYPE = RenderBlocks.allocateRenderType(INSTANCE);
 
-	private static final float B_DOWN = 0.5F;
-	private static final float B_UP = 1.0F;
-	private static final float B_Z = 0.8F;
-	private static final float B_X = 0.6F;
+	private RenderBlockSealedDoor() {
+
+	}
 
 	@Override
 	public boolean render(IBlockAccess world, Block block, int x, int y, int z, RenderBlocks renderer) {
@@ -164,6 +165,48 @@ public class RenderBlockSealedDoor implements BlockRenderType {
 		this.automaticShading = false;
 		block.setBlockBoundsBasedOnState(world, x, y, z);
 		return true;
+	}
+
+	// Pain and suffering
+	private TileEntitySealedDoor dummyTE = null;
+	private RenderSealedDoor dummyRenderer = null;
+	@Override
+	public void renderOnInventory(Block block, int metadata, float brightness, RenderBlocks renderer) {
+		GL11.glScalef(0.5F, 0.5F, 0.5F);
+		GL11.glTranslatef(-0.5F, -0.75F, -0.75F);
+
+		this.brightness = brightness;
+		this.automaticShading = false;
+
+		Tessellator.instance.startDrawingQuads();
+		this.render(SingletonBlockAccess.get(block.blockID, 0b0010), block, 0, 0, 0, renderer);
+		Tessellator.instance.draw();
+		GL11.glTranslatef(0.0F, 1.0F, 0.0F);
+		Tessellator.instance.startDrawingQuads();
+		this.render(SingletonBlockAccess.get(block.blockID, 0b1010), block, 0, 0, 0, renderer);
+		Tessellator.instance.draw();
+		GL11.glTranslatef(0.0F, -1.0F, 0.0F);
+
+		if (this.dummyTE == null) {
+			this.dummyTE = new TileEntitySealedDoor();
+			this.dummyTE.showScrews = true;
+			this.dummyTE.lastShowScrews = true;
+		}
+		this.dummyTE.worldObj = SingletonWorld.get(block.blockID, 0b0010);
+		if (this.dummyRenderer == null) {
+			this.dummyRenderer = RenderSealedDoor.INSTANCE;
+		}
+		this.dummyRenderer.renderTileEntityAt(this.dummyTE, 0, 0, 0, brightness);
+
+		GL11.glTranslatef(0.5F, 0.75F, 0.75F);
+		GL11.glScalef(2.0F, 2.0F, 2.0F);
+	}
+
+	public static final boolean EXPERIMENTAL_3D_RENDERER = true;
+	public boolean doRender3DItem = false;
+	@Override
+	public boolean renderIn3D() {
+		return EXPERIMENTAL_3D_RENDERER && this.doRender3DItem;
 	}
 
 	public float brightness = 1.0F;

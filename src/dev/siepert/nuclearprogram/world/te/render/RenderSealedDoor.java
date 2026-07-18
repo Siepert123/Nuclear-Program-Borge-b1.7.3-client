@@ -13,8 +13,8 @@ public class RenderSealedDoor extends TileEntitySpecialRenderer<TileEntitySealed
 
 	private RenderSealedDoor() {}
 
-	private static final RenderBlocks renderer = new RenderBlocks();
-	private static final RenderBlockSealedDoor instance = RenderBlockSealedDoor.INSTANCE;
+	private final RenderBlocks renderer = new RenderBlocks();
+	private final RenderBlockSealedDoor instance = RenderBlockSealedDoor.INSTANCE;
 
 	private static float pos(int px32) {
 		return px32 / 32.0F;
@@ -68,7 +68,7 @@ public class RenderSealedDoor extends TileEntitySpecialRenderer<TileEntitySealed
 		tes.startDrawingQuads();
 		BlockInit.sealedDoor.pass = 1;
 		BlockInit.sealedDoor.setBlockBounds(0.0F, 0.0F, 0.5F+(0.0625F*0.5F), 1.0F, 2.0F, 1.0F-0.0625F);
-		instance.renderFaces(renderer, tes, BlockInit.sealedDoor, 0, 0, 0);
+		this.instance.renderFaces(this.renderer, tes, BlockInit.sealedDoor, 0, 0, 0);
 		BlockInit.sealedDoor.pass = 0;
 		tes.draw();
 		GL11.glPopMatrix();
@@ -80,7 +80,7 @@ public class RenderSealedDoor extends TileEntitySpecialRenderer<TileEntitySealed
 			GL11.glRotatef(te.getScrewRot(pt) * 360.0F, 0.0F, 0.0F, 1.0F);
 			GL11.glTranslatef(-0.5F, -0.5F, 0.0F);
 			tes.startDrawingQuads();
-			instance.renderScrew(Block.stone, tes, renderer, Block.blockIron.blockTexture);
+			this.instance.renderScrew(Block.stone, tes, this.renderer, Block.blockIron.blockTexture);
 			tes.draw();
 			GL11.glPopMatrix();
 		}

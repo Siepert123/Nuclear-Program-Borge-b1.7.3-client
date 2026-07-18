@@ -4,11 +4,12 @@ import dev.siepert.nuclearprogram.util.IconSubpartStretch;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockSealedDoor;
 import dev.siepert.nuclearprogram.world.te.TileEntitySealedDoor;
 import net.minecraft.src.*;
+import net.minecraftborge.loader.IGraphicsListener;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.IconRegister;
 import net.minecraftborge.loader.Side;
 
-public class BlockSealedDoor extends BlockContainer {
+public class BlockSealedDoor extends BlockContainer implements IGraphicsListener {
 	public Icon blockTexturePart;
 	public Icon blockTextureFrame, blockTextureFrameSide, blockTextureDoor;
 	public Icon blockTextureDoorFront, blockTextureDoorSide;
@@ -159,5 +160,10 @@ public class BlockSealedDoor extends BlockContainer {
 	}
 	public static boolean isOpen(int meta) {
 		return (meta & 0b0100) != 0;
+	}
+
+	@Override
+	public void setGraphicsFancy(boolean fancy) {
+		RenderBlockSealedDoor.INSTANCE.doRender3DItem = fancy;
 	}
 }
