@@ -131,6 +131,19 @@ public class RecipeInit {
 			);
 		}
 
+		recipes.addShapedRecipe(new ItemStack(BlockInit.stairsConcrete, 6),
+				"#  ", "## ", "###",
+				'#', BlockInit.concrete
+		);
+		recipes.addShapedRecipe(new ItemStack(BlockInit.stairsConcreteBrick, 6),
+				"#  ", "## ", "###",
+				'#', BlockInit.concreteBrick
+		);
+		recipes.addShapedRecipe(new ItemStack(BlockInit.stairsConcreteFoundation, 6),
+				"#  ", "## ", "###",
+				'#', BlockInit.concreteFoundation
+		);
+
 		recipes.addShapedRecipe(new ItemStack(BlockInit.slabConcreteSingle, 6, 0),
 				"###",
 				'#', BlockInit.concrete

@@ -9,6 +9,7 @@ import java.util.Random;
 public class BlockCropsHemp extends BlockCrops {
 	public BlockCropsHemp(int blockID) {
 		super(blockID, 0);
+		this.disableStats();
 	}
 
 	@Override

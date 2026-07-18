@@ -15,6 +15,7 @@ import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
 import dev.siepert.nuclearprogram.world.entity.render.RenderHowitzerShell;
 import dev.siepert.nuclearprogram.world.particle.ParticleTextures;
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.Block;
 import net.minecraftborge.loader.FurnaceRecipesFix;
 import net.minecraftborge.loader.ModList;
 import net.minecraftborge.loader.TerrainIcon;
@@ -67,6 +68,8 @@ public class NuclearProgram implements IModLifecycleListener {
 		TagInit.registerItemTags();
 		WorldGenInit.register();
 		EntityInit.register();
+
+		Block.tallGrass.addSeedToDrop(ItemInit.hempSeeds);
 	}
 
 	@Override

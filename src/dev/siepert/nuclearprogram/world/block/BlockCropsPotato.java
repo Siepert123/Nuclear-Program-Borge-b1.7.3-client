@@ -8,6 +8,7 @@ import java.util.Random;
 public class BlockCropsPotato extends BlockCrops {
 	public BlockCropsPotato(int blockID) {
 		super(blockID, 0);
+		this.disableStats();
 	}
 
 	@Override

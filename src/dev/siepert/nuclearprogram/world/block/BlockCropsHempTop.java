@@ -13,6 +13,7 @@ public class BlockCropsHempTop extends BlockFlower {
 		super(blockID, 0);
 		float size = 0.5F - 0.0625F;
 		this.setBlockBounds(0.5F-size, 0.0F, 0.5F-size, 0.5F+size, 0.5F, 0.5F+size);
+		this.disableStats();
 	}
 
 	@Override
