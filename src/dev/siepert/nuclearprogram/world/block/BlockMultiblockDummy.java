@@ -10,7 +10,7 @@ public class BlockMultiblockDummy extends BlockContainer {
 	}
 
 	@Override
-	protected TileEntity getBlockEntity() {
+	protected TileEntity getBlockEntity(int meta) {
 		return null;
 	}
 }

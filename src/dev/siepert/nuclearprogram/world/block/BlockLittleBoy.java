@@ -11,7 +11,7 @@ public class BlockLittleBoy extends BlockNuke {
 	}
 
 	@Override
-	protected TileEntityNuke getBlockEntity() {
+	protected TileEntityNuke getBlockEntity(int meta) {
 		return null;
 	}
 

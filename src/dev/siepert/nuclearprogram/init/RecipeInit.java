@@ -102,6 +102,9 @@ public class RecipeInit {
 		);
 		//endregion
 
+
+		// Blocks
+
 		recipes.addShapedRecipe(new ItemStack(BlockInit.fireclay, 1),
 				"##", "##",
 				'#', ItemInit.ballFireclay
@@ -177,6 +180,8 @@ public class RecipeInit {
 		);
 
 
+		// Items
+
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateIron, 1),
 				ItemInit.hammer,
 				Ingredient.of("ingotIron")
@@ -234,6 +239,13 @@ public class RecipeInit {
 				'#', Ingredient.of("ingotIron"),
 				'X', Ingredient.of("plateIron"),
 				'D', Ingredient.of("dyeAny")
+		);
+
+
+		// Vanilla
+
+		recipes.addShapelessRecipe(new ItemStack(Item.silk, 2),
+				ItemInit.hempFibers, ItemInit.hempFibers, ItemInit.hempFibers
 		);
 	}
 

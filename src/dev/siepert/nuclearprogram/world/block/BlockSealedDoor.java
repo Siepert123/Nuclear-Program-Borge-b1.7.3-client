@@ -134,7 +134,7 @@ public class BlockSealedDoor extends BlockContainer {
 	}
 
 	@Override
-	protected TileEntity getBlockEntity() {
+	protected TileEntity getBlockEntity(int meta) {
 		return new TileEntitySealedDoor();
 	}
 

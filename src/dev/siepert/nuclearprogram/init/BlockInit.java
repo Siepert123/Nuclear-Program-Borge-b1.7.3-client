@@ -57,6 +57,14 @@ public class BlockInit {
 
 	public static BlockExtractionTest extractionTest;
 
+	public static BlockRBMKColumn rbmkBlank;
+	public static BlockRBMKColumn rbmkBoiler;
+	public static BlockRBMKColumn rbmkFuel;
+	public static BlockRBMKColumn rbmkModerator;
+	public static BlockRBMKColumn rbmkControl;
+	public static BlockRBMKColumn rbmkAbsorber;
+	public static BlockRBMKColumn rbmkReflector;
+
 	public static void register(IdAllocationEvent<Block> event) {
 		Helper helper = new Helper(NuclearProgram.MODID, event);
 
@@ -260,6 +268,12 @@ public class BlockInit {
 				.setHardness(1.0F)
 				.setResistance(1.0F)
 				.setStepSound(soundChainFootstep)
+		);
+
+		rbmkBlank = helper.register("rbmkBlank", id -> new BlockRBMKColumn(id)
+				.setHarvestLevel("pickaxe", 2)
+				.setHardness(5.0F)
+				.setStepSound(soundMetal2Footstep)
 		);
 
 		available = true;

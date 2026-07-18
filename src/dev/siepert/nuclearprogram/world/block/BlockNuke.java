@@ -26,7 +26,7 @@ public abstract class BlockNuke extends BlockContainer implements IDetonateBehav
 	}
 
 	@Override
-	protected abstract TileEntityNuke getBlockEntity();
+	protected abstract TileEntityNuke getBlockEntity(int meta);
 
 	@Override
 	public Callback detonate(World world, int x, int y, int z) {

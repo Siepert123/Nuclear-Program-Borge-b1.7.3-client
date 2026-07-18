@@ -8,10 +8,11 @@ import net.minecraft.src.World;
 public class BlockNuclearCharge extends BlockNuke {
 	public BlockNuclearCharge(int blockID) {
 		super(blockID);
+		isBlockContainerMetaMask[blockID] = 0;
 	}
 
 	@Override
-	protected TileEntityNuke getBlockEntity() {
+	protected TileEntityNuke getBlockEntity(int meta) {
 		return null;
 	}
 
