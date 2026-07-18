@@ -55,6 +55,6 @@ public class BlockYanoDoor extends BlockDoor {
 
 	@Override
 	public int idDropped(int meta, Random random) {
-		return this.blockID;
+		return (meta & 8) != 0 ? 0 : this.blockID;
 	}
 }
