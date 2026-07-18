@@ -16,6 +16,7 @@ import net.minecraftborge.loader.event.EventBusSubscriber;
 import net.minecraftborge.loader.event.EventHandler;
 import net.minecraftborge.loader.event.entity.EntityDropLootEvent;
 import net.minecraftborge.loader.event.entity.player.PlayerCreateItemEvent;
+import net.minecraftborge.loader.event.entity.player.PlayerDestroyBlockEvent;
 import net.minecraftborge.loader.event.gui.RenderOverlayGuiEvent;
 import net.minecraftborge.loader.event.misc.ChatCommandEvent;
 import net.minecraftborge.loader.event.misc.FurnaceBurnTimeEvent;
@@ -313,6 +314,23 @@ public class EventHandlers {
 			int playerZ = MathHelper.floor_double(event.getCamera().posZ * 0.125);
 			if (WorldFalloutClouds.CloudData.anyInRange(clouds, playerX, playerZ)) {
 				event.getColor().set(0.1F, 0.1F, 0.1F);
+			}
+		}
+	}
+
+	@EventHandler
+	public static void blockBroken(PlayerDestroyBlockEvent event) {
+		if (event.isCanceled()) return;
+		if (event.getPhase() == Event.Phase.POST) {
+			if (event.getBlockId() == Block.tallGrass.blockID) {
+				World world = event.getWorld();
+				if (world.rand.nextFloat() < 0.1F) {
+					EntityItem entity = new EntityItem(world,
+							event.getX() + 0.5, event.getY() + 0.5, event.getZ() + 0.5,
+							new ItemStack(ItemInit.hempSeeds)
+					);
+					world.entityJoinedWorld(entity);
+				}
 			}
 		}
 	}

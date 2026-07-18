@@ -4,9 +4,10 @@ import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.world.item.ItemConsumableSeeds;
 import dev.siepert.nuclearprogram.world.item.ItemCraftingTool;
 import dev.siepert.nuclearprogram.world.item.ItemDetonator;
-import net.minecraft.src.EnumToolMaterial;
+import dev.siepert.nuclearprogram.world.item.ItemWhitePhosphorus;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemFood;
+import net.minecraft.src.ItemSeeds;
 import net.minecraftborge.loader.event.register.IdAllocationEvent;
 
 import java.util.function.IntFunction;
@@ -23,6 +24,8 @@ public class ItemInit {
 	public static Item ingotElectrum;
 	public static Item ingotKaupium;
 	public static Item ingotYanoizedKaupium;
+	public static Item dustRedPhosphorus;
+	public static Item dustWhitePhosphorus;
 	public static Item plateIron;
 	public static Item plateGold;
 	public static Item plateCopper;
@@ -35,6 +38,8 @@ public class ItemInit {
 	public static Item firebrick;
 	public static ItemConsumableSeeds potato;
 	public static ItemFood potatoCooked;
+	public static ItemSeeds hempSeeds;
+	public static Item hempFibers;
 
 	public static Item resourceBrickHematite;
 	public static Item resourceBrickMalachite;
@@ -62,6 +67,8 @@ public class ItemInit {
 		ingotElectrum = helper.register("ingotElectrum");
 		ingotKaupium = helper.register("ingotKaupium");
 		ingotYanoizedKaupium = helper.register("ingotYanoizedKaupium");
+		dustRedPhosphorus = helper.register("dustRedPhosphorus");
+		dustWhitePhosphorus = helper.register("dustWhitePhosphorus", ItemWhitePhosphorus::new);
 		plateIron = helper.register("plateIron");
 		plateGold = helper.register("plateGold");
 		plateCopper = helper.register("plateCopper");
@@ -73,8 +80,9 @@ public class ItemInit {
 		ballFireclay = helper.register("ballFireclay");
 		firebrick = helper.register("firebrick");
 		potato = helper.register("potato", id -> new ItemConsumableSeeds(id, BlockInit.potatoes.blockID, 1, false));
-		potatoCooked = helper.register("potatoCooked", id -> new ItemFood(id, 4, false)
-				.setMaxStackSize(64));
+		potatoCooked = helper.register("potatoCooked", id -> new ItemFood(id, 4, false).setMaxStackSize(64));
+		hempSeeds = helper.register("hempSeeds", id -> new ItemSeeds(id, BlockInit.hemp.blockID));
+		hempFibers = helper.register("hempFibers");
 
 		resourceBrickHematite = helper.register("resourceBrickHematite");
 		resourceBrickMalachite = helper.register("resourceBrickMalachite");
@@ -89,7 +97,9 @@ public class ItemInit {
 		cutters = helper.register("cutters", id -> new ItemCraftingTool(id)
 				.setMaxDamage(256)
 		);
-		screwdriver = helper.register("screwdriver");
+		screwdriver = helper.register("screwdriver", id -> new ItemCraftingTool(id)
+				.setMaxDamage(256)
+		);
 		detonator = helper.register("detonator", ItemDetonator::new);
 	}
 

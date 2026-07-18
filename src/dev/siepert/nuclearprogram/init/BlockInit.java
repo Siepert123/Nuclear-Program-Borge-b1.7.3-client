@@ -29,6 +29,8 @@ public class BlockInit {
 	public static BlockFurnaceBuilder furnaceBuilderIdle;
 	public static BlockFurnaceBuilder furnaceBuilderLit;
 	public static BlockCropsPotato potatoes;
+	public static BlockCropsHemp hemp;
+	public static BlockCropsHempTop hempTop;
 	public static BlockYanoDoor doorOffice;
 	public static BlockYanoDoor doorBunker;
 	public static Block concrete;
@@ -111,6 +113,17 @@ public class BlockInit {
 		potatoes = helper.register("potatoes", id -> new BlockCropsPotato(id)
 				.setHarvestLevel("hoe", -1)
 				.setStepSound(Block.soundGrassFootstep)
+				.disableNeighborNotifyOnMetadataChange()
+		);
+		hemp = helper.register("hemp", id -> new BlockCropsHemp(id)
+				.setHarvestLevel("hoe", -1)
+				.setStepSound(Block.soundGrassFootstep)
+				.disableNeighborNotifyOnMetadataChange()
+		);
+		hempTop = helper.register("hemp", id -> new BlockCropsHempTop(id)
+				.setHarvestLevel("hoe", -1)
+				.setStepSound(Block.soundGrassFootstep)
+				.disableNeighborNotifyOnMetadataChange()
 		);
 		doorOffice = helper.register("doorOffice", id -> new BlockYanoDoor(id, Material.wood)
 				.setHarvestLevel("axe", 0)

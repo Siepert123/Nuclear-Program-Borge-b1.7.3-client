@@ -209,6 +209,32 @@ public class RecipeInit {
 				ItemInit.hammer,
 				Ingredient.of("ingotSteel")
 		);
+
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.ballFireclay, 4),
+				Item.clay, Item.clay, Item.clay,
+				ItemInit.resourceBrickBauxite
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.ballFireclay, 4),
+				Item.clay, Item.clay,
+				Block.netherrack, Block.netherrack
+		);
+
+		recipes.addShapedRecipe(new ItemStack(ItemInit.hammer, 1),
+				"## ", "##X", "## ",
+				'#', Ingredient.of("ingotIron"),
+				'X', Item.stick
+		);
+		recipes.addShapedRecipe(new ItemStack(ItemInit.cutters, 1),
+				"X#", " X",
+				'#', Ingredient.of("ingotIron"),
+				'X', Item.stick
+		);
+		recipes.addShapedRecipe(new ItemStack(ItemInit.screwdriver, 1),
+				"  X", "D# ", "#D ",
+				'#', Ingredient.of("ingotIron"),
+				'X', Ingredient.of("plateIron"),
+				'D', Ingredient.of("dyeAny")
+		);
 	}
 
 	public static void furnace(FurnaceRecipesFix recipes) {
@@ -240,12 +266,6 @@ public class RecipeInit {
 		recipes.addRecipe(NuclearProgram.path("bloomery"), WorkbenchRecipe.builder()
 				.setResult(new ItemStack(BlockInit.bloomeryIdle))
 				.addIngredient(Ingredient.of(Block.brick.blockID), 16)
-				.build());
-		recipes.addRecipe(NuclearProgram.path("blastfurnace"), WorkbenchRecipe.builder()
-				.setResult(new ItemStack(BlockInit.bloomeryLit))
-				.addIngredient(Ingredient.of(BlockInit.firebricks.blockID), 16)
-				.addIngredient(Ingredient.of("ingotSteel"), 16)
-				.setTier(1)
 				.build());
 
 		recipes.addRecipe("hbm/valve", WorkbenchRecipe.builder()

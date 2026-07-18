@@ -59,6 +59,7 @@ public class NuclearProgram implements IModLifecycleListener {
 		event.registerNetHandler(NuclearProgramNetHandler.register());
 
 		AchievementInit.register();
+		TagInit.registerVanillaTags();
 		TagInit.registerBlockTags();
 		TagInit.registerItemTags();
 		WorldGenInit.register();

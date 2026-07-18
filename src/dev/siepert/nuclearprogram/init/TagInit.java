@@ -2,6 +2,7 @@ package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
 import dev.siepert.nuclearprogram.world.block.BlockMetalOre;
+import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraftborge.loader.DyeHelper;
 import net.minecraftborge.loader.tag.ItemTags;
@@ -16,6 +17,8 @@ public class TagInit {
 		ItemTags.tag("oreLead", new ItemStack(BlockInit.oreMetal, 1, BlockMetalOre.LEAD));
 		ItemTags.tag("oreTitanium", new ItemStack(BlockInit.oreMetal, 1, BlockMetalOre.TITANIUM));
 		ItemTags.tag("oreTungsten", new ItemStack(BlockInit.oreMetal, 1, BlockMetalOre.TUNGSTEN));
+		ItemTags.tag("oreUranium", new ItemStack(BlockInit.oreMetal, 1, BlockMetalOre.URANIUM));
+		ItemTags.tag("oreThorium", new ItemStack(BlockInit.oreMetal, 1, BlockMetalOre.THORIUM));
 
 		ItemTags.tag("blockCopper", new ItemStack(BlockInit.blockMetal, 1, BlockMetal.COPPER));
 		ItemTags.tag("blockAluminium", new ItemStack(BlockInit.blockMetal, 1, BlockMetal.ALUMINIUM));
@@ -53,5 +56,11 @@ public class TagInit {
 		ItemTags.tag("plateTitanium", ItemInit.plateTitanium);
 		ItemTags.tag("plateTungsten", ItemInit.plateTungsten);
 		ItemTags.tag("plateSteel", ItemInit.plateSteel);
+	}
+
+	public static void registerVanillaTags() {
+		if (ItemTags.getTagged("dyeAny").stream().noneMatch(stack -> stack.itemID == Item.dyePowder.shiftedIndex)) {
+			for (int i = 0; i < 16; i++) ItemTags.tag("dyeAny", new ItemStack(Item.dyePowder, 1, i));
+		}
 	}
 }

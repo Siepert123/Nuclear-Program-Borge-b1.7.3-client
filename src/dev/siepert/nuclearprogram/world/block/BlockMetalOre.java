@@ -11,13 +11,17 @@ public class BlockMetalOre extends Block {
 			"Copper",
 			"Lead",
 			"Titanium",
-			"Tungsten"
+			"Tungsten",
+			"Uranium",
+			"Thorium",
 	};
 
 	public static final int COPPER = 0;
 	public static final int LEAD = 1;
 	public static final int TITANIUM = 2;
 	public static final int TUNGSTEN = 3;
+	public static final int URANIUM = 4;
+	public static final int THORIUM = 5;
 
 	public final Icon[] blockTextures = new Icon[VARIANTS.length];
 
