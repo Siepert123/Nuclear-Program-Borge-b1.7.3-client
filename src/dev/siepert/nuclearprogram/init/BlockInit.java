@@ -2,11 +2,9 @@ package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.world.block.*;
+import dev.siepert.nuclearprogram.world.block.BlockWorkbench;
 import dev.siepert.nuclearprogram.world.item.*;
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.Material;
-import net.minecraft.src.StepSound;
+import net.minecraft.src.*;
 import net.minecraftborge.loader.event.register.IdAllocationEvent;
 
 import java.util.function.IntFunction;
@@ -37,6 +35,9 @@ public class BlockInit {
 	public static Block concreteBrick;
 	public static BlockPillar concreteFoundation;
 	public static BlockConcreteColored concreteColored;
+	public static BlockStairs stairsConcrete;
+	public static BlockStairs stairsConcreteBrick;
+	public static BlockStairs stairsConcreteFoundation;
 	public static BlockStepConcrete slabConcreteSingle;
 	public static BlockStepConcrete slabConcreteDouble;
 	public static BlockStepConcreteColored slabConcreteColoredSingle;
@@ -170,6 +171,9 @@ public class BlockInit {
 				.setResistance(concrete.getExplosionResistance(null))
 				.setStepSound(Block.soundStoneFootstep)
 		);
+		stairsConcrete = helper.register("stairsConcrete", id -> new BlockStairs(id, concrete));
+		stairsConcreteBrick = helper.register("stairsConcreteBrick", id -> new BlockStairs(id, concreteBrick));
+		stairsConcreteFoundation = helper.register("stairsConcreteFoundation", id -> new BlockStairs(id, concreteFoundation));
 		slabConcreteSingle = helper.register("slabConcrete", id -> new BlockStepConcrete(id, false)
 				.setHarvestLevel("pickaxe", 2)
 				.setHardness(concrete.getHardness())
@@ -296,6 +300,13 @@ public class BlockInit {
 		Item.itemsList[slabConcreteDouble.blockID] = new ItemBlockStepConcrete(slabConcreteDouble);
 		Item.itemsList[slabConcreteColoredSingle.blockID] = new ItemBlockStepConcreteColored(slabConcreteColoredSingle);
 		Item.itemsList[slabConcreteColoredDouble.blockID] = new ItemBlockStepConcreteColored(slabConcreteColoredDouble);
+		Item.itemsList[rbmkBlank.blockID] = new ItemBlockRBMKColumn(rbmkBlank);
+		Item.itemsList[rbmkBoiler.blockID] = new ItemBlockRBMKColumn(rbmkBoiler);
+		Item.itemsList[rbmkFuel.blockID] = new ItemBlockRBMKColumn(rbmkFuel);
+		Item.itemsList[rbmkModerator.blockID] = new ItemBlockRBMKColumn(rbmkModerator);
+		Item.itemsList[rbmkControl.blockID] = new ItemBlockRBMKColumn(rbmkControl);
+		Item.itemsList[rbmkAbsorber.blockID] = new ItemBlockRBMKColumn(rbmkAbsorber);
+		Item.itemsList[rbmkReflector.blockID] = new ItemBlockRBMKColumn(rbmkReflector);
 	}
 
 	@SuppressWarnings("unchecked")

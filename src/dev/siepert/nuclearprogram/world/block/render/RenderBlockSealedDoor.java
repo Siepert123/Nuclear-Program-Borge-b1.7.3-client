@@ -16,6 +16,11 @@ public class RenderBlockSealedDoor implements BlockRenderType {
 	public static final RenderBlockSealedDoor INSTANCE = new RenderBlockSealedDoor();
 	public static final int RENDER_TYPE = RenderBlocks.allocateRenderType(INSTANCE);
 
+	private static final float B_DOWN = 0.5F;
+	private static final float B_UP = 1.0F;
+	private static final float B_Z = 0.8F;
+	private static final float B_X = 0.6F;
+
 	@Override
 	public boolean render(IBlockAccess world, Block block, int x, int y, int z, RenderBlocks renderer) {
 		if (renderer.overrideBlockIcon != null) {
@@ -31,6 +36,8 @@ public class RenderBlockSealedDoor implements BlockRenderType {
 		int facing = meta & 0b0011;
 		boolean upper = BlockSealedDoor.isUpperPart(meta);
 		Icon textureSteel = BlockInit.blockMetal.blockTextures[BlockMetal.STEEL];
+		this.automaticShading = true;
+		this.brightness = b;
 		switch (facing) {
 			case 0:
 				block.setBlockBounds(0, 0, 0, p*0.5F, 1.0F, p*1.5F);
@@ -153,34 +160,56 @@ public class RenderBlockSealedDoor implements BlockRenderType {
 				}
 				break;
 		}
+		this.brightness = 1.0F;
+		this.automaticShading = false;
 		block.setBlockBoundsBasedOnState(world, x, y, z);
 		return true;
 	}
 
+	public float brightness = 1.0F;
+	public boolean automaticShading = false;
 	public void renderFaces(RenderBlocks renderer, Tessellator tes, Block block, double x, double y, double z) {
+		float bUp = this.brightness;
+		float bDown = this.brightness * (this.automaticShading ? 0.5F : 1.0F);
+		float bX = this.brightness * (this.automaticShading ? 0.6F : 1.0F);
+		float bZ = this.brightness * (this.automaticShading ? 0.8F : 1.0F);
+
 		tes.setNormal(0.0F, -1.0F, 0.0F);
+		tes.setColorOpaque_F(bDown, bDown, bDown);
 		renderer.renderBottomFace(block, x, y, z, block.getBlockIconFromSide(Side.DOWN));
 		tes.setNormal(0.0F, 1.0F, 0.0F);
+		tes.setColorOpaque_F(bUp, bUp, bUp);
 		renderer.renderTopFace(block, x, y, z, block.getBlockIconFromSide(Side.UP));
 		tes.setNormal(0.0F, 0.0F, -1.0F);
+		tes.setColorOpaque_F(bZ, bZ, bZ);
 		renderer.renderEastFace(block, x, y, z, block.getBlockIconFromSide(Side.EAST));
 		tes.setNormal(0.0F, 0.0F, 1.0F);
 		renderer.renderWestFace(block, x, y, z, block.getBlockIconFromSide(Side.WEST));
 		tes.setNormal(-1.0F, 0.0F, 0.0F);
+		tes.setColorOpaque_F(bX, bX, bX);
 		renderer.renderNorthFace(block, x, y, z, block.getBlockIconFromSide(Side.NORTH));
 		tes.setNormal(1.0F, 0.0F, 0.0F);
 		renderer.renderSouthFace(block, x, y, z, block.getBlockIconFromSide(Side.SOUTH));
 	}
 	public void renderFaces(RenderBlocks renderer, Tessellator tes, Block block, double x, double y, double z, Icon texture) {
+		float bUp = this.brightness;
+		float bDown = this.brightness * (this.automaticShading ? 0.5F : 1.0F);
+		float bX = this.brightness * (this.automaticShading ? 0.6F : 1.0F);
+		float bZ = this.brightness * (this.automaticShading ? 0.8F : 1.0F);
+
 		tes.setNormal(0.0F, -1.0F, 0.0F);
+		tes.setColorOpaque_F(bDown, bDown, bDown);
 		renderer.renderBottomFace(block, x, y, z, texture);
 		tes.setNormal(0.0F, 1.0F, 0.0F);
+		tes.setColorOpaque_F(bUp, bUp, bUp);
 		renderer.renderTopFace(block, x, y, z, texture);
 		tes.setNormal(0.0F, 0.0F, -1.0F);
+		tes.setColorOpaque_F(bZ, bZ, bZ);
 		renderer.renderEastFace(block, x, y, z, texture);
 		tes.setNormal(0.0F, 0.0F, 1.0F);
 		renderer.renderWestFace(block, x, y, z, texture);
 		tes.setNormal(-1.0F, 0.0F, 0.0F);
+		tes.setColorOpaque_F(bX, bX, bX);
 		renderer.renderNorthFace(block, x, y, z, texture);
 		tes.setNormal(1.0F, 0.0F, 0.0F);
 		renderer.renderSouthFace(block, x, y, z, texture);

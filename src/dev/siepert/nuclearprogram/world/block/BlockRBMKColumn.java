@@ -81,9 +81,10 @@ public class BlockRBMKColumn extends BlockContainer {
 		return meta == 0 ? this.blockID : 0;
 	}
 
+	private static final boolean USE_CUSTOM_ITEM_RENDERER = false;
 	@Override
 	public int getRenderType() {
-		return RenderBlockRBMKColumn.RENDER_TYPE;
+		return USE_CUSTOM_ITEM_RENDERER ? RenderBlockRBMKColumn.RENDER_TYPE : 0;
 	}
 
 	@Override
