@@ -270,11 +270,13 @@ public class BlockInit {
 				.setStepSound(soundChainFootstep)
 		);
 
-		rbmkBlank = helper.register("rbmkBlank", id -> new BlockRBMKColumn(id)
-				.setHarvestLevel("pickaxe", 2)
-				.setHardness(5.0F)
-				.setStepSound(soundMetal2Footstep)
-		);
+		rbmkBlank = helper.register("rbmkBlank", BlockRBMKColumn::new);
+		rbmkBoiler = helper.register("rbmkBoiler", BlockRBMKColumn::new);
+		rbmkFuel = helper.register("rbmkFuel", BlockRBMKColumn::new);
+		rbmkModerator = helper.register("rbmkModerator", BlockRBMKColumn::new);
+		rbmkControl = helper.register("rbmkControl", BlockRBMKColumn::new);
+		rbmkAbsorber = helper.register("rbmkAbsorber", BlockRBMKColumn::new);
+		rbmkReflector = helper.register("rbmkReflector", BlockRBMKColumn::new);
 
 		available = true;
 

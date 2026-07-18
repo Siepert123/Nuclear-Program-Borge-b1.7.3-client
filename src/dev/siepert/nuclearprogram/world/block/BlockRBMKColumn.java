@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockRBMKColumn;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.Icon;
@@ -9,12 +10,17 @@ import net.minecraftborge.loader.Side;
 import java.util.Random;
 
 public class BlockRBMKColumn extends BlockContainer {
+	protected static boolean preventColumnRemoval = false;
+
 	public Icon blockTextureTop;
 
 	public BlockRBMKColumn(int blockID) {
 		super(blockID, Material.iron);
-		isBlockContainerMetaMask[blockID] = 0;
+		this.setHarvestLevel("pickaxe", 2);
+		this.setHardness(5.0F);
+		this.setStepSound(BlockInit.soundMetal2Footstep);
 
+		isBlockContainerMetaMask[blockID] = 0;
 		this.enableTileEntity(0);
 	}
 
@@ -44,8 +50,29 @@ public class BlockRBMKColumn extends BlockContainer {
 
 	@Override
 	public void onBlockPlaced(World world, int x, int y, int z, int side) {
-		for (int i = 0; i < 7; i++) {
+		for (int i = 1; i < 7; i++) {
 			world.setBlockAndMetadataWithNotify(x, y+i, z, this.blockID, i);
+		}
+	}
+
+	@Override
+	public boolean canBlockStay(World world, int x, int y, int z) {
+		int meta = world.getBlockMetadata(x, y, z);
+		if (meta > 0) {
+			if (world.getBlockId(x, y-1, z) != this.blockID || world.getBlockMetadata(x, y-1, z) != meta - 1) return false;
+		}
+		if (meta < 6) {
+			return world.getBlockId(x, y + 1, z) == this.blockID && world.getBlockMetadata(x, y + 1, z) == meta + 1;
+		}
+		return true;
+	}
+
+	@Override
+	public void onNeighborBlockChange(World world, int x, int y, int z, int neighborBlockID) {
+		if (!this.canBlockStay(world, x, y, z)) {
+			int meta = world.getBlockMetadata(x, y, z);
+			world.setBlockWithNotify(x, y, z, 0);
+			this.dropBlockAsItem(world, x, y, z, meta);
 		}
 	}
 

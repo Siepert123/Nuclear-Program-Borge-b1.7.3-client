@@ -78,6 +78,14 @@ tile.nuclear_program/charredWood.name=Charred Wood
 tile.nuclear_program/nukeNuclearCharge.name=Nuclear Charge
 tile.nuclear_program/nukeLittleBoy.name=Little Boy
 tile.nuclear_program/nukeCaseoh.name=Fat Man
+tile.nuclear_program/extractionTest.name=Debug Bedrock Resource Deposit Extractor
+tile.nuclear_program/rbmkBlank.name=RBMK Column
+tile.nuclear_program/rbmkBoiler.name=RBMK Boiler
+tile.nuclear_program/rbmkFuel.name=RBMK Fuel Slots
+tile.nuclear_program/rbmkModerator.name=RBMK Moderator
+tile.nuclear_program/rbmkControl.name=RBMK Control Rods
+tile.nuclear_program/rbmkAbsorber.name=RBMK Absorber
+tile.nuclear_program/rbmkReflector.name=RBMK Reflector
 
 item.nuclear_program/cokeCoal.name=Coal Coke
 item.nuclear_program/cokePetroleum.name=Petroleum Coke
