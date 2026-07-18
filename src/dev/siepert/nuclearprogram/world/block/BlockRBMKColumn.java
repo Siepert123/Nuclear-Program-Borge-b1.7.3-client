@@ -35,7 +35,7 @@ public class BlockRBMKColumn extends BlockContainer {
 
 	@Override
 	public boolean canPlaceBlockAt(World world, int x, int y, int z) {
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 7; i++) {
 			int blockID = world.getBlockId(x, y+i, z);
 			if (blockID != 0) return false;
 		}
@@ -44,7 +44,7 @@ public class BlockRBMKColumn extends BlockContainer {
 
 	@Override
 	public void onBlockPlaced(World world, int x, int y, int z, int side) {
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 7; i++) {
 			world.setBlockAndMetadataWithNotify(x, y+i, z, this.blockID, i);
 		}
 	}
