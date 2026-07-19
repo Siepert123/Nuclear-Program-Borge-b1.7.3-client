@@ -44,10 +44,13 @@ public class BlockInit {
 	public static BlockStepConcreteColored slabConcreteColoredDouble;
 	public static BlockHatch hatch;
 	public static BlockSealedDoor sealedDoor;
+	public static BlockModulator modulator;
 
 	public static BlockBloomery bloomeryIdle;
 	public static BlockBloomery bloomeryLit;
 	public static BlockBloomeryPipe bloomeryPipe;
+
+	public static BlockFluidPipe fluidPipeCopper;
 
 	public static BlockNukestone nukestone;
 	public static BlockCharred charredWood;
@@ -210,6 +213,12 @@ public class BlockInit {
 				.setResistance(512.0F)
 				.setStepSound(soundMetal2Footstep)
 		);
+		modulator = helper.register("modulator", id -> new BlockModulator(id, Material.iron)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(5.0F)
+				.setResistance(15.0F)
+				.setStepSound(Block.soundMetalFootstep)
+		);
 
 		bloomeryIdle = helper.register("bloomery", id -> new BlockBloomery(id, false)
 				.setHarvestLevel("pickaxe", 0)
@@ -228,6 +237,14 @@ public class BlockInit {
 				.setHardness(Block.brick.getHardness())
 				.setResistance(Block.brick.getExplosionResistance(null))
 				.setStepSound(Block.soundStoneFootstep)
+				.disableResizeItem()
+		);
+
+		fluidPipeCopper = helper.register("fluidPipeCopper", id -> new BlockFluidPipe(id)
+				.setHarvestLevel("pickaxe", 0)
+				.setHardness(5.0F)
+				.setResistance(15.0F)
+				.setStepSound(soundMetal2Footstep)
 				.disableResizeItem()
 		);
 

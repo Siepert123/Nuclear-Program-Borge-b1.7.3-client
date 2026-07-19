@@ -74,6 +74,7 @@ tile.nuclear_program/slabConcreteRed.name=Red Concrete Slab
 tile.nuclear_program/slabConcreteBlack.name=Black Concrete Slab
 tile.nuclear_program/hatch.name=Sealed Hatch
 tile.nuclear_program/sealedDoor.name=Sliding Blast Door
+tile.nuclear_program/modulator.name=Modulator
 tile.nuclear_program/bloomery.name=Bloomery
 tile.nuclear_program/bloomeryPipe.name=Bloomery Pipe
 tile.nuclear_program/nukestone.name=Nuclear Remains
