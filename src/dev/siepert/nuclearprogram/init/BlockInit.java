@@ -51,6 +51,7 @@ public class BlockInit {
 	public static BlockBloomeryPipe bloomeryPipe;
 
 	public static BlockFluidPipe fluidPipeCopper;
+	public static BlockFluidPipeCoated fluidPipeCoated;
 
 	public static BlockNukestone nukestone;
 	public static BlockCharred charredWood;
@@ -242,10 +243,13 @@ public class BlockInit {
 
 		fluidPipeCopper = helper.register("fluidPipeCopper", id -> new BlockFluidPipe(id)
 				.setHarvestLevel("pickaxe", 0)
-				.setHardness(5.0F)
-				.setResistance(15.0F)
+				.setHardness(2.5F)
 				.setStepSound(soundMetal2Footstep)
-				.disableResizeItem()
+		);
+		fluidPipeCoated = helper.register("fluidPipeCoated", id -> new BlockFluidPipeCoated(id)
+				.setHarvestLevel("pickaxe", 0)
+				.setHardness(2.5F)
+				.setStepSound(soundMetal2Footstep)
 		);
 
 		nukestone = helper.register("nukestone", id -> new BlockNukestone(id)

@@ -19,5 +19,8 @@ public class TileEntityInit {
 		TileEntity.addMapping(TileEntityModulator.class, NuclearProgram.path("modulator"));
 
 		TileEntity.addMapping(TileEntityBloomery.class, NuclearProgram.path("bloomery"));
+
+		TileEntity.addMapping(TileEntityFluidPipe.class, NuclearProgram.path("fluidPipe"));
+		TileEntity.addMapping(TileEntityFluidPipeCoated.class, NuclearProgram.path("fluidPipeCoated"));
 	}
 }

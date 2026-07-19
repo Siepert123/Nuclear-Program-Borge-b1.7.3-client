@@ -1,15 +1,31 @@
 package dev.siepert.nuclearprogram.world.block;
 
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockFluidPipe;
-import net.minecraft.src.BlockContainer;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.Material;
-import net.minecraft.src.TileEntity;
+import net.minecraft.src.*;
+import net.minecraftborge.loader.EnumFacing;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.IconRegister;
 import net.minecraftborge.loader.Side;
 
 public class BlockFluidPipe extends BlockContainer {
+	public static final boolean[] canConnectPipe = new boolean[blocksList.length];
+	public static final int[] canConnectPipeMetaMask = new int[blocksList.length];
+
+	public static boolean canConnectPipe(int block, int meta) {
+		if (canConnectPipe[block]) {
+			return (canConnectPipeMetaMask[block] & (1 << meta)) != 0;
+		} else return false;
+	}
+
+	public static void enableConnection(int block, int meta) {
+		canConnectPipe[block] = true;
+		canConnectPipeMetaMask[block] |= (1 << meta);
+	}
+	public static void disableConnection(int block, int meta) {
+		canConnectPipeMetaMask[block] &= ~(1 << meta);
+		canConnectPipe[block] = canConnectPipeMetaMask[block] != 0;
+	}
+
 	public Icon blockTextureVertical;
 	public Icon blockTextureHorizontal;
 
@@ -17,11 +33,84 @@ public class BlockFluidPipe extends BlockContainer {
 		super(blockID, Material.iron);
 
 		isBlockContainerMetaMask[blockID] = 0;
+
+		canConnectPipe[blockID] = true;
+		canConnectPipeMetaMask[blockID] = 0xFFFF;
 	}
 
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		float size = 0.25F;
+		this.setBlockBounds(0.5F-size, 0.5F-size, 0.5F-size, 0.5F+size, 0.5F+size, 0.5F+size);
+		int ox, oy, oz;
+		int count = 0;
+		EnumFacing first = null;
+		for (EnumFacing side : EnumFacing.VALUES) {
+			ox = x + side.getOffsetX();
+			oy = y + side.getOffsetY();
+			oz = z + side.getOffsetZ();
+			if (canConnectPipe(world.getBlockId(ox, oy, oz), world.getBlockMetadata(ox, oy, oz))) {
+				if (first == null) first = side;
+				count++;
+
+				switch (side) {
+					case UP:
+						this.maxY = 1.0;
+						break;
+					case DOWN:
+						this.minY = 0.0;
+						break;
+					case NORTH:
+						this.minX = 0.0;
+						break;
+					case EAST:
+						this.minZ = 0.0;
+						break;
+					case SOUTH:
+						this.maxX = 1.0;
+						break;
+					case WEST:
+						this.maxZ = 1.0;
+						break;
+				}
+			}
+		}
+
+		if (count == 1) {
+			EnumFacing side = first.getOpposite();
+			switch (side) {
+				case UP:
+					this.maxY = 1.0;
+					break;
+				case DOWN:
+					this.minY = 0.0;
+					break;
+				case NORTH:
+					this.minX = 0.0;
+					break;
+				case EAST:
+					this.minZ = 0.0;
+					break;
+				case SOUTH:
+					this.maxX = 1.0;
+					break;
+				case WEST:
+					this.maxZ = 1.0;
+					break;
+			}
+		}
+	}
+
+	@Override
+	public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z) {
+		this.setBlockBoundsBasedOnState(world, x, y, z);
+		return super.getSelectedBoundingBoxFromPool(world, x, y, z);
+	}
+
+	@Override
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
+		this.setBlockBoundsBasedOnState(world, x, y, z);
+		return super.getCollisionBoundingBoxFromPool(world, x, y, z);
 	}
 
 	@Override
