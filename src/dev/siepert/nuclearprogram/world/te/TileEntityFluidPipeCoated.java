@@ -19,7 +19,9 @@ public class TileEntityFluidPipeCoated extends TileEntityFluidPipe {
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		this.modelBlockID = nbt.getShort("modelBlockID");
-		if (Block.blocksList[this.modelBlockID] == null) this.modelBlockID = 0;
+		this.modelBlockID = nbt.getShort("modelBlockID") & 4095;
+		if (Block.blocksList[this.modelBlockID] == null) {
+			this.modelBlockID = 0;
+		}
 	}
 }

@@ -14,14 +14,13 @@ public class RenderBlockFluidPipe implements BlockRenderType {
 
 	@Override
 	public boolean render(IBlockAccess world, Block block, int x, int y, int z, RenderBlocks renderer) {
-		boolean[] sides = new boolean[6];
 		int ox, oy, oz;
 		int count = 0;
 
 		EnumFacing last = null;
 		boolean center = false;
+		boolean flag = false;
 		for (EnumFacing side : EnumFacing.VALUES) {
-
 			ox = x + side.getOffsetX();
 			oy = y + side.getOffsetY();
 			oz = z + side.getOffsetZ();
@@ -29,12 +28,12 @@ public class RenderBlockFluidPipe implements BlockRenderType {
 				if (last != null) {
 					if (side.getOpposite() != last) {
 						center = true;
-						last = null;
 					}
+					last = null;
+					flag = true;
 				}
-				if (!center) last = side;
+				if (!flag) last = side;
 
-				sides[side.getIndex()] = true;
 				count++;
 
 				float size = 0.1874F;
@@ -91,7 +90,7 @@ public class RenderBlockFluidPipe implements BlockRenderType {
 
 		BlockFluidPipe.axis = -1;
 
-		if (center || count == 0) {
+		if (center || count == 0 || count > 2) {
 			float size2 = 0.2499F;
 			BlockFluidPipe.pass = 1;
 			block.setBlockBounds(0.5F - size2, 0.5F - size2, 0.5F - size2, 0.5F + size2, 0.5F + size2, 0.5F + size2);

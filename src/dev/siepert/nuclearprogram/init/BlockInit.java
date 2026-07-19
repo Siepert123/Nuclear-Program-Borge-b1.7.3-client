@@ -244,12 +244,12 @@ public class BlockInit {
 		fluidPipeCopper = helper.register("fluidPipeCopper", id -> new BlockFluidPipe(id)
 				.setHarvestLevel("pickaxe", 0)
 				.setHardness(2.5F)
-				.setStepSound(soundMetal2Footstep)
+				.setStepSound(soundPipeFootstep)
 		);
 		fluidPipeCoated = helper.register("fluidPipeCoated", id -> new BlockFluidPipeCoated(id)
 				.setHarvestLevel("pickaxe", 0)
 				.setHardness(2.5F)
-				.setStepSound(soundMetal2Footstep)
+				.setStepSound(soundPipeFootstep)
 		);
 
 		nukestone = helper.register("nukestone", id -> new BlockNukestone(id)
