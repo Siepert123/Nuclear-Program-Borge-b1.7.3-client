@@ -1,10 +1,7 @@
 package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
-import dev.siepert.nuclearprogram.world.item.ItemConsumableSeeds;
-import dev.siepert.nuclearprogram.world.item.ItemCraftingTool;
-import dev.siepert.nuclearprogram.world.item.ItemDetonator;
-import dev.siepert.nuclearprogram.world.item.ItemWhitePhosphorus;
+import dev.siepert.nuclearprogram.world.item.*;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemFood;
 import net.minecraft.src.ItemSeeds;
@@ -52,6 +49,13 @@ public class ItemInit {
 	public static ItemCraftingTool cutters;
 	public static Item screwdriver;
 	public static ItemDetonator detonator;
+
+	public static Item fuelRodEmpty;
+	public static Item fuelRod;
+	public static Item fuelRodArrayEmpty;
+	public static Item fuelRodArray;
+
+	public static Item fuelRodRbmkEmpty;
 
 	public static void register(IdAllocationEvent<Item> event) {
 		Helper helper = new Helper(NuclearProgram.MODID, event);
@@ -101,6 +105,13 @@ public class ItemInit {
 				.setMaxDamage(256)
 		);
 		detonator = helper.register("detonator", ItemDetonator::new);
+
+		fuelRodEmpty = helper.register("fuelRodEmpty", Item::new);
+		fuelRod = helper.register("fuelRod", ItemFuelRod::new);
+		fuelRodArrayEmpty = helper.register("fuelRodArrayEmpty", Item::new);
+		fuelRodArray = helper.register("fuelRodArray", ItemFuelRod::new);
+
+		fuelRodRbmkEmpty = helper.register("fuelRodRbmkEmpty", ItemFuelRodRBMK::new);
 	}
 
 	@SuppressWarnings("unchecked")

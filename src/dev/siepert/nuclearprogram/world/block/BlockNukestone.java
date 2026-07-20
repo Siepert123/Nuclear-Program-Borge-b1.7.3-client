@@ -54,6 +54,9 @@ public class BlockNukestone extends Block {
 			byte var8 = 32;
 			if(!BlockSand.fallInstantly && world.checkChunksExist(x - var8, y - var8, z - var8, x + var8, y + var8, z + var8)) {
 				EntityFallingSand entity = new EntityFallingSand(world, (float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F, this.blockID);
+				entity.lastTickPosX = entity.posX;
+				entity.lastTickPosY = entity.posY;
+				entity.lastTickPosZ = entity.posZ;
 				entity.blockMeta = world.getBlockMetadata(x, y, z);
 				world.entityJoinedWorld(entity);
 			} else {

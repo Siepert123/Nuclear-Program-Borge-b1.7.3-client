@@ -22,5 +22,9 @@ public class TileEntityInit {
 
 		TileEntity.addMapping(TileEntityFluidPipe.class, NuclearProgram.path("fluidPipe"));
 		TileEntity.addMapping(TileEntityFluidPipeCoated.class, NuclearProgram.path("fluidPipeCoated"));
+
+		TileEntity.addMapping(TileEntityRBMKColumn.class, NuclearProgram.path("rbmk/blank"));
+		TileEntity.addMapping(TileEntityRBMKBoiler.class, NuclearProgram.path("rbmk/boiler"));
+		TileEntity.addMapping(TileEntityRBMKFuel.class, NuclearProgram.path("rbmk/fuel"));
 	}
 }

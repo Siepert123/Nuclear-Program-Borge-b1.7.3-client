@@ -2,19 +2,26 @@ package dev.siepert.nuclearprogram.world.block;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockRBMKColumn;
+import dev.siepert.nuclearprogram.world.te.TileEntityRBMKColumn;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.IconRegister;
 import net.minecraftborge.loader.Side;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class BlockRBMKColumn extends BlockContainer {
 	protected static boolean preventColumnRemoval = false;
 
 	public Icon blockTextureTop;
+	public final Supplier<TileEntityRBMKColumn> tileentity;
 
 	public BlockRBMKColumn(int blockID) {
+		this(blockID, null);
+		throw new AssertionError("Legacy constructor");
+	}
+	public BlockRBMKColumn(int blockID, Supplier<TileEntityRBMKColumn> ctor) {
 		super(blockID, Material.iron);
 		this.setHarvestLevel("pickaxe", 2);
 		this.setHardness(5.0F);
@@ -22,6 +29,8 @@ public class BlockRBMKColumn extends BlockContainer {
 
 		isBlockContainerMetaMask[blockID] = 0;
 		this.enableTileEntity(0);
+
+		this.tileentity = ctor;
 	}
 
 	@Override
@@ -69,10 +78,12 @@ public class BlockRBMKColumn extends BlockContainer {
 
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, int neighborBlockID) {
+		int meta = world.getBlockMetadata(x, y, z);
 		if (!this.canBlockStay(world, x, y, z)) {
-			int meta = world.getBlockMetadata(x, y, z);
 			world.setBlockWithNotify(x, y, z, 0);
 			this.dropBlockAsItem(world, x, y, z, meta);
+		} else if (meta == 0) {
+			((TileEntityRBMKColumn)world.getBlockTileEntity(x, y, z)).updateNeighbourColumns();
 		}
 	}
 
@@ -81,7 +92,7 @@ public class BlockRBMKColumn extends BlockContainer {
 		return meta == 0 ? this.blockID : 0;
 	}
 
-	private static final boolean USE_CUSTOM_ITEM_RENDERER = false;
+	private static final boolean USE_CUSTOM_ITEM_RENDERER = true;
 	@Override
 	public int getRenderType() {
 		return USE_CUSTOM_ITEM_RENDERER ? RenderBlockRBMKColumn.RENDER_TYPE : 0;
@@ -89,6 +100,6 @@ public class BlockRBMKColumn extends BlockContainer {
 
 	@Override
 	protected TileEntity getBlockEntity(int meta) {
-		return null;
+		return meta == 0 ? this.tileentity.get() : null;
 	}
 }

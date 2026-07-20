@@ -13,6 +13,7 @@ import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
+import net.minecraft.src.CraftingManager;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
@@ -36,6 +37,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
+		CraftingManager crafting = CraftingManager.getInstance();
 		int skip;
 
 		// Builder's Smelting category

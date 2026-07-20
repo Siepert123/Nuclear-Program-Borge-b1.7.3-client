@@ -21,7 +21,7 @@ public class EntityGasFX extends EntityFX {
 	public EntityGasFX(World world, double x, double y, double z, float r, float g, float b) {
 		super(world, x, y, z, 0, 0, 0);
 		texture = ParticleTextures.generic[7];
-		this.setMaxAge(200);
+		this.setMaxAge(195 + world.rand.nextInt(10));
 		this.particleRed = r;
 		this.particleGreen = g;
 		this.particleBlue = b;

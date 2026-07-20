@@ -6,8 +6,10 @@ import dev.siepert.nuclearprogram.util.SaveHandlerHook;
 import dev.siepert.nuclearprogram.weapon.BackendExplosionHandler;
 import dev.siepert.nuclearprogram.weapon.WorldActiveExplosions;
 import dev.siepert.nuclearprogram.world.NuclearProgramWorldAccess;
+import dev.siepert.nuclearprogram.world.block.BlockRBMKColumn;
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
 import dev.siepert.nuclearprogram.world.mapdata.WorldFalloutClouds;
+import dev.siepert.nuclearprogram.world.te.TileEntityRBMKColumn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.BorgeMath;
@@ -27,6 +29,7 @@ import net.minecraftborge.loader.event.world.ChangeWorldEvent;
 import net.minecraftborge.loader.event.world.WorldTickEvent;
 import org.lwjgl.opengl.GL11;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -221,14 +224,47 @@ public class EventHandlers {
 		}
 	}
 
+	private static final ArrayList<String> overlayTooltip = new ArrayList<>(16);
 	@EventHandler
 	public static void renderGUI(RenderOverlayGuiEvent event) {
-		if (event.getLayer() == RenderOverlayGuiEvent.Layer.PRE) {
-			int ticks = BackendExplosionHandler.shockwaveTicks;
-			if (ticks > 0) {
-				double mul = ticks * 0.05;
-				double time = Math.toIntExact(System.currentTimeMillis() % 2000) * 0.003 * Math.PI;
-				GL11.glTranslated(Math.sin(time * 2) * mul, Math.sin(time) * mul, 0.0);
+		switch (event.getLayer()) {
+			case PRE: {
+				int ticks = BackendExplosionHandler.shockwaveTicks;
+				if (ticks > 0) {
+					double mul = ticks * 0.05;
+					double time = Math.toIntExact(System.currentTimeMillis() % 2000) * 0.003 * Math.PI;
+					GL11.glTranslated(Math.sin(time * 2) * mul, Math.sin(time) * mul, 0.0);
+				}
+				break;
+			}
+			case DEBUG_SCREEN: {
+				World world = event.getMc().theWorld;
+				MovingObjectPosition select = event.getMc().objectMouseOver;
+				if (world != null && select != null) {
+					int x = select.blockX;
+					int y = select.blockY;
+					int z = select.blockZ;
+					Block block = Block.blocksList[world.getBlockId(x, y, z)];
+					if (block instanceof BlockRBMKColumn) {
+						TileEntity te = world.getBlockTileEntity(x, y - world.getBlockMetadata(x, y, z), z);
+						if (te instanceof TileEntityRBMKColumn) {
+							((TileEntityRBMKColumn) te).debug(overlayTooltip);
+						} else overlayTooltip.add("[MALFORMED RBMK COLUMN]");
+
+						GuiIngame gui = event.getIngameGUI();
+						FontRenderer font = Minecraft.getTheMinecraft().fontRenderer;
+						StringTranslate translate = StringTranslate.getInstance();
+						gui.drawString(font, translate.translateNamedKey(block.getBlockName()) + " debug data", 2, 100, 0xFFFFFF);
+						int pos = 110;
+						for (String s : overlayTooltip) {
+							gui.drawString(font, s, 2, pos, 0xE0E0E0);
+							pos += 8;
+						}
+
+						overlayTooltip.clear();
+					}
+				}
+				break;
 			}
 		}
 	}

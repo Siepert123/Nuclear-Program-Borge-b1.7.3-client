@@ -23,16 +23,16 @@ public class TileEntityModulator extends TileEntity {
 	public void onNeighbourBlockChange() {
 		boolean powered = this.isPowered();
 		if (powered && this.sound == null) {
-			System.out.println("playing sound");
 			this.sound = Minecraft.getTheMinecraft().sndManager.playTrackedSound("siren.modulator",
 					this.xCoord + 0.5F, this.yCoord + 0.5F, this.zCoord + 0.5F,
 					64.0F, 1.0F, true
 			);
 		}
 		if (!powered && this.sound != null) {
-			System.out.println("stopping sound");
-			this.sound.getSystem().stop(this.sound.getSoundID());
-			this.sound.invalidate();
+			if (this.sound.isValid()) {
+				this.sound.getSystem().stop(this.sound.getSoundID());
+				this.sound.invalidate();
+			}
 			this.sound = null;
 		}
 	}

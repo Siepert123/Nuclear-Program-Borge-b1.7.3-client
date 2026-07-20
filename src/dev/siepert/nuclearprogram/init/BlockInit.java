@@ -4,6 +4,9 @@ import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.world.block.*;
 import dev.siepert.nuclearprogram.world.block.BlockWorkbench;
 import dev.siepert.nuclearprogram.world.item.*;
+import dev.siepert.nuclearprogram.world.te.TileEntityRBMKBoiler;
+import dev.siepert.nuclearprogram.world.te.TileEntityRBMKColumn;
+import dev.siepert.nuclearprogram.world.te.TileEntityRBMKFuel;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.event.register.IdAllocationEvent;
 
@@ -42,6 +45,7 @@ public class BlockInit {
 	public static BlockStepConcrete slabConcreteDouble;
 	public static BlockStepConcreteColored slabConcreteColoredSingle;
 	public static BlockStepConcreteColored slabConcreteColoredDouble;
+	public static BlockGrate grateSteel;
 	public static BlockHatch hatch;
 	public static BlockSealedDoor sealedDoor;
 	public static BlockModulator modulator;
@@ -202,6 +206,12 @@ public class BlockInit {
 				.setResistance(concrete.getExplosionResistance(null))
 				.setStepSound(Block.soundStoneFootstep)
 		);
+		grateSteel = helper.register("grateSteel", id -> new BlockGrate(id, Material.iron)
+				.setHarvestLevel("pickaxe", 2)
+				.setHardness(10.0F)
+				.setResistance(16.0F)
+				.setStepSound(Block.soundMetalFootstep)
+		);
 		hatch = helper.register("hatch", id -> new BlockHatch(id)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(10.0F)
@@ -295,13 +305,13 @@ public class BlockInit {
 				.setStepSound(soundChainFootstep)
 		);
 
-		rbmkBlank = helper.register("rbmkBlank", BlockRBMKColumn::new);
-		rbmkBoiler = helper.register("rbmkBoiler", BlockRBMKColumn::new);
-		rbmkFuel = helper.register("rbmkFuel", BlockRBMKColumn::new);
-		rbmkModerator = helper.register("rbmkModerator", BlockRBMKColumn::new);
-		rbmkControl = helper.register("rbmkControl", BlockRBMKColumn::new);
-		rbmkAbsorber = helper.register("rbmkAbsorber", BlockRBMKColumn::new);
-		rbmkReflector = helper.register("rbmkReflector", BlockRBMKColumn::new);
+		rbmkBlank = helper.register("rbmkBlank", id -> new BlockRBMKColumn(id, TileEntityRBMKColumn::new));
+		rbmkBoiler = helper.register("rbmkBoiler", id -> new BlockRBMKColumn(id, TileEntityRBMKBoiler::new));
+		rbmkFuel = helper.register("rbmkFuel", id -> new BlockRBMKColumn(id, TileEntityRBMKFuel::new));
+		rbmkModerator = helper.register("rbmkModerator", id -> new BlockRBMKColumn(id, TileEntityRBMKColumn::new));
+		rbmkControl = helper.register("rbmkControl", id -> new BlockRBMKColumn(id, TileEntityRBMKColumn::new));
+		rbmkAbsorber = helper.register("rbmkAbsorber", id -> new BlockRBMKColumn(id, TileEntityRBMKColumn::new));
+		rbmkReflector = helper.register("rbmkReflector", id -> new BlockRBMKColumn(id, TileEntityRBMKColumn::new));
 
 		available = true;
 

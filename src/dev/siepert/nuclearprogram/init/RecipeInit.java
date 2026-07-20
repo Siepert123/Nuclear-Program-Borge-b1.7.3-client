@@ -8,6 +8,7 @@ import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
 import dev.siepert.nuclearprogram.world.block.BlockMetalOre;
 import dev.siepert.nuclearprogram.world.block.BlockWorkbench;
+import dev.siepert.nuclearprogram.world.item.ItemFuelRod;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -254,6 +255,51 @@ public class RecipeInit {
 				'D', Ingredient.of("dyeAny")
 		);
 
+		// Fuel rod filling
+
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRod, 1, ItemFuelRod.NATURAL_URANIUM),
+				Ingredient.of(ItemInit.fuelRodEmpty.shiftedIndex),
+				Ingredient.of("ingotLead")
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRod, 1, ItemFuelRod.NATURAL_THORIUM),
+				Ingredient.of(ItemInit.fuelRodEmpty.shiftedIndex),
+				Ingredient.of("ingotLead")
+		);
+
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.NATURAL_URANIUM),
+				Ingredient.of(ItemInit.fuelRodArrayEmpty.shiftedIndex),
+				Ingredient.of("ingotLead"),
+				Ingredient.of("ingotLead"),
+				Ingredient.of("ingotLead"),
+				Ingredient.of("ingotLead")
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.NATURAL_THORIUM),
+				Ingredient.of(ItemInit.fuelRodArrayEmpty.shiftedIndex),
+				Ingredient.of("ingotLead"),
+				Ingredient.of("ingotLead"),
+				Ingredient.of("ingotLead"),
+				Ingredient.of("ingotLead")
+		);
+
+		// Fuel rod recycling
+
+		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotLead, 1),
+				"#",
+				'#', Ingredient.of(ItemInit.fuelRod.shiftedIndex, ItemFuelRod.NATURAL_URANIUM)
+		);
+		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotLead, 1),
+				"#",
+				'#', Ingredient.of(ItemInit.fuelRod.shiftedIndex, ItemFuelRod.NATURAL_THORIUM)
+		);
+
+		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotLead, 4),
+				"#",
+				'#', Ingredient.of(ItemInit.fuelRodArray.shiftedIndex, ItemFuelRod.NATURAL_URANIUM)
+		);
+		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotLead, 4),
+				"#",
+				'#', Ingredient.of(ItemInit.fuelRodArray.shiftedIndex, ItemFuelRod.NATURAL_THORIUM)
+		);
 
 		// Vanilla
 
