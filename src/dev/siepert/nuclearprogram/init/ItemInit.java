@@ -19,6 +19,8 @@ public class ItemInit {
 	public static Item ingotTungsten;
 	public static Item ingotSteel;
 	public static Item ingotElectrum;
+	public static Item ingotUranium;
+	public static Item ingotThorium;
 	public static Item ingotKaupium;
 	public static Item ingotYanoizedKaupium;
 	public static Item dustRedPhosphorus;
@@ -69,6 +71,8 @@ public class ItemInit {
 		ingotTungsten = helper.register("ingotTungsten");
 		ingotSteel = helper.register("ingotSteel");
 		ingotElectrum = helper.register("ingotElectrum");
+		ingotUranium = helper.register("ingotUranium");
+		ingotThorium = helper.register("ingotThorium");
 		ingotKaupium = helper.register("ingotKaupium");
 		ingotYanoizedKaupium = helper.register("ingotYanoizedKaupium");
 		dustRedPhosphorus = helper.register("dustRedPhosphorus");

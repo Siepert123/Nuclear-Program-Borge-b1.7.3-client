@@ -45,6 +45,8 @@ public class TagInit {
 		ItemTags.tag("ingotTungsten", ItemInit.ingotTungsten);
 		ItemTags.tag("ingotSteel", ItemInit.ingotSteel);
 		ItemTags.tag("ingotElectrum", ItemInit.ingotElectrum);
+		ItemTags.tag("ingotUranium", ItemInit.ingotUranium);
+		ItemTags.tag("ingotThorium", ItemInit.ingotThorium);
 		ItemTags.tag("ingotKaupium", ItemInit.ingotKaupium);
 		ItemTags.tag("ingotYanoizedKaupium", ItemInit.ingotYanoizedKaupium);
 

@@ -198,15 +198,15 @@ public class RecipeInit {
 
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateIron, 1),
 				ItemInit.hammer,
-				Ingredient.of("ingotIron")
+				IngredientInit.ingotIron
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateGold, 1),
 				ItemInit.hammer,
-				Ingredient.of("ingotGold")
+				IngredientInit.ingotGold
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateCopper, 1),
 				ItemInit.hammer,
-				Ingredient.of("ingotCopper")
+				IngredientInit.ingotCopper
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateAluminium, 1),
 				ItemInit.hammer,
@@ -240,63 +240,76 @@ public class RecipeInit {
 
 		recipes.addShapedRecipe(new ItemStack(ItemInit.hammer, 1),
 				"## ", "##X", "## ",
-				'#', Ingredient.of("ingotIron"),
+				'#', IngredientInit.ingotIron,
 				'X', Item.stick
 		);
 		recipes.addShapedRecipe(new ItemStack(ItemInit.cutters, 1),
 				"X#", " X",
-				'#', Ingredient.of("ingotIron"),
+				'#', IngredientInit.ingotIron,
 				'X', Item.stick
 		);
 		recipes.addShapedRecipe(new ItemStack(ItemInit.screwdriver, 1),
 				"  X", "D# ", "#D ",
-				'#', Ingredient.of("ingotIron"),
+				'#', IngredientInit.ingotIron,
 				'X', Ingredient.of("plateIron"),
 				'D', Ingredient.of("dyeAny")
+		);
+
+		recipes.addShapedRecipe(new ItemStack(ItemInit.fuelRodEmpty, 2),
+				"#", "#", "#",
+				'#', Ingredient.of("plateLead")
+		);
+		recipes.addShapedRecipe(new ItemStack(ItemInit.fuelRodEmpty, 4),
+				"#",
+				'#', ItemInit.fuelRodArrayEmpty
+		);
+		recipes.addShapedRecipe(new ItemStack(ItemInit.fuelRodArrayEmpty, 1),
+				"##", "##",
+				'#', ItemInit.fuelRodEmpty
 		);
 
 		// Fuel rod filling
 
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRod, 1, ItemFuelRod.NATURAL_URANIUM),
 				Ingredient.of(ItemInit.fuelRodEmpty.shiftedIndex),
-				Ingredient.of("ingotLead")
+				IngredientInit.ingotUranium
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRod, 1, ItemFuelRod.NATURAL_THORIUM),
 				Ingredient.of(ItemInit.fuelRodEmpty.shiftedIndex),
-				Ingredient.of("ingotLead")
+				IngredientInit.ingotThorium
 		);
 
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.NATURAL_URANIUM),
 				Ingredient.of(ItemInit.fuelRodArrayEmpty.shiftedIndex),
-				Ingredient.of("ingotLead"),
-				Ingredient.of("ingotLead"),
-				Ingredient.of("ingotLead"),
-				Ingredient.of("ingotLead")
+				IngredientInit.ingotUranium,
+				IngredientInit.ingotUranium,
+				IngredientInit.ingotUranium,
+				IngredientInit.ingotUranium
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.NATURAL_THORIUM),
 				Ingredient.of(ItemInit.fuelRodArrayEmpty.shiftedIndex),
-				Ingredient.of("ingotLead"),
-				Ingredient.of("ingotLead"),
-				Ingredient.of("ingotLead"),
-				Ingredient.of("ingotLead")
+				IngredientInit.ingotThorium,
+				IngredientInit.ingotThorium,
+				IngredientInit.ingotThorium,
+				IngredientInit.ingotThorium
 		);
 
 		// Fuel rod recycling
 
-		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotLead, 1),
+		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotUranium, 1),
 				"#",
 				'#', Ingredient.of(ItemInit.fuelRod.shiftedIndex, ItemFuelRod.NATURAL_URANIUM)
 		);
-		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotLead, 1),
+		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotThorium, 1),
 				"#",
 				'#', Ingredient.of(ItemInit.fuelRod.shiftedIndex, ItemFuelRod.NATURAL_THORIUM)
 		);
 
-		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotLead, 4),
+		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotUranium, 4),
 				"#",
 				'#', Ingredient.of(ItemInit.fuelRodArray.shiftedIndex, ItemFuelRod.NATURAL_URANIUM)
 		);
-		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotLead, 4),
+		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotThorium, 4),
 				"#",
 				'#', Ingredient.of(ItemInit.fuelRodArray.shiftedIndex, ItemFuelRod.NATURAL_THORIUM)
 		);

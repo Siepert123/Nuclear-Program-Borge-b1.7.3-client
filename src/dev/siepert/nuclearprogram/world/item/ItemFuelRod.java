@@ -44,7 +44,6 @@ public class ItemFuelRod extends Item {
 		for (int i = 0; i < this.variants; i++) {
 			items.add(new ItemStack(this, 1, i));
 		}
-		items.add(new ItemStack(this, 1, 2137));
 	}
 
 	@Override
