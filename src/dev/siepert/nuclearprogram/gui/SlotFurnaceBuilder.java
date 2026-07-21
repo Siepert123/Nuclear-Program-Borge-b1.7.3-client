@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.gui;
 
+import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.init.AchievementInit;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
@@ -20,7 +21,7 @@ public class SlotFurnaceBuilder extends Slot {
 
 	@Override
 	public void onPickupFromSlot(ItemStack stack) {
-		stack.onCrafting(this.player.worldObj, this.player);
+		stack.onCrafting(this.player.worldObj, this.player, NuclearProgram.path("FurnaceBuilder"));
 		this.player.triggerAchievement(AchievementInit.instance.furnaceBuilder);
 		super.onPickupFromSlot(stack);
 	}

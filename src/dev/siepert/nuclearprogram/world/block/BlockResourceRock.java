@@ -30,6 +30,11 @@ public class BlockResourceRock extends Block {
 	}
 
 	@Override
+	public Block disableStats() {
+		return super.disableStats();
+	}
+
+	@Override
 	public void registerIcons(IconRegister register) {
 		for (int i = 0; i < VARIANTS.length; i++) {
 			this.blockTextures[i] = register.getTexture(this.getSimpleName() + VARIANTS[i], 16, 16);

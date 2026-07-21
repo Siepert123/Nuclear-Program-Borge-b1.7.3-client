@@ -353,21 +353,4 @@ public class EventHandlers {
 			}
 		}
 	}
-
-	@EventHandler
-	public static void blockBroken(PlayerDestroyBlockEvent event) {
-		if (event.isCanceled()) return;
-		if (event.getPhase() == Event.Phase.POST) {
-			if (event.getBlockId() == Block.tallGrass.blockID) {
-				World world = event.getWorld();
-				if (world.rand.nextFloat() < 0.1F) {
-					EntityItem entity = new EntityItem(world,
-							event.getX() + 0.5, event.getY() + 0.5, event.getZ() + 0.5,
-							new ItemStack(ItemInit.hempSeeds)
-					);
-					world.entityJoinedWorld(entity);
-				}
-			}
-		}
-	}
 }

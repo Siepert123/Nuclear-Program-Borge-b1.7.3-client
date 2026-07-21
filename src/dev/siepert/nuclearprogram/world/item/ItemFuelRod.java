@@ -1,6 +1,5 @@
 package dev.siepert.nuclearprogram.world.item;
 
-import dev.siepert.nuclearprogram.init.ItemInit;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraftborge.loader.Icon;
@@ -11,23 +10,27 @@ import java.util.Collection;
 public class ItemFuelRod extends Item {
 	public static final String[] VARIANTS = {
 			"NaturalUranium",
-			"NaturalThorium",
+			"Thorium232",
+			"Lead",
+			"UraniumLE",
+			"UraniumME",
+			"UraniumHE",
 	};
 
 	public static final int NATURAL_URANIUM = 0;
-	public static final int NATURAL_THORIUM = 1;
+	public static final int THORIUM_232 = 1;
+	public static final int LEAD = 2;
+	public static final int LOW_ENRICHED_URANIUM = 3;
+	public static final int MEDIUM_ENRICHED_URANIUM = 4;
+	public static final int HIGH_ENRICHED_URANIUM = 5;
 
 	public final Icon[] itemTextures = new Icon[VARIANTS.length];
 	public final int variants = VARIANTS.length;
 
 	public ItemFuelRod(int itemID) {
 		super(itemID);
-		this.setMaxStackSize(1);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
-
-		if (this == ItemInit.fuelRod) this.setContainerItem(ItemInit.fuelRodEmpty);
-		if (this == ItemInit.fuelRodArray) this.setContainerItem(ItemInit.fuelRodArrayEmpty);
 	}
 
 	@Override

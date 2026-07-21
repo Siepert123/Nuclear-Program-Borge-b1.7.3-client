@@ -13,7 +13,9 @@ import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
+import dev.siepert.nuclearprogram.recipe.crafting.CraftingRecycleFuelRod;
 import net.minecraft.src.CraftingManager;
+import net.minecraft.src.IRecipe;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
@@ -30,6 +32,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 
 	@Override
 	public void registerCategories(ICategoryRegistration registration) {
+		registration.registerCategory(NPRecipeCategories.RECYCLE_FUEL_ROD, new CraftingCategoryRecycleFuelRod());
 		registration.registerCategory(NPRecipeCategories.SMELTING_BUILDER, new RecipeCategoryFurnaceBuilder());
 		registration.registerCategory(NPRecipeCategories.WORKBENCH, new RecipeCategoryWorkbench());
 		registration.registerCategory(NPRecipeCategories.BLOOMERY, new RecipeCategoryBloomery());
@@ -39,6 +42,17 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 	public void registerRecipes(IRecipeRegistration registration) {
 		CraftingManager crafting = CraftingManager.getInstance();
 		int skip;
+
+		// Fuel Rod Recycling category
+		IRecipeCategory<CraftingRecycleFuelRod> recycleFuelRod = registration.getCategoryByUID(NPRecipeCategories.RECYCLE_FUEL_ROD);
+		List<CraftingRecycleFuelRod> recycleFuelRodRecipes = new ArrayList<>();
+		for (IRecipe recipe : crafting.getRecipeList()) {
+			if (recipe instanceof CraftingRecycleFuelRod) {
+				recycleFuelRodRecipes.add((CraftingRecycleFuelRod) recipe);
+			}
+		}
+		registration.addRecipes(recycleFuelRod, recycleFuelRodRecipes);
+		System.out.println(recycleFuelRodRecipes.size() + " fuel rod recycling recipes");
 
 		// Builder's Smelting category
 		BuilderFurnaceRecipes smelting = BuilderFurnaceRecipes.smelting();
@@ -84,6 +98,8 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 
 	@Override
 	public void registerScreenHandlers(IScreenRegistration registration) {
+		registration.addCraftingCategoryUIDs(NPRecipeCategories.RECYCLE_FUEL_ROD);
+
 		registration.addScreenHandler(GuiFurnaceBuilder.class, 79, 34, 24, 17, NPRecipeCategories.SMELTING_BUILDER, "furnaceFuel");
 		registration.addScreenHandler(GuiBloomery.class, 97, 13, 22, 15, NPRecipeCategories.BLOOMERY);
 	}

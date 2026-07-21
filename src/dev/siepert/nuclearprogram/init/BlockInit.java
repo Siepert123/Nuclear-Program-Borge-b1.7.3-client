@@ -110,6 +110,7 @@ public class BlockInit {
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		resourceDeposit = helper.register("resourceDeposit", id -> new BlockResourceRock(id)
+				.disableStats()
 				.setBlockUnbreakable()
 				.setStepSound(Block.soundStoneFootstep)
 		);

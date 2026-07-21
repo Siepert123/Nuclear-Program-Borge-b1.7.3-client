@@ -20,6 +20,9 @@ public class ItemInit {
 	public static Item ingotSteel;
 	public static Item ingotElectrum;
 	public static Item ingotUranium;
+	public static Item ingotUraniumLE;
+	public static Item ingotUraniumME;
+	public static Item ingotUraniumHE;
 	public static Item ingotThorium;
 	public static Item ingotKaupium;
 	public static Item ingotYanoizedKaupium;
@@ -72,6 +75,9 @@ public class ItemInit {
 		ingotSteel = helper.register("ingotSteel");
 		ingotElectrum = helper.register("ingotElectrum");
 		ingotUranium = helper.register("ingotUranium");
+		ingotUraniumLE = helper.register("ingotUraniumLE");
+		ingotUraniumME = helper.register("ingotUraniumME");
+		ingotUraniumHE = helper.register("ingotUraniumHE");
 		ingotThorium = helper.register("ingotThorium");
 		ingotKaupium = helper.register("ingotKaupium");
 		ingotYanoizedKaupium = helper.register("ingotYanoizedKaupium");

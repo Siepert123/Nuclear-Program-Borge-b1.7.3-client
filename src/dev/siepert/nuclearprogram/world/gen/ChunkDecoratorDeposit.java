@@ -38,8 +38,16 @@ public class ChunkDecoratorDeposit implements IChunkDecorator {
 					for (int j = 0; j < 8; j++) {
 						int k = x + i;
 						int l = z + j;
-						if (world.getBlockId(k, y, l) == Block.stone.blockID && random.nextFloat() < 0.42F) {
-							world.setBlockAndMetadata(k, y, l, BlockInit.resourceRock.blockID, type);
+						int previousBlockID = world.getBlockId(k, y, l);
+						if (previousBlockID == Block.stone.blockID ||
+								previousBlockID == Block.gravel.blockID ||
+								previousBlockID == Block.dirt.blockID ||
+								previousBlockID == Block.sand.blockID ||
+								previousBlockID == Block.grass.blockID
+						) {
+							if (random.nextFloat() < 0.42F) {
+								world.setBlockAndMetadata(k, y, l, BlockInit.resourceRock.blockID, type);
+							}
 						}
 					}
 				}

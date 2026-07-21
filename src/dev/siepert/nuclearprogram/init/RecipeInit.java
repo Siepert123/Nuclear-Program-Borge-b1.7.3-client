@@ -5,6 +5,7 @@ import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
+import dev.siepert.nuclearprogram.recipe.crafting.CraftingRecycleFuelRod;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
 import dev.siepert.nuclearprogram.world.block.BlockMetalOre;
 import dev.siepert.nuclearprogram.world.block.BlockWorkbench;
@@ -104,7 +105,7 @@ public class RecipeInit {
 		//endregion
 
 
-		// Blocks
+		//region Blocks
 
 		recipes.addShapedRecipe(new ItemStack(BlockInit.fireclay, 1),
 				"##", "##",
@@ -193,8 +194,9 @@ public class RecipeInit {
 				'X', ItemInit.valve
 		);
 
+		//endregion
 
-		// Items
+		//region Items
 
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateIron, 1),
 				ItemInit.hammer,
@@ -210,23 +212,23 @@ public class RecipeInit {
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateAluminium, 1),
 				ItemInit.hammer,
-				Ingredient.of("ingotAluminium")
+				IngredientInit.ingotAluminium
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateLead, 1),
 				ItemInit.hammer,
-				Ingredient.of("ingotLead")
+				IngredientInit.ingotLead
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateTitanium, 1),
 				ItemInit.hammer,
-				Ingredient.of("ingotTitanium")
+				IngredientInit.ingotTitanium
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateTungsten, 1),
 				ItemInit.hammer,
-				Ingredient.of("ingotTungsten")
+				IngredientInit.ingotTungsten
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateSteel, 1),
 				ItemInit.hammer,
-				Ingredient.of("ingotSteel")
+				IngredientInit.ingotSteel
 		);
 
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.ballFireclay, 4),
@@ -268,51 +270,153 @@ public class RecipeInit {
 				'#', ItemInit.fuelRodEmpty
 		);
 
+		//endregion
+
+		//region Fuel Rods
+
+		Ingredient fuelRodEmptyIn = Ingredient.of(ItemInit.fuelRodEmpty.shiftedIndex);
+		Ingredient fuelRodArrayEmptyIn = Ingredient.of(ItemInit.fuelRodArrayEmpty.shiftedIndex);
+
+		ItemStack fuelRodEmptyOut = new ItemStack(ItemInit.fuelRodEmpty);
+		ItemStack fuelRodArrayEmptyOut = new ItemStack(ItemInit.fuelRodArrayEmpty);
+
 		// Fuel rod filling
 
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRod, 1, ItemFuelRod.NATURAL_URANIUM),
-				Ingredient.of(ItemInit.fuelRodEmpty.shiftedIndex),
+				fuelRodEmptyIn,
 				IngredientInit.ingotUranium
 		);
-		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRod, 1, ItemFuelRod.NATURAL_THORIUM),
-				Ingredient.of(ItemInit.fuelRodEmpty.shiftedIndex),
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRod, 1, ItemFuelRod.THORIUM_232),
+				fuelRodEmptyIn,
 				IngredientInit.ingotThorium
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRod, 1, ItemFuelRod.LEAD),
+				fuelRodEmptyIn,
+				IngredientInit.ingotLead
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRod, 1, ItemFuelRod.LOW_ENRICHED_URANIUM),
+				fuelRodEmptyIn,
+				IngredientInit.ingotUraniumLE
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRod, 1, ItemFuelRod.MEDIUM_ENRICHED_URANIUM),
+				fuelRodEmptyIn,
+				IngredientInit.ingotUraniumME
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRod, 1, ItemFuelRod.HIGH_ENRICHED_URANIUM),
+				fuelRodEmptyIn,
+				IngredientInit.ingotUraniumHE
 		);
 
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.NATURAL_URANIUM),
-				Ingredient.of(ItemInit.fuelRodArrayEmpty.shiftedIndex),
+				fuelRodArrayEmptyIn,
 				IngredientInit.ingotUranium,
 				IngredientInit.ingotUranium,
 				IngredientInit.ingotUranium,
 				IngredientInit.ingotUranium
 		);
-		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.NATURAL_THORIUM),
-				Ingredient.of(ItemInit.fuelRodArrayEmpty.shiftedIndex),
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.THORIUM_232),
+				fuelRodArrayEmptyIn,
 				IngredientInit.ingotThorium,
 				IngredientInit.ingotThorium,
 				IngredientInit.ingotThorium,
 				IngredientInit.ingotThorium
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.LEAD),
+				fuelRodArrayEmptyIn,
+				IngredientInit.ingotLead,
+				IngredientInit.ingotLead,
+				IngredientInit.ingotLead,
+				IngredientInit.ingotLead
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.LOW_ENRICHED_URANIUM),
+				fuelRodEmptyIn,
+				IngredientInit.ingotUraniumLE,
+				IngredientInit.ingotUraniumLE,
+				IngredientInit.ingotUraniumLE,
+				IngredientInit.ingotUraniumLE
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.MEDIUM_ENRICHED_URANIUM),
+				fuelRodEmptyIn,
+				IngredientInit.ingotUraniumME,
+				IngredientInit.ingotUraniumME,
+				IngredientInit.ingotUraniumME,
+				IngredientInit.ingotUraniumME
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.HIGH_ENRICHED_URANIUM),
+				fuelRodEmptyIn,
+				IngredientInit.ingotUraniumHE,
+				IngredientInit.ingotUraniumHE,
+				IngredientInit.ingotUraniumHE,
+				IngredientInit.ingotUraniumHE
 		);
 
 		// Fuel rod recycling
 
-		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotUranium, 1),
-				"#",
-				'#', Ingredient.of(ItemInit.fuelRod.shiftedIndex, ItemFuelRod.NATURAL_URANIUM)
+		CraftingRecycleFuelRod.Helper recycleFuelRod = new CraftingRecycleFuelRod.Helper(recipes);
+
+		recycleFuelRod.add(
+				Ingredient.of(ItemInit.fuelRod.shiftedIndex, ItemFuelRod.NATURAL_URANIUM),
+				new ItemStack(ItemInit.ingotUranium, 1),
+				fuelRodEmptyOut
 		);
-		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotThorium, 1),
-				"#",
-				'#', Ingredient.of(ItemInit.fuelRod.shiftedIndex, ItemFuelRod.NATURAL_THORIUM)
+		recycleFuelRod.add(
+				Ingredient.of(ItemInit.fuelRod.shiftedIndex, ItemFuelRod.THORIUM_232),
+				new ItemStack(ItemInit.ingotThorium, 1),
+				fuelRodEmptyOut
+		);
+		recycleFuelRod.add(
+				Ingredient.of(ItemInit.fuelRod.shiftedIndex, ItemFuelRod.LEAD),
+				new ItemStack(ItemInit.ingotLead, 1),
+				fuelRodEmptyOut
+		);
+		recycleFuelRod.add(
+				Ingredient.of(ItemInit.fuelRod.shiftedIndex, ItemFuelRod.LOW_ENRICHED_URANIUM),
+				new ItemStack(ItemInit.ingotUraniumLE, 1),
+				fuelRodEmptyOut
+		);
+		recycleFuelRod.add(
+				Ingredient.of(ItemInit.fuelRod.shiftedIndex, ItemFuelRod.MEDIUM_ENRICHED_URANIUM),
+				new ItemStack(ItemInit.ingotUraniumME, 1),
+				fuelRodEmptyOut
+		);
+		recycleFuelRod.add(
+				Ingredient.of(ItemInit.fuelRod.shiftedIndex, ItemFuelRod.HIGH_ENRICHED_URANIUM),
+				new ItemStack(ItemInit.ingotUraniumHE, 1),
+				fuelRodEmptyOut
 		);
 
-		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotUranium, 4),
-				"#",
-				'#', Ingredient.of(ItemInit.fuelRodArray.shiftedIndex, ItemFuelRod.NATURAL_URANIUM)
+		recycleFuelRod.add(
+				Ingredient.of(ItemInit.fuelRodArray.shiftedIndex, ItemFuelRod.NATURAL_URANIUM),
+				new ItemStack(ItemInit.ingotUranium, 4),
+				fuelRodArrayEmptyOut
 		);
-		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotThorium, 4),
-				"#",
-				'#', Ingredient.of(ItemInit.fuelRodArray.shiftedIndex, ItemFuelRod.NATURAL_THORIUM)
+		recycleFuelRod.add(
+				Ingredient.of(ItemInit.fuelRodArray.shiftedIndex, ItemFuelRod.THORIUM_232),
+				new ItemStack(ItemInit.ingotThorium, 4),
+				fuelRodArrayEmptyOut
 		);
+		recycleFuelRod.add(
+				Ingredient.of(ItemInit.fuelRodArray.shiftedIndex, ItemFuelRod.LEAD),
+				new ItemStack(ItemInit.ingotLead, 4),
+				fuelRodArrayEmptyOut
+		);
+		recycleFuelRod.add(
+				Ingredient.of(ItemInit.fuelRodArray.shiftedIndex, ItemFuelRod.LOW_ENRICHED_URANIUM),
+				new ItemStack(ItemInit.ingotUraniumLE, 4),
+				fuelRodArrayEmptyOut
+		);
+		recycleFuelRod.add(
+				Ingredient.of(ItemInit.fuelRodArray.shiftedIndex, ItemFuelRod.MEDIUM_ENRICHED_URANIUM),
+				new ItemStack(ItemInit.ingotUraniumME, 4),
+				fuelRodArrayEmptyOut
+		);
+		recycleFuelRod.add(
+				Ingredient.of(ItemInit.fuelRodArray.shiftedIndex, ItemFuelRod.HIGH_ENRICHED_URANIUM),
+				new ItemStack(ItemInit.ingotUraniumHE, 4),
+				fuelRodArrayEmptyOut
+		);
+
+		//endregion
 
 		// Vanilla
 
