@@ -329,21 +329,21 @@ public class RecipeInit {
 				IngredientInit.ingotLead
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.LOW_ENRICHED_URANIUM),
-				fuelRodEmptyIn,
+				fuelRodArrayEmptyIn,
 				IngredientInit.ingotUraniumLE,
 				IngredientInit.ingotUraniumLE,
 				IngredientInit.ingotUraniumLE,
 				IngredientInit.ingotUraniumLE
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.MEDIUM_ENRICHED_URANIUM),
-				fuelRodEmptyIn,
+				fuelRodArrayEmptyIn,
 				IngredientInit.ingotUraniumME,
 				IngredientInit.ingotUraniumME,
 				IngredientInit.ingotUraniumME,
 				IngredientInit.ingotUraniumME
 		);
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.fuelRodArray, 1, ItemFuelRod.HIGH_ENRICHED_URANIUM),
-				fuelRodEmptyIn,
+				fuelRodArrayEmptyIn,
 				IngredientInit.ingotUraniumHE,
 				IngredientInit.ingotUraniumHE,
 				IngredientInit.ingotUraniumHE,

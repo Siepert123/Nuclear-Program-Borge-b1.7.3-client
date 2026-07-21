@@ -9,6 +9,7 @@ import net.minecraft.src.World;
 public class BlockModulator extends BlockContainer {
 	public BlockModulator(int blockID, Material material) {
 		super(blockID, material);
+		this.disableStats();
 	}
 
 	@Override
