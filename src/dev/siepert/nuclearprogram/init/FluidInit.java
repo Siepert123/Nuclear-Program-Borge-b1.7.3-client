@@ -10,10 +10,18 @@ public class FluidInit {
 			.setTemperature(1000);
 	public static final Fluid steam = new Fluid(3)
 			.setName("steam").setColor(1.0F, 1.0F, 1.0F)
-			.setTemperature(100);
+			.setTemperature(100)
+			.setGaseous();
 	public static final Fluid depletedSteam = new Fluid(4)
 			.setName("depletedSteam").setColor(0.7F, 0.7F, 1.0F)
-			.setTemperature(100);
+			.setTemperature(100)
+			.setGaseous();
+	public static final Fluid hydrogenPeroxide = new Fluid(5)
+			.setName("hydrogenPeroxide").setColor(0.5F, 0.5F, 1.0F);
+	public static final Fluid sulfuricAcid = new Fluid(6)
+			.setName("sulfuricAcid").setColor(0.8F, 0.8F, 0.0F);
+	public static final Fluid hydrofluoricAcid = new Fluid(7)
+			.setName("hydrofluoricAcid").setColor(1.0F, 1.0F, 0.8F);
 
 	public static void register() {}
 
@@ -22,7 +30,7 @@ public class FluidInit {
 		int max = Fluid.ID_SIZE;
 
 		for (int i = 1; i < 256; i++) {
-			if (Fluid.fluidList[i] != null) counter++;
+			if (Fluid.fluidsList[i] != null) counter++;
 		}
 
 		System.out.println("There are " + counter + "/" + max + " fluids registered");

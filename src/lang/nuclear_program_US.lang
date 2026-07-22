@@ -167,6 +167,9 @@ fluid.water.name=Water
 fluid.lava.name=Lava
 fluid.steam.name=Steam
 fluid.depletedSteam.name=Depleted Steam
+fluid.hydrogenPeroxide.name=Hydrogen Peroxide
+fluid.sulfuricAcid.name=Sulfuric Acid
+fluid.hydrofluoricAcid.name=Hydrofluoric Acid
 
 achievement.nuclear_program/concrete=Soviet's Finest
 achievement.nuclear_program/concrete.desc=top 10 concrete mowing

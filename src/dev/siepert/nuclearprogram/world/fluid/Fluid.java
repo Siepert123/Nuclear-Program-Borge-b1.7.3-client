@@ -9,21 +9,23 @@ import java.util.Arrays;
 public class Fluid {
 	public static final int ID_SIZE = 256;
 
-	public static final Fluid[] fluidList = new Fluid[ID_SIZE];
-	public static final int[] temperatureLookup = new int[fluidList.length];
-	public static final int[] colorLookup = new int[fluidList.length];
+	public static final Fluid[] fluidsList = new Fluid[ID_SIZE];
+	public static final int[] temperatureLookup = new int[fluidsList.length];
+	public static final int[] colorLookup = new int[fluidsList.length];
+	public static final boolean[] gaseousLookup = new boolean[fluidsList.length];
 
 	public Fluid(int fluidID) {
 		if (fluidID == 0) throw new IllegalArgumentException("Fluid ID #0 is reserved for null");
 		if (fluidID < 0) throw new IllegalArgumentException("Fluid ID must be positive");
 		if (fluidID >= ID_SIZE) throw new IllegalArgumentException("Fluid ID must not exceed " + (ID_SIZE - 1));
 		this.fluidID = fluidID;
-		if (fluidList[fluidID] != null) {
+		if (fluidsList[fluidID] != null) {
 			throw new RuntimeException("Duplicate fluid ID: #" + fluidID);
 		} else {
-			fluidList[fluidID] = this;
+			fluidsList[fluidID] = this;
 			temperatureLookup[fluidID] = 20;
 			colorLookup[fluidID] = 0xFFFFFFFF;
+			gaseousLookup[fluidID] = false;
 		}
 	}
 	public final int fluidID;
@@ -51,6 +53,10 @@ public class Fluid {
 	public Fluid setColor(float r, float g, float b) {
 		return this.setColor(MathHelper.floor_float(r * 255), MathHelper.floor_float(g * 255), MathHelper.floor_float(b * 255));
 	}
+	public Fluid setGaseous() {
+		gaseousLookup[this.fluidID] = true;
+		return this;
+	}
 
 	public String getUnlocalizedName() {
 		return this.unlocalizedName;
@@ -70,5 +76,6 @@ public class Fluid {
 	static {
 		Arrays.fill(temperatureLookup, 20);
 		Arrays.fill(colorLookup, 0xFF888888);
+		Arrays.fill(gaseousLookup, false);
 	}
 }

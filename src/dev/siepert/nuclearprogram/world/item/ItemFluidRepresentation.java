@@ -8,7 +8,6 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTBase;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraftborge.loader.IconRegister;
-import org.lwjgl.input.Keyboard;
 
 import java.util.Collection;
 import java.util.List;
@@ -28,7 +27,7 @@ public class ItemFluidRepresentation extends Item {
 	public void getSubItems(Collection<ItemStack> items) {
 		items.add(new ItemStack(this, 1, 0));
 		for (int i = 1; i < Fluid.ID_SIZE; i++) {
-			if (Fluid.fluidList[i] != null) {
+			if (Fluid.fluidsList[i] != null) {
 				items.add(new ItemStack(this, 1, i));
 			}
 		}
@@ -36,7 +35,7 @@ public class ItemFluidRepresentation extends Item {
 
 	@Override
 	public String getItemNameIS(ItemStack stack) {
-		return Fluid.getUnlocalizedName(Fluid.fluidList[stack.getItemDamage()]);
+		return Fluid.getUnlocalizedName(Fluid.fluidsList[stack.getItemDamage()]);
 	}
 
 	@Override
@@ -57,13 +56,7 @@ public class ItemFluidRepresentation extends Item {
 		}
 		int fluidID = stack.getItemDamage();
 		if (fluidID > 0) {
-			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-				tooltip.add(String.format(ChatFormat.RED + "%s°C", Fluid.temperatureLookup[fluidID]));
-			} else {
-				tooltip.add(tooltipHoldShift);
-			}
+			tooltip.add(String.format(ChatFormat.RED + "%sºC", Fluid.temperatureLookup[fluidID]));
 		}
 	}
-
-	private static final String tooltipHoldShift = String.format("Hold [%sSHIFT%s] for fluid properties", ChatFormat.AQUA, ChatFormat.RESET);
 }
