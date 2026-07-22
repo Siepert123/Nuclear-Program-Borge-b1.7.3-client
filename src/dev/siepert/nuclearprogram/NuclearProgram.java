@@ -40,6 +40,8 @@ public class NuclearProgram implements IModLifecycleListener {
 
 	@Override
 	public void modPreInit(ModPreInitializationEvent event) {
+		FluidInit.register();
+
 		IObjModelFactory factory = null;
 		try {
 			if (ModList.get().getLoadedMods().contains("objlib")) {

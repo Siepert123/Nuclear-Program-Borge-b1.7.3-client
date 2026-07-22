@@ -1,46 +1,47 @@
 package dev.siepert.nuclearprogram.world.block;
 
-import dev.siepert.nuclearprogram.world.block.render.RenderBlockFluidPipe;
-import net.minecraft.src.*;
+import dev.siepert.nuclearprogram.world.block.render.RenderBlockCable;
+import net.minecraft.src.AxisAlignedBB;
+import net.minecraft.src.Block;
+import net.minecraft.src.IBlockAccess;
+import net.minecraft.src.World;
 import net.minecraftborge.loader.EnumFacing;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.IconRegister;
 import net.minecraftborge.loader.Side;
 
-public class BlockFluidPipe extends BlockContainer {
-	public static final boolean[] canConnectPipe = new boolean[blocksList.length];
-	public static final int[] canConnectPipeMetaMask = new int[blocksList.length];
+public class BlockCable extends Block {
+	public static final boolean[] canConnectCable = new boolean[blocksList.length];
+	public static final int[] canConnectCableMetaMask = new int[blocksList.length];
 
-	public static boolean canConnectPipe(int block, int meta) {
-		if (canConnectPipe[block]) {
-			return (canConnectPipeMetaMask[block] & (1 << meta)) != 0;
+	public static boolean canConnectCable(int block, int meta) {
+		if (canConnectCable[block]) {
+			return (canConnectCableMetaMask[block] & (1 << meta)) != 0;
 		} else return false;
 	}
 
 	public static void enableConnection(int block, int meta) {
-		canConnectPipe[block] = true;
-		canConnectPipeMetaMask[block] |= (1 << meta);
+		canConnectCable[block] = true;
+		canConnectCableMetaMask[block] |= (1 << meta);
 	}
 	public static void disableConnection(int block, int meta) {
-		canConnectPipeMetaMask[block] &= ~(1 << meta);
-		canConnectPipe[block] = canConnectPipeMetaMask[block] != 0;
+		canConnectCableMetaMask[block] &= ~(1 << meta);
+		canConnectCable[block] = canConnectCableMetaMask[block] != 0;
 	}
 
 	public Icon blockTextureVertical;
 	public Icon blockTextureHorizontal;
 
-	public BlockFluidPipe(int blockID) {
-		super(blockID, NPMaterials.pipe);
+	public BlockCable(int blockID) {
+		super(blockID, NPMaterials.cable);
 
-		isBlockContainerMetaMask[blockID] = 0;
-
-		canConnectPipe[blockID] = true;
-		canConnectPipeMetaMask[blockID] = 0xFFFF;
+		canConnectCable[blockID] = true;
+		canConnectCableMetaMask[blockID] = 0xFFFF;
 	}
 
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
-		float size = 0.25F;
+		float size = 0.1875F;
 		this.setBlockBounds(0.5F-size, 0.5F-size, 0.5F-size, 0.5F+size, 0.5F+size, 0.5F+size);
 		int ox, oy, oz;
 		int count = 0;
@@ -49,7 +50,7 @@ public class BlockFluidPipe extends BlockContainer {
 			ox = x + side.getOffsetX();
 			oy = y + side.getOffsetY();
 			oz = z + side.getOffsetZ();
-			if (canConnectPipe(world.getBlockId(ox, oy, oz), world.getBlockMetadata(ox, oy, oz))) {
+			if (canConnectCable(world.getBlockId(ox, oy, oz), world.getBlockMetadata(ox, oy, oz))) {
 				if (first == null) first = side;
 				count++;
 
@@ -153,11 +154,6 @@ public class BlockFluidPipe extends BlockContainer {
 	}
 
 	@Override
-	protected TileEntity getBlockEntity(int meta) {
-		return null;
-	}
-
-	@Override
 	public boolean isOpaqueCube() {
 		return false;
 	}
@@ -169,6 +165,6 @@ public class BlockFluidPipe extends BlockContainer {
 
 	@Override
 	public int getRenderType() {
-		return RenderBlockFluidPipe.RENDER_TYPE;
+		return RenderBlockCable.RENDER_TYPE;
 	}
 }

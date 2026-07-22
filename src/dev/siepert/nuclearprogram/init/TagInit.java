@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.init;
 
+import dev.siepert.nuclearprogram.world.block.BlockDustOre;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
 import dev.siepert.nuclearprogram.world.block.BlockMetalOre;
 import net.minecraft.src.Item;
@@ -19,6 +20,8 @@ public class TagInit {
 		ItemTags.tag("oreTungsten", new ItemStack(BlockInit.oreMetal, 1, BlockMetalOre.TUNGSTEN));
 		ItemTags.tag("oreUranium", new ItemStack(BlockInit.oreMetal, 1, BlockMetalOre.URANIUM));
 		ItemTags.tag("oreThorium", new ItemStack(BlockInit.oreMetal, 1, BlockMetalOre.THORIUM));
+		ItemTags.tag("oreSulphur", new ItemStack(BlockInit.oreDust, 1, BlockDustOre.SULPHUR));
+		ItemTags.tag("oreSaltpeter", new ItemStack(BlockInit.oreDust, 1, BlockDustOre.SALTPETER));
 
 		ItemTags.tag("blockCopper", new ItemStack(BlockInit.blockMetal, 1, BlockMetal.COPPER));
 		ItemTags.tag("blockAluminium", new ItemStack(BlockInit.blockMetal, 1, BlockMetal.ALUMINIUM));
@@ -53,6 +56,10 @@ public class TagInit {
 		ItemTags.tag("ingotKaupium", ItemInit.ingotKaupium);
 		ItemTags.tag("ingotYanoizedKaupium", ItemInit.ingotYanoizedKaupium);
 
+		ItemTags.tag("dustSulphur", ItemInit.dustSulphur);
+		ItemTags.tag("dustSaltpeter", ItemInit.dustSaltpeter);
+		ItemTags.tag("dustPhosphor", ItemInit.dustRedPhosphorus);
+
 		ItemTags.tag("plateIron", ItemInit.plateIron);
 		ItemTags.tag("plateGold", ItemInit.plateGold);
 		ItemTags.tag("plateCopper", ItemInit.plateCopper);
@@ -67,5 +74,12 @@ public class TagInit {
 		if (ItemTags.getTagged("dyeAny").stream().noneMatch(stack -> stack.itemID == Item.dyePowder.shiftedIndex)) {
 			for (int i = 0; i < 16; i++) ItemTags.tag("dyeAny", new ItemStack(Item.dyePowder, 1, i));
 		}
+
+		ItemTags.tag("dyeYellow", ItemInit.dustSulphur);
+		ItemTags.tag("dyeAny", ItemInit.dustSulphur);
+		ItemTags.tag("dyeSilver", ItemInit.dustSaltpeter);
+		ItemTags.tag("dyeAny", ItemInit.dustSaltpeter);
+		ItemTags.tag("dyeRed", ItemInit.dustRedPhosphorus);
+		ItemTags.tag("dyeAny", ItemInit.dustRedPhosphorus);
 	}
 }

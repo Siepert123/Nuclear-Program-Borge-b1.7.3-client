@@ -20,6 +20,7 @@ public class TileEntityInit {
 
 		TileEntity.addMapping(TileEntityBloomery.class, NuclearProgram.path("bloomery"));
 
+		TileEntity.addMapping(TileEntityCableCoated.class, NuclearProgram.path("cableCoated"));
 		TileEntity.addMapping(TileEntityFluidPipe.class, NuclearProgram.path("fluidPipe"));
 		TileEntity.addMapping(TileEntityFluidPipeCoated.class, NuclearProgram.path("fluidPipeCoated"));
 

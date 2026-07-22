@@ -20,6 +20,7 @@ public class BlockInit {
 	public static boolean available = false;
 
 	public static BlockMetalOre oreMetal;
+	public static BlockDustOre oreDust;
 	public static BlockMetal blockMetal;
 	public static BlockFireclay fireclay;
 	public static Block firebricks;
@@ -54,6 +55,8 @@ public class BlockInit {
 	public static BlockBloomery bloomeryLit;
 	public static BlockBloomeryPipe bloomeryPipe;
 
+	public static BlockCable cableElectrum;
+	public static BlockCableCoated cableCoated;
 	public static BlockFluidPipe fluidPipeCopper;
 	public static BlockFluidPipeCoated fluidPipeCoated;
 
@@ -80,6 +83,12 @@ public class BlockInit {
 		oreMetal = helper.register("oreMetal", id -> new BlockMetalOre(id)
 				.setHarvestLevel("pickaxe", 2)
 				.setHarvestLevel("pickaxe", 1, BlockMetalOre.COPPER)
+				.setHardness(Block.oreIron.getHardness())
+				.setResistance(Block.oreIron.getExplosionResistance(null))
+				.setStepSound(Block.soundStoneFootstep)
+		);
+		oreDust = helper.register("oreDust", id -> new BlockDustOre(id)
+				.setHarvestLevel("pickaxe", 1)
 				.setHardness(Block.oreIron.getHardness())
 				.setResistance(Block.oreIron.getExplosionResistance(null))
 				.setStepSound(Block.soundStoneFootstep)
@@ -252,14 +261,24 @@ public class BlockInit {
 				.disableResizeItem()
 		);
 
+		cableElectrum = helper.register("cableElectrum", id -> new BlockCable(id)
+				.setHarvestLevel("pickaxe", 0)
+				.setHardness(5.0F)
+				.setStepSound(Block.soundMetalFootstep)
+		);
+		cableCoated = helper.register("cableCoated", id -> new BlockCableCoated(id)
+				.setHarvestLevel("pickaxe", 0)
+				.setHardness(5.0F)
+				.setStepSound(Block.soundMetalFootstep)
+		);
 		fluidPipeCopper = helper.register("fluidPipeCopper", id -> new BlockFluidPipe(id)
 				.setHarvestLevel("pickaxe", 0)
-				.setHardness(2.5F)
+				.setHardness(5.0F)
 				.setStepSound(soundPipeFootstep)
 		);
 		fluidPipeCoated = helper.register("fluidPipeCoated", id -> new BlockFluidPipeCoated(id)
 				.setHarvestLevel("pickaxe", 0)
-				.setHardness(2.5F)
+				.setHardness(5.0F)
 				.setStepSound(soundPipeFootstep)
 		);
 
@@ -321,6 +340,7 @@ public class BlockInit {
 
 	public static void registerItemBlocks() {
 		Item.itemsList[oreMetal.blockID] = new ItemBlockMetalOre(oreMetal);
+		Item.itemsList[oreDust.blockID] = new ItemBlockDustOre(oreDust);
 		Item.itemsList[blockMetal.blockID] = new ItemBlockMetal(blockMetal);
 		Item.itemsList[resourceRock.blockID] = new ItemBlockResourceRock(resourceRock);
 		Item.itemsList[resourceDeposit.blockID] = new ItemBlockResourceRock(resourceDeposit);

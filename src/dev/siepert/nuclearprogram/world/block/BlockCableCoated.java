@@ -2,17 +2,17 @@ package dev.siepert.nuclearprogram.world.block;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.init.ItemInit;
-import dev.siepert.nuclearprogram.world.block.render.RenderBlockFluidPipeCoated;
-import dev.siepert.nuclearprogram.world.te.TileEntityFluidPipeCoated;
+import dev.siepert.nuclearprogram.world.block.render.RenderBlockCableCoated;
+import dev.siepert.nuclearprogram.world.te.TileEntityCableCoated;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.tag.ItemTags;
 
-public class BlockFluidPipeCoated extends BlockContainer {
-	public BlockFluidPipeCoated(int blockID) {
-		super(blockID, NPMaterials.pipe);
+public class BlockCableCoated extends BlockContainer {
+	public BlockCableCoated(int blockID) {
+		super(blockID, NPMaterials.cable);
 
-		BlockFluidPipe.canConnectPipe[blockID] = true;
-		BlockFluidPipe.canConnectPipeMetaMask[blockID] = 0xFFFF;
+		BlockCable.canConnectCable[blockID] = true;
+		BlockCable.canConnectCableMetaMask[blockID] = 0xFFFF;
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class BlockFluidPipeCoated extends BlockContainer {
 			Block block = Block.blocksList[held.itemID];
 			if (block != null && block != BlockInit.fluidPipeCoated && block.isOpaqueCube() && block.renderAsNormalBlock()) {
 				int meta = held.getItem().getPlacedBlockMetadata(held.getItemDamage());
-				TileEntityFluidPipeCoated te = (TileEntityFluidPipeCoated) world.getBlockTileEntity(x, y, z);
+				TileEntityCableCoated te = (TileEntityCableCoated) world.getBlockTileEntity(x, y, z);
 				if (te.modelBlockID != 0) return false;
 				if (!world.multiplayerWorld) {
 					te.modelBlockID = held.itemID;
@@ -37,7 +37,7 @@ public class BlockFluidPipeCoated extends BlockContainer {
 			return false;
 		} else if (held.itemID == ItemInit.screwdriver.shiftedIndex) {
 			if (!world.multiplayerWorld) {
-				TileEntityFluidPipeCoated te = (TileEntityFluidPipeCoated) world.getBlockTileEntity(x, y, z);
+				TileEntityCableCoated te = (TileEntityCableCoated) world.getBlockTileEntity(x, y, z);
 				te.modelBlockID = 0;
 				world.setBlockMetadata(x, y, z, 0);
 				te.onInventoryChanged();
@@ -49,11 +49,11 @@ public class BlockFluidPipeCoated extends BlockContainer {
 
 	@Override
 	protected TileEntity getBlockEntity(int meta) {
-		return new TileEntityFluidPipeCoated();
+		return new TileEntityCableCoated();
 	}
 
 	@Override
 	public int getRenderType() {
-		return RenderBlockFluidPipeCoated.RENDER_TYPE;
+		return RenderBlockCableCoated.RENDER_TYPE;
 	}
 }

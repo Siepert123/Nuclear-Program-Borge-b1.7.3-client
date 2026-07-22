@@ -26,6 +26,9 @@ public class ItemInit {
 	public static Item ingotThorium;
 	public static Item ingotKaupium;
 	public static Item ingotYanoizedKaupium;
+	public static Item dustSulphur;
+	public static Item dustSaltpeter;
+	public static Item dustFluorite;
 	public static Item dustRedPhosphorus;
 	public static Item dustWhitePhosphorus;
 	public static Item plateIron;
@@ -48,6 +51,8 @@ public class ItemInit {
 	public static Item resourceBrickBauxite;
 	public static Item resourceBrickDirtyCoal;
 
+	public static Item yellowcake;
+
 	public static Item valve;
 
 	public static ItemCraftingTool hammer;
@@ -61,6 +66,8 @@ public class ItemInit {
 	public static Item fuelRodArray;
 
 	public static Item fuelRodRbmkEmpty;
+
+	public static ItemFluidRepresentation fluid;
 
 	public static void register(IdAllocationEvent<Item> event) {
 		Helper helper = new Helper(NuclearProgram.MODID, event);
@@ -81,6 +88,9 @@ public class ItemInit {
 		ingotThorium = helper.register("ingotThorium");
 		ingotKaupium = helper.register("ingotKaupium");
 		ingotYanoizedKaupium = helper.register("ingotYanoizedKaupium");
+		dustSulphur = helper.register("dustSulphur");
+		dustSaltpeter = helper.register("dustSaltpeter");
+		dustFluorite = helper.register("dustFluorite");
 		dustRedPhosphorus = helper.register("dustRedPhosphorus");
 		dustWhitePhosphorus = helper.register("dustWhitePhosphorus", ItemWhitePhosphorus::new);
 		plateIron = helper.register("plateIron");
@@ -103,6 +113,8 @@ public class ItemInit {
 		resourceBrickBauxite = helper.register("resourceBrickBauxite");
 		resourceBrickDirtyCoal = helper.register("resourceBrickDirtyCoal");
 
+		yellowcake = helper.register("yellowcake");
+
 		valve = helper.register("valve");
 
 		hammer = helper.register("hammer", id -> new ItemCraftingTool(id)
@@ -122,6 +134,8 @@ public class ItemInit {
 		fuelRodArray = helper.register("fuelRodArray", ItemFuelRod::new);
 
 		fuelRodRbmkEmpty = helper.register("fuelRodRbmkEmpty", ItemFuelRodRBMK::new);
+
+		fluid = helper.register("fluid", ItemFluidRepresentation::new);
 	}
 
 	@SuppressWarnings("unchecked")

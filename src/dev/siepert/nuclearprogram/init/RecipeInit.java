@@ -6,6 +6,7 @@ import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
 import dev.siepert.nuclearprogram.recipe.crafting.CraftingRecycleFuelRod;
+import dev.siepert.nuclearprogram.world.block.BlockDustOre;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
 import dev.siepert.nuclearprogram.world.block.BlockMetalOre;
 import dev.siepert.nuclearprogram.world.block.BlockWorkbench;
@@ -423,6 +424,14 @@ public class RecipeInit {
 		recipes.addShapelessRecipe(new ItemStack(Item.silk, 2),
 				ItemInit.hempFibers, ItemInit.hempFibers, ItemInit.hempFibers
 		);
+		recipes.addShapelessRecipe(new ItemStack(Item.gunpowder, 5),
+				ItemInit.dustSulphur,
+				Item.coal,
+				ItemInit.dustSaltpeter,
+				ItemInit.dustSaltpeter,
+				ItemInit.dustSaltpeter,
+				ItemInit.dustSaltpeter
+		);
 	}
 
 	public static void furnace(FurnaceRecipesFix recipes) {
@@ -433,6 +442,12 @@ public class RecipeInit {
 		recipes.addSmelting(BlockInit.oreMetal.blockID, BlockMetalOre.LEAD, new ItemStack(ItemInit.ingotLead, 1), 200);
 		recipes.addSmelting(BlockInit.oreMetal.blockID, BlockMetalOre.TITANIUM, new ItemStack(ItemInit.ingotTitanium, 1), 200);
 		recipes.addSmelting(BlockInit.oreMetal.blockID, BlockMetalOre.TUNGSTEN, new ItemStack(ItemInit.ingotTungsten, 1), 200);
+		recipes.addSmelting(BlockInit.oreMetal.blockID, BlockMetalOre.URANIUM, new ItemStack(ItemInit.ingotUranium, 1), 200);
+		recipes.addSmelting(BlockInit.oreMetal.blockID, BlockMetalOre.THORIUM, new ItemStack(ItemInit.ingotThorium, 1), 200);
+
+		recipes.addSmelting(BlockInit.oreDust.blockID, BlockDustOre.SULPHUR, new ItemStack(ItemInit.dustSulphur, 8), 200);
+		recipes.addSmelting(BlockInit.oreDust.blockID, BlockDustOre.SALTPETER, new ItemStack(ItemInit.dustSaltpeter, 8), 200);
+		recipes.addSmelting(BlockInit.oreDust.blockID, BlockDustOre.FLUORITE, new ItemStack(ItemInit.dustFluorite, 8), 200);
 	}
 
 	public static void workbench(WorkbenchRecipes recipes) {

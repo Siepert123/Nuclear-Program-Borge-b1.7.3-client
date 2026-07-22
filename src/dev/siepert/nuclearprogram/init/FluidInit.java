@@ -1,0 +1,30 @@
+package dev.siepert.nuclearprogram.init;
+
+import dev.siepert.nuclearprogram.world.fluid.Fluid;
+
+public class FluidInit {
+	public static final Fluid water = new Fluid(1)
+			.setName("water").setColor(0.0F, 0.0F, 1.0F);
+	public static final Fluid lava = new Fluid(2)
+			.setName("lava").setColor(1.0F, 0.0F, 0.0F)
+			.setTemperature(1000);
+	public static final Fluid steam = new Fluid(3)
+			.setName("steam").setColor(1.0F, 1.0F, 1.0F)
+			.setTemperature(100);
+	public static final Fluid depletedSteam = new Fluid(4)
+			.setName("depletedSteam").setColor(0.7F, 0.7F, 1.0F)
+			.setTemperature(100);
+
+	public static void register() {}
+
+	static {
+		int counter = 1;
+		int max = Fluid.ID_SIZE;
+
+		for (int i = 1; i < 256; i++) {
+			if (Fluid.fluidList[i] != null) counter++;
+		}
+
+		System.out.println("There are " + counter + "/" + max + " fluids registered");
+	}
+}
