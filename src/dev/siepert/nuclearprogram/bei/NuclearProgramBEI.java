@@ -9,10 +9,7 @@ import dev.siepert.bei.api.reg.IScreenRegistration;
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.gui.GuiBloomery;
 import dev.siepert.nuclearprogram.gui.GuiFurnaceBuilder;
-import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
-import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
-import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
-import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
+import dev.siepert.nuclearprogram.recipe.*;
 import dev.siepert.nuclearprogram.recipe.crafting.CraftingRecycleFuelRod;
 import net.minecraft.src.CraftingManager;
 import net.minecraft.src.IRecipe;
@@ -36,6 +33,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		registration.registerCategory(NPRecipeCategories.SMELTING_BUILDER, new RecipeCategoryFurnaceBuilder());
 		registration.registerCategory(NPRecipeCategories.WORKBENCH, new RecipeCategoryWorkbench());
 		registration.registerCategory(NPRecipeCategories.BLOOMERY, new RecipeCategoryBloomery());
+		registration.registerCategory(NPRecipeCategories.RTG_FUEL, new RecipeCategoryRTGFuel());
 	}
 
 	@Override
@@ -94,6 +92,25 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		}
 		registration.addRecipes(bloomery, bloomingRecipes);
 		System.out.println(bloomingRecipes.size() + " blooming recipes" + (skip != 0 ? " (" + skip + " skipped)" : ""));
+
+		// RTG Fuel category
+		RTGFuelRecipes rtgFueling = RTGFuelRecipes.instance();
+		IRecipeCategory<RecipeRTGFuel> rtgFuel = registration.getCategoryByUID(NPRecipeCategories.RTG_FUEL);
+		List<RecipeRTGFuel> rtgFuelRecipes = new ArrayList<>();
+		skip = 0;
+		for (Map.Entry<Integer, RTGFuelRecipes.Recipe> entry : rtgFueling.recipes.entrySet()) {
+			ItemStack in = unpack(entry.getKey());
+			ItemStack result = entry.getValue().product;
+			int ticks = entry.getValue().duration;
+			int watts = entry.getValue().production;
+			if (in == null || result == null) {
+				skip++;
+				continue;
+			}
+			rtgFuelRecipes.add(new RecipeRTGFuel(in, ticks, watts, result));
+		}
+		registration.addRecipes(rtgFuel, rtgFuelRecipes);
+		System.out.println(rtgFuelRecipes.size() + " RTG fuel recipes" + (skip != 0 ? " (" + skip + " skipped)" : ""));
 	}
 
 	@Override

@@ -1,10 +1,14 @@
 package dev.siepert.nuclearprogram.world.fluid;
 
+import dev.siepert.nuclearprogram.init.ItemInit;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.MathHelper;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.IconRegister;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Fluid {
 	public static final int ID_SIZE = 256;
@@ -44,11 +48,11 @@ public class Fluid {
 		return this;
 	}
 	public Fluid setColor(int color) {
-		colorLookup[this.fluidID] = color;
+		colorLookup[this.fluidID] = color | 0xFF000000;
 		return this;
 	}
 	public Fluid setColor(int r, int g, int b) {
-		return this.setColor((r << 16) | (g << 8) | (b) | (0xFF000000));
+		return this.setColor((r << 16) | (g << 8) | (b));
 	}
 	public Fluid setColor(float r, float g, float b) {
 		return this.setColor(MathHelper.floor_float(r * 255), MathHelper.floor_float(g * 255), MathHelper.floor_float(b * 255));
@@ -66,9 +70,17 @@ public class Fluid {
 	}
 
 	public void registerIcons(IconRegister register) {
-		this.fluidTexture = register.getTexture(this.getRegistryName(), 16, 16);
+		this.fluidTexture = register.getTexture("fluid/" + this.getRegistryName(), 16, 16);
 	}
 
+	public static ItemStack createItemRepresentation(Fluid fluid, long amount, byte pressure) {
+		Objects.requireNonNull(fluid, "fluid");
+		ItemStack stack = new ItemStack(ItemInit.fluid, 1, fluid.fluidID);
+		stack.itemNBT = new NBTTagCompound(2);
+		stack.itemNBT.setLong("fluidAmount", amount);
+		stack.itemNBT.setByte("fluidPressure", pressure);
+		return stack;
+	}
 	public static String getUnlocalizedName(Fluid fluid) {
 		return fluid != null ? fluid.getUnlocalizedName() : "fluid.none";
 	}

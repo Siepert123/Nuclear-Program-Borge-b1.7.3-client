@@ -61,4 +61,8 @@ public class ItemFuelRod extends Item {
 		if (metadata < 0 || metadata >= this.variants) return this.getItemName();
 		else return this.getItemName() + VARIANTS[metadata];
 	}
+
+	public ItemStack create(int type) {
+		return new ItemStack(this, 1, type);
+	}
 }

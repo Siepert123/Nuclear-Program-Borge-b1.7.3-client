@@ -48,10 +48,11 @@ public class ItemFluidRepresentation extends Item {
 		NBTTagCompound props = stack.itemNBT;
 		if (props != null) {
 			if (props.hasKey("fluidAmount", NBTBase.LONG)) {
-				tooltip.add(props.getLong("fluidAmount") + " mB");
+				long amount = props.getLong("fluidAmount");
+				tooltip.add(Long.toUnsignedString(amount) + " mB");
 			}
 			if (props.hasKey("fluidPressure", NBTBase.BYTE)) {
-				tooltip.add(props.getByte("fluidPressure") + " bar");
+				tooltip.add((props.getByte("fluidPressure") & 0xFF) + " bar");
 			}
 		}
 		int fluidID = stack.getItemDamage();

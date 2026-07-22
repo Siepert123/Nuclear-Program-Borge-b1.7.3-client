@@ -29,14 +29,18 @@ public class BlockCable extends Block {
 		canConnectCable[block] = canConnectCableMetaMask[block] != 0;
 	}
 
+	public static void enableConnection(int block) {
+		canConnectCable[block] = true;
+		canConnectCableMetaMask[block] = 0xFFFF;
+	}
+
 	public Icon blockTextureVertical;
 	public Icon blockTextureHorizontal;
 
 	public BlockCable(int blockID) {
 		super(blockID, NPMaterials.cable);
 
-		canConnectCable[blockID] = true;
-		canConnectCableMetaMask[blockID] = 0xFFFF;
+		enableConnection(blockID);
 	}
 
 	@Override

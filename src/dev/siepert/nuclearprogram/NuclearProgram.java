@@ -7,12 +7,14 @@ import dev.siepert.nuclearprogram.init.*;
 import dev.siepert.nuclearprogram.network.NuclearProgramNetHandler;
 import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
+import dev.siepert.nuclearprogram.recipe.RTGFuelRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
 import dev.siepert.nuclearprogram.texturefx.TextureYanoizedFX;
 import dev.siepert.nuclearprogram.util.SingletonWorld;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
 import dev.siepert.nuclearprogram.world.entity.render.RenderHowitzerShell;
+import dev.siepert.nuclearprogram.world.fluid.Fluid;
 import dev.siepert.nuclearprogram.world.particle.ParticleTextures;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Block;
@@ -99,6 +101,7 @@ public class NuclearProgram implements IModLifecycleListener {
 		RecipeInit.workbench(WorkbenchRecipes.crafting());
 		RecipeInit.builderFurnace(BuilderFurnaceRecipes.smelting());
 		RecipeInit.bloomery(BloomeryRecipes.blooming());
+		RecipeInit.rtgFuel(RTGFuelRecipes.instance());
 	}
 
 	@EventHandler
@@ -111,6 +114,13 @@ public class NuclearProgram implements IModLifecycleListener {
 
 	@EventHandler
 	public static void registerAdditionalIcons(TerrainStitchEvent event) {
+		for (int i = 0; i < Fluid.ID_SIZE; i++) {
+			Fluid fluid = Fluid.fluidsList[i];
+			if (fluid != null) {
+				fluid.registerIcons(event::registerIcon);
+			}
+		}
+
 		for (int i = 0; i < 8; i++) {
 			ParticleTextures.generic[i] = event.registerIcon(path("particle/generic" + i), 16, 16);
 		}

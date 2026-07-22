@@ -1,10 +1,7 @@
 package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
-import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
-import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
-import dev.siepert.nuclearprogram.recipe.WorkbenchRecipe;
-import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
+import dev.siepert.nuclearprogram.recipe.*;
 import dev.siepert.nuclearprogram.recipe.crafting.CraftingRecycleFuelRod;
 import dev.siepert.nuclearprogram.world.block.BlockDustOre;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
@@ -486,5 +483,10 @@ public class RecipeInit {
 		recipes.addSmelting(ItemInit.resourceBrickHematite.shiftedIndex, 0, new ItemStack(Item.ingotIron), null, 500);
 		recipes.addSmelting(ItemInit.resourceBrickMalachite.shiftedIndex, 0, new ItemStack(ItemInit.ingotCopper), null, 500);
 		recipes.addSmelting(ItemInit.resourceBrickBauxite.shiftedIndex, 0, new ItemStack(ItemInit.ingotAluminium), null, 500);
+	}
+
+	public static void rtgFuel(RTGFuelRecipes recipes) {
+		recipes.addRecipe(ItemInit.fuelRod, ItemFuelRod.NATURAL_URANIUM, 200, 10, ItemInit.fuelRod.create(ItemFuelRod.LEAD));
+		recipes.addRecipe(ItemInit.fuelRodArray, ItemFuelRod.NATURAL_URANIUM, 400, 20, ItemInit.fuelRodArray.create(ItemFuelRod.LEAD));
 	}
 }

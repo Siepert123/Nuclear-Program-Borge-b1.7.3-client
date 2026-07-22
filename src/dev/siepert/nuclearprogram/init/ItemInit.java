@@ -61,9 +61,9 @@ public class ItemInit {
 	public static ItemDetonator detonator;
 
 	public static Item fuelRodEmpty;
-	public static Item fuelRod;
+	public static ItemFuelRod fuelRod;
 	public static Item fuelRodArrayEmpty;
-	public static Item fuelRodArray;
+	public static ItemFuelRod fuelRodArray;
 
 	public static Item fuelRodRbmkEmpty;
 

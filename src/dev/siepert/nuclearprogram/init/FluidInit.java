@@ -13,15 +13,18 @@ public class FluidInit {
 			.setTemperature(100)
 			.setGaseous();
 	public static final Fluid depletedSteam = new Fluid(4)
-			.setName("depletedSteam").setColor(0.7F, 0.7F, 1.0F)
+			.setName("depletedSteam").setColor(0x7C90FF)
 			.setTemperature(100)
 			.setGaseous();
 	public static final Fluid hydrogenPeroxide = new Fluid(5)
-			.setName("hydrogenPeroxide").setColor(0.5F, 0.5F, 1.0F);
+			.setName("hydrogenPeroxide").setColor(0xD6EEFF);
 	public static final Fluid sulfuricAcid = new Fluid(6)
-			.setName("sulfuricAcid").setColor(0.8F, 0.8F, 0.0F);
+			.setName("sulfuricAcid").setColor(0x7F6A00);
 	public static final Fluid hydrofluoricAcid = new Fluid(7)
-			.setName("hydrofluoricAcid").setColor(1.0F, 1.0F, 0.8F);
+			.setName("hydrofluoricAcid").setColor(0xFFF0AA);
+	public static final Fluid uraniumHexafluoride = new Fluid(8)
+			.setName("uraniumHexafluoride").setColor(0.9F, 1.0F, 0.9F)
+			.setGaseous();
 
 	public static void register() {}
 
