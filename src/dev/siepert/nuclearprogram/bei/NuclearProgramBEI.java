@@ -9,6 +9,9 @@ import dev.siepert.bei.api.reg.IScreenRegistration;
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.gui.GuiBloomery;
 import dev.siepert.nuclearprogram.gui.GuiFurnaceBuilder;
+import dev.siepert.nuclearprogram.gui.GuiGasCentrifuge;
+import dev.siepert.nuclearprogram.gui.GuiRTG;
+import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.recipe.*;
 import dev.siepert.nuclearprogram.recipe.crafting.CraftingRecycleFuelRod;
 import net.minecraft.src.CraftingManager;
@@ -33,6 +36,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		registration.registerCategory(NPRecipeCategories.SMELTING_BUILDER, new RecipeCategoryFurnaceBuilder());
 		registration.registerCategory(NPRecipeCategories.WORKBENCH, new RecipeCategoryWorkbench());
 		registration.registerCategory(NPRecipeCategories.BLOOMERY, new RecipeCategoryBloomery());
+		registration.registerCategory(NPRecipeCategories.GAS_CENTRIFUGE, new RecipeCategoryGasCentrifuge());
 		registration.registerCategory(NPRecipeCategories.RTG_FUEL, new RecipeCategoryRTGFuel());
 	}
 
@@ -93,6 +97,15 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		registration.addRecipes(bloomery, bloomingRecipes);
 		System.out.println(bloomingRecipes.size() + " blooming recipes" + (skip != 0 ? " (" + skip + " skipped)" : ""));
 
+		// Gas Centrifuging category
+		IRecipeCategory<RecipeGasCentrifuge> gasCentrifuge = registration.getCategoryByUID(NPRecipeCategories.GAS_CENTRIFUGE);
+		List<RecipeGasCentrifuge> gasCentrifugeRecipes = new ArrayList<>();
+		gasCentrifugeRecipes.add(new RecipeGasCentrifuge(FluidInit.uraniumHexafluoride.fluidID, 1000, FluidInit.uraniumHexafluorideLE.fluidID, 800));
+		gasCentrifugeRecipes.add(new RecipeGasCentrifuge(FluidInit.uraniumHexafluorideLE.fluidID, 1000, FluidInit.uraniumHexafluorideME.fluidID, 800));
+		gasCentrifugeRecipes.add(new RecipeGasCentrifuge(FluidInit.uraniumHexafluorideME.fluidID, 1000, FluidInit.uraniumHexafluorideHE.fluidID, 800));
+		registration.addRecipes(gasCentrifuge, gasCentrifugeRecipes);
+		System.out.println(gasCentrifugeRecipes.size() + " gas centrifuge recipes");
+
 		// RTG Fuel category
 		RTGFuelRecipes rtgFueling = RTGFuelRecipes.instance();
 		IRecipeCategory<RecipeRTGFuel> rtgFuel = registration.getCategoryByUID(NPRecipeCategories.RTG_FUEL);
@@ -119,6 +132,9 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 
 		registration.addScreenHandler(GuiFurnaceBuilder.class, 79, 34, 24, 17, NPRecipeCategories.SMELTING_BUILDER, "furnaceFuel");
 		registration.addScreenHandler(GuiBloomery.class, 97, 13, 22, 15, NPRecipeCategories.BLOOMERY);
+
+		registration.addScreenHandler(GuiGasCentrifuge.class, 49, 17, 42, 56, NPRecipeCategories.GAS_CENTRIFUGE);
+		registration.addScreenHandler(GuiRTG.class, 70, 26, 36, 36, NPRecipeCategories.RTG_FUEL);
 	}
 
 	public static ItemStack unpack(int packed) {

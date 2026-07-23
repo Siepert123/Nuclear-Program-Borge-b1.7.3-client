@@ -1,8 +1,10 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.gui.GuiGasCentrifuge;
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockGasCentrifuge;
 import dev.siepert.nuclearprogram.world.te.TileEntityGasCentrifuge;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.ContainerUtil;
 import net.minecraftborge.loader.IconRegister;
@@ -26,7 +28,7 @@ public class BlockGasCentrifuge extends BlockContainer {
 
 	@Override
 	public void registerIcons(IconRegister register) {
-		this.blockTexture = Block.blockIron.blockTexture;
+		this.blockTexture = BlockInit.blockMetal.blockTextures[BlockMetal.STEEL];
 	}
 
 	@Override
@@ -50,6 +52,16 @@ public class BlockGasCentrifuge extends BlockContainer {
 	public boolean canPlaceBlockAt(World world, int x, int y, int z) {
 		for (int i = 0; i < 4; i++) {
 			if (world.getBlockId(x, y+i, z) != 0) return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
+		if (player.isSneaking() && player.inventory.getCurrentItem() != null) return false;
+		if (!world.multiplayerWorld) {
+			TileEntityGasCentrifuge te = (TileEntityGasCentrifuge) world.getBlockTileEntity(x, y, z);
+			Minecraft.getTheMinecraft().displayGuiScreen(new GuiGasCentrifuge(player.inventory, te));
 		}
 		return true;
 	}

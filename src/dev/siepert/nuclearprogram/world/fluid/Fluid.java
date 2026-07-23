@@ -28,7 +28,7 @@ public class Fluid {
 		} else {
 			fluidsList[fluidID] = this;
 			temperatureLookup[fluidID] = 20;
-			colorLookup[fluidID] = 0xFFFFFFFF;
+			colorLookup[fluidID] = 0xFFFFFF;
 			gaseousLookup[fluidID] = false;
 		}
 	}
@@ -48,7 +48,7 @@ public class Fluid {
 		return this;
 	}
 	public Fluid setColor(int color) {
-		colorLookup[this.fluidID] = color | 0xFF000000;
+		colorLookup[this.fluidID] = color;
 		return this;
 	}
 	public Fluid setColor(int r, int g, int b) {
@@ -87,7 +87,7 @@ public class Fluid {
 
 	static {
 		Arrays.fill(temperatureLookup, 20);
-		Arrays.fill(colorLookup, 0xFF888888);
+		Arrays.fill(colorLookup, 0x888888);
 		Arrays.fill(gaseousLookup, false);
 	}
 }

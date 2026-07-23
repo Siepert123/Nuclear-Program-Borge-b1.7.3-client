@@ -18,7 +18,7 @@ public class RenderBlockGasCentrifuge implements BlockRenderType {
 				for (int k = 0; k < 2; k++){
 					float ox = j * 0.5F;
 					float oz = k * 0.5F;
-					block.setBlockBounds(0.125F + ox, 0.0F, 0.125F + oz, 0.375F + ox, 1.0F, 0.375F + oz);
+					block.setBlockBounds(0.0625F + ox, 0.0F, 0.0625F + oz, 0.5F-0.0625F + ox, 1.0F, 0.5F-0.0625F + oz);
 					renderer.renderStandardBlock(block, x, y+i, z);
 				}
 			}

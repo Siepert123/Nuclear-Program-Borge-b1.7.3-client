@@ -1,8 +1,10 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.init.BlockInit;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
+import net.minecraftborge.loader.IconRegister;
 
 import java.util.Random;
 
@@ -10,7 +12,12 @@ public class BlockCentrifugeExtension extends Block {
 	public BlockCentrifugeExtension(int blockID) {
 		super(blockID, NPMaterials.multiblock);
 		this.disableStats();
-		this.setBlockBounds(0.1F, 0.0F, 0.1F, 0.9F, 1.0F, 0.9F);
+		this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 1.0F-0.0625F, 1.0F, 1.0F-0.0625F);
+	}
+
+	@Override
+	public void registerIcons(IconRegister register) {
+		this.blockTexture = BlockInit.blockMetal.blockTextures[BlockMetal.STEEL];
 	}
 
 	@Override

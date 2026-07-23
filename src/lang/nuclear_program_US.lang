@@ -171,6 +171,10 @@ fluid.depletedSteam.name=Depleted Steam
 fluid.hydrogenPeroxide.name=Hydrogen Peroxide
 fluid.sulfuricAcid.name=Sulfuric Acid
 fluid.hydrofluoricAcid.name=Hydrofluoric Acid
+fluid.uraniumHexafluoride.name=Uranium Hexafluoride
+fluid.uraniumHexafluorideLE.name=Low Enriched UF6
+fluid.uraniumHexafluorideME.name=Medium Enriched UF6
+fluid.uraniumHexafluorideHE.name=High Enriched UF6
 
 achievement.nuclear_program/concrete=Soviet's Finest
 achievement.nuclear_program/concrete.desc=top 10 concrete mowing
