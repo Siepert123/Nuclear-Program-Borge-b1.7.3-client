@@ -45,6 +45,10 @@ public class ItemFluidRepresentation extends Item {
 
 	@Override
 	public void getTooltip(ItemStack stack, List<String> tooltip, boolean isAdvanced) {
+		int fluidID = stack.getItemDamage();
+		if (fluidID > 0) {
+			tooltip.add(String.format(ChatFormat.RED + "%sºC", Fluid.temperatureLookup[fluidID]));
+		}
 		NBTTagCompound props = stack.itemNBT;
 		if (props != null) {
 			if (props.hasKey("fluidAmount", NBTBase.LONG)) {
@@ -54,10 +58,6 @@ public class ItemFluidRepresentation extends Item {
 			if (props.hasKey("fluidPressure", NBTBase.BYTE)) {
 				tooltip.add((props.getByte("fluidPressure") & 0xFF) + " bar");
 			}
-		}
-		int fluidID = stack.getItemDamage();
-		if (fluidID > 0) {
-			tooltip.add(String.format(ChatFormat.RED + "%sºC", Fluid.temperatureLookup[fluidID]));
 		}
 	}
 }

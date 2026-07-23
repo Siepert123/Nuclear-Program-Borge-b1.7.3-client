@@ -26,6 +26,11 @@ public class BlockFluidPipe extends BlockContainer {
 		canConnectPipe[block] = canConnectPipeMetaMask[block] != 0;
 	}
 
+	public static void enableConnection(int block) {
+		canConnectPipe[block] = true;
+		canConnectPipeMetaMask[block] = 0xFFFF;
+	}
+
 	public Icon blockTextureVertical;
 	public Icon blockTextureHorizontal;
 
@@ -34,8 +39,7 @@ public class BlockFluidPipe extends BlockContainer {
 
 		isBlockContainerMetaMask[blockID] = 0;
 
-		canConnectPipe[blockID] = true;
-		canConnectPipeMetaMask[blockID] = 0xFFFF;
+		enableConnection(blockID);
 	}
 
 	@Override

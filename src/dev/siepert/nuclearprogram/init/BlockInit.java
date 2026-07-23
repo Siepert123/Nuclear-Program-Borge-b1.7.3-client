@@ -69,6 +69,9 @@ public class BlockInit {
 
 	public static BlockExtractionTest extractionTest;
 
+	public static BlockGasCentrifuge gasCentrifuge;
+	public static BlockCentrifugeExtension centrifugeExtension;
+
 	public static BlockRTG rtg;
 
 	public static BlockRBMKColumn rbmkBlank;
@@ -325,6 +328,19 @@ public class BlockInit {
 				.setHardness(1.0F)
 				.setResistance(1.0F)
 				.setStepSound(soundChainFootstep)
+		);
+
+		gasCentrifuge = helper.register("gasCentrifuge", id -> new BlockGasCentrifuge(id)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(Block.blockIron.getHardness())
+				.setResistance(Block.blockIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setStepSound(soundMetal2Footstep)
+		);
+		centrifugeExtension = helper.register("centrifugeExtension", id -> new BlockCentrifugeExtension(id)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(Block.blockIron.getHardness())
+				.setResistance(Block.blockIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setStepSound(soundMetal2Footstep)
 		);
 
 		rtg = helper.register("rtg", id -> new BlockRTG(id)
