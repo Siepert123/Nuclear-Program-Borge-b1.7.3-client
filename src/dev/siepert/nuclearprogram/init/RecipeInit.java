@@ -238,6 +238,12 @@ public class RecipeInit {
 				Block.netherrack, Block.netherrack
 		);
 
+		recipes.addShapedRecipe(new ItemStack(ItemInit.uraniumSandwich, 1),
+				"#", "X", "#",
+				'#', IngredientInit.ingotUraniumHE,
+				'X', Item.bread
+		);
+
 		recipes.addShapedRecipe(new ItemStack(ItemInit.hammer, 1),
 				"## ", "##X", "## ",
 				'#', IngredientInit.ingotIron,
@@ -432,6 +438,10 @@ public class RecipeInit {
 	}
 
 	public static void furnace(FurnaceRecipesFix recipes) {
+		recipes.addSmelting(Block.oreCoal.blockID, new ItemStack(Item.coal, 1));
+		recipes.addSmelting(Block.oreLapis.blockID, new ItemStack(Item.dyePowder, 8, 4));
+		recipes.addSmelting(Block.oreRedstone.blockID, new ItemStack(Item.redstone, 8));
+
 		recipes.addSmelting(ItemInit.ballFireclay.shiftedIndex, new ItemStack(ItemInit.firebrick, 1));
 		recipes.addSmelting(ItemInit.potato.shiftedIndex, new ItemStack(ItemInit.potatoCooked, 1));
 

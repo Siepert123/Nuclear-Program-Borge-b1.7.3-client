@@ -52,6 +52,7 @@ public class ItemInit {
 	public static Item resourceBrickDirtyCoal;
 
 	public static Item yellowcake;
+	public static ItemFood uraniumSandwich;
 
 	public static Item valve;
 
@@ -114,6 +115,7 @@ public class ItemInit {
 		resourceBrickDirtyCoal = helper.register("resourceBrickDirtyCoal");
 
 		yellowcake = helper.register("yellowcake");
+		uraniumSandwich = helper.register("uraniumSandwich", id -> new ItemFood(id, 1000, false));
 
 		valve = helper.register("valve");
 

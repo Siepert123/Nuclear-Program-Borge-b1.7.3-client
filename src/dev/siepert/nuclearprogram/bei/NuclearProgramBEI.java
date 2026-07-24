@@ -133,7 +133,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		registration.addScreenHandler(GuiFurnaceBuilder.class, 79, 34, 24, 17, NPRecipeCategories.SMELTING_BUILDER, "furnaceFuel");
 		registration.addScreenHandler(GuiBloomery.class, 97, 13, 22, 15, NPRecipeCategories.BLOOMERY);
 
-		registration.addScreenHandler(GuiGasCentrifuge.class, 49, 17, 42, 56, NPRecipeCategories.GAS_CENTRIFUGE);
+		registration.addScreenHandler(GuiGasCentrifuge.class, 32, 17, 42, 56, NPRecipeCategories.GAS_CENTRIFUGE);
 		registration.addScreenHandler(GuiRTG.class, 70, 26, 36, 36, NPRecipeCategories.RTG_FUEL);
 	}
 

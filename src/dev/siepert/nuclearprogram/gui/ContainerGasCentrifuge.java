@@ -11,10 +11,10 @@ public class ContainerGasCentrifuge extends Container {
 	public ContainerGasCentrifuge(InventoryPlayer inventory, TileEntityGasCentrifuge te) {
 		this.te = te;
 
-		this.addSlot(new SlotCraftResult(inventory.player, te, 0, 107, 36, TileEntityGasCentrifuge.WORKSTATION));
-		this.addSlot(new SlotCraftResult(inventory.player, te, 1, 125, 36, TileEntityGasCentrifuge.WORKSTATION));
-		this.addSlot(new SlotCraftResult(inventory.player, te, 2, 107, 54, TileEntityGasCentrifuge.WORKSTATION));
-		this.addSlot(new SlotCraftResult(inventory.player, te, 3, 125, 54, TileEntityGasCentrifuge.WORKSTATION));
+		this.addSlot(new SlotCraftResult(inventory.player, te, 0, 90, 36, TileEntityGasCentrifuge.WORKSTATION));
+		this.addSlot(new SlotCraftResult(inventory.player, te, 1, 108, 36, TileEntityGasCentrifuge.WORKSTATION));
+		this.addSlot(new SlotCraftResult(inventory.player, te, 2, 90, 54, TileEntityGasCentrifuge.WORKSTATION));
+		this.addSlot(new SlotCraftResult(inventory.player, te, 3, 108, 54, TileEntityGasCentrifuge.WORKSTATION));
 
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 9; ++j) {

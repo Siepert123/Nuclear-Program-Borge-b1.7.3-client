@@ -67,6 +67,9 @@ public class TileEntityRTG extends TileEntity implements IInventory {
 	public int getScaledDepletion(int width) {
 		return this.depletion * width / this.maxDepletion;
 	}
+	public int getEnergyScaled(int h) {
+		return (this.energy * h / (MAX_ENERGY_STORED+1))+1;
+	}
 
 	@Override
 	public int getSizeInventory() {

@@ -28,9 +28,10 @@ public class TileEntityGasCentrifuge extends TileEntity implements IInventory {
 		boolean update = false;
 
 		if (!this.worldObj.multiplayerWorld) {
+			this.energy = Math.min(this.energy + 100, MAX_ENERGY_STORED);
 			this.fluidToProcess = Math.min(this.fluidToProcess + 50, TANK_CAPACITY);
 
-			if (this.fluidProcessed + 800 >= TANK_CAPACITY) {
+			if (this.fluidProcessed + 800 > TANK_CAPACITY) {
 				this.progress = 0;
 			} else if (this.fluidToProcess >= 1000) {
 				update = true;
@@ -65,6 +66,9 @@ public class TileEntityGasCentrifuge extends TileEntity implements IInventory {
 	}
 	public int getFluidProcessedScaled(int h) {
 		return (this.fluidProcessed * h / (TANK_CAPACITY+1))+1;
+	}
+	public int getEnergyScaled(int h) {
+		return (this.energy * h / (MAX_ENERGY_STORED+1))+1;
 	}
 
 	public void setEnrichment(Enrichment setting) {

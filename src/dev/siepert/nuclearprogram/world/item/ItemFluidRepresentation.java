@@ -53,10 +53,10 @@ public class ItemFluidRepresentation extends Item {
 		if (props != null) {
 			if (props.hasKey("fluidAmount", NBTBase.LONG)) {
 				long amount = props.getLong("fluidAmount");
-				tooltip.add(Long.toUnsignedString(amount) + " mB");
+				tooltip.add(ChatFormat.WHITE + Long.toUnsignedString(amount) + " mB");
 			}
 			if (props.hasKey("fluidPressure", NBTBase.BYTE)) {
-				tooltip.add((props.getByte("fluidPressure") & 0xFF) + " bar");
+				tooltip.add(ChatFormat.WHITE + (props.getByte("fluidPressure") & 0xFF) + " bar");
 			}
 		}
 	}

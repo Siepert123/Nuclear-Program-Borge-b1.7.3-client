@@ -2,6 +2,7 @@ package dev.siepert.nuclearprogram.gui;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.init.FluidInit;
+import dev.siepert.nuclearprogram.util.NumFormat;
 import dev.siepert.nuclearprogram.world.fluid.Fluid;
 import dev.siepert.nuclearprogram.world.te.TileEntityGasCentrifuge;
 import net.minecraft.src.GuiContainer;
@@ -31,21 +32,25 @@ public class GuiGasCentrifuge extends GuiContainer {
 		this.mc.renderEngine.bindTexture(textureID);
 		int x = (this.width - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
-		this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
+		this.drawTexturedModalRect(x, y, 0, 0, this.xSize+29, this.ySize);
 
 		if (this.te.fluidToProcess > 0) {
 			int scaled = this.te.getFluidToProcessScaled(55);
-			this.drawTexturedModalRect(x+8, y+15, 176, 1, 7, scaled);
-			this.drawTexturedModalRect(x+17, y+15, 185, 1, 7, scaled);
+			this.drawTexturedModalRect(x+8, y+15, 98, 166, 7, scaled);
+			this.drawTexturedModalRect(x+17, y+15, 107, 166, 7, scaled);
 		}
 		if (this.te.fluidProcessed > 0) {
 			int scaled = this.te.getFluidProcessedScaled(55);
-			this.drawTexturedModalRect(x+152, y+15, 176, 1, 7, scaled);
-			this.drawTexturedModalRect(x+161, y+15, 185, 1, 7, scaled);
+			this.drawTexturedModalRect(x+134, y+15, 98, 166, 7, scaled);
+			this.drawTexturedModalRect(x+143, y+15, 107, 166, 7, scaled);
 		}
 		if (this.te.progress > 0) {
-			int scaled = this.te.progress * 115 / TileEntityGasCentrifuge.TICKS_PER_CENTRIFUGE;
+			int scaled = this.te.progress * 98 / TileEntityGasCentrifuge.TICKS_PER_CENTRIFUGE;
 			this.drawTexturedModalRect(x+28, y+17, 0, 166, scaled, 55);
+		}
+		if (this.te.energy > 0) {
+			int scaled = this.te.getEnergyScaled(141);
+			this.drawTexturedModalRect(x+184, y+17+141-scaled, 205, 141-scaled, 16, scaled);
 		}
 
 		this.fontRenderer.drawString(this.te.getInvName(), x + (this.xSize / 2) - (this.fontRenderer.getStringWidth(this.te.getInvName()) / 2), y + 6, 0x404040);
@@ -60,20 +65,28 @@ public class GuiGasCentrifuge extends GuiContainer {
 			int y = (this.height - this.ySize) / 2;
 			int mx = this.mouseX - x;
 			int my = this.mouseY - y;
-			if (mx >= 7 && my >= 14 && mx < 7+18 && my < 14+57) {
-				String amount = this.te.fluidToProcess + "mB/" + TileEntityGasCentrifuge.TANK_CAPACITY + "mB";
+			if (mx >= 7 && my >= 14 && mx <7+18 && my < 14+57) {
+				String amount = this.te.fluidToProcess + "/" + TileEntityGasCentrifuge.TANK_CAPACITY + "mB";
 				drawTooltipWithGradientBackdrop(this, this.fontRenderer, mx + 12, my - 12,
 						translate.translateNamedKey(Fluid.getUnlocalizedName(Fluid.fluidsList[this.te.getFluidIn()])), Collections.singletonList(amount),
 						-1, -1,
 						0xC0000000, (Fluid.colorLookup[this.te.getFluidIn()]) | 0xC0000000
 				);
 			}
-			if (mx >= 151 && my >= 14 && mx < 151+18 && my < 14+57) {
-				String amount = this.te.fluidProcessed + "mB/" + TileEntityGasCentrifuge.TANK_CAPACITY + "mB";
+			if (mx >= 133 && my >= 14 && mx < 133+18 && my < 14+57) {
+				String amount = this.te.fluidProcessed + "/" + TileEntityGasCentrifuge.TANK_CAPACITY + "mB";
 				drawTooltipWithGradientBackdrop(this, this.fontRenderer, mx + 12, my - 12,
 						translate.translateNamedKey(Fluid.getUnlocalizedName(Fluid.fluidsList[this.te.getFluidOut()])), Collections.singletonList(amount),
 						-1, -1,
 						0xC0000000, (Fluid.colorLookup[this.te.getFluidOut()]) | 0xC0000000
+				);
+			}
+			if (mx >= 183 && my >= 16 && mx < 183+18 && my < 16+143) {
+				String amount = NumFormat.format(this.te.energy) + "/" + NumFormat.format(TileEntityGasCentrifuge.MAX_ENERGY_STORED) + "RF";
+				drawTooltipWithGradientBackdrop(this, this.fontRenderer, mx + 12, my - 12,
+						amount, Collections.emptyList(),
+						-1, -1,
+						0xC0FF0000, 0xC07F0000
 				);
 			}
 		}

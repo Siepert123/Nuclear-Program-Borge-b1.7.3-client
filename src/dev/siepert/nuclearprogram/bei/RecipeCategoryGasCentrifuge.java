@@ -34,7 +34,7 @@ public class RecipeCategoryGasCentrifuge implements IRecipeCategory<RecipeGasCen
 	}
 	@Override
 	public int getWidth() {
-		return 164;
+		return 146;
 	}
 	@Override
 	public int getHeight() {
@@ -49,20 +49,20 @@ public class RecipeCategoryGasCentrifuge implements IRecipeCategory<RecipeGasCen
 	public void getItems(IIngredients ingredients, RecipeGasCentrifuge recipe) {
 		ingredients.addInput(2, 2+55/2+8, IngredientFluid.create(Fluid.fluidsList[recipe.fluidIn], recipe.fluidInAmount, (byte) 1));
 		if (recipe.fluidOut > 0) {
-			ingredients.addResult(146, 2+55/2+8, Fluid.createItemRepresentation(Fluid.fluidsList[recipe.fluidOut], recipe.fluidOutAmount, (byte) 1));
+			ingredients.addResult(128, 2+55/2+8, Fluid.createItemRepresentation(Fluid.fluidsList[recipe.fluidOut], recipe.fluidOutAmount, (byte) 1));
 		}
 		ItemStack[] product = recipe.products;
 		if (product.length > 0) {
-			ingredients.addResult(101, 23, recipe.products[0]);
+			ingredients.addResult(84, 23, recipe.products[0]);
 		}
 		if (product.length > 1) {
-			ingredients.addResult(119, 23, recipe.products[1]);
+			ingredients.addResult(102, 23, recipe.products[1]);
 		}
 		if (product.length > 2) {
-			ingredients.addResult(101, 41, recipe.products[2]);
+			ingredients.addResult(84, 41, recipe.products[2]);
 		}
 		if (product.length > 3) {
-			ingredients.addResult(119, 41, recipe.products[3]);
+			ingredients.addResult(102, 41, recipe.products[3]);
 		}
 	}
 
@@ -70,7 +70,7 @@ public class RecipeCategoryGasCentrifuge implements IRecipeCategory<RecipeGasCen
 	public void drawBackdrop(Minecraft mc, Tessellator tes, int x, int y, RecipeGasCentrifuge recipe, float pt) {
 		this.drawTexturedModalRect(tes, x, y, 6, 13, this.getWidth(), this.getHeight());
 		int progress = Minecraft.getTicksRan() % TileEntityGasCentrifuge.TICKS_PER_CENTRIFUGE;
-		this.drawTexturedModalRect(tes, x+22, y+4, 0, 166, progress * 115 / TileEntityGasCentrifuge.TICKS_PER_CENTRIFUGE, 55);
+		this.drawTexturedModalRect(tes, x+22, y+4, 0, 166, progress * 98 / TileEntityGasCentrifuge.TICKS_PER_CENTRIFUGE, 55);
 	}
 	@Override
 	public void drawExtras(Minecraft mc, RenderEngine textures, int x, int y, double mouseX, double mouseY, RecipeGasCentrifuge recipe, float pt) {
