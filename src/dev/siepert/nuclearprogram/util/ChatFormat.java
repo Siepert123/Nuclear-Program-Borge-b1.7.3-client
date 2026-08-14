@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.util;
 
+@SuppressWarnings("unused")
 public class ChatFormat {
 	public static final char FORMATTING = '\u00A7';
 	public static final String BLACK = FORMATTING + "0";

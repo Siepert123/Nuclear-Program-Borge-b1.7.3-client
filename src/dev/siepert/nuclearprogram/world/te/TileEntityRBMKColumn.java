@@ -20,6 +20,7 @@ public class TileEntityRBMKColumn extends TileEntity {
 	protected TileEntityRBMKColumn[] cachedNeighbours = new TileEntityRBMKColumn[4];
 	protected int neighbourCount = 0;
 	public double heat = 20.0;
+	public double incomingHeat = 0.0;
 
 	public void meltdown() {
 		List<TileEntityRBMKColumn> affected = new ArrayList<>();
@@ -75,6 +76,8 @@ public class TileEntityRBMKColumn extends TileEntity {
 			this.spreadHeat();
 			this.logicTick();
 		}
+		this.heat += this.incomingHeat;
+		this.incomingHeat = 0.0;
 
 
 		this.onInventoryChanged();
@@ -89,9 +92,10 @@ public class TileEntityRBMKColumn extends TileEntity {
 			double dissipate = (this.heat - 20) * 0.05;
 			for (int i = 0; i < 4; i++) {
 				TileEntityRBMKColumn te = this.cachedNeighbours[i];
-				if (te != null) te.heat += dissipate;
+				if (te != null) te.incomingHeat += dissipate;
 			}
 			this.heat -= dissipate * this.neighbourCount;
+			this.heat -= dissipate * (4-this.neighbourCount) * 0.05;
 		}
 	}
 

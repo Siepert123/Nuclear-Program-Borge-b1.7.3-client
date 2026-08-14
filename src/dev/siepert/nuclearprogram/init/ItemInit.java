@@ -12,6 +12,7 @@ import java.util.function.IntFunction;
 public class ItemInit {
 	public static Item cokeCoal;
 	public static Item cokePetroleum;
+
 	public static Item ingotCopper;
 	public static Item ingotAluminium;
 	public static Item ingotLead;
@@ -23,14 +24,28 @@ public class ItemInit {
 	public static Item ingotUraniumLE;
 	public static Item ingotUraniumME;
 	public static Item ingotUraniumHE;
+	public static Item ingotUranium233;
+	public static Item ingotUranium235;
+	public static Item ingotUranium238;
 	public static Item ingotThorium;
 	public static Item ingotKaupium;
 	public static Item ingotYanoizedKaupium;
+
+	public static Item nuggetUranium;
+	public static Item nuggetUraniumLE;
+	public static Item nuggetUraniumME;
+	public static Item nuggetUraniumHE;
+	public static Item nuggetUranium233;
+	public static Item nuggetUranium235;
+	public static Item nuggetUranium238;
+	public static Item nuggetThorium;
+
 	public static Item dustSulphur;
 	public static Item dustSaltpeter;
 	public static Item dustFluorite;
 	public static Item dustRedPhosphorus;
 	public static Item dustWhitePhosphorus;
+
 	public static Item plateIron;
 	public static Item plateGold;
 	public static Item plateCopper;
@@ -39,6 +54,7 @@ public class ItemInit {
 	public static Item plateTitanium;
 	public static Item plateTungsten;
 	public static Item plateSteel;
+
 	public static Item ballFireclay;
 	public static Item firebrick;
 	public static ItemConsumableSeeds potato;
@@ -75,6 +91,7 @@ public class ItemInit {
 
 		cokeCoal = helper.register("cokeCoal");
 		cokePetroleum = helper.register("cokePetroleum");
+
 		ingotCopper = helper.register("ingotCopper");
 		ingotAluminium = helper.register("ingotAluminium");
 		ingotLead = helper.register("ingotLead");
@@ -86,14 +103,28 @@ public class ItemInit {
 		ingotUraniumLE = helper.register("ingotUraniumLE");
 		ingotUraniumME = helper.register("ingotUraniumME");
 		ingotUraniumHE = helper.register("ingotUraniumHE");
+		ingotUranium233 = helper.register("ingotUranium233");
+		ingotUranium235 = helper.register("ingotUranium235");
+		ingotUranium238 = helper.register("ingotUranium238");
 		ingotThorium = helper.register("ingotThorium");
 		ingotKaupium = helper.register("ingotKaupium");
 		ingotYanoizedKaupium = helper.register("ingotYanoizedKaupium");
+
+		nuggetUranium = helper.register("nuggetUranium");
+		nuggetUraniumLE = helper.register("nuggetUraniumLE");
+		nuggetUraniumME = helper.register("nuggetUraniumME");
+		nuggetUraniumHE = helper.register("nuggetUraniumHE");
+		nuggetUranium233 = helper.register("nuggetUranium233");
+		nuggetUranium235 = helper.register("nuggetUranium235");
+		nuggetUranium238 = helper.register("nuggetUranium238");
+		nuggetThorium = helper.register("nuggetThorium");
+
 		dustSulphur = helper.register("dustSulphur");
 		dustSaltpeter = helper.register("dustSaltpeter");
 		dustFluorite = helper.register("dustFluorite");
 		dustRedPhosphorus = helper.register("dustRedPhosphorus");
 		dustWhitePhosphorus = helper.register("dustWhitePhosphorus", ItemWhitePhosphorus::new);
+
 		plateIron = helper.register("plateIron");
 		plateGold = helper.register("plateGold");
 		plateCopper = helper.register("plateCopper");
@@ -102,6 +133,7 @@ public class ItemInit {
 		plateTitanium = helper.register("plateTitanium");
 		plateTungsten = helper.register("plateTungsten");
 		plateSteel = helper.register("plateSteel");
+
 		ballFireclay = helper.register("ballFireclay");
 		firebrick = helper.register("firebrick");
 		potato = helper.register("potato", id -> new ItemConsumableSeeds(id, BlockInit.potatoes.blockID, 1, false));
