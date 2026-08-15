@@ -18,8 +18,8 @@ import dev.siepert.nuclearprogram.world.fluid.Fluid;
 import dev.siepert.nuclearprogram.world.particle.ParticleTextures;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Block;
+import net.minecraft.src.Item;
 import net.minecraftborge.loader.FurnaceRecipesFix;
-import net.minecraftborge.loader.ModList;
 import net.minecraftborge.loader.TerrainIcon;
 import net.minecraftborge.loader.event.EventBusSubscriber;
 import net.minecraftborge.loader.event.EventHandler;
@@ -44,17 +44,7 @@ public class NuclearProgram implements IModLifecycleListener {
 	public void modPreInit(ModPreInitializationEvent event) {
 		FluidInit.register();
 
-		IObjModelFactory factory = null;
-		try {
-			if (ModList.get().getLoadedMods().contains("objlib")) {
-				factory = (IObjModelFactory) Class.forName("dev.objlib.OBJModelFactoryImpl").newInstance();
-			} else {
-				System.err.println("OBJ Library not present!");
-			}
-		} catch (Throwable e) {
-			System.err.println("Failed to detect OBJ Library: " + e);
-		}
-		OBJ_FACTORY = factory;
+		OBJ_FACTORY = IObjModelFactory.newFactory(null);
 
 		SingletonWorld.get(0, 0);
 	}
@@ -74,6 +64,7 @@ public class NuclearProgram implements IModLifecycleListener {
 		EntityInit.register();
 
 		Block.tallGrass.addSeedToDrop(ItemInit.hempSeeds);
+		Block.tallGrass.addSeedToDrop(Item.seeds);
 	}
 
 	@Override
