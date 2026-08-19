@@ -1,6 +1,7 @@
 package dev.siepert.nuclearprogram.world.block;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
+import dev.siepert.nuclearprogram.world.block.render.RenderBlockInvisible;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
@@ -55,6 +56,6 @@ public class BlockCentrifugeExtension extends Block {
 
 	@Override
 	public int getRenderType() {
-		return -1;
+		return RenderBlockInvisible.RENDER_TYPE;
 	}
 }

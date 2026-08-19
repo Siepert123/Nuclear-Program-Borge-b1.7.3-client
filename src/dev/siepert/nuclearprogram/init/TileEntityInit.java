@@ -2,6 +2,7 @@ package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.world.te.*;
+import dev.siepert.nuclearprogram.world.te.render.RenderGasCentrifuge;
 import dev.siepert.nuclearprogram.world.te.render.RenderHatch;
 import dev.siepert.nuclearprogram.world.te.render.RenderSealedDoor;
 import net.minecraft.src.TileEntity;
@@ -25,6 +26,7 @@ public class TileEntityInit {
 		TileEntity.addMapping(TileEntityFluidPipeCoated.class, NuclearProgram.path("fluidPipeCoated"));
 
 		TileEntity.addMapping(TileEntityGasCentrifuge.class, NuclearProgram.path("gasCentrifuge"));
+		TileEntityRenderer.instance.addRenderer(TileEntityGasCentrifuge.class, RenderGasCentrifuge.INSTANCE);
 
 		TileEntity.addMapping(TileEntityRTG.class, NuclearProgram.path("rtg"));
 

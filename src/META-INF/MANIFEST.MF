@@ -4,3 +4,4 @@ Mod-Name: Siepert's Nuclear Program
 Mod-Description: <peak>
 Mod-Version: 0.0.0
 Mod-Lifecycle-Listener: dev.siepert.nuclearprogram.NuclearProgram
+Mod-Dependencies: objlib

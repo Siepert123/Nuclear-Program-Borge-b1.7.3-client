@@ -3,6 +3,7 @@ package dev.siepert.nuclearprogram.world.block;
 import dev.siepert.nuclearprogram.gui.GuiGasCentrifuge;
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockGasCentrifuge;
+import dev.siepert.nuclearprogram.world.block.render.RenderBlockInvisible;
 import dev.siepert.nuclearprogram.world.te.TileEntityGasCentrifuge;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
@@ -19,6 +20,8 @@ public class BlockGasCentrifuge extends BlockContainer {
 
 		BlockCable.enableConnection(blockID);
 		BlockFluidPipe.enableConnection(blockID);
+
+		this.setLightOpacity(0);
 	}
 
 	@Override
@@ -73,6 +76,6 @@ public class BlockGasCentrifuge extends BlockContainer {
 
 	@Override
 	public int getRenderType() {
-		return RenderBlockGasCentrifuge.RENDER_TYPE;
+		return RenderBlockInvisible.RENDER_TYPE;
 	}
 }

@@ -1,6 +1,8 @@
 package dev.siepert.nuclearprogram;
 
 import dev.objlib.api.IObjModelFactory;
+import dev.objlib.api.OBJLoadedEvent;
+import dev.objlib.api.OBJLoadingEvent;
 import dev.siepert.nuclearprogram.gui.LoadingScreenRendererHints;
 import dev.siepert.nuclearprogram.gui.NuclearProgramRemoteGUI;
 import dev.siepert.nuclearprogram.init.*;
@@ -128,6 +130,17 @@ public class NuclearProgram implements IModLifecycleListener {
 	@EventHandler
 	public static void registerEntityRenders(RegisterEntityRenderersEvent event) {
 		event.register(EntityHowitzerShell.class, new RenderHowitzerShell());
+	}
+
+	@EventHandler
+	public static void registerOBJModels(OBJLoadingEvent event) {
+		System.out.println("Registering OBJ models for Nuclear Program");
+		OBJInit.register();
+	}
+	@EventHandler
+	public static void optimizeOBJModels(OBJLoadedEvent event) {
+		System.out.println("Optimizing OBJ models for Nuclear Program");
+		OBJInit.optimize();
 	}
 
 	@EventHandler

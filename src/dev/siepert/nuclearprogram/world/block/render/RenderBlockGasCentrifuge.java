@@ -5,6 +5,7 @@ import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.RenderBlocks;
 import net.minecraftborge.loader.BlockRenderType;
 
+@Deprecated
 public class RenderBlockGasCentrifuge implements BlockRenderType {
 	public static final RenderBlockGasCentrifuge INSTANCE = new RenderBlockGasCentrifuge();
 	public static final int RENDER_TYPE = RenderBlocks.allocateRenderType(INSTANCE);
