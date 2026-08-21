@@ -16,7 +16,7 @@ public class BlockGasCentrifuge extends BlockContainer {
 	private final Random random = new Random();
 
 	public BlockGasCentrifuge(int blockID) {
-		super(blockID, Material.iron);
+		super(blockID, NPMaterials.multiblock);
 
 		BlockCable.enableConnection(blockID);
 		BlockFluidPipe.enableConnection(blockID);
@@ -39,6 +39,13 @@ public class BlockGasCentrifuge extends BlockContainer {
 		for (int i = 1; i < 4; i++) {
 			world.setBlock(x, y+i, z, BlockInit.centrifugeExtension.blockID);
 		}
+		this.onNeighborBlockChange(world, x, y, z, this.blockID);
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving placer) {
+		int facing = MathHelper.floor_double((double)(placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+		world.setBlockMetadata(x, y, z, facing);
 	}
 
 	@Override
@@ -49,6 +56,12 @@ public class BlockGasCentrifuge extends BlockContainer {
 		super.onBlockRemoval(world, x, y, z);
 
 		if (world.getBlockId(x, y+1, z) == BlockInit.centrifugeExtension.blockID) world.setBlockWithNotify(x, y+1, z, 0);
+	}
+
+	@Override
+	public void onNeighborBlockChange(World world, int x, int y, int z, int neighborBlockID) {
+		TileEntityGasCentrifuge te = (TileEntityGasCentrifuge) world.getBlockTileEntity(x, y, z);
+		if (te != null) te.updateEnrichmentStatus();
 	}
 
 	@Override

@@ -26,6 +26,8 @@ public class BlockInit {
 	public static Block firebricks;
 	public static BlockResourceRock resourceRock;
 	public static BlockResourceRock resourceDeposit;
+	public static BlockCrudeDeposit depositCrude;
+	public static BlockCrudeDeposit depositBedrockCrude;
 
 	public static BlockWorkbench workbench;
 	public static BlockFurnaceBuilder furnaceBuilderIdle;
@@ -69,6 +71,7 @@ public class BlockInit {
 
 	public static BlockExtractionTest extractionTest;
 
+	public static BlockDerrick derrick;
 	public static BlockGasCentrifuge gasCentrifuge;
 	public static BlockCentrifugeExtension centrifugeExtension;
 
@@ -125,6 +128,15 @@ public class BlockInit {
 		);
 		resourceDeposit = helper.register("resourceDeposit", id -> new BlockResourceRock(id)
 				.disableStats()
+				.setBlockUnbreakable()
+				.setStepSound(Block.soundStoneFootstep)
+		);
+		depositCrude = helper.register("deposit", id -> new BlockCrudeDeposit(id, Material.rock)
+				.setHardness(Block.oreCoal.getHardness())
+				.setResistance(Block.oreCoal.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setStepSound(Block.soundStoneFootstep)
+		);
+		depositBedrockCrude = helper.register("depositBedrock", id -> new BlockCrudeDeposit(id, Material.rock)
 				.setBlockUnbreakable()
 				.setStepSound(Block.soundStoneFootstep)
 		);
@@ -330,6 +342,12 @@ public class BlockInit {
 				.setStepSound(soundChainFootstep)
 		);
 
+		derrick = helper.register("derrick", id -> new BlockDerrick(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(Block.blockIron.getHardness())
+				.setResistance(Block.blockIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setStepSound(soundMetal2Footstep)
+		);
 		gasCentrifuge = helper.register("gasCentrifuge", id -> new BlockGasCentrifuge(id)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(Block.blockIron.getHardness())

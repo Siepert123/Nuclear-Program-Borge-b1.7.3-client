@@ -4,6 +4,7 @@ import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.init.ItemInit;
 import net.minecraft.src.*;
+import net.minecraftborge.loader.EnumFacing;
 
 public class TileEntityGasCentrifuge extends TileEntity implements IInventory {
 	public static final String WORKSTATION = NuclearProgram.path("GasCentrifuge");
@@ -22,6 +23,7 @@ public class TileEntityGasCentrifuge extends TileEntity implements IInventory {
 	public int energy = 0;
 	public Enrichment setting = Enrichment.NATURAL;
 	public boolean push = true;
+	public TileEntityGasCentrifuge next = null;
 
 	@Override
 	public void updateEntity() {
@@ -29,16 +31,36 @@ public class TileEntityGasCentrifuge extends TileEntity implements IInventory {
 
 		if (!this.worldObj.multiplayerWorld) {
 			this.energy = Math.min(this.energy + 100, MAX_ENERGY_STORED);
-			this.fluidToProcess = Math.min(this.fluidToProcess + 50, TANK_CAPACITY);
+			if (this.worldObj.getBlockId(this.xCoord, this.yCoord-1, this.zCoord) == Block.cobblestoneMossy.blockID) {
+				this.fluidToProcess = Math.min(this.fluidToProcess + 50, TANK_CAPACITY);
+			}
 
-			if (this.fluidProcessed + 800 > TANK_CAPACITY) {
-				this.progress = 0;
+			if (this.push) {
+				if (this.fluidProcessed > 0 && this.obtainNextTE()) {
+					int transfer = Math.min(this.fluidProcessed, TANK_CAPACITY - this.next.fluidToProcess);
+					if (transfer > 0) {
+						update = true;
+						this.fluidProcessed -= transfer;
+						this.next.fluidToProcess += transfer;
+						this.next.onInventoryChanged();
+					}
+				}
+			} else {
+				update = true;
+				this.fluidProcessed = 0;
+			}
+
+			if (this.fluidProcessed + 1000 > TANK_CAPACITY) {
+				if (this.progress != 0) {
+					update = true;
+					this.progress = 0;
+				}
 			} else if (this.fluidToProcess >= 1000) {
 				update = true;
 				if (++this.progress >= TICKS_PER_CENTRIFUGE) {
 					this.progress = 0;
 					this.fluidToProcess -= 1000;
-					if (this.push) this.fluidProcessed += 800;
+					if (this.push) this.fluidProcessed += 1000;
 					else {
 						if (this.inventory[0] == null) {
 							switch (this.setting) {
@@ -70,6 +92,14 @@ public class TileEntityGasCentrifuge extends TileEntity implements IInventory {
 	public int getEnergyScaled(int h) {
 		return (this.energy * h / (MAX_ENERGY_STORED+1))+1;
 	}
+	private boolean obtainNextTE() {
+		if (this.next == null || this.next.isInvalid()) {
+			EnumFacing facing = EnumFacing.HORIZONTALS[this.getBlockMetadata() & 3];
+			TileEntity te = this.worldObj.getBlockTileEntity(this.xCoord + facing.getOffsetX(), this.yCoord, this.zCoord + facing.getOffsetZ());
+			if (te instanceof TileEntityGasCentrifuge) this.next = (TileEntityGasCentrifuge) te;
+		}
+		return this.next != null;
+	}
 
 	public void setEnrichment(Enrichment setting) {
 		this.setting = setting;
@@ -78,6 +108,7 @@ public class TileEntityGasCentrifuge extends TileEntity implements IInventory {
 	}
 	public void setPush(boolean push) {
 		this.push = push && this.setting != Enrichment.HIGH || this.setting == Enrichment.NATURAL;
+		if (!this.push) this.next = null;
 	}
 
 	public int getFluidIn() {
@@ -85,6 +116,29 @@ public class TileEntityGasCentrifuge extends TileEntity implements IInventory {
 	}
 	public int getFluidOut() {
 		return this.push ? this.setting.fluidID + 1 : 0;
+	}
+
+	public void updateEnrichmentStatus() {
+		int self = this.getBlockType().blockID;
+		int facing = this.getBlockMetadata();
+		EnumFacing efacing = EnumFacing.HORIZONTALS[facing & 3];
+		int ox = efacing.getOffsetX();
+		int oz = efacing.getOffsetZ();
+
+		this.setEnrichment(Enrichment.NATURAL);
+		if (this.worldObj.getBlockId(this.xCoord + ox, this.yCoord, this.zCoord + oz) == self) {
+			if (this.worldObj.getBlockMetadata(this.xCoord + ox, this.yCoord, this.zCoord + oz) == facing) {
+				TileEntityGasCentrifuge other = (TileEntityGasCentrifuge) this.worldObj.getBlockTileEntity(this.xCoord + ox, this.yCoord, this.zCoord + oz);
+				this.setEnrichment(other.setting.next());
+			}
+		}
+		this.setPush(false);
+		if (this.worldObj.getBlockId(this.xCoord - ox, this.yCoord, this.zCoord - oz) == self) {
+			if (this.worldObj.getBlockMetadata(this.xCoord - ox, this.yCoord, this.zCoord - oz) == facing) {
+				this.setPush(true);
+				((this.next = (TileEntityGasCentrifuge) this.worldObj.getBlockTileEntity(this.xCoord - ox, this.yCoord, this.zCoord - oz))).updateEnrichmentStatus();
+			}
+		}
 	}
 
 	@Override
@@ -161,6 +215,15 @@ public class TileEntityGasCentrifuge extends TileEntity implements IInventory {
 		public final int fluidID;
 		Enrichment(int fluidID) {
 			this.fluidID = fluidID;
+		}
+
+		public Enrichment next() {
+			switch (this) {
+				case NATURAL: return LOW;
+				case LOW: return MEDIUM;
+				case MEDIUM: return HIGH;
+				default: return NATURAL;
+			}
 		}
 	}
 }

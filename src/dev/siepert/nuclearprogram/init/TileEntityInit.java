@@ -2,6 +2,7 @@ package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.world.te.*;
+import dev.siepert.nuclearprogram.world.te.render.RenderDerrick;
 import dev.siepert.nuclearprogram.world.te.render.RenderGasCentrifuge;
 import dev.siepert.nuclearprogram.world.te.render.RenderHatch;
 import dev.siepert.nuclearprogram.world.te.render.RenderSealedDoor;
@@ -25,6 +26,8 @@ public class TileEntityInit {
 		TileEntity.addMapping(TileEntityFluidPipe.class, NuclearProgram.path("fluidPipe"));
 		TileEntity.addMapping(TileEntityFluidPipeCoated.class, NuclearProgram.path("fluidPipeCoated"));
 
+		TileEntity.addMapping(TileEntityDerrick.class, NuclearProgram.path("derrick"));
+		TileEntityRenderer.instance.addRenderer(TileEntityDerrick.class, RenderDerrick.INSTANCE);
 		TileEntity.addMapping(TileEntityGasCentrifuge.class, NuclearProgram.path("gasCentrifuge"));
 		TileEntityRenderer.instance.addRenderer(TileEntityGasCentrifuge.class, RenderGasCentrifuge.INSTANCE);
 

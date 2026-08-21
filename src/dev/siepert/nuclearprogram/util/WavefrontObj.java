@@ -27,6 +27,11 @@ public class WavefrontObj {
 		if (list == null) return;
 		GL11.glCallList(list);
 	}
+	public void callAllLists() {
+		for (Integer list : this.groupLists.values()) {
+			if (list != null) GL11.glCallList(list);
+		}
+	}
 
 	public void rerender() {
 		this.groups.clear();
