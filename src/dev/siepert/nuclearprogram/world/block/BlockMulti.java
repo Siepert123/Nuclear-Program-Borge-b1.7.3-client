@@ -41,6 +41,7 @@ public abstract class BlockMulti extends BlockContainer {
 		int meta = world.getBlockMetadata(x, y, z);
 
 		if (meta >= FLAG) meta -= FLAG;
+		if (meta < 0 || meta > 5) return;
 
 		EnumFacing dir = EnumFacing.VALUES[meta].getOpposite();
 		int neighbour = world.getBlockId(x + dir.getOffsetX(), y + dir.getOffsetY(), z + dir.getOffsetZ());
@@ -79,17 +80,17 @@ public abstract class BlockMulti extends BlockContainer {
 		}
 
 		EnumFacing dir = EnumFacing.VALUES[meta].getOpposite();
-		int block = world.getBlockId(x + dir.getOffsetX(), y + dir.getOffsetY(), dir.getOffsetZ());
+		int block = world.getBlockId(x + dir.getOffsetX(), y + dir.getOffsetY(), z + dir.getOffsetZ());
 		if (block != this.blockID) return false;
 
-		positionsIndex++;
 		if (positions.size() == positionsIndex) positions.add(new ChunkCoordinates());
 		ChunkCoordinates current = positions.get(positionsIndex);
 		current.x = x;
 		current.y = y;
 		current.z = z;
+		positionsIndex++;
 
-		return this.findCoreImpl(world, x, y, z, pos);
+		return this.findCoreImpl(world, x + dir.getOffsetX(), y + dir.getOffsetY(), z + dir.getOffsetZ(), pos);
 	}
 
 	@Override
@@ -99,8 +100,8 @@ public abstract class BlockMulti extends BlockContainer {
 		keepInventory = false;
 	}
 
-	private static final int[] dims = new int[3];
-	private static final int[] dimsRot = new int[3];
+	private static final int[] dims = new int[6];
+	private static final int[] dimsRot = new int[6];
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving placer) {
 		EnumFacing placedSide = EnumFacing.VALUES[world.getBlockMetadata(x, y, z)];
@@ -111,7 +112,7 @@ public abstract class BlockMulti extends BlockContainer {
 
 		EnumFacing facingDir = EnumFacing.NORTH;
 
-		if (placedSide.isHorizontal()) {
+		if (!placedSide.isHorizontal()) {
 			int rot = MathHelper.floor_float(placer.rotationYaw * 4.0F / 360.0F + 0.5F) & 3;
 			switch (rot) {
 				case 0:
@@ -137,7 +138,7 @@ public abstract class BlockMulti extends BlockContainer {
 
 		int ox = x + facingDir.getOffsetX() * o;
 		int oy = y + this.getCoreHeightOffset();
-		int oz = x + facingDir.getOffsetZ() * o;
+		int oz = z + facingDir.getOffsetZ() * o;
 
 		this.getDimensions(dims);
 		if (placedSide == EnumFacing.DOWN) {
@@ -182,7 +183,7 @@ public abstract class BlockMulti extends BlockContainer {
 	}
 	protected boolean checkRequirement(World world, int x, int y, int z, EnumFacing facing, int offset) {
 		getDimensions(dims);
-		return MultiblockHelper.isSpaceUnoccupied(world, x, y, z, dims, facing);
+		return MultiblockHelper.isSpaceUnoccupied(world, x + facing.getOffsetX() * offset, y + facing.getOffsetY() * offset, z + facing.getOffsetZ() * offset, dims, facing);
 	}
 	protected void fillSpace(World world, int x, int y, int z, EnumFacing facing, int offset) {
 		this.getDimensions(dims);
@@ -211,6 +212,10 @@ public abstract class BlockMulti extends BlockContainer {
 	public void onBlockRemoval(World world, int x, int y, int z) {
 		int meta = world.getBlockMetadata(x, y, z);
 		if (meta < 12 && !keepInventory) {
+			int[] core = new int[3];
+			if (this.findCore(world, x, y, z, core)) {
+				world.setBlockWithNotify(core[0], core[1], core[2], 0);
+			}
 			if (meta >= FLAG) meta -= FLAG;
 			EnumFacing facing = EnumFacing.VALUES[meta];
 

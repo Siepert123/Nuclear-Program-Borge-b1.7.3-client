@@ -23,6 +23,7 @@ public class RenderDerrick extends TileEntitySpecialRenderer<TileEntityDerrick> 
 		GL11.glTranslatef((float) x + 0.5F, (float) y, (float) z + 0.5F);
 		OBJRenderHelper.enableMachineLight();
 		OBJInit.oil_derrick.callList("Base");
+		OBJRenderHelper.disableMachineLight();
 		GL11.glPopMatrix();
 		GL11.glEnable(GL11.GL_CULL_FACE);
 	}

@@ -41,6 +41,7 @@ public class RenderGasCentrifuge extends TileEntitySpecialRenderer<TileEntityGas
 				GL11.glPopMatrix();
 			}
 		}
+		OBJRenderHelper.disableMachineLight();
 		GL11.glPopMatrix();
 		GL11.glEnable(GL11.GL_CULL_FACE);
 	}

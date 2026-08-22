@@ -12,6 +12,11 @@ import net.minecraft.src.TileEntityRenderer;
 public class TileEntityInit {
 
 	public static void register() {
+		TileEntity.addMapping(TileEntityProxy.Proxy00.class, NuclearProgram.path("proxy00"));
+		TileEntity.addMapping(TileEntityProxy.Proxy01.class, NuclearProgram.path("proxy01"));
+		TileEntity.addMapping(TileEntityProxy.Proxy10.class, NuclearProgram.path("proxy10"));
+		TileEntity.addMapping(TileEntityProxy.Proxy11.class, NuclearProgram.path("proxy11"));
+
 		TileEntity.addMapping(TileEntityFurnaceBuilder.class, NuclearProgram.MODID + "/furnaceBuilder");
 
 		TileEntity.addMapping(TileEntityHatch.class, NuclearProgram.MODID + "/hatch");

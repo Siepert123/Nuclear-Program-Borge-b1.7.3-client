@@ -32,6 +32,12 @@ public class OBJRenderHelper {
 		GL11.glShadeModel(GL11.GL_SMOOTH);
 		GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT, storeVec4(ambient, ambient, ambient, 1.0F));
 	}
+	public static void disableMachineLight() {
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glDisable(GL11.GL_LIGHT0);
+		GL11.glDisable(GL11.GL_LIGHT1);
+		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
+	}
 
 	private static FloatBuffer storeVec4(double x, double y, double z, double w) {
 		return storeVec4((float) x, (float) y, (float) z, (float) w);

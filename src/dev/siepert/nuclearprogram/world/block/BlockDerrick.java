@@ -1,18 +1,28 @@
 package dev.siepert.nuclearprogram.world.block;
 
 import dev.siepert.nuclearprogram.world.te.TileEntityDerrick;
+import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
 import net.minecraft.src.Material;
 import net.minecraft.src.TileEntity;
+import net.minecraft.src.World;
+import net.minecraftborge.loader.EnumFacing;
 
 public class BlockDerrick extends BlockMulti {
 	public BlockDerrick(int blockID, Material material) {
 		super(blockID, material);
+
+		for (int i = 0; i < 6; i++) {
+			BlockFluidPipe.enableConnection(blockID, FLAG + i);
+		}
+		for (int i = 0; i < 6; i++) {
+			BlockCable.enableConnection(blockID, FLAG + i);
+		}
 	}
 
 	@Override
 	protected TileEntity getBlockEntity(int meta) {
 		if (meta >= 12) return new TileEntityDerrick();
-		//if (meta >= 6) return new TileEntityProxy();
+		if (meta >= 6) return TileEntityProxy.create(true, true);
 		return null;
 	}
 
@@ -34,5 +44,17 @@ public class BlockDerrick extends BlockMulti {
 	@Override
 	public int getCoreOffset() {
 		return 1;
+	}
+
+	@Override
+	protected void fillSpace(World world, int x, int y, int z, EnumFacing facing, int offset) {
+		super.fillSpace(world, x, y, z, facing, offset);
+		x += facing.getOffsetX() * offset;
+		z += facing.getOffsetZ() * offset;
+
+		this.setFlag(world, x+1, y, z);
+		this.setFlag(world, x-1, y, z);
+		this.setFlag(world, x, y, z+1);
+		this.setFlag(world, x, y, z-1);
 	}
 }

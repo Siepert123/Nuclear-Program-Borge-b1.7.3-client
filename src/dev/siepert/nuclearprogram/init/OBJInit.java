@@ -17,6 +17,7 @@ public class OBJInit {
 		gas_centrifuge = get(factory, "gas_centrifuge");
 	}
 	public static void optimize() {
+		oil_derrick.rerender();
 		gas_centrifuge.rerender();
 	}
 
