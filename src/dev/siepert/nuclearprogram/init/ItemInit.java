@@ -84,6 +84,7 @@ public class ItemInit {
 
 	public static Item fuelRodRbmkEmpty;
 
+	public static ItemFluidIdentifier fluidIdentifier;
 	public static ItemFluidRepresentation fluid;
 
 	public static void register(IdAllocationEvent<Item> event) {
@@ -169,6 +170,7 @@ public class ItemInit {
 
 		fuelRodRbmkEmpty = helper.register("fuelRodRbmkEmpty", ItemFuelRodRBMK::new);
 
+		fluidIdentifier = helper.register("fluidIdentifier", ItemFluidIdentifier::new);
 		fluid = helper.register("fluid", ItemFluidRepresentation::new);
 	}
 

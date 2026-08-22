@@ -17,6 +17,7 @@ public class Fluid {
 	public static final int[] temperatureLookup = new int[fluidsList.length];
 	public static final int[] colorLookup = new int[fluidsList.length];
 	public static final boolean[] gaseousLookup = new boolean[fluidsList.length];
+	public static final boolean[] hasFluidIdentifier = new boolean[fluidsList.length];
 
 	public Fluid(int fluidID) {
 		if (fluidID == 0) throw new IllegalArgumentException("Fluid ID #0 is reserved for null");
@@ -30,6 +31,7 @@ public class Fluid {
 			temperatureLookup[fluidID] = 20;
 			colorLookup[fluidID] = 0xFFFFFF;
 			gaseousLookup[fluidID] = false;
+			hasFluidIdentifier[fluidID] = true;
 		}
 	}
 	public final int fluidID;
@@ -61,6 +63,10 @@ public class Fluid {
 		gaseousLookup[this.fluidID] = true;
 		return this;
 	}
+	public Fluid disableIdentifier() {
+		hasFluidIdentifier[this.fluidID] = false;
+		return this;
+	}
 
 	public String getUnlocalizedName() {
 		return this.unlocalizedName;
@@ -89,5 +95,8 @@ public class Fluid {
 		Arrays.fill(temperatureLookup, 20);
 		Arrays.fill(colorLookup, 0x888888);
 		Arrays.fill(gaseousLookup, false);
+		Arrays.fill(hasFluidIdentifier, false);
+
+		hasFluidIdentifier[0] = true;
 	}
 }

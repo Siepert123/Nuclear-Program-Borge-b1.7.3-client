@@ -165,6 +165,7 @@ item.nuclear_program/fuelRodArrayUraniumLE.name=LEU Fuel Rod Array
 item.nuclear_program/fuelRodArrayUraniumME.name=MEU Fuel Rod Array
 item.nuclear_program/fuelRodArrayUraniumHE.name=HEU Fuel Rod Array
 item.nuclear_program/fuelRodRbmkEmpty.name=Empty RBMK Fuel Rod
+item.nuclear_program/fluidIdentifier.name=Fluid Identifier
 
 fluid.none.name=None
 fluid.water.name=Water

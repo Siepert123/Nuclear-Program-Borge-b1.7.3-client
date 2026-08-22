@@ -11,12 +11,8 @@ public class BlockDerrick extends BlockMulti {
 	public BlockDerrick(int blockID, Material material) {
 		super(blockID, material);
 
-		for (int i = 0; i < 6; i++) {
-			BlockFluidPipe.enableConnection(blockID, FLAG + i);
-		}
-		for (int i = 0; i < 6; i++) {
-			BlockCable.enableConnection(blockID, FLAG + i);
-		}
+		this.flagEnableEnergyConnection();
+		this.flagEnableFluidConnection();
 	}
 
 	@Override

@@ -17,7 +17,10 @@ public class RenderBlockFluidPipe implements BlockRenderType {
 	@Override
 	public boolean render(IBlockAccess world, Block block, int x, int y, int z, RenderBlocks renderer) {
 		int ox, oy, oz;
+		int ob, om;
 		int count = 0;
+		int myFilter = BlockFluidPipe.getAssignedFluidType(world, x, y, z);
+		int of;
 
 		EnumFacing last = null;
 		boolean center = false;
@@ -26,41 +29,45 @@ public class RenderBlockFluidPipe implements BlockRenderType {
 			ox = x + side.getOffsetX();
 			oy = y + side.getOffsetY();
 			oz = z + side.getOffsetZ();
-			if (BlockFluidPipe.canConnectPipe(world.getBlockId(ox, oy, oz), world.getBlockMetadata(ox, oy, oz))) {
-				if (last != null) {
-					if (side.getOpposite() != last) {
-						center = true;
+			ob = world.getBlockId(ox, oy, oz);
+			om = world.getBlockMetadata(ox, oy, oz);
+			if (BlockFluidPipe.canConnectPipe(ob, om)) {
+				if (BlockFluidPipe.getFilteredFluid(world, ox, oy, oz, ob, myFilter)) {
+					if (last != null) {
+						if (side.getOpposite() != last) {
+							center = true;
+						}
+						last = null;
+						flag = true;
 					}
-					last = null;
-					flag = true;
-				}
-				if (!flag) last = side;
+					if (!flag) last = side;
 
-				count++;
+					count++;
 
-				float size = 0.1874F;
-				switch (side) {
-					case UP:
-						block.setBlockBounds(0.5F-size, 0.5F, 0.5F-size, 0.5F+size, 1.0F, 0.5F+size);
-						break;
-					case DOWN:
-						block.setBlockBounds(0.5F-size, 0.0F, 0.5F-size, 0.5F+size, 0.5F, 0.5F+size);
-						break;
-					case NORTH:
-						block.setBlockBounds(0.0F, 0.5F-size, 0.5F-size, 0.5F, 0.5F+size, 0.5F+size);
-						break;
-					case EAST:
-						block.setBlockBounds(0.5F-size, 0.5F-size, 0.0F, 0.5F+size, 0.5F+size, 0.5F);
-						break;
-					case SOUTH:
-						block.setBlockBounds(0.5F, 0.5F-size, 0.5F-size, 1.0F, 0.5F+size, 0.5F+size);
-						break;
-					case WEST:
-						block.setBlockBounds(0.5F-size, 0.5F-size, 0.5F, 0.5F+size, 0.5F+size, 1.0F);
-						break;
+					float size = 0.1874F;
+					switch (side) {
+						case UP:
+							block.setBlockBounds(0.5F - size, 0.5F, 0.5F - size, 0.5F + size, 1.0F, 0.5F + size);
+							break;
+						case DOWN:
+							block.setBlockBounds(0.5F - size, 0.0F, 0.5F - size, 0.5F + size, 0.5F, 0.5F + size);
+							break;
+						case NORTH:
+							block.setBlockBounds(0.0F, 0.5F - size, 0.5F - size, 0.5F, 0.5F + size, 0.5F + size);
+							break;
+						case EAST:
+							block.setBlockBounds(0.5F - size, 0.5F - size, 0.0F, 0.5F + size, 0.5F + size, 0.5F);
+							break;
+						case SOUTH:
+							block.setBlockBounds(0.5F, 0.5F - size, 0.5F - size, 1.0F, 0.5F + size, 0.5F + size);
+							break;
+						case WEST:
+							block.setBlockBounds(0.5F - size, 0.5F - size, 0.5F, 0.5F + size, 0.5F + size, 1.0F);
+							break;
+					}
+					BlockFluidPipe.axis = side.getOpposite().getIndex();
+					renderer.renderStandardBlock(block, x, y, z);
 				}
-				BlockFluidPipe.axis = side.getOpposite().getIndex();
-				renderer.renderStandardBlock(block, x, y, z);
 			}
 		}
 

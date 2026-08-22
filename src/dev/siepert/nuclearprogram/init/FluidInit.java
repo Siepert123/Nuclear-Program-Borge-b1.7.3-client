@@ -27,13 +27,16 @@ public class FluidInit {
 			.setGaseous();
 	public static final Fluid uraniumHexafluorideLE = new Fluid(9)
 			.setName("uraniumHexafluorideLE").setColor(0.9F, 1.0F, 0.9F)
-			.setGaseous();
+			.setGaseous()
+			.disableIdentifier();
 	public static final Fluid uraniumHexafluorideME = new Fluid(10)
 			.setName("uraniumHexafluorideME").setColor(0.9F, 1.0F, 0.9F)
-			.setGaseous();
+			.setGaseous()
+			.disableIdentifier();
 	public static final Fluid uraniumHexafluorideHE = new Fluid(11)
 			.setName("uraniumHexafluorideHE").setColor(0.9F, 1.0F, 0.9F)
-			.setGaseous();
+			.setGaseous()
+			.disableIdentifier();
 
 	public static void register() {}
 

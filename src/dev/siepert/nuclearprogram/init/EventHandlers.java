@@ -2,11 +2,15 @@ package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.Nothing;
 import dev.siepert.nuclearprogram.NuclearProgram;
+import dev.siepert.nuclearprogram.util.BlockPos;
 import dev.siepert.nuclearprogram.util.SaveHandlerHook;
+import dev.siepert.nuclearprogram.util.collect.IntList;
+import dev.siepert.nuclearprogram.util.collect.SizedIntArrayList;
 import dev.siepert.nuclearprogram.weapon.BackendExplosionHandler;
 import dev.siepert.nuclearprogram.weapon.WorldActiveExplosions;
 import dev.siepert.nuclearprogram.world.NuclearProgramWorldAccess;
 import dev.siepert.nuclearprogram.world.block.BlockRBMKColumn;
+import dev.siepert.nuclearprogram.world.block.IOverlayInfo;
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
 import dev.siepert.nuclearprogram.world.mapdata.WorldFalloutClouds;
 import dev.siepert.nuclearprogram.world.te.TileEntityRBMKColumn;
@@ -16,6 +20,7 @@ import net.minecraftborge.loader.BorgeMath;
 import net.minecraftborge.loader.event.Event;
 import net.minecraftborge.loader.event.EventBusSubscriber;
 import net.minecraftborge.loader.event.EventHandler;
+import net.minecraftborge.loader.event.EventPriority;
 import net.minecraftborge.loader.event.entity.EntityDropLootEvent;
 import net.minecraftborge.loader.event.entity.player.PlayerCreateItemEvent;
 import net.minecraftborge.loader.event.entity.player.PlayerDestroyBlockEvent;
@@ -224,7 +229,15 @@ public class EventHandlers {
 		}
 	}
 
+	@EventHandler(EventPriority.LOWEST)
+	public static void tickWorldLast(WorldTickEvent event) {
+		if (event.getPhase() == Event.Phase.POST) {
+			BlockPos.resetPool();
+		}
+	}
+
 	private static final ArrayList<String> overlayTooltip = new ArrayList<>(16);
+	private static final IntList overlayColors = new SizedIntArrayList(16);
 	@EventHandler
 	public static void renderGUI(RenderOverlayGuiEvent event) {
 		switch (event.getLayer()) {
@@ -266,6 +279,41 @@ public class EventHandlers {
 				}
 				break;
 			}
+			case POST:
+				World world = event.getMc().theWorld;
+				MovingObjectPosition select = event.getMc().objectMouseOver;
+				if (world != null && select != null) {
+					int x = select.blockX;
+					int y = select.blockY;
+					int z = select.blockZ;
+					Block block = Block.blocksList[world.getBlockId(x, y, z)];
+					if (block instanceof IOverlayInfo) {
+						overlayTooltip.clear();
+						overlayColors.clear();
+						((IOverlayInfo)block).addInformation(world, x, y, z, overlayTooltip, overlayColors);
+
+						if (!overlayTooltip.isEmpty()) {
+							ScaledResolution res = event.resolution;
+							GL11.glPushMatrix();
+							GL11.glTranslatef(0.0F, -(float)(res.getScaledHeight() - 48), 0.0F);
+							GuiIngame gui = event.getIngameGUI();
+							FontRenderer font = event.getMc().fontRenderer;
+							StringTranslate translate = StringTranslate.getInstance();
+							int centerX = res.getScaledWidth() / 2;
+							int centerY = res.getScaledHeight() / 2;
+							gui.drawString(font, translate.translateNamedKey(block.getBlockName()), centerX + 2, centerY - 10, 0xFFFF00);
+							int pos = centerY + 2;
+							for (int i = 0; i < overlayTooltip.size(); i++) {
+								String text = overlayTooltip.get(i);
+								int color = overlayColors.get(i);
+								gui.drawString(font, text, centerX + 2, pos, color);
+								pos += 8;
+							}
+							GL11.glPopMatrix();
+						}
+					}
+				}
+				break;
 		}
 	}
 

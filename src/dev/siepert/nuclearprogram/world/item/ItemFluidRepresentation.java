@@ -25,9 +25,8 @@ public class ItemFluidRepresentation extends Item {
 
 	@Override
 	public void getSubItems(Collection<ItemStack> items) {
-		items.add(new ItemStack(this, 1, 0));
-		for (int i = 1; i < Fluid.ID_SIZE; i++) {
-			if (Fluid.fluidsList[i] != null) {
+		for (int i = 0; i < Fluid.ID_SIZE; i++) {
+			if (Fluid.hasFluidIdentifier[i]) {
 				items.add(new ItemStack(this, 1, i));
 			}
 		}
@@ -46,7 +45,7 @@ public class ItemFluidRepresentation extends Item {
 	@Override
 	public void getTooltip(ItemStack stack, List<String> tooltip, boolean isAdvanced) {
 		int fluidID = stack.getItemDamage();
-		if (fluidID > 0) {
+		if (fluidID > 0 && Fluid.temperatureLookup[fluidID] != 20) {
 			tooltip.add(String.format(ChatFormat.RED + "%sºC", Fluid.temperatureLookup[fluidID]));
 		}
 		NBTTagCompound props = stack.itemNBT;

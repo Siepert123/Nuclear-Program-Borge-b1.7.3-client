@@ -7,6 +7,7 @@ import dev.siepert.nuclearprogram.gui.LoadingScreenRendererHints;
 import dev.siepert.nuclearprogram.gui.NuclearProgramRemoteGUI;
 import dev.siepert.nuclearprogram.init.*;
 import dev.siepert.nuclearprogram.network.NuclearProgramNetHandler;
+import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
 import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.RTGFuelRecipes;
@@ -49,6 +50,7 @@ public class NuclearProgram implements IModLifecycleListener {
 		OBJ_FACTORY = IObjModelFactory.newFactory(null);
 
 		SingletonWorld.get(0, 0);
+		PipeNetNode.doRegistries();
 	}
 
 	@Override

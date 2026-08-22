@@ -27,6 +27,17 @@ public abstract class BlockMulti extends BlockContainer {
 	public static final int FLAG = 6;
 	public static boolean keepInventory = false;
 
+	protected final void flagEnableEnergyConnection() {
+		for (int i = 0; i < 6; i++) {
+			BlockCable.enableConnection(this.blockID, FLAG + i);
+		}
+	}
+	protected final void flagEnableFluidConnection() {
+		for (int i = 0; i < 6; i++) {
+			BlockFluidPipe.enableConnection(this.blockID, FLAG + i);
+		}
+	}
+
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, int neighborBlockID) {
 		super.onNeighborBlockChange(world, x, y, z, neighborBlockID);
