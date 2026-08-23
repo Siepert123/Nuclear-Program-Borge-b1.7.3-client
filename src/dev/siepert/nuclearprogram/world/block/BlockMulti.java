@@ -201,7 +201,7 @@ public abstract class BlockMulti extends BlockContainer {
 		MultiblockHelper.fill(world, x + facing.getOffsetX() * offset, y, z + facing.getOffsetZ() * offset, dims, this.blockID, facing);
 	}
 
-	protected final void setFlag(World world, int x, int y, int z) {
+	protected void setFlag(World world, int x, int y, int z) {
 		if (world.getBlockId(x, y, z) != this.blockID) {
 			System.err.print("Tried placing multiblock extra flag at non-self X:" + x + " Y:" + y + " Z:" + z);
 			return;

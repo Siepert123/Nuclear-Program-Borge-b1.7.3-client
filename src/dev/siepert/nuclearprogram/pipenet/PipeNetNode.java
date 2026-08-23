@@ -1,20 +1,22 @@
 package dev.siepert.nuclearprogram.pipenet;
 
 import dev.siepert.nuclearprogram.pipenet.node.PPNBasic;
+import dev.siepert.nuclearprogram.pipenet.node.PPNMultiblockProxy;
 import dev.siepert.nuclearprogram.util.BlockPos;
 import net.minecraft.src.ChunkCoordinates;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.World;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 public abstract class PipeNetNode {
 	private static final HashMap<String, Class<? extends PipeNetNode>> nameToClassMap = new HashMap<>();
 	private static final HashMap<Class<? extends PipeNetNode>, String> classToNameMap = new HashMap<>();
-	private static final HashMap<Class<? extends PipeNetNode>, Supplier<? extends PipeNetNode>> classToCtorMap = new HashMap<>();
+	private static final HashMap<Class<? extends PipeNetNode>, Function<World, ? extends PipeNetNode>> classToCtorMap = new HashMap<>();
 
-	public static void register(Class<? extends PipeNetNode> clazz, String name, Supplier<? extends PipeNetNode> ctor) {
+	public static void register(Class<? extends PipeNetNode> clazz, String name, Function<World, ? extends PipeNetNode> ctor) {
 		if (nameToClassMap.containsKey(name)) throw new IllegalArgumentException("Duplicate PipeNetNode ID: " + name);
 		if (classToNameMap.containsKey(clazz)) throw new IllegalArgumentException("Duplicate PipeNetNode type: " + clazz.getName());
 
@@ -25,22 +27,37 @@ public abstract class PipeNetNode {
 
 	public static void doRegistries() {
 		register(PPNBasic.class, "basic", PPNBasic::new);
+		register(PPNMultiblockProxy.class, "proxy", PPNMultiblockProxy::new);
 	}
 
-	public static PipeNetNode create(NBTTagCompound nbt) {
+	public static PipeNetNode create(World world, NBTTagCompound nbt) {
 		String id = nbt.getString("id");
-		Supplier<? extends PipeNetNode> ctor = classToCtorMap.get(nameToClassMap.get(id));
+		Function<World, ? extends PipeNetNode> ctor = classToCtorMap.get(nameToClassMap.get(id));
 		if (ctor == null) {
 			System.err.println("Invalid PipeNetNode ID: " + id);
 			return null;
 		}
-		PipeNetNode node = ctor.get();
+		PipeNetNode node = ctor.apply(world);
 		node.readFromNBT(nbt);
 		return node;
 	}
 
+	private final IReceivingPipeNetNode receiving = this instanceof IReceivingPipeNetNode ? (IReceivingPipeNetNode) this : null;
+	public final boolean isReceiving() {
+		return this.receiving != null;
+	}
+	public final IReceivingPipeNetNode asReceiving() {
+		return this.receiving;
+	}
+
+	public final World worldObj;
+	public PipeNetNode(World world) {
+		this.worldObj = world;
+	}
+
 	public int x, y, z;
 	public int fluidType;
+	public long network = 0L;
 
 	public void readFromNBT(NBTTagCompound nbt) {
 		this.x = nbt.getInteger("x");
@@ -50,7 +67,6 @@ public abstract class PipeNetNode {
 	}
 	public void writeToNBT(NBTTagCompound nbt) {
 		String id = classToNameMap.get(this.getClass());
-		System.out.println("saving " + id);
 		if (id == null) {
 			throw new RuntimeException("PipeNetNode " + this.getClass().getName() + " is unregistered!! Pls fix!!");
 		} else {
@@ -70,13 +86,30 @@ public abstract class PipeNetNode {
 	public boolean canConnect(int fluidType) {
 		return this.fluidType == fluidType;
 	}
+	public boolean canConnect(PipeNetNode other) {
+		return this.canConnect(other.fluidType) || other.isReceiving();
+	}
 
-	public void getConnectedPositions(Collection<ChunkCoordinates> positions) {
-		positions.add(BlockPos.pooled(this.x+1, this.y, this.z));
-		positions.add(BlockPos.pooled(this.x, this.y+1, this.z));
-		positions.add(BlockPos.pooled(this.x, this.y, this.z+1));
-		positions.add(BlockPos.pooled(this.x-1, this.y, this.z));
-		positions.add(BlockPos.pooled(this.x, this.y-1, this.z));
-		positions.add(BlockPos.pooled(this.x, this.y, this.z-1));
+	public void getConnectedPositions(BlockPos.Pool pool, Collection<ChunkCoordinates> positions) {
+		positions.add(pool.get(this.x+1, this.y, this.z));
+		positions.add(pool.get(this.x, this.y+1, this.z));
+		positions.add(pool.get(this.x, this.y, this.z+1));
+		positions.add(pool.get(this.x-1, this.y, this.z));
+		positions.add(pool.get(this.x, this.y-1, this.z));
+		positions.add(pool.get(this.x, this.y, this.z-1));
+	}
+
+	public final long pushFluid(int fluidType, long amount, int bar) {
+		if (this.isReceiving()) {
+			return this.asReceiving().addFluid(fluidType, amount, bar);
+		} else {
+			PipeNet.WorldData data = PipeNet.getData(this.worldObj);
+			return data.getOrCreateNetwork(this).pushFluid(fluidType, amount, bar);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName() + "[network=" + this.network + ",fluidType=" + this.fluidType + "]";
 	}
 }

@@ -35,22 +35,33 @@ public class BlockPos {
 		return i | ((long)z & PACKED_Z_MASK) << Z_OFFSET;
 	}
 
-	private static final List<ChunkCoordinates> pool = new ArrayList<>();
-	private static int poolIndex = 0;
+	public static final Pool GLOBAL_POOL = new Pool();
+	public static final class Pool {
+		private final List<ChunkCoordinates> pool = new ArrayList<>();
+		private int poolIndex = 0;
 
-	public static ChunkCoordinates pooled(int x, int y, int z) {
-		if (pool.size() == poolIndex) pool.add(new ChunkCoordinates());
-		ChunkCoordinates pos = pool.get(poolIndex++);
-		pos.x = x;
-		pos.y = y;
-		pos.z = z;
-		return pos;
-	}
-	public static void resetPool() {
-		poolIndex = 0;
-	}
-	public static void drainPool() {
-		resetPool();
-		pool.clear();
+		public ChunkCoordinates get(int x, int y, int z) {
+			if (this.pool.size() == this.poolIndex) this.pool.add(new ChunkCoordinates());
+			ChunkCoordinates pos = this.pool.get(this.poolIndex++);
+			pos.x = x;
+			pos.y = y;
+			pos.z = z;
+			return pos;
+		}
+
+		public void reset() {
+			this.poolIndex = 0;
+		}
+		public void drain() {
+			this.reset();
+			this.pool.clear();
+		}
+
+		public int getIndex() {
+			return this.poolIndex;
+		}
+		public int getSize() {
+			return this.pool.size();
+		}
 	}
 }

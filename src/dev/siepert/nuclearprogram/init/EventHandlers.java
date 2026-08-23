@@ -232,7 +232,7 @@ public class EventHandlers {
 	@EventHandler(EventPriority.LOWEST)
 	public static void tickWorldLast(WorldTickEvent event) {
 		if (event.getPhase() == Event.Phase.POST) {
-			BlockPos.resetPool();
+			BlockPos.GLOBAL_POOL.reset();
 		}
 	}
 

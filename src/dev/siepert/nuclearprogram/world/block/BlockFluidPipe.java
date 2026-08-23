@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.init.ItemInit;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
 import dev.siepert.nuclearprogram.pipenet.node.PPNBasic;
@@ -184,7 +185,7 @@ public class BlockFluidPipe extends BlockContainer implements IOverlayInfo, IFlu
 
 	@Override
 	public void onBlockAdded(World world, int x, int y, int z) {
-		PipeNet.setNode(world, x, y, z, new PPNBasic().positioned(x, y, z));
+		PipeNet.setNode(world, x, y, z, new PPNBasic(world).positioned(x, y, z));
 	}
 
 	@Override
@@ -220,6 +221,21 @@ public class BlockFluidPipe extends BlockContainer implements IOverlayInfo, IFlu
 	}
 
 	@Override
+	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
+		if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().itemID == ItemInit.screwdriver.shiftedIndex) {
+			long nextID = PipeNet.nextNetworkID;
+			PipeNet.Network net = PipeNet.getData(world).getOrCreateNetwork(PipeNet.getNode(x, y, z));
+			player.addChatMessage("Network of pipe: " + net + (nextID != PipeNet.nextNetworkID ? " (newly created)" : "") + " with " + net.nodes.size() + " nodes and " + net.receivers.size() + " receivers");
+			if (player.isSneaking()) {
+				long amount = 10000L;
+				long remainder = net.pushFluid(net.fluidType, amount, 1);
+				player.addChatMessage((amount - remainder) + "mB out of " + amount + "mB pushed to " + net.receivers.size() + " receivers");
+			}
+			return true;
+		} else return false;
+	}
+
+	@Override
 	public void addInformation(World world, int x, int y, int z, List<String> information, IntList colors) {
 		PipeNetNode node = PipeNet.getNode(x, y, z);
 		if (node != null) {
@@ -228,6 +244,8 @@ public class BlockFluidPipe extends BlockContainer implements IOverlayInfo, IFlu
 			Fluid fluid = Fluid.fluidsList[fluidID];
 			information.add(translate.translateNamedKey(Fluid.getUnlocalizedName(fluid)));
 			colors.add(Fluid.colorLookup[fluidID]);
+			information.add("Network ID: " + node.network);
+			colors.add(0x00FFFF);
 		} else {
 			information.add("(no attached PipeNet node)");
 			colors.add(NPMth.blink() ? 0xFF0000 : 0xFF8888);
@@ -237,9 +255,10 @@ public class BlockFluidPipe extends BlockContainer implements IOverlayInfo, IFlu
 	@Override
 	public void setFluidID(World world, int x, int y, int z, int fluidID) {
 		PipeNetNode node = PipeNet.getNode(x, y, z);
-		if (node != null) {
+		if (node != null && node.fluidType != fluidID) {
 			node.fluidType = fluidID;
 			world.markBlockNeedsUpdate(x, y, z);
+			PipeNet.getData(world).invalidateAround(node);
 		}
 	}
 }

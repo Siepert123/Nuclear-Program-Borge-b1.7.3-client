@@ -1,5 +1,11 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.pipenet.PipeNet;
+import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
+import dev.siepert.nuclearprogram.pipenet.node.PPNBasic;
+import dev.siepert.nuclearprogram.pipenet.node.PPNMultiblockProxy;
+import dev.siepert.nuclearprogram.util.NPMth;
+import dev.siepert.nuclearprogram.util.collect.IntList;
 import dev.siepert.nuclearprogram.world.te.TileEntityDerrick;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
 import net.minecraft.src.Material;
@@ -7,7 +13,9 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraftborge.loader.EnumFacing;
 
-public class BlockDerrick extends BlockMulti {
+import java.util.List;
+
+public class BlockDerrick extends BlockMulti implements IOverlayInfo {
 	public BlockDerrick(int blockID, Material material) {
 		super(blockID, material);
 
@@ -52,5 +60,34 @@ public class BlockDerrick extends BlockMulti {
 		this.setFlag(world, x-1, y, z);
 		this.setFlag(world, x, y, z+1);
 		this.setFlag(world, x, y, z-1);
+	}
+
+	@Override
+	public void onBlockRemoval(World world, int x, int y, int z) {
+		super.onBlockRemoval(world, x, y, z);
+
+		PipeNet.setNode(world, x, y, z, null);
+	}
+
+	@Override
+	protected void setFlag(World world, int x, int y, int z) {
+		super.setFlag(world, x, y, z);
+
+		PipeNet.setNode(world, x, y, z, new PPNMultiblockProxy(world).positioned(x, y, z));
+	}
+
+	@Override
+	public void addInformation(World world, int x, int y, int z, List<String> information, IntList colors) {
+		int metadata = world.getBlockMetadata(x, y, z);
+		if (this.hasFlag(metadata)) {
+			PipeNetNode node = PipeNet.getNode(x, y, z);
+			if (node != null) {
+				information.add("Network ID: " + node.network);
+				colors.add(0x00FFFF);
+			} else {
+				information.add("(no attached PipeNet node)");
+				colors.add(NPMth.blink() ? 0xFF0000 : 0xFF8888);
+			}
+		}
 	}
 }

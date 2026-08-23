@@ -2,17 +2,25 @@ package dev.siepert.nuclearprogram.world.block;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.init.ItemInit;
+import dev.siepert.nuclearprogram.pipenet.PipeNet;
+import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
+import dev.siepert.nuclearprogram.pipenet.node.PPNBasic;
+import dev.siepert.nuclearprogram.util.NPMth;
+import dev.siepert.nuclearprogram.util.collect.IntList;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockFluidPipeCoated;
+import dev.siepert.nuclearprogram.world.fluid.Fluid;
 import dev.siepert.nuclearprogram.world.te.TileEntityFluidPipeCoated;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.tag.ItemTags;
 
-public class BlockFluidPipeCoated extends BlockContainer {
+import java.util.List;
+
+public class BlockFluidPipeCoated extends BlockContainer implements IOverlayInfo, IFluidIdentifiable {
 	public BlockFluidPipeCoated(int blockID) {
 		super(blockID, NPMaterials.pipe);
 
-		BlockFluidPipe.canConnectPipe[blockID] = true;
-		BlockFluidPipe.canConnectPipeMetaMask[blockID] = 0xFFFF;
+		BlockFluidPipe.enableConnection(blockID);
+		BlockFluidPipe.enableFilteredFluids(blockID);
 	}
 
 	@Override
@@ -50,6 +58,45 @@ public class BlockFluidPipeCoated extends BlockContainer {
 	@Override
 	protected TileEntity getBlockEntity(int meta) {
 		return new TileEntityFluidPipeCoated();
+	}
+
+	@Override
+	public void onBlockAdded(World world, int x, int y, int z) {
+		super.onBlockAdded(world, x, y, z);
+		PipeNet.setNode(world, x, y, z, new PPNBasic(world).positioned(x, y, z));
+	}
+
+	@Override
+	public void onBlockRemoval(World world, int x, int y, int z) {
+		super.onBlockRemoval(world, x, y, z);
+		PipeNet.setNode(world, x, y, z, null);
+	}
+
+	@Override
+	public void addInformation(World world, int x, int y, int z, List<String> information, IntList colors) {
+		PipeNetNode node = PipeNet.getNode(x, y, z);
+		if (node != null) {
+			int fluidID = node.fluidType;
+			StringTranslate translate = StringTranslate.getInstance();
+			Fluid fluid = Fluid.fluidsList[fluidID];
+			information.add(translate.translateNamedKey(Fluid.getUnlocalizedName(fluid)));
+			colors.add(Fluid.colorLookup[fluidID]);
+			information.add("Network ID: " + node.network);
+			colors.add(0x00FFFF);
+		} else {
+			information.add("(no attached PipeNet node)");
+			colors.add(NPMth.blink() ? 0xFF0000 : 0xFF8888);
+		}
+	}
+
+	@Override
+	public void setFluidID(World world, int x, int y, int z, int fluidID) {
+		PipeNetNode node = PipeNet.getNode(x, y, z);
+		if (node != null && node.fluidType != fluidID) {
+			node.fluidType = fluidID;
+			world.markBlockNeedsUpdate(x, y, z);
+			PipeNet.getData(world).invalidateAround(node);
+		}
 	}
 
 	@Override
