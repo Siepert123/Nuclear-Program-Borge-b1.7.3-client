@@ -1,7 +1,10 @@
 package dev.siepert.nuclearprogram.world.te;
 
+import dev.siepert.nuclearprogram.cablenet.CableNet;
+import dev.siepert.nuclearprogram.cablenet.CableNetNode;
 import dev.siepert.nuclearprogram.recipe.RTGFuelRecipes;
 import net.minecraft.src.*;
+import net.minecraftborge.loader.EnumFacing;
 import net.minecraftborge.loader.tag.ItemTags;
 
 public class TileEntityRTG extends TileEntity implements IInventory {
@@ -17,6 +20,8 @@ public class TileEntityRTG extends TileEntity implements IInventory {
 	public int maxDepletion = 0;
 	public int energyPerTick = 0;
 	public ItemStack currentlyDepleting = null;
+
+	private int age = 0;
 
 	@Override
 	public void updateEntity() {
@@ -58,6 +63,17 @@ public class TileEntityRTG extends TileEntity implements IInventory {
 					}
 				}
 				update = true;
+			}
+
+			if (this.energy > 0 && this.age++ % 20 == 0) {
+				for (EnumFacing side : EnumFacing.VALUES) {
+					CableNetNode node = CableNet.getNode(this.worldObj,
+							this.xCoord + side.getOffsetX(), this.yCoord + side.getOffsetY(), this.zCoord + side.getOffsetZ()
+					);
+					if (node != null) {
+						this.energy = Math.toIntExact(node.pushEnergy(this.energy));
+					}
+				}
 			}
 		}
 

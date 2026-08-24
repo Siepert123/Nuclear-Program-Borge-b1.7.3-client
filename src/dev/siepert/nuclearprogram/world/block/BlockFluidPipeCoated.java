@@ -4,7 +4,7 @@ import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.init.ItemInit;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
-import dev.siepert.nuclearprogram.pipenet.node.PPNBasic;
+import dev.siepert.nuclearprogram.pipenet.node.PNNBasic;
 import dev.siepert.nuclearprogram.util.NPMth;
 import dev.siepert.nuclearprogram.util.collect.IntList;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockFluidPipeCoated;
@@ -63,7 +63,7 @@ public class BlockFluidPipeCoated extends BlockContainer implements IOverlayInfo
 	@Override
 	public void onBlockAdded(World world, int x, int y, int z) {
 		super.onBlockAdded(world, x, y, z);
-		PipeNet.setNode(world, x, y, z, new PPNBasic(world).positioned(x, y, z));
+		PipeNet.setNode(world, x, y, z, new PNNBasic(world).positioned(x, y, z));
 	}
 
 	@Override

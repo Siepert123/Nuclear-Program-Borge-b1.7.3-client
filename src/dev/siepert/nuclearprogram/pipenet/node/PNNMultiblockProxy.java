@@ -6,8 +6,8 @@ import dev.siepert.nuclearprogram.world.te.IFluidReceiverTE;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
 import net.minecraft.src.World;
 
-public class PPNMultiblockProxy extends PipeNetNode implements IReceivingPipeNetNode {
-	public PPNMultiblockProxy(World world) {
+public class PNNMultiblockProxy extends PipeNetNode implements IReceivingPipeNetNode {
+	public PNNMultiblockProxy(World world) {
 		super(world);
 		this.fluidType = -1;
 	}
@@ -25,11 +25,11 @@ public class PPNMultiblockProxy extends PipeNetNode implements IReceivingPipeNet
 
 	@Override
 	public long getCapacity(int fluidID, int bar) {
-		return this.cast().getCapacity(fluidID, bar);
+		return this.cast().getFluidCapacity(fluidID, bar);
 	}
 	@Override
 	public long getRemainingCapacity(int fluidID, int bar) {
-		return this.cast().getRemainingCapacity(fluidID, bar);
+		return this.cast().getRemainingFluidCapacity(fluidID, bar);
 	}
 	@Override
 	public long addFluid(int fluidID, long amount, int bar) {

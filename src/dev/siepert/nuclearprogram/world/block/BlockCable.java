@@ -1,16 +1,21 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.cablenet.CableNet;
+import dev.siepert.nuclearprogram.cablenet.CableNetNode;
+import dev.siepert.nuclearprogram.cablenet.node.CNNBasic;
+import dev.siepert.nuclearprogram.init.ItemInit;
+import dev.siepert.nuclearprogram.util.NPMth;
+import dev.siepert.nuclearprogram.util.collect.IntList;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockCable;
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.Block;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.World;
+import net.minecraft.src.*;
 import net.minecraftborge.loader.EnumFacing;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.IconRegister;
 import net.minecraftborge.loader.Side;
 
-public class BlockCable extends Block {
+import java.util.List;
+
+public class BlockCable extends Block implements IOverlayInfo {
 	public static final boolean[] canConnectCable = new boolean[blocksList.length];
 	public static final int[] canConnectCableMetaMask = new int[blocksList.length];
 
@@ -150,6 +155,18 @@ public class BlockCable extends Block {
 		}
 	}
 
+	@Override
+	public void onBlockAdded(World world, int x, int y, int z) {
+		super.onBlockAdded(world, x, y, z);
+		CableNet.setNode(world, x, y, z, new CNNBasic(world).positioned(x, y, z));
+	}
+
+	@Override
+	public void onBlockRemoval(World world, int x, int y, int z) {
+		super.onBlockRemoval(world, x, y, z);
+		CableNet.setNode(world, x, y, z, null);
+	}
+
 	public static int axis = -1;
 
 	@Override
@@ -170,5 +187,32 @@ public class BlockCable extends Block {
 	@Override
 	public int getRenderType() {
 		return RenderBlockCable.RENDER_TYPE;
+	}
+
+	@Override
+	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
+		if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().itemID == ItemInit.screwdriver.shiftedIndex) {
+			long nextID = CableNet.nextNetworkID;
+			CableNet.Network net = CableNet.getData(world).getOrCreateNetwork(CableNet.getNode(x, y, z));
+			player.addChatMessage("Network of Cable: " + net + (nextID != CableNet.nextNetworkID ? " (newly created)" : "") + " with " + net.nodes.size() + " nodes and " + net.receivers.size() + " receivers");
+			if (player.isSneaking()) {
+				long amount = 10000L;
+				long remainder = net.pushEnergy(amount);
+				player.addChatMessage((amount - remainder) + "RF out of " + amount + "RF pushed to " + net.receivers.size() + " receivers");
+			}
+			return true;
+		} else return false;
+	}
+
+	@Override
+	public void addInformation(World world, int x, int y, int z, List<String> information, IntList colors) {
+		CableNetNode node = CableNet.getNode(x, y, z);
+		if (node != null) {
+			information.add("Network ID: " + node.network);
+			colors.add(0x00FFFF);
+		} else {
+			information.add("(no attached CableNet node)");
+			colors.add(NPMth.blink() ? 0xFF0000 : 0xFF8888);
+		}
 	}
 }

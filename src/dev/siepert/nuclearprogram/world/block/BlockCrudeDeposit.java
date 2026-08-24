@@ -11,6 +11,12 @@ import java.util.Collection;
 public class BlockCrudeDeposit extends Block {
 	public final Icon[] blockTextures = new Icon[3];
 
+	public static final String[] VARIANTS = {
+			"Oil",
+			"Gas",
+			"Depleted"
+	};
+
 	public static final int OIL = 0;
 	public static final int GAS = 1;
 	public static final int DEPLETED = 2;
@@ -29,9 +35,19 @@ public class BlockCrudeDeposit extends Block {
 	}
 
 	@Override
+	protected int damageDropped(int meta) {
+		return meta;
+	}
+
+	@Override
+	public Icon getBlockIconFromSideAndMetadata(int side, int meta) {
+		return this.blockTextures[meta];
+	}
+
+	@Override
 	public void getSubBlocks(Collection<ItemStack> items) {
-		items.add(new ItemStack(this, 1, 0));
-		items.add(new ItemStack(this, 1, 1));
-		items.add(new ItemStack(this, 1, 2));
+		items.add(new ItemStack(this, 1, OIL));
+		items.add(new ItemStack(this, 1, GAS));
+		items.add(new ItemStack(this, 1, DEPLETED));
 	}
 }

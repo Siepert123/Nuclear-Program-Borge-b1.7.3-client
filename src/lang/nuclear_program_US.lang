@@ -27,6 +27,8 @@ tile.nuclear_program/resourceDepositHematite.name=Bedrock Hematite Deposit
 tile.nuclear_program/resourceDepositMalachite.name=Bedrock Malachite Deposit
 tile.nuclear_program/resourceDepositBauxite.name=Bedrock Bauxite Deposit
 tile.nuclear_program/resourceDepositDirtyCoal.name=Bedrock Dirty Coal Deposit
+tile.nuclear_program/deposit.name=Crude Deposit
+tile.nuclear_program/depositBedrock.name=Bedrock Crude Deposit
 tile.nuclear_program/workbenchIron.name=Iron Workbench
 tile.nuclear_program/workbenchSteel.name=Steel Workbench
 tile.nuclear_program/furnaceBuilder.name=Builder's Furnace
@@ -179,6 +181,8 @@ fluid.uraniumHexafluoride.name=Uranium Hexafluoride
 fluid.uraniumHexafluorideLE.name=Low Enriched UF6
 fluid.uraniumHexafluorideME.name=Medium Enriched UF6
 fluid.uraniumHexafluorideHE.name=High Enriched UF6
+fluid.crudeOil.name=Crude Oil
+fluid.naturalGas.name=Natural Gas
 
 achievement.nuclear_program/concrete=Soviet's Finest
 achievement.nuclear_program/concrete.desc=top 10 concrete mowing

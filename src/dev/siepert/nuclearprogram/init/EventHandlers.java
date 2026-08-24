@@ -12,6 +12,7 @@ import dev.siepert.nuclearprogram.world.NuclearProgramWorldAccess;
 import dev.siepert.nuclearprogram.world.block.BlockRBMKColumn;
 import dev.siepert.nuclearprogram.world.block.IOverlayInfo;
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
+import dev.siepert.nuclearprogram.world.fluid.FluidStack;
 import dev.siepert.nuclearprogram.world.mapdata.WorldFalloutClouds;
 import dev.siepert.nuclearprogram.world.te.TileEntityRBMKColumn;
 import net.minecraft.client.Minecraft;
@@ -233,6 +234,7 @@ public class EventHandlers {
 	public static void tickWorldLast(WorldTickEvent event) {
 		if (event.getPhase() == Event.Phase.POST) {
 			BlockPos.GLOBAL_POOL.reset();
+			FluidStack.GLOBAL_POOL.reset();
 		}
 	}
 

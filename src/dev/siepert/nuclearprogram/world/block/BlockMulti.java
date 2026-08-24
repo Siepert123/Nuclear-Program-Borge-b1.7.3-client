@@ -10,6 +10,7 @@ import net.minecraftborge.loader.Icon;
 import java.util.ArrayList;
 import java.util.List;
 
+// Based off of NTM's BlockDummyable.
 public abstract class BlockMulti extends BlockContainer {
 	protected BlockMulti(int blockID, Material material) {
 		super(blockID, material);

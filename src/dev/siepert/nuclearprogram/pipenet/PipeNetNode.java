@@ -1,7 +1,7 @@
 package dev.siepert.nuclearprogram.pipenet;
 
-import dev.siepert.nuclearprogram.pipenet.node.PPNBasic;
-import dev.siepert.nuclearprogram.pipenet.node.PPNMultiblockProxy;
+import dev.siepert.nuclearprogram.pipenet.node.PNNBasic;
+import dev.siepert.nuclearprogram.pipenet.node.PNNMultiblockProxy;
 import dev.siepert.nuclearprogram.util.BlockPos;
 import net.minecraft.src.ChunkCoordinates;
 import net.minecraft.src.NBTTagCompound;
@@ -26,15 +26,15 @@ public abstract class PipeNetNode {
 	}
 
 	public static void doRegistries() {
-		register(PPNBasic.class, "basic", PPNBasic::new);
-		register(PPNMultiblockProxy.class, "proxy", PPNMultiblockProxy::new);
+		register(PNNBasic.class, "basic", PNNBasic::new);
+		register(PNNMultiblockProxy.class, "proxy", PNNMultiblockProxy::new);
 	}
 
 	public static PipeNetNode create(World world, NBTTagCompound nbt) {
 		String id = nbt.getString("id");
 		Function<World, ? extends PipeNetNode> ctor = classToCtorMap.get(nameToClassMap.get(id));
 		if (ctor == null) {
-			System.err.println("Invalid PipeNetNode ID: " + id);
+			System.err.println("Invalid PipeNetNode id	: " + id);
 			return null;
 		}
 		PipeNetNode node = ctor.apply(world);

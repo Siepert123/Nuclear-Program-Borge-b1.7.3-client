@@ -1,13 +1,20 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.cablenet.CableNet;
+import dev.siepert.nuclearprogram.cablenet.CableNetNode;
+import dev.siepert.nuclearprogram.cablenet.node.CNNBasic;
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.init.ItemInit;
+import dev.siepert.nuclearprogram.util.NPMth;
+import dev.siepert.nuclearprogram.util.collect.IntList;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockCableCoated;
 import dev.siepert.nuclearprogram.world.te.TileEntityCableCoated;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.tag.ItemTags;
 
-public class BlockCableCoated extends BlockContainer {
+import java.util.List;
+
+public class BlockCableCoated extends BlockContainer implements IOverlayInfo {
 	public BlockCableCoated(int blockID) {
 		super(blockID, NPMaterials.cable);
 
@@ -53,7 +60,31 @@ public class BlockCableCoated extends BlockContainer {
 	}
 
 	@Override
+	public void onBlockAdded(World world, int x, int y, int z) {
+		super.onBlockAdded(world, x, y, z);
+		CableNet.setNode(world, x, y, z, new CNNBasic(world).positioned(x, y, z));
+	}
+
+	@Override
+	public void onBlockRemoval(World world, int x, int y, int z) {
+		super.onBlockRemoval(world, x, y, z);
+		CableNet.setNode(world, x, y, z, null);
+	}
+
+	@Override
 	public int getRenderType() {
 		return RenderBlockCableCoated.RENDER_TYPE;
+	}
+
+	@Override
+	public void addInformation(World world, int x, int y, int z, List<String> information, IntList colors) {
+		CableNetNode node = CableNet.getNode(x, y, z);
+		if (node != null) {
+			information.add("Network ID: " + node.network);
+			colors.add(0x00FFFF);
+		} else {
+			information.add("(no attached CableNet node)");
+			colors.add(NPMth.blink() ? 0xFF0000 : 0xFF8888);
+		}
 	}
 }

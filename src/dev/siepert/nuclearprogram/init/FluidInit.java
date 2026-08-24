@@ -37,6 +37,11 @@ public class FluidInit {
 			.setName("uraniumHexafluorideHE").setColor(0.9F, 1.0F, 0.9F)
 			.setGaseous()
 			.disableIdentifier();
+	public static final Fluid crudeOil = new Fluid(12)
+			.setName("crudeOil").setColor(0.0F, 0.0F, 0.0F);
+	public static final Fluid naturalGas = new Fluid(13)
+			.setName("naturalGas").setColor(0.88F, 0.88F, 0.7F)
+			.setGaseous();
 
 	public static void register() {}
 

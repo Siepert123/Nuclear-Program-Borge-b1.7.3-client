@@ -3,6 +3,7 @@ package dev.siepert.nuclearprogram;
 import dev.objlib.api.IObjModelFactory;
 import dev.objlib.api.OBJLoadedEvent;
 import dev.objlib.api.OBJLoadingEvent;
+import dev.siepert.nuclearprogram.cablenet.CableNetNode;
 import dev.siepert.nuclearprogram.gui.LoadingScreenRendererHints;
 import dev.siepert.nuclearprogram.gui.NuclearProgramRemoteGUI;
 import dev.siepert.nuclearprogram.init.*;
@@ -50,6 +51,7 @@ public class NuclearProgram implements IModLifecycleListener {
 		OBJ_FACTORY = IObjModelFactory.newFactory(null);
 
 		SingletonWorld.get(0, 0);
+		CableNetNode.doRegistries();
 		PipeNetNode.doRegistries();
 	}
 

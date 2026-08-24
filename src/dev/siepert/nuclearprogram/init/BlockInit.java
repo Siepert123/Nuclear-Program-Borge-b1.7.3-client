@@ -72,6 +72,7 @@ public class BlockInit {
 	public static BlockExtractionTest extractionTest;
 
 	public static BlockDerrick derrick;
+	public static BlockDerrickPipe derrickPipe;
 	public static BlockGasCentrifuge gasCentrifuge;
 	public static BlockCentrifugeExtension centrifugeExtension;
 
@@ -348,6 +349,12 @@ public class BlockInit {
 				.setResistance(Block.blockIron.getExplosionResistance(null) * 5.0F / 3.0F)
 				.setStepSound(soundMetal2Footstep)
 		);
+		derrickPipe = helper.register("derrickPipe", id -> new BlockDerrickPipe(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(Block.blockIron.getHardness())
+				.setResistance(Block.blockIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setStepSound(Block.soundStoneFootstep)
+		);
 		gasCentrifuge = helper.register("gasCentrifuge", id -> new BlockGasCentrifuge(id)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(Block.blockIron.getHardness())
@@ -387,6 +394,8 @@ public class BlockInit {
 		Item.itemsList[blockMetal.blockID] = new ItemBlockMetal(blockMetal);
 		Item.itemsList[resourceRock.blockID] = new ItemBlockResourceRock(resourceRock);
 		Item.itemsList[resourceDeposit.blockID] = new ItemBlockResourceRock(resourceDeposit);
+		Item.itemsList[depositCrude.blockID] = new ItemBlockCrudeDeposit(depositCrude);
+		Item.itemsList[depositBedrockCrude.blockID] = new ItemBlockCrudeDeposit(depositBedrockCrude);
 		Item.itemsList[workbench.blockID] = new ItemBlockWorkbench(workbench);
 		Item.itemsList[doorOffice.blockID] = new ItemBlockYanoDoor(doorOffice);
 		Item.itemsList[doorBunker.blockID] = new ItemBlockYanoDoor(doorBunker);
