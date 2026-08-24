@@ -27,6 +27,12 @@ public final class FluidStack {
 		return GLOBAL_POOL.get(this.fluidType, this.amount, this.bar);
 	}
 
+	public void reflect(FluidStack other) {
+		this.fluidType = other.fluidType;
+		this.amount = other.amount;
+		this.bar = other.bar;
+	}
+
 	public static final Pool GLOBAL_POOL = new Pool();
 	public static final class Pool {
 		private final List<FluidStack> pool = new ArrayList<>();

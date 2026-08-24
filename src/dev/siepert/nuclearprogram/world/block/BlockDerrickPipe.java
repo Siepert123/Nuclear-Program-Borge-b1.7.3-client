@@ -1,8 +1,8 @@
 package dev.siepert.nuclearprogram.world.block;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.Material;
+import dev.siepert.nuclearprogram.init.BlockInit;
+import dev.siepert.nuclearprogram.world.te.TileEntityDerrick;
+import net.minecraft.src.*;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.IconRegister;
 import net.minecraftborge.loader.Side;
@@ -50,5 +50,33 @@ public class BlockDerrickPipe extends Block {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
+	}
+
+	@Override
+	public void onBlockAdded(World world, int x, int y, int z) {
+		for (int i = y+1; i < 128; i++) {
+			int block = world.getBlockId(x, i, z);
+			if (block == BlockInit.derrick.blockID) {
+				TileEntity te = world.getBlockTileEntity(x, i, z);
+				if (te instanceof TileEntityDerrick) {
+					((TileEntityDerrick)te).cachedDrillDepth = -1;
+				}
+				return;
+			} else if (block != this.blockID) return;
+		}
+	}
+
+	@Override
+	public void onBlockRemoval(World world, int x, int y, int z) {
+		for (int i = y+1; i < 128; i++) {
+			int block = world.getBlockId(x, i, z);
+			if (block == BlockInit.derrick.blockID) {
+				TileEntity te = world.getBlockTileEntity(x, i, z);
+				if (te instanceof TileEntityDerrick) {
+					((TileEntityDerrick)te).cachedDrillDepth = -1;
+				}
+				return;
+			} else if (block != this.blockID) return;
+		}
 	}
 }

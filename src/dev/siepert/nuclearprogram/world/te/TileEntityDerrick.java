@@ -1,8 +1,10 @@
 package dev.siepert.nuclearprogram.world.te;
 
+import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
+import dev.siepert.nuclearprogram.weapon.BackendExplosionHandler;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.EnumFacing;
 
@@ -28,13 +30,26 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 		if (!this.worldObj.multiplayerWorld) {
 			this.age++;
 			if (this.age % 5 == 0) {
-				if (this.energy >= ENERGY_PER_TICK && (TANK_CAPACITY - this.tankCrudeOil >= 100) && (TANK_CAPACITY - this.tankNaturalGas >= 25)) {
-					update = true;
-					this.energy -= ENERGY_PER_TICK;
-					this.tankCrudeOil += 100L;
-					this.tankNaturalGas += 25L;
-					if (this.age % 50 == 0) {
-						this.effects();
+				int nextBlockToDrill = this.getBlockAtDrillTip();
+
+				if (nextBlockToDrill == BlockInit.depositCrude.blockID || nextBlockToDrill == BlockInit.depositBedrockCrude.blockID) {
+					if (this.energy >= ENERGY_PER_TICK && (TANK_CAPACITY - this.tankCrudeOil >= 100) && (TANK_CAPACITY - this.tankNaturalGas >= 25)) {
+						update = true;
+						this.energy -= ENERGY_PER_TICK;
+						this.tankCrudeOil += 100L;
+						this.tankNaturalGas += 25L;
+						if (this.age % 50 == 0) {
+							this.effects();
+						}
+					}
+				} else {
+					int cost = nextBlockToDrill > 0 ? MathHelper.floor_float(Block.blocksList[nextBlockToDrill].getHardness() * 100) : 0;
+					if (cost >= 0) {
+						if (this.energy >= cost) {
+							update = true;
+							this.energy -= cost;
+							this.worldObj.setBlockWithNotify(this.xCoord, this.yCoord-(this.getDrillDepth()+1), this.zCoord, BlockInit.derrickPipe.blockID);
+						}
 					}
 				}
 				if (this.tankCrudeOil > 0 || this.tankNaturalGas > 0) {
@@ -54,11 +69,33 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 	}
 
 	private void effects() {
-		this.worldObj.playSoundEffect(this.xCoord + 0.5, this.yCoord + 5.5, this.zCoord + 0.5, "random.splash", 2.5F, 0.7F);
+		this.worldObj.playSoundEffect(
+				this.xCoord + 0.5, this.yCoord + 5.5, this.zCoord + 0.5,
+				"random.splash", 2.5F, 0.7F + this.worldObj.rand.nextFloat() * 0.1F
+		);
+	}
+
+	public int cachedDrillDepth = -1;
+	public int getDrillDepth() {
+		if (this.cachedDrillDepth == -1) {
+			this.cachedDrillDepth = 0;
+			while (this.worldObj.getBlockId(this.xCoord, this.yCoord-(this.cachedDrillDepth+1), this.zCoord) == BlockInit.derrickPipe.blockID) {
+				this.cachedDrillDepth++;
+			}
+		}
+		return this.cachedDrillDepth;
+	}
+	public int getBlockAtDrillTip() {
+		int depth = this.getDrillDepth();
+		return this.worldObj.getBlockId(this.xCoord, this.yCoord - (depth+1), this.zCoord);
+	}
+	public int getMetadataAtDrillTip() {
+		int depth = this.getDrillDepth();
+		return this.worldObj.getBlockMetadata(this.xCoord, this.yCoord - (depth+1), this.zCoord);
 	}
 
 	public int getDrillDepthScaled(int h) {
-		return 0;
+		return this.getDrillDepth() * h / this.yCoord;
 	}
 	public int getCrudeOilFillScaled(int h) {
 		return Math.toIntExact(this.tankCrudeOil * h / (TANK_CAPACITY+1))+1;

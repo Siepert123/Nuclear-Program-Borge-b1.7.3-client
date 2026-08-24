@@ -35,6 +35,10 @@ public class GuiDerrick extends GuiContainer {
 		int y = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, this.xSize+29, this.ySize);
 
+		if (this.te.getDrillDepth() > 0) {
+			int scaled = this.te.getDrillDepthScaled(55);
+			this.drawTexturedModalRect(x+34, y+14, 222, 1, 8, scaled);
+		}
 		if (this.te.tankCrudeOil > 0) {
 			int scaled = this.te.getCrudeOilFillScaled(62);
 			this.drawTexturedModalRect(x+62, y+14+62-scaled, 240, 62-scaled, 16, scaled);
@@ -61,6 +65,11 @@ public class GuiDerrick extends GuiContainer {
 			int mx = this.mouseX - x;
 			int my = this.mouseY - y;
 
+			if (mx >= 33 && my >= 13 && mx < 33+10 && my < 13+57) {
+				drawTooltipWithGradientBackdrop(this, this.fontRenderer, mx + 12, my - 12,
+						"Depth: " + this.te.getDrillDepth() + "m", Collections.emptyList()
+				);
+			}
 			if (mx >= 61 && my >= 13 && mx < 61+18 && my < 13+64) {
 				String amount = this.te.tankCrudeOil + "/" + TileEntityDerrick.TANK_CAPACITY + "mB";
 				drawTooltipWithGradientBackdrop(this, this.fontRenderer, mx + 12, my - 12,

@@ -323,7 +323,7 @@ public class EventHandlers {
 	public static void getFOV(GetFOVModifierEvent event) {
 		int ticks = BackendExplosionHandler.shockwaveTicks;
 		if (ticks > 0) {
-			if ((ticks & 1) == 0) {
+			if ((Minecraft.getTicksRan() & 1) == 0) {
 				double larp = ticks / 80.0;
 				event.setFOV(BorgeMath.clampedLerp(event.getFOV(), event.getFOV() - 15.0F, larp));
 			}
