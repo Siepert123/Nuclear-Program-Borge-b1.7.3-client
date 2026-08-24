@@ -38,6 +38,11 @@ public abstract class BlockMulti extends BlockContainer {
 			BlockFluidPipe.enableConnection(this.blockID, FLAG + i);
 		}
 	}
+	protected final void flagDisableTE() {
+		for (int i = 0; i < 6; i++) {
+			this.disableTileEntity(FLAG + i);
+		}
+	}
 
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, int neighborBlockID) {

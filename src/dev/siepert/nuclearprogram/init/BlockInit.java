@@ -1,6 +1,7 @@
 package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
+import dev.siepert.nuclearprogram.util.BlockProps;
 import dev.siepert.nuclearprogram.world.block.*;
 import dev.siepert.nuclearprogram.world.block.BlockWorkbench;
 import dev.siepert.nuclearprogram.world.item.*;
@@ -73,6 +74,9 @@ public class BlockInit {
 
 	public static BlockDerrick derrick;
 	public static BlockDerrickPipe derrickPipe;
+	public static BlockOilDistilleryController oilDistilleryController;
+	public static BlockOilDistillerySegment oilDistillerySegment;
+
 	public static BlockGasCentrifuge gasCentrifuge;
 	public static BlockCentrifugeExtension centrifugeExtension;
 
@@ -92,27 +96,27 @@ public class BlockInit {
 		oreMetal = helper.register("oreMetal", id -> new BlockMetalOre(id)
 				.setHarvestLevel("pickaxe", 2)
 				.setHarvestLevel("pickaxe", 1, BlockMetalOre.COPPER)
-				.setHardness(Block.oreIron.getHardness())
-				.setResistance(Block.oreIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.ORE_HARDNESS)
+				.setResistance(BlockProps.ORE_RESISTANCE)
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		oreDust = helper.register("oreDust", id -> new BlockDustOre(id)
 				.setHarvestLevel("pickaxe", 1)
-				.setHardness(Block.oreIron.getHardness())
-				.setResistance(Block.oreIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.ORE_HARDNESS)
+				.setResistance(BlockProps.ORE_RESISTANCE)
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		blockMetal = helper.register("blockMetal", id -> new BlockMetal(id)
 				.setHarvestLevel("pickaxe", 2)
 				.setHarvestLevel("pickaxe", 1, BlockMetal.COPPER)
-				.setHardness(Block.blockIron.getHardness())
-				.setResistance(Block.blockIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
 				.setStepSound(Block.soundMetalFootstep)
 		);
 		fireclay = helper.register("fireclay", id -> new BlockFireclay(id)
 				.setHarvestLevel("shovel", 0)
-				.setHardness(Block.blockClay.getHardness())
-				.setResistance(Block.blockClay.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.CLAY_HARDNESS)
+				.setResistance(BlockProps.CLAY_RESISTANCE)
 				.setStepSound(Block.soundGravelFootstep)
 		);
 		firebricks = helper.register("firebricks", id -> new Block(id, Material.rock)
@@ -123,8 +127,8 @@ public class BlockInit {
 		);
 		resourceRock = helper.register("resourceRock", id -> new BlockResourceRock(id)
 				.setHarvestLevel("pickaxe", 1)
-				.setHardness(Block.oreIron.getHardness())
-				.setResistance(Block.oreIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.ORE_HARDNESS)
+				.setResistance(BlockProps.ORE_RESISTANCE)
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		resourceDeposit = helper.register("resourceDeposit", id -> new BlockResourceRock(id)
@@ -133,8 +137,8 @@ public class BlockInit {
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		depositCrude = helper.register("deposit", id -> new BlockCrudeDeposit(id, Material.rock)
-				.setHardness(Block.oreCoal.getHardness())
-				.setResistance(Block.oreCoal.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.ORE_HARDNESS)
+				.setResistance(BlockProps.ORE_RESISTANCE)
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		depositBedrockCrude = helper.register("depositBedrock", id -> new BlockCrudeDeposit(id, Material.rock)
@@ -184,27 +188,27 @@ public class BlockInit {
 		);
 		concrete = helper.register("concrete", id -> new Block(id, NPMaterials.concrete)
 				.setHarvestLevel("pickaxe", 2)
-				.setHardness(15.0F)
-				.setResistance(256.0F)
+				.setHardness(BlockProps.CONCRETE_HARDNESS)
+				.setResistance(BlockProps.CONCRETE_RESISTANCE)
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		concreteBrick = helper.register("concreteBrick", id -> new Block(id, NPMaterials.concrete)
 				.setHarvestLevel("pickaxe", 2)
-				.setHardness(concrete.getHardness())
-				.setResistance(concrete.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.CONCRETE_HARDNESS)
+				.setResistance(BlockProps.CONCRETE_RESISTANCE)
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		concreteFoundation = helper.register("concreteFoundation",
 				id -> new BlockPillar(id, NPMaterials.concrete, NuclearProgram.path("concrete"), NuclearProgram.path("concreteFoundation"))
 						.setHarvestLevel("pickaxe", 2)
-						.setHardness(concrete.getHardness())
-						.setResistance(concrete.getExplosionResistance(null) * 5.0F / 3.0F)
+						.setHardness(BlockProps.CONCRETE_HARDNESS)
+						.setResistance(BlockProps.CONCRETE_RESISTANCE)
 						.setStepSound(Block.soundStoneFootstep)
 		);
 		concreteColored = helper.register("concrete", id -> new BlockConcreteColored(id)
 				.setHarvestLevel("pickaxe", 2)
-				.setHardness(concrete.getHardness())
-				.setResistance(concrete.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.CONCRETE_HARDNESS)
+				.setResistance(BlockProps.CONCRETE_RESISTANCE)
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		stairsConcrete = helper.register("stairsConcrete", id -> new BlockStairs(id, concrete));
@@ -212,26 +216,26 @@ public class BlockInit {
 		stairsConcreteFoundation = helper.register("stairsConcreteFoundation", id -> new BlockStairs(id, concreteFoundation));
 		slabConcreteSingle = helper.register("slabConcrete", id -> new BlockStepConcrete(id, false)
 				.setHarvestLevel("pickaxe", 2)
-				.setHardness(concrete.getHardness())
-				.setResistance(concrete.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.CONCRETE_HARDNESS)
+				.setResistance(BlockProps.CONCRETE_RESISTANCE)
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		slabConcreteDouble = helper.register("slabConcrete", id -> new BlockStepConcrete(id, true)
 				.setHarvestLevel("pickaxe", 2)
-				.setHardness(concrete.getHardness())
-				.setResistance(concrete.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.CONCRETE_HARDNESS)
+				.setResistance(BlockProps.CONCRETE_RESISTANCE)
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		slabConcreteColoredSingle = helper.register("slabConcrete", id -> new BlockStepConcreteColored(id, false)
 				.setHarvestLevel("pickaxe", 2)
-				.setHardness(concrete.getHardness())
-				.setResistance(concrete.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.CONCRETE_HARDNESS)
+				.setResistance(BlockProps.CONCRETE_RESISTANCE)
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		slabConcreteColoredDouble = helper.register("slabConcrete", id -> new BlockStepConcreteColored(id, true)
 				.setHarvestLevel("pickaxe", 2)
-				.setHardness(concrete.getHardness())
-				.setResistance(concrete.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.CONCRETE_HARDNESS)
+				.setResistance(BlockProps.CONCRETE_RESISTANCE)
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		grateSteel = helper.register("grateSteel", id -> new BlockGrate(id, Material.iron)
@@ -345,33 +349,45 @@ public class BlockInit {
 
 		derrick = helper.register("derrick", id -> new BlockDerrick(id, NPMaterials.multiblock)
 				.setHarvestLevel("pickaxe", 1)
-				.setHardness(Block.blockIron.getHardness())
-				.setResistance(Block.blockIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
 				.setStepSound(soundMetal2Footstep)
 		);
 		derrickPipe = helper.register("derrickPipe", id -> new BlockDerrickPipe(id, NPMaterials.multiblock)
 				.setHarvestLevel("pickaxe", 1)
-				.setHardness(Block.blockIron.getHardness())
-				.setResistance(Block.blockIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
 				.setStepSound(Block.soundStoneFootstep)
+		);
+		oilDistilleryController = helper.register("oilDistilleryController", id -> new BlockOilDistilleryController(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(soundMetal2Footstep)
+		);
+		oilDistillerySegment = helper.register("oilDistillerySegment", id -> new BlockOilDistillerySegment(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(soundMetal2Footstep)
 		);
 		gasCentrifuge = helper.register("gasCentrifuge", id -> new BlockGasCentrifuge(id)
 				.setHarvestLevel("pickaxe", 1)
-				.setHardness(Block.blockIron.getHardness())
-				.setResistance(Block.blockIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
 				.setStepSound(soundMetal2Footstep)
 		);
 		centrifugeExtension = helper.register("centrifugeExtension", id -> new BlockCentrifugeExtension(id)
 				.setHarvestLevel("pickaxe", 1)
-				.setHardness(Block.blockIron.getHardness())
-				.setResistance(Block.blockIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
 				.setStepSound(soundMetal2Footstep)
 		);
 
 		rtg = helper.register("rtg", id -> new BlockRTG(id)
 				.setHarvestLevel("pickaxe", 1)
-				.setHardness(Block.blockIron.getHardness())
-				.setResistance(Block.blockIron.getExplosionResistance(null) * 5.0F / 3.0F)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
 				.setStepSound(soundMetal2Footstep)
 		);
 

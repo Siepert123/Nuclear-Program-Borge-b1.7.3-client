@@ -5,8 +5,12 @@ import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
 import dev.siepert.nuclearprogram.weapon.BackendExplosionHandler;
+import dev.siepert.nuclearprogram.world.block.BlockCrudeDeposit;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.EnumFacing;
+
+import java.util.Random;
 
 public class TileEntityDerrick extends TileEntity implements IInventory, IEnergyReceiverTE {
 
@@ -23,6 +27,7 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 	public final ItemStack[] inventory = new ItemStack[5];
 
 	private int age = 0;
+	private long totalGasBored = 0L;
 	@Override
 	public void updateEntity() {
 		boolean update = false;
@@ -33,13 +38,27 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 				int nextBlockToDrill = this.getBlockAtDrillTip();
 
 				if (nextBlockToDrill == BlockInit.depositCrude.blockID || nextBlockToDrill == BlockInit.depositBedrockCrude.blockID) {
-					if (this.energy >= ENERGY_PER_TICK && (TANK_CAPACITY - this.tankCrudeOil >= 100) && (TANK_CAPACITY - this.tankNaturalGas >= 25)) {
-						update = true;
-						this.energy -= ENERGY_PER_TICK;
-						this.tankCrudeOil += 100L;
-						this.tankNaturalGas += 25L;
-						if (this.age % 50 == 0) {
-							this.effects();
+					int type = this.getMetadataAtDrillTip();
+					if (type == BlockCrudeDeposit.OIL) {
+						if (this.energy >= ENERGY_PER_TICK && (TANK_CAPACITY - this.tankCrudeOil >= 100) && (TANK_CAPACITY - this.tankNaturalGas >= 5)) {
+							update = true;
+							this.energy -= ENERGY_PER_TICK;
+							this.tankCrudeOil += 100L;
+							this.tankNaturalGas += 5L;
+							if (this.age % 50 == 0) {
+								this.effects();
+							}
+						}
+					} else if (type == BlockCrudeDeposit.GAS) {
+						if (this.energy >= ENERGY_PER_TICK && (TANK_CAPACITY - this.tankNaturalGas >= 100)) {
+							update = true;
+							this.energy -= ENERGY_PER_TICK;
+							this.tankNaturalGas += 100L;
+							this.totalGasBored += 100L;
+							if (this.totalGasBored > 100_000L) {
+								this.totalGasBored -= this.worldObj.rand.nextInt(50_000) + 50_000;
+								this.sinkhole();
+							}
 						}
 					}
 				} else {
@@ -74,6 +93,23 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 				"random.splash", 2.5F, 0.7F + this.worldObj.rand.nextFloat() * 0.1F
 		);
 	}
+	private void sinkhole() {
+		EntityPlayer player = Minecraft.getTheMinecraft().thePlayer;
+		if (player != null && player.getDistance(this.xCoord, this.yCoord, this.zCoord) < 512) {
+			BackendExplosionHandler.shockwaveTicks = 40;
+		}
+		Random rnd = new Random();
+		int x, z;
+		do {
+			x = rnd.nextInt(256) - 128;
+			z = rnd.nextInt(256) - 128;
+		} while (Math.abs(x) < 5 && Math.abs(z) < 5);
+
+		this.spawnSinkhole(this.xCoord + x, this.zCoord + z);
+	}
+	private void spawnSinkhole(int x, int z) {
+		System.out.println("pretend as if something catastrophic is happening at X: " + x + ", Z: " + z);
+	}
 
 	public int cachedDrillDepth = -1;
 	public int getDrillDepth() {
@@ -95,7 +131,7 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 	}
 
 	public int getDrillDepthScaled(int h) {
-		return this.getDrillDepth() * h / this.yCoord;
+		return (this.getDrillDepth() * h / this.yCoord)+1;
 	}
 	public int getCrudeOilFillScaled(int h) {
 		return Math.toIntExact(this.tankCrudeOil * h / (TANK_CAPACITY+1))+1;
@@ -113,6 +149,7 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 		nbt.setLong("energy", this.energy);
 		nbt.setLong("tankCrudeOil", this.tankCrudeOil);
 		nbt.setLong("tankNaturalGas", this.tankNaturalGas);
+		nbt.setLong("totalGasBored", this.totalGasBored);
 	}
 
 	@Override
@@ -121,6 +158,7 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 		this.energy = nbt.getLong("energy");
 		this.tankCrudeOil = nbt.getLong("tankCrudeOil");
 		this.tankNaturalGas = nbt.getLong("tankNaturalGas");
+		this.totalGasBored = nbt.getLong("totalGasBored");
 	}
 
 	@Override
