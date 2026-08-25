@@ -14,9 +14,13 @@ import java.util.List;
 public class BlockCreativeSupply extends BlockContainer implements IOverlayInfo, IFluidIdentifiable {
 	public BlockCreativeSupply(int blockID) {
 		super(blockID, NPMaterials.multiblock);
+		this.setHarvestLevel("pickaxe", 1);
 		this.setHardness(BlockProps.IRON_HARDNESS);
 		this.setResistance(BlockProps.IRON_RESISTANCE);
 		this.setStepSound(BlockInit.soundMetal2Footstep);
+
+		BlockCable.enableConnection(blockID);
+		BlockFluidPipe.enableConnection(blockID);
 	}
 
 	@Override

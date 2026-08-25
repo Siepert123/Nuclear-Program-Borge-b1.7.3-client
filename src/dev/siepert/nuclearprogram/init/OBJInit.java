@@ -8,6 +8,8 @@ public class OBJInit {
 	// Oil machines
 	public static WavefrontObj oil_derrick = null;
 	public static final String oil_derrick_tex = get("oil_derrick");
+	public static WavefrontObj gas_flare = null;
+	public static final String gas_flare_tex = get("gas_flare");
 	public static WavefrontObj oil_distillery_base = null;
 	public static final String oil_distillery_base_tex = get("oil_distillery_base");
 	public static WavefrontObj oil_distillery_segment = null;
@@ -22,6 +24,7 @@ public class OBJInit {
 		if (factory == null) throw new RuntimeException("Where's my OBJ factory at");
 		// Oil machines
 		oil_derrick = get(factory, "oil_derrick");
+		gas_flare = get(factory, "gas_flare");
 		oil_distillery_base = get(factory, "oil_distillery_base");
 		oil_distillery_segment = get(factory, "oil_distillery_segment");
 
@@ -31,6 +34,7 @@ public class OBJInit {
 	public static void optimize() {
 		// Oil machines
 		oil_derrick.rerender();
+		gas_flare.rerender();
 		oil_distillery_base.rerender();
 		oil_distillery_segment.rerender();
 

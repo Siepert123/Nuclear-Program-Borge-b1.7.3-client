@@ -31,6 +31,7 @@ public class TileEntityInit {
 
 		// Oil machines
 		register(TileEntityDerrick.class, "derrick", RenderDerrick.INSTANCE);
+		register(TileEntityGasFlare.class, "gasFlare", RenderGasFlare.INSTANCE);
 		register(TileEntityOilDistilleryController.class, "oilDistilleryController", RenderOilDistilleryController.INSTANCE);
 		register(TileEntityOilDistillerySegment.class, "oilDistillerySegment", RenderOilDistillerySegment.INSTANCE);
 
