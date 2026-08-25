@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.world.te;
 
+import dev.siepert.nuclearprogram.init.AchievementInit;
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
@@ -28,6 +29,7 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 
 	private int age = 0;
 	private long totalGasBored = 0L;
+	private boolean hasStruckOil = false;
 	@Override
 	public void updateEntity() {
 		boolean update = false;
@@ -47,6 +49,11 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 							this.tankNaturalGas += 5L;
 							if (this.age % 50 == 0) {
 								this.effects();
+							}
+
+							if (!this.hasStruckOil) {
+								this.achievement();
+								this.hasStruckOil = true;
 							}
 						}
 					} else if (type == BlockCrudeDeposit.GAS) {
@@ -110,6 +117,12 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 	private void spawnSinkhole(int x, int z) {
 		System.out.println("pretend as if something catastrophic is happening at X: " + x + ", Z: " + z);
 	}
+	private void achievement() {
+		EntityPlayer player = this.worldObj.getClosestPlayer(this.xCoord + 0.5, this.yCoord + 0.5, this.zCoord + 0.5, -1.0);
+		if (player != null) {
+			player.triggerAchievement(AchievementInit.instance.concrete);
+		}
+	}
 
 	public int cachedDrillDepth = -1;
 	public int getDrillDepth() {
@@ -150,6 +163,7 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 		nbt.setLong("tankCrudeOil", this.tankCrudeOil);
 		nbt.setLong("tankNaturalGas", this.tankNaturalGas);
 		nbt.setLong("totalGasBored", this.totalGasBored);
+		nbt.setBoolean("hasStruckOil", this.hasStruckOil);
 	}
 
 	@Override
@@ -159,6 +173,7 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 		this.tankCrudeOil = nbt.getLong("tankCrudeOil");
 		this.tankNaturalGas = nbt.getLong("tankNaturalGas");
 		this.totalGasBored = nbt.getLong("totalGasBored");
+		this.hasStruckOil = nbt.getBoolean("hasStruckOil");
 	}
 
 	@Override

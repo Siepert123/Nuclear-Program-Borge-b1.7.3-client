@@ -3,6 +3,7 @@ package dev.siepert.nuclearprogram.world;
 import dev.siepert.nuclearprogram.weapon.BackendExplosionHandler;
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
 import dev.siepert.nuclearprogram.world.particle.EntityGasFX;
+import dev.siepert.nuclearprogram.world.particle.EntityLargeFlameFX;
 import dev.siepert.nuclearprogram.world.te.TileEntityHatch;
 import dev.siepert.nuclearprogram.world.te.TileEntitySealedDoor;
 import net.minecraft.client.Minecraft;
@@ -45,23 +46,29 @@ public class NuclearProgramWorldAccess implements IWorldAccess {
 			double px = this.mc.renderViewEntity.posX - x;
 			double py = this.mc.renderViewEntity.posY - y;
 			double pz = this.mc.renderViewEntity.posZ - z;
-			EntityGasFX gasFX;
 			switch (name) {
-				case "nuclear_program/gas":
+				case "nuclear_program/gas": {
 					this.mc.effectRenderer.addEffect(new EntityGasFX(this.worldObj, x, y, z, (float) dx, (float) dy, (float) dz));
 					break;
-				case "nuclear_program/pollution":
+				}
+				case "nuclear_program/pollution": {
 					float f0 = this.rnd.nextFloat() * 0.1F;
-					gasFX = new EntityGasFX(this.worldObj, x, y, z, 0.15F + f0, 0.15F + f0, 0.15F + f0);
+					EntityGasFX gasFX = new EntityGasFX(this.worldObj, x, y, z, 0.15F + f0, 0.15F + f0, 0.15F + f0);
 					if (dx > 0.0) gasFX.scalar = (float) dx;
 					this.mc.effectRenderer.addEffect(gasFX);
 					break;
-				case "nuclear_program/steam":
+				}
+				case "nuclear_program/steam": {
 					float f1 = this.rnd.nextFloat() * 0.05F + 0.95F;
-					gasFX = new EntityGasFX(this.worldObj, x, y, z, f1, f1, 1.0F);
+					EntityGasFX gasFX = new EntityGasFX(this.worldObj, x, y, z, f1, f1, 1.0F);
 					if (dx > 0.0) gasFX.scalar = (float) dx;
 					this.mc.effectRenderer.addEffect(gasFX);
 					break;
+				}
+				case "nuclear_program/flame": {
+					this.mc.effectRenderer.addEffect(new EntityLargeFlameFX(this.worldObj, x, y, z, dx, dy, dz));
+					break;
+				}
 			}
 		}
 	}
