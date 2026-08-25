@@ -38,10 +38,28 @@ public class FluidInit {
 			.setGaseous()
 			.disableIdentifier();
 	public static final Fluid crudeOil = new Fluid(12)
-			.setName("crudeOil").setColor(0.0F, 0.0F, 0.0F);
+			.setName("crudeOil").setColor(0x020202);
 	public static final Fluid naturalGas = new Fluid(13)
 			.setName("naturalGas").setColor(0.88F, 0.88F, 0.7F)
 			.setGaseous();
+	public static final Fluid heavyOil = new Fluid(14)
+			.setName("heavyOil").setColor(0x000000);
+	public static final Fluid diesel = new Fluid(15)
+			.setName("diesel").setColor(0xB9A191);
+	public static final Fluid kerosene = new Fluid(16)
+			.setName("kerosene").setColor(0x888BC2);
+	public static final Fluid naphtha = new Fluid(17)
+			.setName("naphtha").setColor(0x78574F);
+	public static final Fluid gasoline = new Fluid(18)
+			.setName("gasoline").setColor(0xC0AF8B);
+	public static final Fluid petroleumGas = new Fluid(19)
+			.setName("petroleumGas").setColor(0xC0AF8B);
+	public static final Fluid lpg = new Fluid(20)
+			.setName("lpg").setColor(0xB0A97D);
+	public static final Fluid ethane = new Fluid(21)
+			.setName("ethane").setColor(0xFFFFFF);
+	public static final Fluid propane = new Fluid(22)
+			.setName("propane").setColor(0xFFFFFF);
 
 	public static void register() {}
 

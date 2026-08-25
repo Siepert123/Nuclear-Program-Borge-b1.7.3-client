@@ -65,5 +65,6 @@ public class RenderHatch extends TileEntitySpecialRenderer<TileEntityHatch> {
 		tes.draw();
 		GL11.glPopMatrix();
 		BlockInit.hatch.setBlockBoundsBasedOnState(SingletonBlockAccess.or(this.worldObj, BlockInit.hatch.blockID, 0), te.xCoord, te.yCoord, te.zCoord);
+		RenderHelper.disableStandardItemLighting();
 	}
 }

@@ -5,7 +5,6 @@ import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.util.NumFormat;
 import dev.siepert.nuclearprogram.world.fluid.Fluid;
 import dev.siepert.nuclearprogram.world.te.TileEntityDerrick;
-import dev.siepert.nuclearprogram.world.te.TileEntityGasCentrifuge;
 import net.minecraft.src.GuiContainer;
 import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.StringTranslate;
@@ -85,7 +84,7 @@ public class GuiDerrick extends GuiContainer {
 						0xC0000000, Fluid.colorLookup[FluidInit.naturalGas.fluidID] | 0xC0000000);
 			}
 			if (mx >= 183 && my >= 16 && mx < 183+18 && my < 16+143) {
-				String amount = NumFormat.format(this.te.energy) + "/" + NumFormat.format(TileEntityGasCentrifuge.MAX_ENERGY_STORED) + "RF";
+				String amount = NumFormat.format(this.te.energy) + "/" + NumFormat.format(TileEntityDerrick.MAX_ENERGY_STORED) + "RF";
 				drawTooltipWithGradientBackdrop(this, this.fontRenderer, mx + 12, my - 12,
 						amount, Collections.emptyList(),
 						-1, -1,

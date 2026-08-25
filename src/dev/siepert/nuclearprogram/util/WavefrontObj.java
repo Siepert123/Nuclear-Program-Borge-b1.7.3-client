@@ -15,6 +15,7 @@ public class WavefrontObj {
 	public final IObjModel model;
 	public final List<String> groups;
 	public final Map<String, Integer> groupLists;
+	public boolean prerendered = false;
 
 	public WavefrontObj(IObjModel model) {
 		this.model = model.disableFormatCheck();
@@ -23,11 +24,13 @@ public class WavefrontObj {
 	}
 
 	public void callList(String group) {
+		if (!this.prerendered) this.rerender();
 		Integer list = this.groupLists.get(group);
 		if (list == null) return;
 		GL11.glCallList(list);
 	}
 	public void callAllLists() {
+		if (!this.prerendered) this.rerender();
 		for (Integer list : this.groupLists.values()) {
 			if (list != null) GL11.glCallList(list);
 		}
@@ -51,5 +54,6 @@ public class WavefrontObj {
 			GL11.glEndList();
 			this.groupLists.put(group, list);
 		}
+		this.prerendered = true;
 	}
 }

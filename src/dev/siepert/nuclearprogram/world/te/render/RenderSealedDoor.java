@@ -15,6 +15,7 @@ public class RenderSealedDoor extends TileEntitySpecialRenderer<TileEntitySealed
 
 	private final RenderBlocks renderer = new RenderBlocks();
 	private final RenderBlockSealedDoor instance = RenderBlockSealedDoor.INSTANCE;
+	public boolean allowItemLightModification = true;
 
 	private static float pos(int px32) {
 		return px32 / 32.0F;
@@ -56,7 +57,7 @@ public class RenderSealedDoor extends TileEntitySpecialRenderer<TileEntitySealed
 	private void renderDo(TileEntitySealedDoor te, double x, double y, double z, float pt) {
 		int meta = te.getBlockMetadata();
 		if ((meta & 0b1000) != 0) return;
-		RenderHelper.enableStandardItemLighting();
+		if (this.allowItemLightModification) RenderHelper.enableStandardItemLighting();
 		Tessellator tes = Tessellator.instance;
 		this.instance.brightness = te.worldObj.getLightBrightness(te.xCoord, te.yCoord, te.zCoord);
 		GL11.glPushMatrix();
@@ -91,5 +92,7 @@ public class RenderSealedDoor extends TileEntitySpecialRenderer<TileEntitySealed
 		this.instance.brightness = 1.0F;
 		BlockInit.sealedDoor.setBlockBoundsBasedOnState(te.worldObj, te.xCoord, te.yCoord, te.zCoord);
 		Block.stone.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+
+		if (this.allowItemLightModification) RenderHelper.disableStandardItemLighting();
 	}
 }

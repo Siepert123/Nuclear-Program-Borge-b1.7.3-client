@@ -18,11 +18,11 @@ public class RenderOilDistillerySegment extends TileEntitySpecialRenderer<TileEn
 
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTick) {
+		OBJRenderHelper.enableMachineLight();
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) x + 0.5F, (float) y, (float) z + 0.5F);
-		OBJRenderHelper.enableMachineLight();
-		OBJInit.oil_distillery_segment.callList("Base");
-		OBJRenderHelper.disableMachineLight();
+		OBJInit.oil_distillery_segment.callAllLists();
 		GL11.glPopMatrix();
+		OBJRenderHelper.disableMachineLight();
 	}
 }

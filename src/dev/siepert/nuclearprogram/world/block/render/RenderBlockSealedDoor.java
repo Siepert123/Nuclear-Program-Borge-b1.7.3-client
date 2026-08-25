@@ -196,7 +196,9 @@ public class RenderBlockSealedDoor implements BlockRenderType {
 		if (this.dummyRenderer == null) {
 			this.dummyRenderer = RenderSealedDoor.INSTANCE;
 		}
+		this.dummyRenderer.allowItemLightModification = false;
 		this.dummyRenderer.renderTileEntityAt(this.dummyTE, 0, 0, 0, brightness);
+		this.dummyRenderer.allowItemLightModification = true;
 
 		GL11.glTranslatef(0.5F, 0.75F, 0.75F);
 		GL11.glScalef(2.0F, 2.0F, 2.0F);

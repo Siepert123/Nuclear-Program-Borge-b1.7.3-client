@@ -139,6 +139,7 @@ public class NuclearProgram implements IModLifecycleListener {
 	@EventHandler
 	public static void registerOBJModels(OBJLoadingEvent event) {
 		System.out.println("Registering OBJ models for Nuclear Program");
+		QuadOBJInit.register();
 		OBJInit.register();
 	}
 	@EventHandler

@@ -4,6 +4,7 @@ import dev.siepert.nuclearprogram.init.ItemInit;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.StringTranslate;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.IconRegister;
 
@@ -89,6 +90,9 @@ public class Fluid {
 	}
 	public static String getUnlocalizedName(Fluid fluid) {
 		return fluid != null ? fluid.getUnlocalizedName() : "fluid.none";
+	}
+	public static String getLocalizedName(Fluid fluid) {
+		return StringTranslate.getInstance().translateNamedKey(getUnlocalizedName(fluid));
 	}
 
 	static {

@@ -8,6 +8,8 @@ import java.nio.FloatBuffer;
 
 public class OBJRenderHelper {
 	private static final FloatBuffer buf = GLAllocation.createDirectFloatBuffer(16);
+	private static final Vec3D lightSource0;
+	private static final Vec3D lightSource1;
 
 	public static void enableMachineLight() {
 		GL11.glEnable(GL11.GL_LIGHTING);
@@ -15,16 +17,17 @@ public class OBJRenderHelper {
 		GL11.glEnable(GL11.GL_LIGHT1);
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 		GL11.glColorMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT_AND_DIFFUSE);
+
 		float ambient = 0.4F;
 		float diffuse = 0.6F;
 		float specular = 0.0F;
-		Vec3D vec = Vec3D.createVector(3, 10, -7);
-		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, storeVec4(vec.xCoord, vec.yCoord, vec.zCoord, 0.0D));
+
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, storeVec4(lightSource0.xCoord, lightSource0.yCoord, lightSource0.zCoord, 0.0D));
 		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, storeVec4(diffuse, diffuse, diffuse, 1.0F));
 		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, storeVec4(0.0F, 0.0F, 0.0F, 1.0F));
 		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPECULAR, storeVec4(specular, specular, specular, 1.0F));
-		vec = Vec3D.createVector(-3, 10, 7);
-		GL11.glLight(GL11.GL_LIGHT1, GL11.GL_POSITION, storeVec4(vec.xCoord, vec.yCoord, vec.zCoord, 0.0D));
+
+		GL11.glLight(GL11.GL_LIGHT1, GL11.GL_POSITION, storeVec4(lightSource1.xCoord, lightSource1.yCoord, lightSource1.zCoord, 0.0D));
 		GL11.glLight(GL11.GL_LIGHT1, GL11.GL_DIFFUSE, storeVec4(diffuse, diffuse, diffuse, 1.0F));
 		GL11.glLight(GL11.GL_LIGHT1, GL11.GL_AMBIENT, storeVec4(0.0F, 0.0F, 0.0F, 1.0F));
 		GL11.glLight(GL11.GL_LIGHT1, GL11.GL_SPECULAR, storeVec4(specular, specular, specular, 1.0F));
@@ -47,5 +50,12 @@ public class OBJRenderHelper {
 		buf.put(x).put(y).put(z).put(w);
 		buf.flip();
 		return buf;
+	}
+
+	static {
+		Vec3D ls0 = Vec3D.createVector(0.2, 1.0, -0.7).normalize();
+		lightSource0 = Vec3D.createVectorHelper(ls0.xCoord, ls0.yCoord, ls0.zCoord);
+		Vec3D ls1 = Vec3D.createVector(-0.2, 1.0, 0.7).normalize();
+		lightSource1 = Vec3D.createVectorHelper(ls1.xCoord, ls1.yCoord, ls1.zCoord);
 	}
 }

@@ -193,6 +193,15 @@ fluid.uraniumHexafluorideME.name=Medium Enriched UF6
 fluid.uraniumHexafluorideHE.name=High Enriched UF6
 fluid.crudeOil.name=Crude Oil
 fluid.naturalGas.name=Natural Gas
+fluid.heavyOil.name=Heavy Oil
+fluid.diesel.name=Diesel
+fluid.kerosene.name=Kerosene
+fluid.naphtha.name=Naphtha
+fluid.gasoline.name=Gasoline
+fluid.petroleumGas.name=Petroleum Gas
+fluid.lpg.name=Liquid Petrol Gas
+fluid.ethane.name=Ethane
+fluid.propane.name=Propane
 
 achievement.nuclear_program/concrete=Soviet's Finest
 achievement.nuclear_program/concrete.desc=top 10 concrete mowing

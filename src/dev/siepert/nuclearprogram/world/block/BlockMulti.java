@@ -233,12 +233,14 @@ public abstract class BlockMulti extends BlockContainer {
 			if (this.findCore(world, x, y, z, core)) {
 				world.setBlockWithNotify(core[0], core[1], core[2], 0);
 			}
+			/*
 			if (meta >= FLAG) meta -= FLAG;
 			EnumFacing facing = EnumFacing.VALUES[meta];
 
 			if (world.getBlockId(x + facing.getOffsetX(), y + facing.getOffsetY(), z + facing.getOffsetZ()) == this.blockID) {
 				world.setBlockWithNotify(x + facing.getOffsetX(), y + facing.getOffsetY(), z + facing.getOffsetZ(), 0);
 			}
+			*/
 		}
 
 		super.onBlockRemoval(world, x, y, z);

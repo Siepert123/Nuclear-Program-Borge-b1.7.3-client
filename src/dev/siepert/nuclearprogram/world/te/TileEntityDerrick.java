@@ -18,7 +18,7 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 
 	}
 
-	public static final long MAX_ENERGY = 10_000L;
+	public static final long MAX_ENERGY_STORED = 10_000L;
 	public static final long ENERGY_PER_TICK = 250L;
 	public long energy = 0L;
 	public static final long TANK_CAPACITY = 16_000L;
@@ -140,7 +140,7 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 		return Math.toIntExact(this.tankNaturalGas * h / (TANK_CAPACITY+1))+1;
 	}
 	public int getEnergyScaled(int h) {
-		return Math.toIntExact(this.energy * h / (MAX_ENERGY+1))+1;
+		return Math.toIntExact(this.energy * h / (MAX_ENERGY_STORED +1))+1;
 	}
 
 	@Override
@@ -163,11 +163,11 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 
 	@Override
 	public long getEnergyCapacity() {
-		return MAX_ENERGY;
+		return MAX_ENERGY_STORED;
 	}
 	@Override
 	public long getRemainingEnergyCapacity() {
-		return MAX_ENERGY - this.energy;
+		return MAX_ENERGY_STORED - this.energy;
 	}
 	@Override
 	public long addEnergy(long amount) {
@@ -176,7 +176,7 @@ public class TileEntityDerrick extends TileEntity implements IInventory, IEnergy
 			this.energy += amount;
 			return 0L;
 		} else {
-			this.energy = MAX_ENERGY;
+			this.energy = MAX_ENERGY_STORED;
 			return remain;
 		}
 	}
