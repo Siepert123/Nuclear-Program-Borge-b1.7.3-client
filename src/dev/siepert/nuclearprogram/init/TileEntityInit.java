@@ -27,6 +27,8 @@ public class TileEntityInit {
 		TileEntity.addMapping(TileEntityFluidPipe.class, NuclearProgram.path("fluidPipe"));
 		TileEntity.addMapping(TileEntityFluidPipeCoated.class, NuclearProgram.path("fluidPipeCoated"));
 
+		register(TileEntityCreativeSupply.class, "creativeSupply", null);
+
 		// Oil machines
 		register(TileEntityDerrick.class, "derrick", RenderDerrick.INSTANCE);
 		register(TileEntityOilDistilleryController.class, "oilDistilleryController", RenderOilDistilleryController.INSTANCE);

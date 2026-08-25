@@ -47,12 +47,14 @@ public class GuiOilDistillery extends GuiContainer {
 					this.renderFluidOutputBar(x, y, 0, 0, this.te.getSegment(0).getFluidFillScaled(88));
 					this.renderFluidOutputBar(x, y, 1, 3, this.te.getSegment(1).getFluidFillScaled(88));
 					this.renderFluidOutputBar(x, y, 2, 5, this.te.getSegment(2).getFluidFillScaled(88));
+					this.drawTexturedModalRect(x+68, y+15, 0, 198, 94, 31);
 					break;
 				case 4:
 					this.renderFluidOutputBar(x, y, 0, 0, this.te.getSegment(0).getFluidFillScaled(88));
 					this.renderFluidOutputBar(x, y, 1, 1, this.te.getSegment(1).getFluidFillScaled(88));
 					this.renderFluidOutputBar(x, y, 2, 3, this.te.getSegment(2).getFluidFillScaled(88));
 					this.renderFluidOutputBar(x, y, 2, 5, this.te.getSegment(3).getFluidFillScaled(88));
+					this.drawTexturedModalRect(x+68, y+15, 0, 208, 94, 21);
 					break;
 				case 6:
 					this.renderFluidOutputBar(x, y, 0, 0, this.te.getSegment(0).getFluidFillScaled(88));

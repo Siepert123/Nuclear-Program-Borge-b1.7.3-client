@@ -71,6 +71,7 @@ public class BlockInit {
 	public static BlockNuke nukeCaseoh;
 
 	public static BlockExtractionTest extractionTest;
+	public static BlockCreativeSupply creativeSupply;
 
 	public static BlockDerrick derrick;
 	public static BlockDerrickPipe derrickPipe;
@@ -346,6 +347,7 @@ public class BlockInit {
 				.setResistance(1.0F)
 				.setStepSound(soundChainFootstep)
 		);
+		creativeSupply = helper.register("creativeSupply", BlockCreativeSupply::new);
 
 		derrick = helper.register("derrick", id -> new BlockDerrick(id, NPMaterials.multiblock)
 				.setHarvestLevel("pickaxe", 1)
