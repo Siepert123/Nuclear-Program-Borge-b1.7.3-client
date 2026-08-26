@@ -98,6 +98,7 @@ tile.nuclear_program/charredWood.name=Charred Wood
 tile.nuclear_program/nukeNuclearCharge.name=Nuclear Charge
 tile.nuclear_program/nukeLittleBoy.name=Little Boy
 tile.nuclear_program/nukeCaseoh.name=Fat Man
+tile.nuclear_program/animationTest.name=Animation Test
 tile.nuclear_program/extractionTest.name=Debug Bedrock Resource Deposit Extractor
 tile.nuclear_program/creativeSupply.name=Creative Supply
 tile.nuclear_program/derrick.name=Derrick

@@ -159,6 +159,11 @@ public class EventHandlers {
 				world.spawnParticle("nuclear_program/pollution", sender.posX, sender.posY, sender.posZ, 0, 0, 0);
 				return;
 			}
+			if (cmd.startsWith("/goon4")) {
+				event.setCanceled(true);
+				world.playSoundEffect(sender.posX, sender.posY, sender.posZ, "machine.hsrfs.loop", 1.0F, 1.0F);
+				return;
+			}
 			Nothing.none();
 		} catch (Exception e) {
 			event.sendStatus("Exception handling command " + event.getCommand() + " (handler: " + NuclearProgram.MODID + "):");

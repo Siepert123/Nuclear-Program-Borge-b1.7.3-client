@@ -10,6 +10,10 @@ block/yanoDoor1.ogg
 block/yanoDoor2.ogg
 block/yanoDoor3.ogg
 
+machine/hsrfs/close.ogg
+machine/hsrfs/loop.ogg
+machine/hsrfs/open.ogg
+
 random/blastfurnace1.ogg
 random/blastfurnace2.ogg
 random/blastfurnace3.ogg

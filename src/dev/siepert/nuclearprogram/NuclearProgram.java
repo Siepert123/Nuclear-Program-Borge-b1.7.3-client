@@ -23,8 +23,10 @@ import dev.siepert.nuclearprogram.world.particle.ParticleTextures;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
+import net.minecraft.src.SoundManager;
 import net.minecraftborge.loader.FurnaceRecipesFix;
 import net.minecraftborge.loader.TerrainIcon;
+import net.minecraftborge.loader.TrackedSound;
 import net.minecraftborge.loader.event.EventBusSubscriber;
 import net.minecraftborge.loader.event.EventHandler;
 import net.minecraftborge.loader.event.IModLifecycleListener;
@@ -33,6 +35,9 @@ import net.minecraftborge.loader.event.lifecycle.ModPostInitializationEvent;
 import net.minecraftborge.loader.event.lifecycle.ModPreInitializationEvent;
 import net.minecraftborge.loader.event.misc.ReplaceSimilarBlocksEvent;
 import net.minecraftborge.loader.event.register.*;
+
+import java.lang.reflect.Field;
+import java.util.List;
 
 @EventBusSubscriber(NuclearProgram.MODID)
 public class NuclearProgram implements IModLifecycleListener {
@@ -152,5 +157,22 @@ public class NuclearProgram implements IModLifecycleListener {
 	public static void fixStatistics(ReplaceSimilarBlocksEvent event) {
 		if (!BlockInit.available) return;
 		event.replace(BlockInit.furnaceBuilderLit.blockID, BlockInit.furnaceBuilderIdle.blockID);
+	}
+
+	// TODO: fix this in Borge
+	private static final List<TrackedSound> playingTrackedSounds;
+	static {
+		try {
+			Field field = SoundManager.class.getDeclaredField("playingTrackedSounds");
+			field.setAccessible(true);
+			playingTrackedSounds = (List<TrackedSound>) field.get(null);
+		} catch (NoSuchFieldException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	// A horrible workaround but the SoundManager code is broken to always return null ;-;
+	public static TrackedSound getLastTrackedSound() {
+		return playingTrackedSounds.get(playingTrackedSounds.size() - 1);
 	}
 }

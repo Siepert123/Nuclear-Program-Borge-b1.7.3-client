@@ -5,6 +5,9 @@ import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.util.WavefrontObj;
 
 public class OBJInit {
+	public static WavefrontObj animation_test = null;
+	public static final String animation_test_tex = get("animation_test");
+
 	// Oil machines
 	public static WavefrontObj oil_derrick = null;
 	public static final String oil_derrick_tex = get("oil_derrick");
@@ -24,6 +27,8 @@ public class OBJInit {
 	public static void register() {
 		final IObjModelFactory factory = IObjModelFactory.newFactory(null);
 		if (factory == null) throw new RuntimeException("Where's my OBJ factory at");
+		animation_test = get(factory, "animation_test");
+
 		// Oil machines
 		oil_derrick = get(factory, "oil_derrick");
 		gas_flare = get(factory, "gas_flare");
@@ -35,6 +40,8 @@ public class OBJInit {
 		gas_centrifuge = get(factory, "gas_centrifuge");
 	}
 	public static void optimize() {
+		animation_test.rerender();
+
 		// Oil machines
 		oil_derrick.rerender();
 		gas_flare.rerender();
