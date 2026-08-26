@@ -6,7 +6,7 @@ import dev.siepert.nuclearprogram.init.ItemInit;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.EnumFacing;
 
-public class TileEntityGasCentrifuge extends TileEntity implements IInventory {
+public class TileEntityGasCentrifuge extends TileEntityMachineBase implements IInventory {
 	public static final String WORKSTATION = NuclearProgram.path("GasCentrifuge");
 	public static final int MAX_ENERGY_STORED = 10_000;
 	public static final int TANK_CAPACITY = 8000;

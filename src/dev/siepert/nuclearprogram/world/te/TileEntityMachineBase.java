@@ -2,7 +2,7 @@ package dev.siepert.nuclearprogram.world.te;
 
 import net.minecraft.src.TileEntity;
 
-public class TileEntityMachineBase extends TileEntity {
+public abstract class TileEntityMachineBase extends TileEntity {
 	public TileEntityMachineBase() {
 
 	}

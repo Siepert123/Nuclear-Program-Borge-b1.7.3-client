@@ -6,7 +6,7 @@ import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraftborge.loader.EnumFacing;
 
-public class TileEntityOilDistillerySegment extends TileEntity {
+public class TileEntityOilDistillerySegment extends TileEntityMachineBase {
 	public TileEntityOilDistillerySegment() {
 
 	}

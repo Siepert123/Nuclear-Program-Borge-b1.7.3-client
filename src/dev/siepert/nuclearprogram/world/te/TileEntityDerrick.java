@@ -13,7 +13,7 @@ import net.minecraftborge.loader.EnumFacing;
 
 import java.util.Random;
 
-public class TileEntityDerrick extends TileEntity implements IInventory, IEnergyReceiverTE {
+public class TileEntityDerrick extends TileEntityMachineBase implements IInventory, IEnergyReceiverTE {
 
 	public TileEntityDerrick() {
 

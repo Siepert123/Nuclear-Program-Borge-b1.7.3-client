@@ -6,7 +6,7 @@ import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraftborge.loader.EnumFacing;
 
-public class TileEntityDrainagePipe extends TileEntity implements IFluidReceiverTE {
+public class TileEntityDrainagePipe extends TileEntityMachineBase implements IFluidReceiverTE {
 	public static final long DRAIN_RATE = 50L;
 	public int animation = 0;
 	public int fluidType = FluidInit.heavyOil.fluidID;

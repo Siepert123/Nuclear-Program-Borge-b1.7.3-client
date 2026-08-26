@@ -6,7 +6,7 @@ import net.minecraft.src.*;
 
 import java.util.Objects;
 
-public class TileEntityOilDistilleryController extends TileEntity implements IInventory, IEnergyReceiverTE, IFluidReceiverTE {
+public class TileEntityOilDistilleryController extends TileEntityMachineBase implements IInventory, IEnergyReceiverTE, IFluidReceiverTE {
 	// These are genuinely just random values,
 	// so I should probably rebalance these at some point.
 	public static final int[] DISTRIBUTIONS_3 = {40, 30, 30};
