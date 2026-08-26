@@ -2,12 +2,14 @@ package dev.siepert.nuclearprogram.world.te;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.util.RBMKComparator;
-import net.minecraft.src.Block;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraftborge.loader.EnumFacing;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class TileEntityRBMKColumn extends TileEntity {
 	public TileEntityRBMKColumn() {

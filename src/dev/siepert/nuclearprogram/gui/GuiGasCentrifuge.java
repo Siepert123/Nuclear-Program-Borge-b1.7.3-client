@@ -1,7 +1,6 @@
 package dev.siepert.nuclearprogram.gui;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
-import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.util.NumFormat;
 import dev.siepert.nuclearprogram.world.fluid.Fluid;
 import dev.siepert.nuclearprogram.world.te.TileEntityGasCentrifuge;

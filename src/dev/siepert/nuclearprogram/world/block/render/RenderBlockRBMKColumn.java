@@ -6,7 +6,6 @@ import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.RenderBlocks;
 import net.minecraft.src.Tessellator;
 import net.minecraftborge.loader.BlockRenderType;
-import org.lwjgl.opengl.GL11;
 
 public class RenderBlockRBMKColumn implements BlockRenderType {
 	public static final RenderBlockRBMKColumn INSTANCE = new RenderBlockRBMKColumn();

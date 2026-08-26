@@ -2,7 +2,6 @@ package dev.siepert.nuclearprogram.world.block;
 
 import dev.siepert.nuclearprogram.gui.GuiGasCentrifuge;
 import dev.siepert.nuclearprogram.init.BlockInit;
-import dev.siepert.nuclearprogram.world.block.render.RenderBlockGasCentrifuge;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockInvisible;
 import dev.siepert.nuclearprogram.world.te.TileEntityGasCentrifuge;
 import net.minecraft.client.Minecraft;

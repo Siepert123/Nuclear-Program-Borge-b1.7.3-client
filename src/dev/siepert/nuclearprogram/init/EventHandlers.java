@@ -24,7 +24,6 @@ import net.minecraftborge.loader.event.EventHandler;
 import net.minecraftborge.loader.event.EventPriority;
 import net.minecraftborge.loader.event.entity.EntityDropLootEvent;
 import net.minecraftborge.loader.event.entity.player.PlayerCreateItemEvent;
-import net.minecraftborge.loader.event.entity.player.PlayerDestroyBlockEvent;
 import net.minecraftborge.loader.event.gui.RenderOverlayGuiEvent;
 import net.minecraftborge.loader.event.misc.ChatCommandEvent;
 import net.minecraftborge.loader.event.misc.FurnaceBurnTimeEvent;

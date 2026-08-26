@@ -3,7 +3,6 @@ package dev.siepert.nuclearprogram.world.te;
 import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.world.block.BlockMulti;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
 import net.minecraftborge.loader.EnumFacing;
 
 public class TileEntityDrainagePipe extends TileEntityMachineBase implements IFluidReceiverTE {

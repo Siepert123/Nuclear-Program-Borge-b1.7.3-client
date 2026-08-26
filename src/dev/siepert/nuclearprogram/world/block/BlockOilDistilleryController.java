@@ -3,19 +3,16 @@ package dev.siepert.nuclearprogram.world.block;
 import dev.siepert.nuclearprogram.cablenet.CableNet;
 import dev.siepert.nuclearprogram.cablenet.node.CNNMultiblockProxy;
 import dev.siepert.nuclearprogram.gui.GuiOilDistillery;
-import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.node.PNNMultiblockProxy;
-import dev.siepert.nuclearprogram.util.NPMth;
-import dev.siepert.nuclearprogram.util.NumFormat;
-import dev.siepert.nuclearprogram.util.collect.IntList;
 import dev.siepert.nuclearprogram.world.te.TileEntityOilDistilleryController;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.*;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.Material;
+import net.minecraft.src.TileEntity;
+import net.minecraft.src.World;
 import net.minecraftborge.loader.EnumFacing;
-
-import java.util.List;
 
 public class BlockOilDistilleryController extends BlockMulti {
 	public BlockOilDistilleryController(int blockID, Material material) {

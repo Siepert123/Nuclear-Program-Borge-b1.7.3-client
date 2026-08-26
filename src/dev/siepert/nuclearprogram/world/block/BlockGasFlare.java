@@ -1,7 +1,6 @@
 package dev.siepert.nuclearprogram.world.block;
 
 import dev.siepert.nuclearprogram.cablenet.CableNet;
-import dev.siepert.nuclearprogram.init.ItemInit;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.node.PNNMultiblockProxy;
 import dev.siepert.nuclearprogram.util.NPMth;
@@ -9,7 +8,9 @@ import dev.siepert.nuclearprogram.util.collect.IntList;
 import dev.siepert.nuclearprogram.world.fluid.Fluid;
 import dev.siepert.nuclearprogram.world.te.TileEntityGasFlare;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
-import net.minecraft.src.*;
+import net.minecraft.src.Material;
+import net.minecraft.src.TileEntity;
+import net.minecraft.src.World;
 import net.minecraftborge.loader.EnumFacing;
 
 import java.util.List;

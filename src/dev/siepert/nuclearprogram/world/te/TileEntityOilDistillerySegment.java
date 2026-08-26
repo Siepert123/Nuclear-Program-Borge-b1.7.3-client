@@ -3,7 +3,6 @@ package dev.siepert.nuclearprogram.world.te;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
 import net.minecraftborge.loader.EnumFacing;
 
 public class TileEntityOilDistillerySegment extends TileEntityMachineBase {

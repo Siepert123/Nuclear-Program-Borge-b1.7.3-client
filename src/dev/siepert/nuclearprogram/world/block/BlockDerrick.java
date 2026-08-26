@@ -5,7 +5,6 @@ import dev.siepert.nuclearprogram.cablenet.node.CNNMultiblockProxy;
 import dev.siepert.nuclearprogram.gui.GuiDerrick;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
-import dev.siepert.nuclearprogram.pipenet.node.PNNMultiblockProxy;
 import dev.siepert.nuclearprogram.util.NPMth;
 import dev.siepert.nuclearprogram.util.collect.IntList;
 import dev.siepert.nuclearprogram.world.te.TileEntityDerrick;
