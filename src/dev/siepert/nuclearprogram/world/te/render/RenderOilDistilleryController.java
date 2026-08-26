@@ -1,7 +1,6 @@
 package dev.siepert.nuclearprogram.world.te.render;
 
 import dev.siepert.nuclearprogram.init.OBJInit;
-import dev.siepert.nuclearprogram.util.OBJRenderHelper;
 import dev.siepert.nuclearprogram.world.te.TileEntityOilDistilleryController;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntitySpecialRenderer;
@@ -20,9 +19,9 @@ public class RenderOilDistilleryController extends TileEntitySpecialRenderer<Til
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTick) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) x + 0.5F, (float) y, (float) z + 0.5F);
-		OBJRenderHelper.enableMachineLight();
+		//OBJRenderHelper.enableMachineLight();
 		OBJInit.oil_distillery_base.callList("Base");
-		OBJRenderHelper.disableMachineLight();
+		//OBJRenderHelper.disableMachineLight();
 		GL11.glPopMatrix();
 	}
 }

@@ -27,6 +27,7 @@ public class TileEntityInit {
 		TileEntity.addMapping(TileEntityFluidPipe.class, NuclearProgram.path("fluidPipe"));
 		TileEntity.addMapping(TileEntityFluidPipeCoated.class, NuclearProgram.path("fluidPipeCoated"));
 
+		register(TileEntityAnimationTest.class, "animationTest", RenderAnimationTest.INSTANCE);
 		register(TileEntityCreativeSupply.class, "creativeSupply", null);
 
 		// Oil machines

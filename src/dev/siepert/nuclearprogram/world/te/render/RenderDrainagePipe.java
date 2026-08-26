@@ -1,7 +1,6 @@
 package dev.siepert.nuclearprogram.world.te.render;
 
 import dev.siepert.nuclearprogram.init.OBJInit;
-import dev.siepert.nuclearprogram.util.OBJRenderHelper;
 import dev.siepert.nuclearprogram.world.block.BlockMulti;
 import dev.siepert.nuclearprogram.world.te.TileEntityDrainagePipe;
 import net.minecraft.src.TileEntity;
@@ -21,10 +20,10 @@ public class RenderDrainagePipe extends TileEntitySpecialRenderer<TileEntityDrai
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTick) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) x + 0.5F, (float) y, (float) z + 0.5F);
-		OBJRenderHelper.enableMachineLight();
+		//OBJRenderHelper.enableMachineLight();
 		GL11.glRotatef(BlockMulti.ROTATIONS[te.getBlockMetadata() - BlockMulti.OFFSET] + 180.0F, 0.0F, 1.0F, 0.0F);
 		OBJInit.drainage_pipe.callAllLists();
-		OBJRenderHelper.disableMachineLight();
+		//OBJRenderHelper.disableMachineLight();
 		GL11.glPopMatrix();
 	}
 }

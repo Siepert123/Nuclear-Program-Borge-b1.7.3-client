@@ -2,9 +2,8 @@ package dev.siepert.nuclearprogram.world.te;
 
 import dev.siepert.nuclearprogram.init.FluidInit;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
 
-public class TileEntityGasFlare extends TileEntity implements IFluidReceiverTE {
+public class TileEntityGasFlare extends TileEntityMachineBase implements IFluidReceiverTE {
 	public static final long FLARE_RATE = 50L;
 	public int animation = 0;
 	public int fluidType = FluidInit.naturalGas.fluidID;

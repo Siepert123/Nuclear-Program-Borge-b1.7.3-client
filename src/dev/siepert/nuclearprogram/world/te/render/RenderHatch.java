@@ -43,7 +43,7 @@ public class RenderHatch extends TileEntitySpecialRenderer<TileEntityHatch> {
 	}
 
 	private void renderDo(TileEntityHatch te, double x, double y, double z, float pt) {
-		RenderHelper.enableStandardItemLighting();
+		//RenderHelper.enableStandardItemLighting();
 		Tessellator tes = Tessellator.instance;
 		float b = this.worldObj != null ? this.worldObj.getLightBrightness(te.xCoord, te.yCoord, te.zCoord) : 1.0F;
 		GL11.glPushMatrix();
@@ -65,6 +65,6 @@ public class RenderHatch extends TileEntitySpecialRenderer<TileEntityHatch> {
 		tes.draw();
 		GL11.glPopMatrix();
 		BlockInit.hatch.setBlockBoundsBasedOnState(SingletonBlockAccess.or(this.worldObj, BlockInit.hatch.blockID, 0), te.xCoord, te.yCoord, te.zCoord);
-		RenderHelper.disableStandardItemLighting();
+		//RenderHelper.disableStandardItemLighting();
 	}
 }

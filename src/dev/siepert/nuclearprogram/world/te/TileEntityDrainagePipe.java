@@ -30,7 +30,7 @@ public class TileEntityDrainagePipe extends TileEntity implements IFluidReceiver
 		}
 	}
 	private void effects() {
-		if ((this.worldObj.getWorldTime() & 1) == 0) {
+		if ((this.worldObj.getWorldTime() & 1) == ((this.xCoord ^ this.yCoord ^ this.zCoord) & 1)) {
 			EnumFacing side = EnumFacing.VALUES[this.getBlockMetadata() - BlockMulti.OFFSET].getOpposite();
 			this.worldObj.spawnParticle("nuclear_program/drainage",
 					this.xCoord + 0.5 + side.getOffsetX() * 2.5, this.yCoord + 0.5, this.zCoord + 0.5 + side.getOffsetZ() * 2.5,

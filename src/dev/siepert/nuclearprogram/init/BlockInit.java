@@ -70,6 +70,7 @@ public class BlockInit {
 	public static BlockNuke nukeLittleBoy;
 	public static BlockNuke nukeCaseoh;
 
+	public static BlockAnimationTest animationTest;
 	public static BlockExtractionTest extractionTest;
 	public static BlockCreativeSupply creativeSupply;
 
@@ -343,6 +344,12 @@ public class BlockInit {
 				.setStepSound(Block.soundMetalFootstep)
 		);
 
+		animationTest = helper.register("animationTest", id -> new BlockAnimationTest(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(soundMetal2Footstep)
+		);
 		extractionTest = helper.register("extractionTest", id -> new BlockExtractionTest(id, Material.iron)
 				.setHarvestLevel("pickaxe", 0)
 				.setHardness(1.0F)

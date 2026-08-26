@@ -1,7 +1,6 @@
 package dev.siepert.nuclearprogram.world.te.render;
 
 import dev.siepert.nuclearprogram.init.OBJInit;
-import dev.siepert.nuclearprogram.util.OBJRenderHelper;
 import dev.siepert.nuclearprogram.world.te.TileEntityGasFlare;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntitySpecialRenderer;
@@ -21,9 +20,9 @@ public class RenderGasFlare extends TileEntitySpecialRenderer<TileEntityGasFlare
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) x + 0.5F, (float) y, (float) z + 0.5F);
-		OBJRenderHelper.enableMachineLight();
+		//OBJRenderHelper.enableMachineLight();
 		OBJInit.gas_flare.callAllLists();
-		OBJRenderHelper.disableMachineLight();
+		//OBJRenderHelper.disableMachineLight();
 		GL11.glPopMatrix();
 		GL11.glEnable(GL11.GL_CULL_FACE);
 	}
