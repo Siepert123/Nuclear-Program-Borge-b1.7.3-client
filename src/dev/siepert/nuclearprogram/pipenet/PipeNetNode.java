@@ -2,6 +2,7 @@ package dev.siepert.nuclearprogram.pipenet;
 
 import dev.siepert.nuclearprogram.pipenet.node.PNNBasic;
 import dev.siepert.nuclearprogram.pipenet.node.PNNMultiblockProxy;
+import dev.siepert.nuclearprogram.pipenet.node.PNNReceiverTE;
 import dev.siepert.nuclearprogram.util.BlockPos;
 import net.minecraft.src.ChunkCoordinates;
 import net.minecraft.src.NBTTagCompound;
@@ -27,6 +28,7 @@ public abstract class PipeNetNode {
 
 	public static void doRegistries() {
 		register(PNNBasic.class, "basic", PNNBasic::new);
+		register(PNNReceiverTE.class, "receiver_te", PNNReceiverTE::new);
 		register(PNNMultiblockProxy.class, "proxy", PNNMultiblockProxy::new);
 	}
 

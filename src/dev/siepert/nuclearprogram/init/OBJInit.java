@@ -10,6 +10,8 @@ public class OBJInit {
 	public static final String oil_derrick_tex = get("oil_derrick");
 	public static WavefrontObj gas_flare = null;
 	public static final String gas_flare_tex = get("gas_flare");
+	public static WavefrontObj drainage_pipe = null;
+	public static final String drainage_pipe_tex = get("drainage_pipe");
 	public static WavefrontObj oil_distillery_base = null;
 	public static final String oil_distillery_base_tex = get("oil_distillery_base");
 	public static WavefrontObj oil_distillery_segment = null;
@@ -25,6 +27,7 @@ public class OBJInit {
 		// Oil machines
 		oil_derrick = get(factory, "oil_derrick");
 		gas_flare = get(factory, "gas_flare");
+		drainage_pipe = get(factory, "drainage_pipe");
 		oil_distillery_base = get(factory, "oil_distillery_base");
 		oil_distillery_segment = get(factory, "oil_distillery_segment");
 
@@ -35,6 +38,7 @@ public class OBJInit {
 		// Oil machines
 		oil_derrick.rerender();
 		gas_flare.rerender();
+		drainage_pipe.rerender();
 		oil_distillery_base.rerender();
 		oil_distillery_segment.rerender();
 

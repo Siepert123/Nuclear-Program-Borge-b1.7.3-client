@@ -14,7 +14,7 @@ import net.minecraftborge.loader.EnumFacing;
 
 import java.util.List;
 
-public class BlockGasFlare extends BlockMulti implements IOverlayInfo {
+public class BlockGasFlare extends BlockMulti implements IFluidIdentifiable, IOverlayInfo {
 	public BlockGasFlare(int blockID, Material material) {
 		super(blockID, material);
 
@@ -70,18 +70,15 @@ public class BlockGasFlare extends BlockMulti implements IOverlayInfo {
 		PipeNet.setNode(world, x, y, z, new PNNMultiblockProxy(world).positioned(x, y, z));
 	}
 
+	private final int[] pos = new int[3];
 	@Override
-	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
-		if (player.isSneaking()) return false;
-		ItemStack held = player.inventory.getCurrentItem();
-		if (held == null || held.itemID != ItemInit.fluidIdentifier.shiftedIndex) return false;
+	public void setFluidID(World world, int x, int y, int z, int fluidID) {
 		if (this.findCore(world, x, y, z, this.pos)) {
 			TileEntityGasFlare te = (TileEntityGasFlare) world.getBlockTileEntity(this.pos[0], this.pos[1], this.pos[2]);
-			return te.setFlaredGas(held.getItemDamage(), world.multiplayerWorld);
-		} else return false;
+			te.setFlaredGas(fluidID, world.multiplayerWorld);
+		}
 	}
 
-	private final int[] pos = new int[3];
 	@Override
 	public void addInformation(World world, int x, int y, int z, List<String> information, IntList colors) {
 		if (this.findCore(world, x, y, z, this.pos)) {

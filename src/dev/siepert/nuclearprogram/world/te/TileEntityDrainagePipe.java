@@ -1,25 +1,27 @@
 package dev.siepert.nuclearprogram.world.te;
 
 import dev.siepert.nuclearprogram.init.FluidInit;
+import dev.siepert.nuclearprogram.world.block.BlockMulti;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
+import net.minecraftborge.loader.EnumFacing;
 
-public class TileEntityGasFlare extends TileEntity implements IFluidReceiverTE {
-	public static final long FLARE_RATE = 50L;
+public class TileEntityDrainagePipe extends TileEntity implements IFluidReceiverTE {
+	public static final long DRAIN_RATE = 50L;
 	public int animation = 0;
-	public int fluidType = FluidInit.naturalGas.fluidID;
+	public int fluidType = FluidInit.heavyOil.fluidID;
 
-	public static final long TANK_CAPACITY = FLARE_RATE * 20L; // Stores a second of burn time
+	public static final long TANK_CAPACITY = DRAIN_RATE * 20L; // Stores a second of drain time
 	public long tank = 0L;
 
-	public TileEntityGasFlare() {
+	public TileEntityDrainagePipe() {
 
 	}
 
 	@Override
 	public void updateEntity() {
 		if (this.tank > 0L) {
-			this.tank = Math.max(0L, this.tank - FLARE_RATE);
+			this.tank = Math.max(0L, this.tank - DRAIN_RATE);
 			this.animation = 10;
 		}
 		if (this.animation > 0) {
@@ -29,40 +31,33 @@ public class TileEntityGasFlare extends TileEntity implements IFluidReceiverTE {
 	}
 	private void effects() {
 		if ((this.worldObj.getWorldTime() & 1) == 0) {
-			this.worldObj.spawnParticle("nuclear_program/flame",
-					this.xCoord + 0.5, this.yCoord + 11.0, this.zCoord + 0.5,
-					0.0, 1.0, 0.0
-			);
+			EnumFacing side = EnumFacing.VALUES[this.getBlockMetadata() - BlockMulti.OFFSET].getOpposite();
+			this.worldObj.spawnParticle("nuclear_program/drainage",
+					this.xCoord + 0.5 + side.getOffsetX() * 2.5, this.yCoord + 0.5, this.zCoord + 0.5 + side.getOffsetZ() * 2.5,
+					0.0, this.fluidType, 0.0);
 		}
 	}
 
-	public boolean setFlaredGas(int fluidType, boolean client) {
-		if (fluidType == this.fluidType) return true;
-		if (fluidType == FluidInit.naturalGas.fluidID) {
-			if (!client) {
-				this.setFluidType(fluidType);
-			}
-			return true;
+	public void setDrainedFluid(int fluidType, boolean client) {
+		if (fluidType == this.fluidType || client) return;
+		if (fluidType == FluidInit.heavyOil.fluidID) {
+			this.setFluidType(fluidType);
 		}
-		if (fluidType == FluidInit.petroleumGas.fluidID) {
-			if (!client) {
-				this.setFluidType(fluidType);
-			}
-			return true;
+		if (fluidType == FluidInit.diesel.fluidID) {
+			this.setFluidType(fluidType);
 		}
-		if (fluidType == FluidInit.ethane.fluidID) {
-			if (!client) {
-				this.setFluidType(fluidType);
-			}
-			return true;
+		if (fluidType == FluidInit.kerosene.fluidID) {
+			this.setFluidType(fluidType);
 		}
-		if (fluidType == FluidInit.propane.fluidID) {
-			if (!client) {
-				this.setFluidType(fluidType);
-			}
-			return true;
+		if (fluidType == FluidInit.naphtha.fluidID) {
+			this.setFluidType(fluidType);
 		}
-		return false;
+		if (fluidType == FluidInit.gasoline.fluidID) {
+			this.setFluidType(fluidType);
+		}
+		if (fluidType == FluidInit.lpg.fluidID) {
+			this.setFluidType(fluidType);
+		}
 	}
 	private void setFluidType(int fluidType) {
 		this.fluidType = fluidType;

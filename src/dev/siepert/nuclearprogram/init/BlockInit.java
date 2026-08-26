@@ -76,6 +76,7 @@ public class BlockInit {
 	public static BlockDerrick derrick;
 	public static BlockDerrickPipe derrickPipe;
 	public static BlockGasFlare gasFlare;
+	public static BlockDrainagePipe drainagePipe;
 	public static BlockOilDistilleryController oilDistilleryController;
 	public static BlockOilDistillerySegment oilDistillerySegment;
 
@@ -363,6 +364,12 @@ public class BlockInit {
 				.setStepSound(Block.soundStoneFootstep)
 		);
 		gasFlare = helper.register("gasFlare", id -> new BlockGasFlare(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(soundMetal2Footstep)
+		);
+		drainagePipe = helper.register("drainagePipe", id -> new BlockDrainagePipe(id, NPMaterials.multiblock)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(BlockProps.IRON_HARDNESS)
 				.setResistance(BlockProps.IRON_RESISTANCE)

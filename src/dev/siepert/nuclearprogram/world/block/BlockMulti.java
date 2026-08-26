@@ -43,6 +43,16 @@ public abstract class BlockMulti extends BlockContainer {
 			this.disableTileEntity(FLAG + i);
 		}
 	}
+	protected final void coreEnableEnergyConnection() {
+		for (int i = 0; i < 4; i++) {
+			BlockCable.enableConnection(this.blockID, 12 + i);
+		}
+	}
+	protected final void coreEnableFluidConnection() {
+		for (int i = 0; i < 4; i++) {
+			BlockFluidPipe.enableConnection(this.blockID, 12 + i);
+		}
+	}
 
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, int neighborBlockID) {
@@ -109,6 +119,8 @@ public abstract class BlockMulti extends BlockContainer {
 
 		return this.findCoreImpl(world, x + dir.getOffsetX(), y + dir.getOffsetY(), z + dir.getOffsetZ(), pos);
 	}
+
+	public static final float[] ROTATIONS = {0.0F, 0.0F, 0.0F, 180.0F, 90.0F, 270.0F};
 
 	@Override
 	public void onBlockPlaced(World world, int x, int y, int z, int side) {

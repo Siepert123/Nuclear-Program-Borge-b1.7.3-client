@@ -2,6 +2,8 @@ package dev.siepert.nuclearprogram.world;
 
 import dev.siepert.nuclearprogram.weapon.BackendExplosionHandler;
 import dev.siepert.nuclearprogram.world.entity.EntityHowitzerShell;
+import dev.siepert.nuclearprogram.world.fluid.Fluid;
+import dev.siepert.nuclearprogram.world.particle.EntityDrainageFX;
 import dev.siepert.nuclearprogram.world.particle.EntityGasFX;
 import dev.siepert.nuclearprogram.world.particle.EntityLargeFlameFX;
 import dev.siepert.nuclearprogram.world.te.TileEntityHatch;
@@ -67,6 +69,16 @@ public class NuclearProgramWorldAccess implements IWorldAccess {
 				}
 				case "nuclear_program/flame": {
 					this.mc.effectRenderer.addEffect(new EntityLargeFlameFX(this.worldObj, x, y, z, dx, dy, dz));
+					break;
+				}
+				case "nuclear_program/drainage": {
+					int fluidID = MathHelper.floor_double(dy);
+					int color = Fluid.colorLookup[fluidID];
+					float offset = this.rnd.nextFloat() / 127.0F;
+					float r = ((color >> 16) & 0xFF) / 255.0F + offset;
+					float g = ((color >> 8) & 0xFF) / 255.0F + offset;
+					float b = ((color) & 0xFF) / 255.0F + offset;
+					this.mc.effectRenderer.addEffect(new EntityDrainageFX(this.worldObj, x, y, z, r, g, b).setGlowing(Fluid.temperatureLookup[fluidID] >= 600));
 					break;
 				}
 			}

@@ -25,6 +25,12 @@ public class TileEntityCreativeSupply extends TileEntity {
 					node.pushFluid(this.fluidType, Long.MAX_VALUE, 1);
 				}
 			}
+			if ((this.worldObj.getWorldTime() & 1) == 0) {
+				this.worldObj.spawnParticle("nuclear_program/drainage",
+						this.xCoord + 0.5, this.yCoord + 10.5, this.zCoord + 0.5,
+						0.0, this.fluidType, 0.0
+				);
+			}
 		} else {
 			for (EnumFacing side : EnumFacing.VALUES) {
 				CableNetNode node = CableNet.getNode(this.worldObj,

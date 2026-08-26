@@ -103,6 +103,7 @@ tile.nuclear_program/creativeSupply.name=Creative Supply
 tile.nuclear_program/derrick.name=Derrick
 tile.nuclear_program/derrickPipe.name=Derrick Pipe
 tile.nuclear_program/gasFlare.name=Gas Flare
+tile.nuclear_program/drainagePipe.name=Drainage Pipe
 tile.nuclear_program/oilDistilleryController.name=Oil Distillery Base
 tile.nuclear_program/oilDistillerySegment.name=Oil Distillery Segment
 tile.nuclear_program/oilDistilleryCap.name=Oil Distillery Cap
