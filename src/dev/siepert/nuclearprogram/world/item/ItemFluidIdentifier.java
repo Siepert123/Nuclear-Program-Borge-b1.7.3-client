@@ -1,7 +1,9 @@
 package dev.siepert.nuclearprogram.world.item;
 
+import dev.siepert.nuclearprogram.gui.GuiFluidIdentifier;
 import dev.siepert.nuclearprogram.world.block.IFluidIdentifiable;
 import dev.siepert.nuclearprogram.world.fluid.Fluid;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.IconRegister;
@@ -65,5 +67,12 @@ public class ItemFluidIdentifier extends Item {
 			((IFluidIdentifiable)block).setFluidID(world, x, y, z, stack.getItemDamage());
 			return true;
 		} else return false;
+	}
+
+	@Override
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		ItemStack ret = stack.copy();
+		Minecraft.getTheMinecraft().displayGuiScreen(new GuiFluidIdentifier(ret, player));
+		return ret;
 	}
 }

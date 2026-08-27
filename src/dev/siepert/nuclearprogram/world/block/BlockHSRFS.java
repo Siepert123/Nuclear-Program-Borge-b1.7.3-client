@@ -38,6 +38,11 @@ public class BlockHSRFS extends BlockMulti {
 	@Override
 	protected void fillSpace(World world, int x, int y, int z, EnumFacing facing, int offset) {
 		super.fillSpace(world, x, y, z, facing, offset);
+		x += facing.getOffsetX() * offset;
+		z += facing.getOffsetZ() * offset;
+
+		this.setFlag(world, x + facing.getOffsetZ() * 2, y, z + facing.getOffsetX() * 2);
+		this.setFlag(world, x - facing.getOffsetZ() * 2, y, z - facing.getOffsetX() * 2);
 	}
 
 	private final int[] pos = new int[3];
