@@ -27,6 +27,9 @@ public class OBJInit {
 	public static WavefrontObj gas_centrifuge = null;
 	public static final String gas_centrifuge_tex = get("gas_centrifuge");
 
+	public static WavefrontObj hsrfs = null;
+	public static final String hsrfs_tex = get("hsrfs");
+
 	public static void register() {
 		final IObjModelFactory factory = IObjModelFactory.newFactory(null);
 		if (factory == null) throw new RuntimeException("Where's my OBJ factory at");
@@ -43,6 +46,8 @@ public class OBJInit {
 
 		// Nuclear machines
 		gas_centrifuge = get(factory, "gas_centrifuge");
+
+		hsrfs = get(factory, "hsrfs");
 	}
 	public static void optimize() {
 		animation_test.rerender();
@@ -58,6 +63,8 @@ public class OBJInit {
 
 		// Nuclear machines
 		gas_centrifuge.rerender();
+
+		hsrfs.rerender();
 	}
 
 	private static WavefrontObj get(IObjModelFactory factory, String path) {
