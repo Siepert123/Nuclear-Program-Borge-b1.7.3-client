@@ -2,6 +2,8 @@ package dev.siepert.nuclearprogram.world.te;
 
 import dev.siepert.nuclearprogram.world.block.BlockMulti;
 import net.minecraft.src.TileEntity;
+import net.minecraftborge.loader.EnumFacing;
+import net.minecraftborge.loader.capability.Capability;
 
 public abstract class TileEntityProxy extends TileEntity {
 	public static final IFluidReceiverTE DUMMY_FLUID_RECEIVER = new IFluidReceiverTE() {
@@ -80,6 +82,16 @@ public abstract class TileEntityProxy extends TileEntity {
 	}
 
 	private TileEntityProxy() {}
+
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing context) {
+		return this.getCore().hasCapability(capability, context);
+	}
+
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing context) {
+		return this.getCore().getCapability(capability, context);
+	}
 
 	public static final class Proxy00 extends TileEntityProxy {
 		public Proxy00() {}
