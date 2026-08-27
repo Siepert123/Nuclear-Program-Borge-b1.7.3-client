@@ -42,6 +42,8 @@ public class TileEntityInit {
 		// Nuclear machines
 		register(TileEntityGasCentrifuge.class, "gasCentrifuge", RenderGasCentrifuge.INSTANCE);
 
+		register(TileEntityHSRFS.class, "hsrfs", RenderHSRFS.INSTANCE);
+
 		register(TileEntityRTG.class, "rtg", null);
 
 		TileEntity.addMapping(TileEntityRBMKColumn.class, NuclearProgram.path("rbmk/blank"));

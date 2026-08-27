@@ -86,6 +86,8 @@ public class BlockInit {
 	public static BlockGasCentrifuge gasCentrifuge;
 	public static BlockCentrifugeExtension centrifugeExtension;
 
+	public static BlockHSRFS hsrfs;
+
 	public static BlockRTG rtg;
 
 	public static BlockRBMKColumn rbmkBlank;
@@ -411,6 +413,13 @@ public class BlockInit {
 				.setStepSound(soundMetal2Footstep)
 		);
 		centrifugeExtension = helper.register("centrifugeExtension", id -> new BlockCentrifugeExtension(id)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(soundMetal2Footstep)
+		);
+
+		hsrfs = helper.register("hsrfs", id -> new BlockHSRFS(id, NPMaterials.multiblock)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(BlockProps.IRON_HARDNESS)
 				.setResistance(BlockProps.IRON_RESISTANCE)
