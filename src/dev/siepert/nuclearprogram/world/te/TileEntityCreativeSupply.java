@@ -22,7 +22,7 @@ public class TileEntityCreativeSupply extends TileEntity {
 						this.zCoord + side.getOffsetZ()
 				);
 				if (node != null) {
-					node.pushFluid(this.fluidType, Long.MAX_VALUE, 1);
+					node.pushFluid(this.fluidType, Long.MAX_VALUE);
 				}
 			}
 		} else {

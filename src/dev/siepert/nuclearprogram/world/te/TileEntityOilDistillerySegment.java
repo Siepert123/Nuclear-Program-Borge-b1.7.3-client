@@ -26,7 +26,7 @@ public class TileEntityOilDistillerySegment extends TileEntityMachineBase {
 					PipeNetNode node = PipeNet.getNode(this.worldObj, this.xCoord + side.getOffsetX() * 2, this.yCoord, this.zCoord + side.getOffsetZ() * 2);
 					if (node != null) {
 						update = true;
-						this.tank = node.pushFluid(this.fluidType, this.tank, 1);
+						this.tank = node.pushFluid(this.fluidType, this.tank);
 					}
 				}
 			}

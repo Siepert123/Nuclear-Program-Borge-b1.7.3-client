@@ -101,13 +101,36 @@ public abstract class PipeNetNode {
 		positions.add(pool.get(this.x, this.y, this.z-1));
 	}
 
+	/**
+	 * Pushes some arbitrary fluid into the network connected to this node.
+	 * Returns how much fluid is left after distributing, so it should be used in some way like this:
+	 * <br>
+	 * {@code this.tank = node.pushFluid(this.tankFluidType, this.tank);}
+	 * @param fluidType The fluid ID.
+	 * @param amount How much fluid to try to push, in mB.
+	 * @return The amount of fluid left after distributing the fluid.
+	 */
+	public final long pushFluid(int fluidType, long amount) {
+		return pushFluid(fluidType, amount, 1);
+	}
+
+	/**
+	 * Pushes some arbitrary fluid into the network connected to this node.
+	 * Returns how much fluid is left after distributing, so it should be used in some way like this:
+	 * <br>
+	 * {@code this.tank = node.pushFluid(this.tankFluidType, this.tank, 1);}
+	 * @param fluidType The fluid ID.
+	 * @param amount How much fluid to try to push, in mB.
+	 * @param bar The pressurization of said fluid.
+	 * @return The amount of fluid left after distributing the fluid.
+	 */
 	public final long pushFluid(int fluidType, long amount, int bar) {
 		if (this.isReceiving()) {
 			return this.asReceiving().addFluid(fluidType, amount, bar);
-		} else {
+		} else if (this.fluidType == fluidType) {
 			PipeNet.WorldData data = PipeNet.getData(this.worldObj);
 			return data.getOrCreateNetwork(this).pushFluid(fluidType, amount, bar);
-		}
+		} else return amount;
 	}
 
 	@Override

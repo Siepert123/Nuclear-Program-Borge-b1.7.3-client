@@ -83,8 +83,8 @@ public class TileEntityDerrick extends TileEntityMachineBase implements IInvento
 					for (EnumFacing side : EnumFacing.HORIZONTALS) {
 						PipeNetNode node = PipeNet.getNode(this.worldObj, this.xCoord + side.getOffsetX() * 2, this.yCoord, this.zCoord + side.getOffsetZ() * 2);
 						if (node != null) {
-							this.tankCrudeOil = node.pushFluid(FluidInit.crudeOil.fluidID, this.tankCrudeOil, 1);
-							this.tankNaturalGas = node.pushFluid(FluidInit.naturalGas.fluidID, this.tankNaturalGas, 1);
+							this.tankCrudeOil = node.pushFluid(FluidInit.crudeOil.fluidID, this.tankCrudeOil);
+							this.tankNaturalGas = node.pushFluid(FluidInit.naturalGas.fluidID, this.tankNaturalGas);
 						}
 					}
 				}
