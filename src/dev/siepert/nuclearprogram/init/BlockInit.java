@@ -81,6 +81,8 @@ public class BlockInit {
 	public static BlockOilDistilleryController oilDistilleryController;
 	public static BlockOilDistillerySegment oilDistillerySegment;
 
+	public static BlockEngineV8 engineV8;
+
 	public static BlockGasCentrifuge gasCentrifuge;
 	public static BlockCentrifugeExtension centrifugeExtension;
 
@@ -394,6 +396,14 @@ public class BlockInit {
 				.setResistance(BlockProps.IRON_RESISTANCE)
 				.setStepSound(soundMetal2Footstep)
 		);
+
+		engineV8 = helper.register("engineV8", id -> new BlockEngineV8(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(Block.soundMetalFootstep)
+		);
+
 		gasCentrifuge = helper.register("gasCentrifuge", id -> new BlockGasCentrifuge(id)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(BlockProps.IRON_HARDNESS)

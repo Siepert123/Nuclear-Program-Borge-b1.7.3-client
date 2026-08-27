@@ -92,7 +92,8 @@ public class TileEntityGasFlare extends TileEntityMachineBase implements IFluidR
 	}
 	@Override
 	public long addFluid(int fluidType, long amount, int bar) {
-		if (fluidType != this.fluidType || this.tank == TANK_CAPACITY || amount == 0) return amount;
+		if (fluidType != this.fluidType || this.tank == TANK_CAPACITY || amount <= 0) return amount;
+		this.onInventoryChanged();
 		long remain = amount - (TANK_CAPACITY - this.tank);
 		if (remain <= 0) {
 			this.tank += amount;

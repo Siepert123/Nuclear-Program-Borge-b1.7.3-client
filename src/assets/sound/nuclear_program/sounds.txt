@@ -30,7 +30,10 @@ step/metalStep1.ogg
 step/metalStep2.ogg
 step/metalStep3.ogg
 step/metalStep4.ogg
-step/pipe.ogg
+step/pipe1.ogg
+step/pipe2.ogg
+step/pipe3.ogg
+step/pipe4.ogg
 
 weapon/explosionLarge.ogg
 weapon/explosionNuclear.ogg

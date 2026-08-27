@@ -37,6 +37,8 @@ public class TileEntityInit {
 		register(TileEntityOilDistilleryController.class, "oilDistilleryController", RenderOilDistilleryController.INSTANCE);
 		register(TileEntityOilDistillerySegment.class, "oilDistillerySegment", RenderOilDistillerySegment.INSTANCE);
 
+		register(TileEntityEngineV8.class, "engineV8", RenderEngineV8.INSTANCE);
+
 		// Nuclear machines
 		register(TileEntityGasCentrifuge.class, "gasCentrifuge", RenderGasCentrifuge.INSTANCE);
 

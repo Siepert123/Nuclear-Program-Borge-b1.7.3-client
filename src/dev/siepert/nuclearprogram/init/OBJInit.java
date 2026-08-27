@@ -20,6 +20,9 @@ public class OBJInit {
 	public static WavefrontObj oil_distillery_segment = null;
 	public static final String oil_distillery_segment_tex = get("oil_distillery_segment");
 
+	public static WavefrontObj combustion_engine_v8 = null;
+	public static final String combustion_engine_v8_tex = get("combustion_engine_v8");
+
 	// Nuclear machines
 	public static WavefrontObj gas_centrifuge = null;
 	public static final String gas_centrifuge_tex = get("gas_centrifuge");
@@ -36,6 +39,8 @@ public class OBJInit {
 		oil_distillery_base = get(factory, "oil_distillery_base");
 		oil_distillery_segment = get(factory, "oil_distillery_segment");
 
+		combustion_engine_v8 = get(factory, "combustion_engine_v8");
+
 		// Nuclear machines
 		gas_centrifuge = get(factory, "gas_centrifuge");
 	}
@@ -48,6 +53,8 @@ public class OBJInit {
 		drainage_pipe.rerender();
 		oil_distillery_base.rerender();
 		oil_distillery_segment.rerender();
+
+		combustion_engine_v8.rerender();
 
 		// Nuclear machines
 		gas_centrifuge.rerender();

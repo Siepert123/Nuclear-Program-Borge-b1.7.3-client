@@ -46,4 +46,9 @@ public class NPMth {
 	public static boolean blink() {
 		return (System.currentTimeMillis() % 1000) < 500;
 	}
+
+	public static int clamp(int value, int min, int max) {
+		return value < min ? min : Math.min(value, max);
+	}
+
 }

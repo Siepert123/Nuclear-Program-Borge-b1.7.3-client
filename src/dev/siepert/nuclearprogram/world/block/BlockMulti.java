@@ -121,6 +121,10 @@ public abstract class BlockMulti extends BlockContainer {
 	}
 
 	public static final float[] ROTATIONS = {0.0F, 0.0F, 0.0F, 180.0F, 90.0F, 270.0F};
+	public static float getRotation(int metadata) {
+		if (metadata >= 12) return ROTATIONS[metadata - OFFSET];
+		else return 0.0F;
+	}
 
 	@Override
 	public void onBlockPlaced(World world, int x, int y, int z, int side) {

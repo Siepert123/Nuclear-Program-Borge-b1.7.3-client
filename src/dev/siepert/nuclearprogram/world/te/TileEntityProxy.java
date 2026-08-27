@@ -44,7 +44,8 @@ public abstract class TileEntityProxy extends TileEntity {
 	};
 
 	public static final int VOID_PRIORITY = 1000;
-	public static final int BATTERY_PRIORITY = 10;
+	public static final int BUFFER_PRIORITY = 100;
+	public static final int ENGINE_PRIORITY = 10;
 	public static final int MACHINE_PRIORITY = 0;
 
 

@@ -70,6 +70,8 @@ public class BlockAnimationTest extends BlockMulti implements IOverlayInfo {
 			colors.add(0xFFFFFF);
 			information.add("soundLoop: " + te.soundLoop);
 			colors.add(0xFFFFFF);
+			information.add("rotation: " + te.rotation);
+			colors.add(0xFFFFFF);
 		} else {
 			information.add("Core not found");
 			colors.add(NPMth.blink() ? 0xFF0000 : 0xFF8888);

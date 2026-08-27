@@ -187,14 +187,17 @@ public class TileEntityOilDistilleryController extends TileEntityMachineBase imp
 	}
 	@Override
 	public long addEnergy(long amount) {
-		long remain = amount - this.getRemainingEnergyCapacity();
-		if (remain <= 0) {
-			this.energy += amount;
-			return 0L;
-		} else {
-			this.energy = MAX_ENERGY_STORED;
-			return remain;
-		}
+		if (this.energy < MAX_ENERGY_STORED && amount > 0L) {
+			this.onInventoryChanged();
+			long remain = amount - this.getRemainingEnergyCapacity();
+			if (remain <= 0) {
+				this.energy += amount;
+				return 0L;
+			} else {
+				this.energy = MAX_ENERGY_STORED;
+				return remain;
+			}
+		} else return amount;
 	}
 	@Override
 	public long getFluidCapacity(int fluidType, int bar) {
@@ -206,7 +209,8 @@ public class TileEntityOilDistilleryController extends TileEntityMachineBase imp
 	}
 	@Override
 	public long addFluid(int fluidType, long amount, int bar) {
-		if (fluidType == FluidInit.crudeOil.fluidID && bar == 1) {
+		if (fluidType == FluidInit.crudeOil.fluidID && bar == 1 && this.tankCrudeOil < TANK_CAPACITY && amount > 0L) {
+			this.onInventoryChanged();
 			long remain = amount - (TANK_CAPACITY - this.tankCrudeOil);
 			if (remain <= 0) {
 				this.tankCrudeOil += amount;
