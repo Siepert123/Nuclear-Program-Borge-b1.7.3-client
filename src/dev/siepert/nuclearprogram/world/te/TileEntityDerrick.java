@@ -97,7 +97,7 @@ public class TileEntityDerrick extends TileEntityMachineBase implements IInvento
 	private void effects() {
 		this.worldObj.playSoundEffect(
 				this.xCoord + 0.5, this.yCoord + 5.5, this.zCoord + 0.5,
-				"random.splash", 2.5F, 0.7F + this.worldObj.rand.nextFloat() * 0.1F
+				"random.splash", 0.5F, 0.7F + this.worldObj.rand.nextFloat() * 0.1F
 		);
 	}
 	private void sinkhole() {

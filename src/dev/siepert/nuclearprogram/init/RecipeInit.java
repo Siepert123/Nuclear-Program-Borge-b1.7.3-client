@@ -274,6 +274,12 @@ public class RecipeInit {
 				'#', ItemInit.fuelRodEmpty
 		);
 
+		recipes.addShapedRecipe(new ItemStack(ItemInit.fluidIdentifier, 1, 0),
+				"D", "#",
+				'#', Ingredient.of("plateIron"),
+				'D', Ingredient.of("dyeAny")
+		);
+
 		//endregion
 
 		//region Fuel Rods
