@@ -60,6 +60,14 @@ public class FluidInit {
 			.setName("ethane").setColor(0xFFFFFF);
 	public static final Fluid propane = new Fluid(22)
 			.setName("propane").setColor(0xFFFFFF);
+	public static final Fluid air = new Fluid(23)
+			.setName("air").setColor(0xFFFFFF);
+	public static final Fluid airBlast = new Fluid(24)
+			.setName("airBlast").setColor(0xFFCCCC);
+	public static final Fluid creosote = new Fluid(25)
+			.setName("creosote").setColor(0x654321);
+	public static final Fluid carbonDioxide = new Fluid(26)
+			.setName("carbonDioxide").setColor(0x444444);
 
 	public static void register() {}
 

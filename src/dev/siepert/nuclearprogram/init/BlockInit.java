@@ -57,6 +57,7 @@ public class BlockInit {
 	public static BlockBloomery bloomeryIdle;
 	public static BlockBloomery bloomeryLit;
 	public static BlockBloomeryPipe bloomeryPipe;
+	public static BlockAirStove airStove;
 	public static BlockBlastFurnace blastFurnace;
 
 	public static BlockCable cableElectrum;
@@ -290,6 +291,12 @@ public class BlockInit {
 				.setResistance(Block.brick.getExplosionResistance(null) * 5.0F / 3.0F)
 				.setStepSound(Block.soundStoneFootstep)
 				.disableResizeItem()
+		);
+		airStove = helper.register("airStove", id -> new BlockAirStove(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(soundMetal2Footstep)
 		);
 		blastFurnace = helper.register("blastFurnace", id -> new BlockBlastFurnace(id, NPMaterials.multiblock)
 				.setHarvestLevel("pickaxe", 1)

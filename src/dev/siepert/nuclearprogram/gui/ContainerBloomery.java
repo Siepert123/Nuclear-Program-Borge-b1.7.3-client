@@ -15,8 +15,8 @@ public class ContainerBloomery extends Container {
 
 		this.addSlot(new SlotCoal(furnace, 0, 80, 36));
 		this.addSlot(new Slot(furnace, 1, 80, 12));
-		this.addSlot(new SlotCraftResult(inventory.player, furnace, 2, 120, 12));
-		this.addSlot(new SlotCraftResult(inventory.player, furnace, 3, 120, 33));
+		this.addSlot(new SlotCraftResult(inventory.player, furnace, 2, 120, 12, TileEntityBloomery.WORKSTATION));
+		this.addSlot(new SlotCraftResult(inventory.player, furnace, 3, 120, 33, TileEntityBloomery.WORKSTATION));
 
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 9; ++j) {

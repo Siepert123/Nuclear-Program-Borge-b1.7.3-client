@@ -10,6 +10,8 @@ import net.minecraftborge.loader.ITickingTile;
 import java.util.Arrays;
 
 public class TileEntityBloomery extends TileEntity implements IInventory, IFurnace, ITickingTile {
+	public static final String WORKSTATION = "Bloomery";
+
 	private final ItemStack[] inventory = new ItemStack[4]; // 0 - fuel; 1 - iron ore; 2 - result; 3 - slag
 	public int fuelHeap = 0;
 	public int recipeTicks = 0;

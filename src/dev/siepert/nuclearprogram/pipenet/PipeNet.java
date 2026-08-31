@@ -260,10 +260,11 @@ public final class PipeNet {
 		}
 
 		public long pushFluid(int fluidType, long amount, int bar) {
-			if (this.fluidType != fluidType) return amount;
+			if (this.fluidType != fluidType || amount == 0L) return amount;
 			//TODO: Distribute fluid among equal priority evenly?
 			for (IReceivingPipeNetNode receiver : this.receivers) {
 				amount = receiver.addFluid(fluidType, amount, bar);
+				if (amount == 0L) break;
 			}
 			return amount;
 		}

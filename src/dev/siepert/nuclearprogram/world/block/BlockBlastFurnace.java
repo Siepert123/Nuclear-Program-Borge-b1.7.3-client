@@ -1,12 +1,17 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.gui.GuiBlastFurnace;
+import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockBlastFurnace;
 import dev.siepert.nuclearprogram.world.te.TileEntityBlastFurnace;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
+import net.minecraft.client.Minecraft;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Material;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraftborge.loader.EnumFacing;
+import net.minecraftborge.loader.IconRegister;
 
 public class BlockBlastFurnace extends BlockMulti {
 	public BlockBlastFurnace(int blockID, Material material) {
@@ -49,8 +54,25 @@ public class BlockBlastFurnace extends BlockMulti {
 		this.setFlag(world, x, y, z-1);
 	}
 
+	private final int[] pos = new int[3];
+	@Override
+	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
+		if (this.findCore(world, x, y, z, this.pos)) {
+			if (!world.multiplayerWorld) {
+				TileEntityBlastFurnace te = (TileEntityBlastFurnace) world.getBlockTileEntity(this.pos[0], this.pos[1], this.pos[2]);
+				Minecraft.getTheMinecraft().displayGuiScreen(new GuiBlastFurnace(player.inventory, te));
+			}
+			return true;
+		} else return false;
+	}
+
 	@Override
 	public int getRenderType() {
 		return RenderBlockBlastFurnace.RENDER_TYPE;
+	}
+
+	@Override
+	public void registerIcons(IconRegister register) {
+		this.blockTexture = BlockInit.firebricks.blockTexture;
 	}
 }

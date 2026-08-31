@@ -9,6 +9,8 @@ public class OBJInit {
 	public static final String animation_test_tex = get("animation_test");
 
 	// Early game
+	public static WavefrontObj air_stove = null;
+	public static final String air_stove_tex = get("air_stove");
 	public static WavefrontObj blast_furnace = null;
 	public static final String blast_furnace_tex = get("blast_furnace");
 
@@ -40,6 +42,7 @@ public class OBJInit {
 		animation_test = get(factory, "animation_test");
 
 		// Early game
+		air_stove = get(factory, "air_stove");
 		blast_furnace = get(factory, "blast_furnace");
 
 		// Oil machines
@@ -60,6 +63,7 @@ public class OBJInit {
 		animation_test.rerender();
 
 		// Early game
+		air_stove.rerender();
 		blast_furnace.rerender();
 
 		// Oil machines
