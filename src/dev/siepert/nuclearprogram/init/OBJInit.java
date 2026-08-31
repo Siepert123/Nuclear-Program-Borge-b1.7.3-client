@@ -8,6 +8,10 @@ public class OBJInit {
 	public static WavefrontObj animation_test = null;
 	public static final String animation_test_tex = get("animation_test");
 
+	// Early game
+	public static WavefrontObj blast_furnace = null;
+	public static final String blast_furnace_tex = get("blast_furnace");
+
 	// Oil machines
 	public static WavefrontObj oil_derrick = null;
 	public static final String oil_derrick_tex = get("oil_derrick");
@@ -35,6 +39,9 @@ public class OBJInit {
 		if (factory == null) throw new RuntimeException("Where's my OBJ factory at");
 		animation_test = get(factory, "animation_test");
 
+		// Early game
+		blast_furnace = get(factory, "blast_furnace");
+
 		// Oil machines
 		oil_derrick = get(factory, "oil_derrick");
 		gas_flare = get(factory, "gas_flare");
@@ -51,6 +58,9 @@ public class OBJInit {
 	}
 	public static void optimize() {
 		animation_test.rerender();
+
+		// Early game
+		blast_furnace.rerender();
 
 		// Oil machines
 		oil_derrick.rerender();

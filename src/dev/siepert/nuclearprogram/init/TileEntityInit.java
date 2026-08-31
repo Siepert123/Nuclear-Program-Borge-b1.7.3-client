@@ -22,6 +22,7 @@ public class TileEntityInit {
 		register(TileEntityModulator.class, "modulator", null);
 
 		TileEntity.addMapping(TileEntityBloomery.class, NuclearProgram.path("bloomery"));
+		register(TileEntityBlastFurnace.class, "blastFurnace", RenderBlastFurnace.INSTANCE);
 
 		TileEntity.addMapping(TileEntityCableCoated.class, NuclearProgram.path("cableCoated"));
 		TileEntity.addMapping(TileEntityFluidPipe.class, NuclearProgram.path("fluidPipe"));

@@ -1,5 +1,7 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.init.BlockInit;
+import dev.siepert.nuclearprogram.world.block.render.RenderBlockHSRFS;
 import dev.siepert.nuclearprogram.world.te.TileEntityHSRFS;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
 import net.minecraft.src.EntityPlayer;
@@ -7,6 +9,7 @@ import net.minecraft.src.Material;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraftborge.loader.EnumFacing;
+import net.minecraftborge.loader.IconRegister;
 
 public class BlockHSRFS extends BlockMulti {
 	public BlockHSRFS(int blockID, Material material) {
@@ -57,5 +60,14 @@ public class BlockHSRFS extends BlockMulti {
 				return true;
 			} else return false;
 		} else return false;
+	}
+
+	@Override
+	public int getRenderType() {
+		return RenderBlockHSRFS.RENDER_TYPE;
+	}
+	@Override
+	public void registerIcons(IconRegister register) {
+		this.blockTexture = BlockInit.blockMetal.blockTextures[BlockMetal.STEEL];
 	}
 }
