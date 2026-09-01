@@ -2,6 +2,8 @@ package dev.siepert.nuclearprogram.world.block;
 
 import dev.siepert.nuclearprogram.gui.GuiBlastFurnace;
 import dev.siepert.nuclearprogram.init.BlockInit;
+import dev.siepert.nuclearprogram.pipenet.PipeNet;
+import dev.siepert.nuclearprogram.pipenet.node.PNNMultiblockProxy;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockBlastFurnace;
 import dev.siepert.nuclearprogram.world.te.TileEntityBlastFurnace;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
@@ -54,9 +56,24 @@ public class BlockBlastFurnace extends BlockMulti {
 		this.setFlag(world, x, y, z-1);
 	}
 
+	@Override
+	protected void setFlag(World world, int x, int y, int z) {
+		super.setFlag(world, x, y, z);
+
+		PipeNet.setNode(world, x, y, z, new PNNMultiblockProxy(world).positioned(x, y, z));
+	}
+
+	@Override
+	public void onBlockRemoval(World world, int x, int y, int z) {
+		super.onBlockRemoval(world, x, y, z);
+
+		PipeNet.setNode(world, x, y, z, null);
+	}
+
 	private final int[] pos = new int[3];
 	@Override
 	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
+		if (player.isSneaking() && player.inventory.getCurrentItem() != null) return false;
 		if (this.findCore(world, x, y, z, this.pos)) {
 			if (!world.multiplayerWorld) {
 				TileEntityBlastFurnace te = (TileEntityBlastFurnace) world.getBlockTileEntity(this.pos[0], this.pos[1], this.pos[2]);

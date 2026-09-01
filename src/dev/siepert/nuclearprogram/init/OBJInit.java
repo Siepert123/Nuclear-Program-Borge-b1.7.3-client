@@ -9,6 +9,8 @@ public class OBJInit {
 	public static final String animation_test_tex = get("animation_test");
 
 	// Early game
+	public static WavefrontObj coke_oven = null;
+	public static final String coke_oven_tex = get("coke_oven");
 	public static WavefrontObj air_stove = null;
 	public static final String air_stove_tex = get("air_stove");
 	public static WavefrontObj blast_furnace = null;
@@ -42,6 +44,7 @@ public class OBJInit {
 		animation_test = get(factory, "animation_test");
 
 		// Early game
+		coke_oven = get(factory, "coke_oven");
 		air_stove = get(factory, "air_stove");
 		blast_furnace = get(factory, "blast_furnace");
 
@@ -63,6 +66,7 @@ public class OBJInit {
 		animation_test.rerender();
 
 		// Early game
+		coke_oven.rerender();
 		air_stove.rerender();
 		blast_furnace.rerender();
 

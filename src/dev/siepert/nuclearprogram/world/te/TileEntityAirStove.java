@@ -1,6 +1,11 @@
 package dev.siepert.nuclearprogram.world.te;
 
 import dev.siepert.nuclearprogram.init.FluidInit;
+import dev.siepert.nuclearprogram.pipenet.PipeNet;
+import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
+import dev.siepert.nuclearprogram.world.block.BlockMulti;
+import net.minecraft.src.NBTTagCompound;
+import net.minecraftborge.loader.EnumFacing;
 
 public class TileEntityAirStove extends TileEntityMachineBase implements IFluidReceiverTE {
 	public int fluidType = FluidInit.creosote.fluidID;
@@ -19,11 +24,20 @@ public class TileEntityAirStove extends TileEntityMachineBase implements IFluidR
 		boolean update = false;
 
 		if (!this.worldObj.multiplayerWorld) {
-			if (this.tankAirIn >= 100L && (TANK_CAPACITY_AIR - this.tankAirOut) >= 100L && this.tankHeatSource > 0L) {
+			while (this.tankAirIn >= 100L && (TANK_CAPACITY_AIR - this.tankAirOut) >= 100L && this.tankHeatSource > 0L) {
 				update = true;
 				this.tankHeatSource--;
 				this.tankAirIn -= 100L;
 				this.tankAirOut += 100L;
+			}
+			if (this.tankAirOut > 0L) {
+				long old = this.tankAirOut;
+				EnumFacing side = EnumFacing.VALUES[this.getBlockMetadata() - BlockMulti.OFFSET];
+				PipeNetNode node1 = PipeNet.getNode(this.worldObj, this.xCoord + side.getOffsetZ() * 3, this.yCoord + 2, this.zCoord + side.getOffsetX() * 3);
+				PipeNetNode node2 = PipeNet.getNode(this.worldObj, this.xCoord - side.getOffsetZ() * 3, this.yCoord + 2, this.zCoord - side.getOffsetX() * 3);
+				if (node1 != null) this.tankAirOut = node1.pushFluid(FluidInit.airBlast.fluidID, this.tankAirOut, 1);
+				if (node2 != null) this.tankAirOut = node2.pushFluid(FluidInit.airBlast.fluidID, this.tankAirOut, 1);
+				if (old != this.tankAirOut) update = true;
 			}
 		}
 
@@ -39,6 +53,24 @@ public class TileEntityAirStove extends TileEntityMachineBase implements IFluidR
 			this.fluidType = fluidID;
 			this.onInventoryChanged();
 		}
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
+		nbt.setInteger("fluidType", this.fluidType);
+		nbt.setLong("tankHeatSource", this.tankHeatSource);
+		nbt.setLong("tankAirIn", this.tankAirIn);
+		nbt.setLong("tankAirOut", this.tankAirOut);
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		this.fluidType = nbt.getInteger("fluidType");
+		this.tankHeatSource = nbt.getLong("tankHeatSource");
+		this.tankAirIn = nbt.getLong("tankAirIn");
+		this.tankAirOut = nbt.getLong("tankAirOut");
 	}
 
 	@Override

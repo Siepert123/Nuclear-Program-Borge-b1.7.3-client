@@ -21,12 +21,12 @@ public class TileEntityInit {
 		register(TileEntitySealedDoor.class, "sealedDoor", RenderSealedDoor.INSTANCE);
 		register(TileEntityModulator.class, "modulator", null);
 
-		TileEntity.addMapping(TileEntityBloomery.class, NuclearProgram.path("bloomery"));
+		register(TileEntityBloomery.class, "bloomery", null);
+		register(TileEntityCokeOven.class, "cokeOven", RenderCokeOven.INSTANCE);
 		register(TileEntityAirStove.class, "airStove", RenderAirStove.INSTANCE);
 		register(TileEntityBlastFurnace.class, "blastFurnace", RenderBlastFurnace.INSTANCE);
 
 		TileEntity.addMapping(TileEntityCableCoated.class, NuclearProgram.path("cableCoated"));
-		TileEntity.addMapping(TileEntityFluidPipe.class, NuclearProgram.path("fluidPipe"));
 		TileEntity.addMapping(TileEntityFluidPipeCoated.class, NuclearProgram.path("fluidPipeCoated"));
 
 		register(TileEntityAnimationTest.class, "animationTest", RenderAnimationTest.INSTANCE);

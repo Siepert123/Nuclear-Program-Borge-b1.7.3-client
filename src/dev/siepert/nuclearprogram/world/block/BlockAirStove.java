@@ -1,7 +1,5 @@
 package dev.siepert.nuclearprogram.world.block;
 
-import dev.siepert.nuclearprogram.cablenet.CableNet;
-import dev.siepert.nuclearprogram.cablenet.node.CNNMultiblockProxy;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.node.PNNMultiblockProxy;
 import dev.siepert.nuclearprogram.util.NPMth;
@@ -90,15 +88,13 @@ public class BlockAirStove extends BlockMulti implements IFluidIdentifiable, IOv
 	@Override
 	public void addInformation(World world, int x, int y, int z, List<String> information, IntList colors) {
 		if (this.findCore(world, x, y, z, this.pos)) {
-			if (this.hasFlag(world.getBlockMetadata(x, y, z))) {
-				TileEntityAirStove te = (TileEntityAirStove) world.getBlockTileEntity(this.pos[0], this.pos[1], this.pos[2]);
-				information.add(Fluid.getLocalizedName(Fluid.fluidsList[te.fluidType]) + ": " + te.tankHeatSource + "mB/" + TileEntityAirStove.TANK_CAPACITY_FUEL + "mB");
-				colors.add(0xFFFFFF);
-				information.add("Air: " + te.tankAirIn + "mB/" + TileEntityAirStove.TANK_CAPACITY_AIR + "mB");
-				colors.add(0xFFFFFF);
-				information.add("Heated Air: " + te.tankAirOut + "mB/" + TileEntityAirStove.TANK_CAPACITY_AIR + "mB");
-				colors.add(0xFFFFFF);
-			}
+			TileEntityAirStove te = (TileEntityAirStove) world.getBlockTileEntity(this.pos[0], this.pos[1], this.pos[2]);
+			information.add(Fluid.getLocalizedName(Fluid.fluidsList[te.fluidType]) + ": " + te.tankHeatSource + "mB/" + TileEntityAirStove.TANK_CAPACITY_FUEL + "mB");
+			colors.add(0xFFFFFF);
+			information.add("Air: " + te.tankAirIn + "mB/" + TileEntityAirStove.TANK_CAPACITY_AIR + "mB");
+			colors.add(0xFFFFFF);
+			information.add("Heated Air: " + te.tankAirOut + "mB/" + TileEntityAirStove.TANK_CAPACITY_AIR + "mB");
+			colors.add(0xFFFFFF);
 		} else {
 			information.add("Core not found");
 			colors.add(NPMth.blink() ? 0xFF0000 : 0xFF8888);
