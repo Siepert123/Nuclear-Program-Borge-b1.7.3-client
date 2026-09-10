@@ -13,12 +13,11 @@ public class RenderBlockRBMKColumn implements BlockRenderType {
 
 	@Override
 	public boolean render(IBlockAccess world, Block block, int x, int y, int z, RenderBlocks renderer) {
-		if (renderer.overrideBlockIcon == null && block == BlockInit.rbmkControl && world.getBlockMetadata(x, y, z) == 6) {
-			block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.875F, 1.0F);
-			renderer.renderStandardBlock(block, x, y, z);
+		renderer.renderStandardBlock(block, x, y, z);
+		if (block != BlockInit.rbmkControl && world.getBlockMetadata(x, y, z) == 6) {
+			block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
+			renderer.renderStandardBlock(block, x, y+1, z);
 			block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-		} else {
-			renderer.renderStandardBlock(block, x, y, z);
 		}
 		return true;
 	}

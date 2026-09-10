@@ -7,8 +7,11 @@ import net.minecraft.src.Tessellator;
 import net.minecraft.src.World;
 import net.minecraftborge.loader.BorgeMath;
 import net.minecraftborge.loader.Icon;
+import org.lwjgl.opengl.GL11;
 
 public class EntityGasFX extends EntityFX {
+	public static final boolean RENDER_FAST = true;
+
 	public static final Minecraft mc = Minecraft.getTheMinecraft();
 	public static Icon texture = null;
 
@@ -53,6 +56,14 @@ public class EntityGasFX extends EntityFX {
 
 	@Override
 	public void renderParticle(Tessellator tes, float partialTick, float x, float y, float z, float var6, float var7) {
+		if (RENDER_FAST) {
+			this.renderFast(tes, partialTick, x, y, z, var6, var7);
+		} else {
+			this.renderFancy(tes, partialTick, x, y, z, var6, var7);
+		}
+	}
+
+	private void renderFast(Tessellator tes, float partialTick, float x, float y, float z, float var6, float var7) {
 		if (texture == null) return;
 		double minU = texture.getU(0.0);
 		double maxU = texture.getU(1.0);
@@ -70,10 +81,33 @@ public class EntityGasFX extends EntityFX {
 		tes.addVertexWithUV(px + x * scale + var6 * scale, py + y * scale, pz + z * scale + var7 * scale, minU, maxV);
 		tes.addVertexWithUV(px + x * scale - var6 * scale, py - y * scale, pz + z * scale - var7 * scale, minU, minV);
 	}
+	private void renderFancy(Tessellator tes, float partialTick, float x, float y, float z, float var6, float var7) {
+		if (texture == null) return;
+		double minU = texture.getU(0.0);
+		double maxU = texture.getU(1.0);
+		double minV = texture.getV(0.0);
+		double maxV = texture.getV(1.0);
+		float scale = this.particleScale * 0.5F;
+		float px = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)partialTick - interpPosX);
+		float py = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)partialTick - interpPosY);
+		float pz = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)partialTick - interpPosZ);
+		float brightness = this.getEntityBrightness(partialTick);
+
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		tes.startDrawingQuads();
+		tes.setColorRGBA_F(this.particleRed * brightness, this.particleGreen * brightness, this.particleBlue * brightness, 0.2F);
+		tes.addVertexWithUV(px - x * scale - var6 * scale, py - y * scale, pz - z * scale - var7 * scale, maxU, minV);
+		tes.addVertexWithUV(px - x * scale + var6 * scale, py + y * scale, pz - z * scale + var7 * scale, maxU, maxV);
+		tes.addVertexWithUV(px + x * scale + var6 * scale, py + y * scale, pz + z * scale + var7 * scale, minU, maxV);
+		tes.addVertexWithUV(px + x * scale - var6 * scale, py - y * scale, pz + z * scale - var7 * scale, minU, minV);
+		tes.draw();
+		GL11.glDisable(GL11.GL_BLEND);
+	}
 
 	@Override
 	public int getFXLayer() {
-		return 2;
+		return RENDER_FAST ? 2 : 3;
 	}
 
 	@Override
