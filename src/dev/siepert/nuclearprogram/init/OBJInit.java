@@ -8,6 +8,10 @@ public class OBJInit {
 	public static WavefrontObj animation_test = null;
 	public static final String animation_test_tex = get("animation_test");
 
+	// Transmission
+	public static WavefrontObj transmission_tower = null;
+	public static final String transmission_tower_tex = get("transmission_tower");
+
 	// Early game
 	public static WavefrontObj coke_oven = null;
 	public static final String coke_oven_tex = get("coke_oven");
@@ -43,6 +47,9 @@ public class OBJInit {
 		if (factory == null) throw new RuntimeException("Where's my OBJ factory at");
 		animation_test = get(factory, "animation_test");
 
+		// Transmission
+		transmission_tower = get(factory, "transmission_tower");
+
 		// Early game
 		coke_oven = get(factory, "coke_oven");
 		air_stove = get(factory, "air_stove");
@@ -64,6 +71,9 @@ public class OBJInit {
 	}
 	public static void optimize() {
 		animation_test.rerender();
+
+		// Transmission
+		transmission_tower.rerender();
 
 		// Early game
 		coke_oven.rerender();

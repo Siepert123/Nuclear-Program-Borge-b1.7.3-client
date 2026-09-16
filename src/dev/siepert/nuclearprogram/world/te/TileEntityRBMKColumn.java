@@ -2,6 +2,7 @@ package dev.siepert.nuclearprogram.world.te;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.util.RBMKComparator;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraftborge.loader.EnumFacing;
@@ -123,6 +124,9 @@ public class TileEntityRBMKColumn extends TileEntity {
 				this.neighbourCount++;
 			}
 		}
+	}
+	public boolean blockActivated(EntityPlayer player) {
+		return false;
 	}
 
 	public void debug(List<String> props) {

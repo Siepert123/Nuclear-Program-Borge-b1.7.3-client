@@ -28,6 +28,7 @@ public class TileEntityInit {
 
 		TileEntity.addMapping(TileEntityCableCoated.class, NuclearProgram.path("cableCoated"));
 		TileEntity.addMapping(TileEntityFluidPipeCoated.class, NuclearProgram.path("fluidPipeCoated"));
+		register(TileEntityTransmissionTower.class, "transmission_tower", new RenderTransmissionTower(TileEntityTransmissionTower.class));
 
 		register(TileEntityAnimationTest.class, "animationTest", RenderAnimationTest.INSTANCE);
 		register(TileEntityCreativeSupply.class, "creativeSupply", null);
@@ -51,6 +52,7 @@ public class TileEntityInit {
 		TileEntity.addMapping(TileEntityRBMKColumn.class, NuclearProgram.path("rbmk/blank"));
 		TileEntity.addMapping(TileEntityRBMKBoiler.class, NuclearProgram.path("rbmk/boiler"));
 		TileEntity.addMapping(TileEntityRBMKFuel.class, NuclearProgram.path("rbmk/fuel"));
+		register(TileEntityRBMKControl.class, "rbmk/control", RenderRBMKControl.INSTANCE);
 	}
 
 	private static <T extends TileEntity> void register(Class<T> type, String name, TileEntitySpecialRenderer<T> tesr) {

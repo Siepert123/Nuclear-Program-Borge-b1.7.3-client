@@ -7,6 +7,7 @@ import dev.siepert.nuclearprogram.world.block.BlockWorkbench;
 import dev.siepert.nuclearprogram.world.item.*;
 import dev.siepert.nuclearprogram.world.te.TileEntityRBMKBoiler;
 import dev.siepert.nuclearprogram.world.te.TileEntityRBMKColumn;
+import dev.siepert.nuclearprogram.world.te.TileEntityRBMKControl;
 import dev.siepert.nuclearprogram.world.te.TileEntityRBMKFuel;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.event.register.IdAllocationEvent;
@@ -65,6 +66,7 @@ public class BlockInit {
 	public static BlockCableCoated cableCoated;
 	public static BlockFluidPipe fluidPipeCopper;
 	public static BlockFluidPipeCoated fluidPipeCoated;
+	public static BlockTransmissionTower transmissionTower;
 
 	public static BlockNukestone nukestone;
 	public static BlockCharred charredWood;
@@ -332,6 +334,12 @@ public class BlockInit {
 				.setHardness(5.0F)
 				.setStepSound(soundPipeFootstep)
 		);
+		transmissionTower = helper.register("transmissionTower", id -> new BlockTransmissionTower(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(soundMetal2Footstep)
+		);
 
 		nukestone = helper.register("nukestone", id -> new BlockNukestone(id)
 				.setHarvestLevel("pickaxe", 0)
@@ -458,7 +466,7 @@ public class BlockInit {
 		rbmkBoiler = helper.register("rbmkBoiler", id -> new BlockRBMKColumn(id, TileEntityRBMKBoiler::new));
 		rbmkFuel = helper.register("rbmkFuel", id -> new BlockRBMKColumn(id, TileEntityRBMKFuel::new));
 		rbmkModerator = helper.register("rbmkModerator", id -> new BlockRBMKColumn(id, TileEntityRBMKColumn::new));
-		rbmkControl = helper.register("rbmkControl", id -> new BlockRBMKColumn(id, TileEntityRBMKColumn::new));
+		rbmkControl = helper.register("rbmkControl", id -> new BlockRBMKColumn(id, TileEntityRBMKControl::new));
 		rbmkAbsorber = helper.register("rbmkAbsorber", id -> new BlockRBMKColumn(id, TileEntityRBMKColumn::new));
 		rbmkReflector = helper.register("rbmkReflector", id -> new BlockRBMKColumn(id, TileEntityRBMKColumn::new));
 

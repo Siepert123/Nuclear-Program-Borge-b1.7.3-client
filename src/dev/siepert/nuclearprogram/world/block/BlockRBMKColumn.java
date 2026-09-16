@@ -88,6 +88,17 @@ public class BlockRBMKColumn extends BlockContainer {
 	}
 
 	@Override
+	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
+		int meta = world.getBlockMetadata(x, y, z);
+		return this.blockActivatedRBMK(world, x, y-meta, z, player);
+	}
+
+	protected boolean blockActivatedRBMK(World world, int x, int y, int z, EntityPlayer player) {
+		TileEntityRBMKColumn te = (TileEntityRBMKColumn) world.getBlockTileEntity(x, y, z);
+		return te != null && te.blockActivated(player);
+	}
+
+	@Override
 	public int idDropped(int meta, Random random) {
 		return meta == 0 ? this.blockID : 0;
 	}
