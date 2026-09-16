@@ -17,6 +17,8 @@ public abstract class RenderBlockMulti implements BlockRenderType {
 
 	@Override
 	public boolean renderIn3D() {
-		return true;
+		return this.renders3D;
 	}
+
+	public boolean renders3D = true;
 }

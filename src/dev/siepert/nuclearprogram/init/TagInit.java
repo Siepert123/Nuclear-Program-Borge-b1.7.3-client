@@ -79,6 +79,8 @@ public class TagInit {
 		ItemTags.tag("dyeAny", ItemInit.dustSulphur);
 		ItemTags.tag("dyeSilver", ItemInit.dustSaltpeter);
 		ItemTags.tag("dyeAny", ItemInit.dustSaltpeter);
+		ItemTags.tag("dyeWhite", ItemInit.dustFluorite);
+		ItemTags.tag("dyeAny", ItemInit.dustFluorite);
 		ItemTags.tag("dyeRed", ItemInit.dustRedPhosphorus);
 		ItemTags.tag("dyeAny", ItemInit.dustRedPhosphorus);
 	}

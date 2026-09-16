@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.world.block.render.RenderBlockTransmissionTower;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
 import dev.siepert.nuclearprogram.world.te.TileEntityTransmissionTower;
 import net.minecraft.src.EntityPlayer;
@@ -53,5 +54,10 @@ public class BlockTransmissionTower extends BlockMulti {
 			te.onInventoryChanged();
 			return true;
 		} else return false;
+	}
+
+	@Override
+	public int getRenderType() {
+		return RenderBlockTransmissionTower.RENDER_TYPE;
 	}
 }

@@ -7,6 +7,7 @@ import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
 import dev.siepert.nuclearprogram.util.NPMth;
 import dev.siepert.nuclearprogram.util.collect.IntList;
+import dev.siepert.nuclearprogram.world.block.render.RenderBlockDerrick;
 import dev.siepert.nuclearprogram.world.te.TileEntityDerrick;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
 import net.minecraft.client.Minecraft;
@@ -105,5 +106,10 @@ public class BlockDerrick extends BlockMulti implements IOverlayInfo {
 				colors.add(NPMth.blink() ? 0xFF0000 : 0xFF8888);
 			}
 		}
+	}
+
+	@Override
+	public int getRenderType() {
+		return RenderBlockDerrick.RENDER_TYPE;
 	}
 }
