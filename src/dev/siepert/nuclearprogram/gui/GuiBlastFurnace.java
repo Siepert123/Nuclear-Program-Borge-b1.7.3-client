@@ -27,6 +27,15 @@ public class GuiBlastFurnace extends GuiContainer {
 		int y = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
 
+		if (this.furnace.cokes > 0) {
+			int scaled = this.furnace.getCokesScaled(35);
+			this.drawTexturedModalRect(x+62, y+13+35-scaled, 176, 18, 8, scaled);
+		}
+		if (this.furnace.progress > 0) {
+			int scaled = this.furnace.getProgressScaled(27);
+			this.drawTexturedModalRect(x+97, y+12, 176, 0, scaled, 18);
+		}
+
 		this.fontRenderer.drawString(this.furnace.getInvName(), x + (this.xSize / 2) - (this.fontRenderer.getStringWidth(this.furnace.getInvName()) / 2), y + 4, 0xFFFFFF);
 		this.fontRenderer.drawString("Inventory", x + 8, y + this.ySize - 92, 0x000000);
 	}

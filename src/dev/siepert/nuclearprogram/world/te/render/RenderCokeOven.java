@@ -8,9 +8,12 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntitySpecialRenderer;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Random;
+
 public class RenderCokeOven extends TileEntitySpecialRenderer<TileEntityCokeOven> {
 	public static final RenderCokeOven INSTANCE = new RenderCokeOven();
 	private RenderCokeOven() {}
+	private final Random rnd = new Random();
 
 	@Override
 	public String getRenderTexture(TileEntityCokeOven te) {
@@ -26,22 +29,20 @@ public class RenderCokeOven extends TileEntitySpecialRenderer<TileEntityCokeOven
 		TileEntityCokeOven oven = (TileEntityCokeOven) te;
 		float anim = (oven.isOpen != oven.wasOpen) ? (oven.isOpen ? partialTick : 1.0F - partialTick) : oven.isOpen ? 1.0F : 0.0F;
 		if (anim == 0.0F) {
-			OBJInit.coke_oven.callList("DoorL");
-			OBJInit.coke_oven.callList("DoorR");
+			OBJInit.coke_oven.callList("Door");
 		} else {
 			GL11.glPushMatrix();
-			GL11.glTranslatef(0.5F, 0.0F, -1.5F);
-			GL11.glRotatef(anim * 100.0F, 0.0F, -1.0F, 0.0F);
-			GL11.glTranslatef(-0.5F, 0.0F, 1.5F);
-			OBJInit.coke_oven.callList("DoorL");
-			GL11.glPopMatrix();
-			GL11.glPushMatrix();
-			GL11.glTranslatef(-0.5F, 0.0F, -1.5F);
+			GL11.glTranslatef(-0.5F + (3F/16F), 0.0F, -1.5F);
 			GL11.glRotatef(anim * 100.0F, 0.0F, 1.0F, 0.0F);
-			GL11.glTranslatef(0.5F, 0.0F, 1.5F);
-			OBJInit.coke_oven.callList("DoorR");
+			GL11.glTranslatef(0.5F - (3F/16F), 0.0F, 1.5F);
+			OBJInit.coke_oven.callList("Door");
 			GL11.glPopMatrix();
 		}
+		GL11.glDisable(GL11.GL_LIGHTING);
+		float brightness = this.rnd.nextFloat() * 0.05F + 0.95F;
+		GL11.glColor3f(brightness, brightness, brightness);
+		OBJInit.coke_oven.callList("Fire");
+		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
 	}
 }

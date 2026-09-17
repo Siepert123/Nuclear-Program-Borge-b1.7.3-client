@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockTransmissionTower;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
 import dev.siepert.nuclearprogram.world.te.TileEntityTransmissionTower;
@@ -8,6 +9,7 @@ import net.minecraft.src.Material;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraftborge.loader.EnumFacing;
+import net.minecraftborge.loader.IconRegister;
 
 public class BlockTransmissionTower extends BlockMulti {
 	public BlockTransmissionTower(int blockID, Material material) {
@@ -59,5 +61,10 @@ public class BlockTransmissionTower extends BlockMulti {
 	@Override
 	public int getRenderType() {
 		return RenderBlockTransmissionTower.RENDER_TYPE;
+	}
+
+	@Override
+	public void registerIcons(IconRegister register) {
+		this.blockTexture = BlockInit.blockMetal.blockTextures[BlockMetal.STEEL];
 	}
 }

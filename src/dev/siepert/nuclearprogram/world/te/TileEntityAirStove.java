@@ -24,7 +24,8 @@ public class TileEntityAirStove extends TileEntityMachineBase implements IFluidR
 		boolean update = false;
 
 		if (!this.worldObj.multiplayerWorld) {
-			while (this.tankAirIn >= 100L && (TANK_CAPACITY_AIR - this.tankAirOut) >= 100L && this.tankHeatSource > 0L) {
+			int lim = 64;
+			while (this.tankAirIn >= 100L && (TANK_CAPACITY_AIR - this.tankAirOut) >= 100L && this.tankHeatSource > 0L && lim-- > 0) {
 				update = true;
 				this.tankHeatSource--;
 				this.tankAirIn -= 100L;
@@ -98,7 +99,7 @@ public class TileEntityAirStove extends TileEntityMachineBase implements IFluidR
 				return 0L;
 			} else {
 				this.tankHeatSource = TANK_CAPACITY_FUEL;
-				return amount - remain;
+				return remain;
 			}
 		}
 		if (fluidType == FluidInit.air.fluidID) {
@@ -109,7 +110,7 @@ public class TileEntityAirStove extends TileEntityMachineBase implements IFluidR
 				return 0L;
 			} else {
 				this.tankAirIn = TANK_CAPACITY_AIR;
-				return amount - remain;
+				return remain;
 			}
 		}
 		return amount;

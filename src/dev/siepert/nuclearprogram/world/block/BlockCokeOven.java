@@ -1,28 +1,34 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.util.NPMth;
 import dev.siepert.nuclearprogram.util.collect.IntList;
+import dev.siepert.nuclearprogram.world.block.render.RenderBlockCokeOven;
 import dev.siepert.nuclearprogram.world.te.TileEntityCokeOven;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
 import net.minecraft.src.*;
+import net.minecraftborge.loader.EnumFacing;
+import net.minecraftborge.loader.IconRegister;
 
 import java.util.List;
 
 public class BlockCokeOven extends BlockMulti implements IOverlayInfo {
 	public BlockCokeOven(int blockID, Material material) {
 		super(blockID, material);
+
+		this.flagDisableTE();
+		this.flagEnableFluidConnection();
 	}
 
 	@Override
 	protected TileEntity getBlockEntity(int meta) {
 		if (meta >= 12) return new TileEntityCokeOven();
-		if (meta >= 6) return TileEntityProxy.create(true, false);
 		return null;
 	}
 
 	@Override
 	public void getDimensions(int[] dims) {
-		dims[0] = 1;
+		dims[0] = 4;
 		dims[1] = 1;
 		dims[2] = 1;
 		dims[3] = 1;
@@ -37,6 +43,15 @@ public class BlockCokeOven extends BlockMulti implements IOverlayInfo {
 	@Override
 	public int getCoreHeightOffset() {
 		return 1;
+	}
+
+	@Override
+	protected void fillSpace(World world, int x, int y, int z, EnumFacing facing, int offset) {
+		super.fillSpace(world, x, y, z, facing, offset);
+		x += facing.getOffsetX() * offset;
+		z += facing.getOffsetZ() * offset;
+
+		this.setFlag(world, x - facing.getOffsetX(), y, z - facing.getOffsetZ());
 	}
 
 	private final int[] pos = new int[3];
@@ -62,9 +77,21 @@ public class BlockCokeOven extends BlockMulti implements IOverlayInfo {
 			colors.add(0xFFFFFF);
 			information.add("Creosote buffer: " + te.tankCreosote + "mB/" + TileEntityCokeOven.TANK_CAPACITY + "mB");
 			colors.add(0xFFFFFF);
+			information.add("Progress: " + te.progress + "/200");
+			colors.add(0xFFFFFF);
 		} else {
 			information.add("Core not found");
 			colors.add(NPMth.blink() ? 0xFF0000 : 0xFF8888);
 		}
+	}
+
+	@Override
+	public int getRenderType() {
+		return RenderBlockCokeOven.RENDER_TYPE;
+	}
+
+	@Override
+	public void registerIcons(IconRegister register) {
+		this.blockTexture = BlockInit.blockMetal.blockTextures[BlockMetal.STEEL];
 	}
 }

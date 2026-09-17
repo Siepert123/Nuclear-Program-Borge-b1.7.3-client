@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.init.ItemInit;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.node.PNNMultiblockProxy;
@@ -11,6 +12,7 @@ import dev.siepert.nuclearprogram.world.te.TileEntityEngineV8;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.EnumFacing;
+import net.minecraftborge.loader.IconRegister;
 
 import java.util.List;
 
@@ -106,5 +108,10 @@ public class BlockEngineV8 extends BlockMulti implements IFluidIdentifiable, IOv
 			information.add("Core not found");
 			colors.add(NPMth.blink() ? 0xFF0000 : 0xFF8888);
 		}
+	}
+
+	@Override
+	public void registerIcons(IconRegister register) {
+		this.blockTexture = BlockInit.blockMetal.blockTextures[BlockMetal.STEEL];
 	}
 }

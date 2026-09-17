@@ -6,6 +6,8 @@ import dev.siepert.nuclearprogram.init.ItemInit;
 import dev.siepert.nuclearprogram.util.NPMth;
 import net.minecraft.src.*;
 
+import java.util.Arrays;
+
 public class TileEntityBlastFurnace extends TileEntityMachineBase implements IInventory, IFluidReceiverTE {
 	public static final String WORKSTATION = "BlastFurnace";
 
@@ -13,6 +15,7 @@ public class TileEntityBlastFurnace extends TileEntityMachineBase implements IIn
 
 	public static final int cokesMax = 32;
 	public int cokes = 0;
+	public static final int MAX_PROGRESS = 200;
 	public int progress = 0;
 	public static final long MAX_HEATING = 1600L;
 	public long heating = 0L;
@@ -42,7 +45,7 @@ public class TileEntityBlastFurnace extends TileEntityMachineBase implements IIn
 					if (this.inventory[1].itemID == Item.ingotIron.shiftedIndex) {
 						if (this.hasOutputCapacity(1, 0)) {
 							this.progress += speed;
-							if (this.progress > 200) {
+							if (this.progress > MAX_PROGRESS) {
 								this.cokes--;
 								this.progress = 0;
 								this.appendOutputs(true, 1, 0);
@@ -54,7 +57,7 @@ public class TileEntityBlastFurnace extends TileEntityMachineBase implements IIn
 					if (this.inventory[1].itemID == Block.oreIron.blockID) {
 						if (this.hasOutputCapacity(2, 1)) {
 							this.progress += speed;
-							if (this.progress > 200) {
+							if (this.progress > MAX_PROGRESS) {
 								this.cokes--;
 								this.progress = 0;
 								this.appendOutputs(true, 2, 1);
@@ -106,6 +109,17 @@ public class TileEntityBlastFurnace extends TileEntityMachineBase implements IIn
 		nbt.setInteger("cokes", this.cokes);
 		nbt.setInteger("progress", this.progress);
 		nbt.setLong("heating", this.heating);
+
+		NBTTagList items = new NBTTagList();
+		for (int i = 0; i < this.getSizeInventory(); i++) {
+			if (this.inventory[i] != null) {
+				NBTTagCompound compound = new NBTTagCompound();
+				compound.setByte("slot", (byte) i);
+				this.inventory[i].writeToNBT(compound);
+				items.setTag(compound);
+			}
+		}
+		nbt.setTag("Inventory", items);
 	}
 
 	@Override
@@ -114,6 +128,23 @@ public class TileEntityBlastFurnace extends TileEntityMachineBase implements IIn
 		this.cokes = nbt.getInteger("cokes");
 		this.progress = nbt.getInteger("progress");
 		this.heating = nbt.getLong("heating");
+
+		Arrays.fill(this.inventory, null);
+		NBTTagList items = nbt.getTagList("Inventory");
+		for (int i = 0; i < items.tagCount(); i++) {
+			NBTTagCompound compound = (NBTTagCompound) items.tagAt(i);
+			byte slot = compound.getByte("slot");
+			if (slot >= 0 && slot < this.getSizeInventory()) {
+				this.inventory[slot] = new ItemStack(compound);
+			}
+		}
+	}
+
+	public int getCokesScaled(int scale) {
+		return (this.cokes * scale / (cokesMax+1))+1;
+	}
+	public int getProgressScaled(int scale) {
+		return (this.progress * scale / (MAX_PROGRESS+1))+1;
 	}
 
 	@Override

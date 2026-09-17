@@ -4,8 +4,10 @@ import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.util.MultiblockHelper;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockInvisible;
 import net.minecraft.src.*;
+import net.minecraftborge.loader.ContainerUtil;
 import net.minecraftborge.loader.EnumFacing;
 import net.minecraftborge.loader.Icon;
+import net.minecraftborge.loader.tag.ItemTags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -247,6 +249,12 @@ public abstract class BlockMulti extends BlockContainer {
 		if (meta < 12 && !keepInventory) {
 			int[] core = new int[3];
 			if (this.findCore(world, x, y, z, core)) {
+				TileEntity te = world.getBlockTileEntity(core[0], core[1], core[2]);
+				if (te instanceof IInventory && !te.isInvalid()) {
+					IInventory inventory = (IInventory) te;
+					ContainerUtil.dropContents(world, x, y, z, inventory, world.rand);
+					te.invalidate();
+				}
 				world.setBlockWithNotify(core[0], core[1], core[2], 0);
 			}
 			/*
