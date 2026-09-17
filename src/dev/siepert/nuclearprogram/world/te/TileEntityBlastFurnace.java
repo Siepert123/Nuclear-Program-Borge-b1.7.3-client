@@ -1,14 +1,21 @@
 package dev.siepert.nuclearprogram.world.te;
 
+import dev.siepert.nuclearprogram.Nothing;
 import dev.siepert.nuclearprogram.init.FluidInit;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.ItemStack;
+import dev.siepert.nuclearprogram.init.ItemInit;
+import dev.siepert.nuclearprogram.util.NPMth;
+import net.minecraft.src.*;
 
 public class TileEntityBlastFurnace extends TileEntityMachineBase implements IInventory, IFluidReceiverTE {
 	public static final String WORKSTATION = "BlastFurnace";
 
 	private final ItemStack[] inventory = new ItemStack[4];
+
+	public static final int cokesMax = 32;
+	public int cokes = 0;
+	public int progress = 0;
+	public static final long MAX_HEATING = 1600L;
+	public long heating = 0L;
 
 	public TileEntityBlastFurnace() {
 
@@ -16,10 +23,97 @@ public class TileEntityBlastFurnace extends TileEntityMachineBase implements IIn
 
 	@Override
 	public void updateEntity() {
-		this.worldObj.spawnParticle("nuclear_program/pollution",
-				this.xCoord + 0.5, this.yCoord + 7.0, this.zCoord + 0.5,
-				0.0, 0.0, 0.0
-		);
+		boolean update = false;
+
+		if (this.inventory[0] != null && this.cokes + 2 <= cokesMax) {
+			if (this.inventory[0].itemID == ItemInit.cokeCoal.shiftedIndex || this.inventory[0].itemID == ItemInit.cokePetroleum.shiftedIndex) {
+				update = true;
+				if (--this.inventory[0].stackSize == 0) this.inventory[0] = null;
+				this.cokes += 2;
+			}
+		}
+
+		if (this.heating > 0L) {
+			update = true;
+			recipe:
+			if (this.heating >= 100L) {
+				int speed = NPMth.log2((int) (this.heating / 100L)) + 1;
+				if (this.cokes > 0 && this.inventory[1] != null) {
+					if (this.inventory[1].itemID == Item.ingotIron.shiftedIndex) {
+						if (this.hasOutputCapacity(1, 0)) {
+							this.progress += speed;
+							if (this.progress > 200) {
+								this.cokes--;
+								this.progress = 0;
+								this.appendOutputs(true, 1, 0);
+							}
+							this.effects(4);
+							break recipe;
+						}
+					}
+					if (this.inventory[1].itemID == Block.oreIron.blockID) {
+						if (this.hasOutputCapacity(2, 1)) {
+							this.progress += speed;
+							if (this.progress > 200) {
+								this.cokes--;
+								this.progress = 0;
+								this.appendOutputs(true, 2, 1);
+							}
+							this.effects(2);
+							break recipe;
+						}
+					}
+				}
+				if (this.progress > 0) this.progress--;
+			}
+			this.heating = 0L;
+		}
+
+		if (update) this.onInventoryChanged();
+	}
+
+	private boolean hasOutputCapacity(int steel, int slag) {
+		if (this.inventory[2] != null && this.inventory[2].stackSize + steel > 64) return false;
+		return this.inventory[3] == null || this.inventory[3].stackSize + slag <= 64;
+	}
+	private void appendOutputs(boolean take, int steel, int slag) {
+		if (take) {
+			if (--this.inventory[1].stackSize <= 0) this.inventory[1] = null;
+		}
+
+		if (steel > 0) {
+			if (this.inventory[2] == null) this.inventory[2] = new ItemStack(ItemInit.ingotSteel, steel);
+			else this.inventory[2].stackSize += steel;
+		}
+
+		if (slag > 0) {
+			if (this.inventory[3] == null) this.inventory[3] = new ItemStack(Block.gravel, slag);
+			else this.inventory[3].stackSize += slag;
+		}
+	}
+	private void effects(int chance) {
+		if (this.worldObj.rand.nextInt(chance) == 0) {
+			this.worldObj.spawnParticle("nuclear_program/pollution",
+					this.xCoord + 0.5, this.yCoord + 7.0, this.zCoord + 0.5,
+					0.0, 0.0, 0.0
+			);
+		}
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
+		nbt.setInteger("cokes", this.cokes);
+		nbt.setInteger("progress", this.progress);
+		nbt.setLong("heating", this.heating);
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		this.cokes = nbt.getInteger("cokes");
+		this.progress = nbt.getInteger("progress");
+		this.heating = nbt.getLong("heating");
 	}
 
 	@Override
@@ -33,10 +127,13 @@ public class TileEntityBlastFurnace extends TileEntityMachineBase implements IIn
 	@Override
 	public long addFluid(int fluidType, long amount, int bar) {
 		if (fluidType == FluidInit.airBlast.fluidID && bar == 1) {
-			long remain = amount - 1000L;
+			this.onInventoryChanged();
+			long remain = amount - (MAX_HEATING - this.heating);
 			if (remain <= 0L) {
+				this.heating += amount;
 				return 0L;
 			} else {
+				this.heating = MAX_HEATING;
 				return remain;
 			}
 		} else return amount;
