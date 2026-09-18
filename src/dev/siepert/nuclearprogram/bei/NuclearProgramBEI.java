@@ -7,17 +7,13 @@ import dev.siepert.bei.api.reg.ICategoryRegistration;
 import dev.siepert.bei.api.reg.IRecipeRegistration;
 import dev.siepert.bei.api.reg.IScreenRegistration;
 import dev.siepert.nuclearprogram.NuclearProgram;
-import dev.siepert.nuclearprogram.gui.GuiBloomery;
-import dev.siepert.nuclearprogram.gui.GuiFurnaceBuilder;
-import dev.siepert.nuclearprogram.gui.GuiGasCentrifuge;
-import dev.siepert.nuclearprogram.gui.GuiRTG;
+import dev.siepert.nuclearprogram.gui.*;
 import dev.siepert.nuclearprogram.init.FluidInit;
+import dev.siepert.nuclearprogram.init.ItemInit;
 import dev.siepert.nuclearprogram.recipe.*;
 import dev.siepert.nuclearprogram.recipe.crafting.CraftingRecycleFuelRod;
-import net.minecraft.src.CraftingManager;
-import net.minecraft.src.IRecipe;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
+import net.minecraft.src.*;
+import net.minecraftborge.loader.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +32,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		registration.registerCategory(NPRecipeCategories.SMELTING_BUILDER, new RecipeCategoryFurnaceBuilder());
 		registration.registerCategory(NPRecipeCategories.WORKBENCH, new RecipeCategoryWorkbench());
 		registration.registerCategory(NPRecipeCategories.BLOOMERY, new RecipeCategoryBloomery());
+		registration.registerCategory(NPRecipeCategories.BLAST_FURNACE, new RecipeCategoryBlastFurnace());
 		registration.registerCategory(NPRecipeCategories.GAS_CENTRIFUGE, new RecipeCategoryGasCentrifuge());
 		registration.registerCategory(NPRecipeCategories.RTG_FUEL, new RecipeCategoryRTGFuel());
 	}
@@ -97,6 +94,14 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		registration.addRecipes(bloomery, bloomingRecipes);
 		System.out.println(bloomingRecipes.size() + " blooming recipes" + (skip != 0 ? " (" + skip + " skipped)" : ""));
 
+		// Blasting category
+		IRecipeCategory<RecipeBlastFurnace> blastFurnace = registration.getCategoryByUID(NPRecipeCategories.BLAST_FURNACE);
+		List<RecipeBlastFurnace> blastingRecipes = new ArrayList<>();
+		blastingRecipes.add(new RecipeBlastFurnace(Ingredient.of("oreIron"), new ItemStack(ItemInit.ingotSteel, 2), new ItemStack(Block.gravel, 1)));
+		blastingRecipes.add(new RecipeBlastFurnace(Ingredient.of("ingotIron"), new ItemStack(ItemInit.ingotSteel, 1), null));
+		registration.addRecipes(blastFurnace, blastingRecipes);
+		System.out.println(blastingRecipes.size() + " blasting recipes");
+
 		// Gas Centrifuging category
 		IRecipeCategory<RecipeGasCentrifuge> gasCentrifuge = registration.getCategoryByUID(NPRecipeCategories.GAS_CENTRIFUGE);
 		List<RecipeGasCentrifuge> gasCentrifugeRecipes = new ArrayList<>();
@@ -132,6 +137,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 
 		registration.addScreenHandler(GuiFurnaceBuilder.class, 79, 34, 24, 17, NPRecipeCategories.SMELTING_BUILDER, "furnaceFuel");
 		registration.addScreenHandler(GuiBloomery.class, 97, 13, 22, 15, NPRecipeCategories.BLOOMERY);
+		registration.addScreenHandler(GuiBlastFurnace.class, 97, 12, 27, 18, NPRecipeCategories.BLAST_FURNACE);
 
 		registration.addScreenHandler(GuiGasCentrifuge.class, 32, 17, 42, 56, NPRecipeCategories.GAS_CENTRIFUGE);
 		registration.addScreenHandler(GuiRTG.class, 70, 26, 36, 36, NPRecipeCategories.RTG_FUEL);

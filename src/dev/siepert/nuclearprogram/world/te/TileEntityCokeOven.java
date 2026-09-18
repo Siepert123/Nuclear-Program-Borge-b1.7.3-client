@@ -36,6 +36,11 @@ public class TileEntityCokeOven extends TileEntityMachineBase implements IInvent
 			if (this.progress > 0) {
 				if (this.tankCreosote < TANK_CAPACITY && (this.inventory[1] == null || this.inventory[1].stackSize < 64)) {
 					update = true;
+
+					if (this.worldObj.rand.nextInt(64) == 0) {
+						this.worldObj.playSoundEffect(this.xCoord + 0.5, this.yCoord + 0.5, this.zCoord + 0.5, "fire.fire", 1.0F, 0.7F);
+					}
+
 					this.isOpen = true;
 					this.progress++;
 					this.tankCreosote++;
@@ -51,6 +56,7 @@ public class TileEntityCokeOven extends TileEntityMachineBase implements IInvent
 						update = true;
 						this.isOpen = true;
 						this.progress = 1;
+						this.tankCreosote++;
 						if (--this.inventory[0].stackSize <= 0) this.inventory[0] = null;
 					} else this.isOpen = false;
 				} else {
