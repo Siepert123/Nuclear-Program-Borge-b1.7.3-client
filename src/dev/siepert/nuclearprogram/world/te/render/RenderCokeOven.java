@@ -10,9 +10,11 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.Random;
 
-public class RenderCokeOven extends TileEntitySpecialRenderer<TileEntityCokeOven> {
+public class RenderCokeOven extends RenderMachineBase<TileEntityCokeOven> {
 	public static final RenderCokeOven INSTANCE = new RenderCokeOven();
-	private RenderCokeOven() {}
+	private RenderCokeOven() {
+		super(TileEntityCokeOven.class);
+	}
 	private final Random rnd = new Random();
 
 	@Override
@@ -21,13 +23,10 @@ public class RenderCokeOven extends TileEntitySpecialRenderer<TileEntityCokeOven
 	}
 
 	@Override
-	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTick) {
-		GL11.glPushMatrix();
-		GL11.glTranslatef((float) x + 0.5F, (float) y, (float) z + 0.5F);
+	protected void renderMachine(TileEntityCokeOven te, double x, double y, double z, float partialTick) {
 		GL11.glRotatef(BlockMulti.getRotation(te.getBlockMetadata()), 0.0F, 1.0F, 0.0F);
 		OBJInit.coke_oven.callList("Base");
-		TileEntityCokeOven oven = (TileEntityCokeOven) te;
-		float anim = (oven.isOpen != oven.wasOpen) ? (oven.isOpen ? partialTick : 1.0F - partialTick) : oven.isOpen ? 1.0F : 0.0F;
+		float anim = (te.isOpen != te.wasOpen) ? (te.isOpen ? partialTick : 1.0F - partialTick) : te.isOpen ? 1.0F : 0.0F;
 		if (anim == 0.0F) {
 			OBJInit.coke_oven.callList("Door");
 		} else {
@@ -43,6 +42,5 @@ public class RenderCokeOven extends TileEntitySpecialRenderer<TileEntityCokeOven
 		GL11.glColor3f(brightness, brightness, brightness);
 		OBJInit.coke_oven.callList("Fire");
 		GL11.glEnable(GL11.GL_LIGHTING);
-		GL11.glPopMatrix();
 	}
 }

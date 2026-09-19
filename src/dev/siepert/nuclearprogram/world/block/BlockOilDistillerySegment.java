@@ -3,6 +3,7 @@ package dev.siepert.nuclearprogram.world.block;
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.util.NPMth;
 import dev.siepert.nuclearprogram.util.collect.IntList;
+import dev.siepert.nuclearprogram.world.block.render.RenderBlockOilDistillerySegment;
 import dev.siepert.nuclearprogram.world.fluid.Fluid;
 import dev.siepert.nuclearprogram.world.te.TileEntityOilDistilleryController;
 import dev.siepert.nuclearprogram.world.te.TileEntityOilDistillerySegment;
@@ -11,10 +12,11 @@ import net.minecraft.src.StringTranslate;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraftborge.loader.EnumFacing;
+import net.minecraftborge.loader.IGraphicsListener;
 
 import java.util.List;
 
-public class BlockOilDistillerySegment extends BlockMulti implements IOverlayInfo {
+public class BlockOilDistillerySegment extends BlockMulti implements IOverlayInfo, IGraphicsListener {
 	public BlockOilDistillerySegment(int blockID, Material material) {
 		super(blockID, material);
 
@@ -92,5 +94,15 @@ public class BlockOilDistillerySegment extends BlockMulti implements IOverlayInf
 				colors.add(NPMth.blink() ? 0xFF0000 : 0xFF8888);
 			}
 		}
+	}
+
+	@Override
+	public int getRenderType() {
+		return RenderBlockOilDistillerySegment.RENDER_TYPE;
+	}
+
+	@Override
+	public void setGraphicsFancy(boolean fancy) {
+		RenderBlockOilDistillerySegment.INSTANCE.renders3D = fancy;
 	}
 }

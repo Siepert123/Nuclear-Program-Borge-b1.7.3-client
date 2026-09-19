@@ -57,6 +57,9 @@ public class TileEntityDrainagePipe extends TileEntityMachineBase implements IFl
 		if (fluidType == FluidInit.lpg.fluidID) {
 			this.setFluidType(fluidType);
 		}
+		if (fluidType == FluidInit.creosote.fluidID) {
+			this.setFluidType(fluidType);
+		}
 	}
 	private void setFluidType(int fluidType) {
 		this.fluidType = fluidType;

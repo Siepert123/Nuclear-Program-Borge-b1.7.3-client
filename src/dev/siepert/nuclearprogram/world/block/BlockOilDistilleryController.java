@@ -5,6 +5,7 @@ import dev.siepert.nuclearprogram.cablenet.node.CNNMultiblockProxy;
 import dev.siepert.nuclearprogram.gui.GuiOilDistillery;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.node.PNNMultiblockProxy;
+import dev.siepert.nuclearprogram.world.block.render.RenderBlockOilDistilleryController;
 import dev.siepert.nuclearprogram.world.te.TileEntityOilDistilleryController;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
 import net.minecraft.client.Minecraft;
@@ -13,8 +14,9 @@ import net.minecraft.src.Material;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraftborge.loader.EnumFacing;
+import net.minecraftborge.loader.IGraphicsListener;
 
-public class BlockOilDistilleryController extends BlockMulti {
+public class BlockOilDistilleryController extends BlockMulti implements IGraphicsListener {
 	public BlockOilDistilleryController(int blockID, Material material) {
 		super(blockID, material);
 
@@ -82,5 +84,15 @@ public class BlockOilDistilleryController extends BlockMulti {
 			Minecraft.getTheMinecraft().displayGuiScreen(new GuiOilDistillery(player.inventory, te));
 		}
 		return true;
+	}
+
+	@Override
+	public int getRenderType() {
+		return RenderBlockOilDistilleryController.RENDER_TYPE;
+	}
+
+	@Override
+	public void setGraphicsFancy(boolean fancy) {
+		RenderBlockOilDistilleryController.INSTANCE.renders3D = fancy;
 	}
 }
