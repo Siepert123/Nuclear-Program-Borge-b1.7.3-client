@@ -13,12 +13,19 @@ block/yanoDoor3.ogg
 machine/hsrfs/close.ogg
 machine/hsrfs/loop.ogg
 machine/hsrfs/open.ogg
+machine/misc/rodsElevate.ogg
+machine/misc/rodsLower.ogg
+machine/misc/rotate.ogg
+machine/boiler.ogg
+machine/welding.ogg
 
 random/blastfurnace1.ogg
 random/blastfurnace2.ogg
 random/blastfurnace3.ogg
 random/blastfurnace4.ogg
 random/blastfurnace5.ogg
+random/geiger1.ogg
+random/lock.ogg
 
 siren/modulator.ogg
 

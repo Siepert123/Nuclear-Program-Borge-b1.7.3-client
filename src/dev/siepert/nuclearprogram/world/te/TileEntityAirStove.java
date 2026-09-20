@@ -1,11 +1,16 @@
 package dev.siepert.nuclearprogram.world.te;
 
+import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
 import dev.siepert.nuclearprogram.world.block.BlockMulti;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraftborge.loader.EnumFacing;
+import net.minecraftborge.loader.TrackedSound;
+
+import java.util.Objects;
 
 public class TileEntityAirStove extends TileEntityMachineBase implements IFluidReceiverTE {
 	public int fluidType = FluidInit.creosote.fluidID;
@@ -17,6 +22,31 @@ public class TileEntityAirStove extends TileEntityMachineBase implements IFluidR
 
 	public TileEntityAirStove() {
 
+	}
+
+	private boolean boiling = false;
+	private TrackedSound loop = null;
+
+	private void play() {
+		if (this.boiling) return;
+		this.boiling = true;
+
+		if (this.loop == null) {
+			this.loop = Minecraft.getTheMinecraft().sndManager.playTrackedSound("machine.boiler",
+					this.xCoord + 0.5F, this.yCoord + 1.5F, this.zCoord + 0.5F,
+					1.0F, 1.0F, true
+			);
+			if (this.loop == null) this.loop = NuclearProgram.getLastTrackedSound();
+			Objects.requireNonNull(this.loop, "TileEntityAirStove.loop");
+		}
+
+		this.loop.setVolume(1.0F);
+	}
+	private void unplay() {
+		if (!this.boiling) return;
+		this.boiling = false;
+
+		this.loop.setVolume(0.0F);
 	}
 
 	@Override
@@ -31,6 +61,8 @@ public class TileEntityAirStove extends TileEntityMachineBase implements IFluidR
 				this.tankAirIn -= 100L;
 				this.tankAirOut += 100L;
 			}
+			if (lim == 64) this.unplay();
+			else this.play();
 			if (this.tankAirOut > 0L) {
 				long old = this.tankAirOut;
 				EnumFacing side = EnumFacing.VALUES[this.getBlockMetadata() - BlockMulti.OFFSET];
