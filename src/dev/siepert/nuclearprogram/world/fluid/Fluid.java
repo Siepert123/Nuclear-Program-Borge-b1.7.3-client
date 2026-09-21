@@ -19,6 +19,8 @@ public class Fluid {
 	public static final int[] colorLookup = new int[fluidsList.length];
 	public static final boolean[] gaseousLookup = new boolean[fluidsList.length];
 	public static final boolean[] hasFluidIdentifier = new boolean[fluidsList.length];
+	public static final FluidTraitHeatable[] traitHeatable = new FluidTraitHeatable[fluidsList.length];
+	public static final FluidTraitCoolable[] traitCoolable = new FluidTraitCoolable[fluidsList.length];
 
 	public Fluid(int fluidID) {
 		if (fluidID == 0) throw new IllegalArgumentException("Fluid ID #0 is reserved for null");
@@ -66,6 +68,14 @@ public class Fluid {
 	}
 	public Fluid disableIdentifier() {
 		hasFluidIdentifier[this.fluidID] = false;
+		return this;
+	}
+	public Fluid setHeatable(int hotFluid, int thermalCap) {
+		traitHeatable[this.fluidID] = new FluidTraitHeatable(hotFluid, thermalCap);
+		return this;
+	}
+	public Fluid setCoolable(int coldFluid, int thermalCap) {
+		traitCoolable[this.fluidID] = new FluidTraitCoolable(coldFluid, thermalCap);
 		return this;
 	}
 

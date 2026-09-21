@@ -48,6 +48,7 @@ public class TileEntityInit {
 		register(TileEntityHSRFS.class, "hsrfs", RenderHSRFS.INSTANCE);
 
 		register(TileEntityRTG.class, "rtg", null);
+		register(TileEntityHeatexBoiler.class, "heatexBoiler", null);
 
 		TileEntity.addMapping(TileEntityRBMKColumn.class, NuclearProgram.path("rbmk/blank"));
 		TileEntity.addMapping(TileEntityRBMKBoiler.class, NuclearProgram.path("rbmk/boiler"));

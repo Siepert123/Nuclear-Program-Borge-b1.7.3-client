@@ -82,6 +82,7 @@ public class BlockInit {
 	public static BlockDerrick derrick;
 	public static BlockDerrickPipe derrickPipe;
 	public static BlockGasFlare gasFlare;
+	public static BlockFlareBulb flareBulb;
 	public static BlockDrainagePipe drainagePipe;
 	public static BlockOilDistilleryController oilDistilleryController;
 	public static BlockOilDistillerySegment oilDistillerySegment;
@@ -94,6 +95,7 @@ public class BlockInit {
 	public static BlockHSRFS hsrfs;
 
 	public static BlockRTG rtg;
+	public static BlockHeatexBoiler heatexBoiler;
 
 	public static BlockRBMKColumn rbmkBlank;
 	public static BlockRBMKColumn rbmkBoiler;
@@ -409,6 +411,12 @@ public class BlockInit {
 				.setResistance(BlockProps.IRON_RESISTANCE)
 				.setStepSound(soundMetal2Footstep)
 		);
+		flareBulb = helper.register("flareBulb", id -> new BlockFlareBulb(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(soundMetal2Footstep)
+		);
 		drainagePipe = helper.register("drainagePipe", id -> new BlockDrainagePipe(id, NPMaterials.multiblock)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(BlockProps.IRON_HARDNESS)
@@ -456,6 +464,12 @@ public class BlockInit {
 		);
 
 		rtg = helper.register("rtg", id -> new BlockRTG(id)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(soundMetal2Footstep)
+		);
+		heatexBoiler = helper.register("heatexBoiler", id -> new BlockHeatexBoiler(id, Material.iron)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(BlockProps.IRON_HARDNESS)
 				.setResistance(BlockProps.IRON_RESISTANCE)

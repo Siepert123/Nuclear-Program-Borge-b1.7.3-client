@@ -3,6 +3,7 @@ package dev.siepert.nuclearprogram.init;
 import dev.objlib.api.IObjModelFactory;
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.util.WavefrontObj;
+import net.minecraft.src.RenderHelper;
 
 public class OBJInit {
 	public static WavefrontObj animation_test = null;
@@ -70,6 +71,7 @@ public class OBJInit {
 		hsrfs = get(factory, "hsrfs");
 	}
 	public static void optimize() {
+		RenderHelper.disableStandardItemLighting();
 		animation_test.rerender();
 
 		// Transmission

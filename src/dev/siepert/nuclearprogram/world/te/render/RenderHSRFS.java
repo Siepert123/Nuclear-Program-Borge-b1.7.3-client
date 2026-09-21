@@ -26,7 +26,7 @@ public class RenderHSRFS extends TileEntitySpecialRenderer<TileEntityHSRFS> {
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTick) {
 		GL11.glPushMatrix();
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		//GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glShadeModel(GL11.GL_SMOOTH);
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
 		GL11.glRotatef(BlockMulti.getRotation(te.getBlockMetadata()), 0.0F, 1.0F, 0.0F);

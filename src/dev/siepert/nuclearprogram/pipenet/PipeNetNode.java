@@ -1,6 +1,7 @@
 package dev.siepert.nuclearprogram.pipenet;
 
 import dev.siepert.nuclearprogram.pipenet.node.PNNBasic;
+import dev.siepert.nuclearprogram.pipenet.node.PNNFlareBulb;
 import dev.siepert.nuclearprogram.pipenet.node.PNNMultiblockProxy;
 import dev.siepert.nuclearprogram.pipenet.node.PNNReceiverTE;
 import dev.siepert.nuclearprogram.util.BlockPos;
@@ -30,6 +31,7 @@ public abstract class PipeNetNode {
 		register(PNNBasic.class, "basic", PNNBasic::new);
 		register(PNNReceiverTE.class, "receiver_te", PNNReceiverTE::new);
 		register(PNNMultiblockProxy.class, "proxy", PNNMultiblockProxy::new);
+		register(PNNFlareBulb.class, "flare_bulb", PNNFlareBulb::new);
 	}
 
 	public static PipeNetNode create(World world, NBTTagCompound nbt) {
