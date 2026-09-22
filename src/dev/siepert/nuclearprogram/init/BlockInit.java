@@ -79,6 +79,8 @@ public class BlockInit {
 	public static BlockExtractionTest extractionTest;
 	public static BlockCreativeSupply creativeSupply;
 
+	public static BlockDrum drum;
+
 	public static BlockDerrick derrick;
 	public static BlockDerrickPipe derrickPipe;
 	public static BlockGasFlare gasFlare;
@@ -393,6 +395,13 @@ public class BlockInit {
 		);
 		creativeSupply = helper.register("creativeSupply", BlockCreativeSupply::new);
 
+		drum = helper.register("drum", id -> new BlockDrum(id, Material.iron)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(soundMetal2Footstep)
+		);
+
 		derrick = helper.register("derrick", id -> new BlockDerrick(id, NPMaterials.multiblock)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(BlockProps.IRON_HARDNESS)
@@ -505,6 +514,7 @@ public class BlockInit {
 		Item.itemsList[slabConcreteDouble.blockID] = new ItemBlockStepConcrete(slabConcreteDouble);
 		Item.itemsList[slabConcreteColoredSingle.blockID] = new ItemBlockStepConcreteColored(slabConcreteColoredSingle);
 		Item.itemsList[slabConcreteColoredDouble.blockID] = new ItemBlockStepConcreteColored(slabConcreteColoredDouble);
+		Item.itemsList[drum.blockID] = new ItemBlockDrum(drum);
 		Item.itemsList[rbmkBlank.blockID] = new ItemBlockRBMKColumn(rbmkBlank);
 		Item.itemsList[rbmkBoiler.blockID] = new ItemBlockRBMKColumn(rbmkBoiler);
 		Item.itemsList[rbmkFuel.blockID] = new ItemBlockRBMKColumn(rbmkFuel);

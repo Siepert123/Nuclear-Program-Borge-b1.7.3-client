@@ -33,6 +33,8 @@ public class TileEntityInit {
 		register(TileEntityAnimationTest.class, "animationTest", RenderAnimationTest.INSTANCE);
 		register(TileEntityCreativeSupply.class, "creativeSupply", null);
 
+		register(TileEntityDrum.class, "drum", null);
+
 		// Oil machines
 		register(TileEntityDerrick.class, "derrick", RenderDerrick.INSTANCE);
 		register(TileEntityGasFlare.class, "gasFlare", RenderGasFlare.INSTANCE);

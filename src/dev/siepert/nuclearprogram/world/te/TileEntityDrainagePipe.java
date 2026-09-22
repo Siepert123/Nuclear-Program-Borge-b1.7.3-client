@@ -39,26 +39,17 @@ public class TileEntityDrainagePipe extends TileEntityMachineBase implements IFl
 
 	public void setDrainedFluid(int fluidType, boolean client) {
 		if (fluidType == this.fluidType || client) return;
-		if (fluidType == FluidInit.heavyOil.fluidID) {
-			this.setFluidType(fluidType);
-		}
-		if (fluidType == FluidInit.diesel.fluidID) {
-			this.setFluidType(fluidType);
-		}
-		if (fluidType == FluidInit.kerosene.fluidID) {
-			this.setFluidType(fluidType);
-		}
-		if (fluidType == FluidInit.naphtha.fluidID) {
-			this.setFluidType(fluidType);
-		}
-		if (fluidType == FluidInit.gasoline.fluidID) {
-			this.setFluidType(fluidType);
-		}
-		if (fluidType == FluidInit.lpg.fluidID) {
-			this.setFluidType(fluidType);
-		}
-		if (fluidType == FluidInit.creosote.fluidID) {
-			this.setFluidType(fluidType);
+		switch (fluidType) {
+			case FluidInit.water_Id:
+			case FluidInit.crudeOil_Id:
+			case FluidInit.heavyOil_Id:
+			case FluidInit.diesel_Id:
+			case FluidInit.kerosene_Id:
+			case FluidInit.naphtha_Id:
+			case FluidInit.gasoline_Id:
+			case FluidInit.lpg_Id:
+			case FluidInit.creosote_Id:
+				this.setFluidType(fluidType);
 		}
 	}
 	private void setFluidType(int fluidType) {
