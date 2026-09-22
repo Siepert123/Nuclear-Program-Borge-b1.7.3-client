@@ -94,6 +94,7 @@ public class BlockInit {
 	public static BlockGasCentrifuge gasCentrifuge;
 	public static BlockCentrifugeExtension centrifugeExtension;
 
+	public static BlockPBR pebbleBedReactor;
 	public static BlockHSRFS hsrfs;
 
 	public static BlockRTG rtg;
@@ -465,6 +466,12 @@ public class BlockInit {
 				.setStepSound(soundMetal2Footstep)
 		);
 
+		pebbleBedReactor = helper.register("pebbleBedReactor", id -> new BlockPBR(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(Block.soundStoneFootstep)
+		);
 		hsrfs = helper.register("hsrfs", id -> new BlockHSRFS(id, NPMaterials.multiblock)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(BlockProps.IRON_HARDNESS)

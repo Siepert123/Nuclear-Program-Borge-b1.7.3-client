@@ -47,6 +47,7 @@ public class TileEntityInit {
 		// Nuclear machines
 		register(TileEntityGasCentrifuge.class, "gasCentrifuge", RenderGasCentrifuge.INSTANCE);
 
+		register(TileEntityPBR.class, "pbr", RenderPBR.INSTANCE);
 		register(TileEntityHSRFS.class, "hsrfs", RenderHSRFS.INSTANCE);
 
 		register(TileEntityRTG.class, "rtg", null);

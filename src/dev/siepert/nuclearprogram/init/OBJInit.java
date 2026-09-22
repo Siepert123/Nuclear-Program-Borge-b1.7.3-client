@@ -40,6 +40,8 @@ public class OBJInit {
 	public static WavefrontObj gas_centrifuge = null;
 	public static final String gas_centrifuge_tex = get("gas_centrifuge");
 
+	public static WavefrontObj pebble_bed_reactor = null;
+	public static final String pebble_bed_reactor_tex = get("pebble_bed_reactor");
 	public static WavefrontObj hsrfs = null;
 	public static final String hsrfs_tex = get("hsrfs");
 
@@ -68,6 +70,7 @@ public class OBJInit {
 		// Nuclear machines
 		gas_centrifuge = get(factory, "gas_centrifuge");
 
+		pebble_bed_reactor = get(factory, "pebble_bed_reactor");
 		hsrfs = get(factory, "hsrfs");
 	}
 	public static void optimize() {
@@ -94,6 +97,7 @@ public class OBJInit {
 		// Nuclear machines
 		gas_centrifuge.rerender();
 
+		pebble_bed_reactor.rerender();
 		hsrfs.rerender();
 	}
 
