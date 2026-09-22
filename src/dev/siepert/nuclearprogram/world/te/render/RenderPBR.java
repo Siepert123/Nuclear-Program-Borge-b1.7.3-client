@@ -20,6 +20,9 @@ public class RenderPBR extends RenderMachineBase<TileEntityPBR>  {
 	@Override
 	protected void renderMachine(TileEntityPBR te, double x, double y, double z, float partialTick) {
 		GL11.glRotatef(BlockMulti.getRotation(te.getBlockMetadata()), 0.0F, 1.0F, 0.0F);
-		OBJInit.pebble_bed_reactor.callAllLists();
+		GL11.glShadeModel(GL11.GL_SMOOTH);
+		OBJInit.pebble_bed_reactor.callList("Hull");
+		GL11.glShadeModel(GL11.GL_FLAT);
+		OBJInit.pebble_bed_reactor.callList("Decorations");
 	}
 }

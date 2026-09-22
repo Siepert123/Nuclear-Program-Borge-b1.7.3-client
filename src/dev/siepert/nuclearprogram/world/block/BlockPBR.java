@@ -16,7 +16,7 @@ public class BlockPBR extends BlockMulti {
 	public BlockPBR(int blockID, Material material) {
 		super(blockID, material);
 
-		this.flagEnableEnergyConnection();
+		this.flagEnableFluidConnection();
 	}
 
 	@Override

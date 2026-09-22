@@ -19,7 +19,10 @@ public class RenderBlockPBR extends RenderBlockMulti {
 		final float scale = 1.0F / 3.5F;
 		GL11.glTranslatef(0.0F, -0.5F, 0.0F);
 		GL11.glScalef(scale, scale, scale);
-		OBJInit.pebble_bed_reactor.callAllLists();
+		GL11.glShadeModel(GL11.GL_SMOOTH);
+		OBJInit.pebble_bed_reactor.callList("Hull");
+		GL11.glShadeModel(GL11.GL_FLAT);
+		OBJInit.pebble_bed_reactor.callList("Decorations");
 		GL11.glPopMatrix();
 		mc.renderEngine.bindTerrainTexture();
 	}
