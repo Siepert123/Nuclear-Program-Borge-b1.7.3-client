@@ -93,7 +93,7 @@ public class GuiOilDistillery extends GuiContainer {
 				drawTooltipWithGradientBackdrop(this, this.fontRenderer, mx + 12, my - 12,
 						translate.translateNamedKey(FluidInit.crudeOil.getUnlocalizedName()), Collections.singletonList(amount),
 						-1, -1,
-						0xC0000000, Fluid.colorLookup[FluidInit.crudeOil.fluidID] | 0xC0000000);
+						0xC0000000, Fluid.colorLookup[FluidInit.crudeOil_Id] | 0xC0000000);
 			}
 
 			if (this.te.isValidSegmentCount() && mx >= 70 && mx < 70+90) {

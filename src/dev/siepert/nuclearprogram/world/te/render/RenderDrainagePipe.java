@@ -20,10 +20,10 @@ public class RenderDrainagePipe extends TileEntitySpecialRenderer<TileEntityDrai
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTick) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) x + 0.5F, (float) y, (float) z + 0.5F);
-		//OBJRenderHelper.enableMachineLight();
+		GL11.glShadeModel(GL11.GL_SMOOTH);
 		GL11.glRotatef(BlockMulti.getRotation(te.getBlockMetadata()) + 180.0F, 0.0F, 1.0F, 0.0F);
 		OBJInit.drainage_pipe.callAllLists();
-		//OBJRenderHelper.disableMachineLight();
+		GL11.glShadeModel(GL11.GL_FLAT);
 		GL11.glPopMatrix();
 	}
 }

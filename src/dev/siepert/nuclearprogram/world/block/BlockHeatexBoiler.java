@@ -1,14 +1,13 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.gui.GuiHeatexBoiler;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.node.PNNReceiverTE;
 import dev.siepert.nuclearprogram.util.collect.IntList;
 import dev.siepert.nuclearprogram.world.fluid.Fluid;
 import dev.siepert.nuclearprogram.world.te.TileEntityHeatexBoiler;
-import net.minecraft.src.BlockContainer;
-import net.minecraft.src.Material;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+import net.minecraft.client.Minecraft;
+import net.minecraft.src.*;
 
 import java.util.List;
 
@@ -32,6 +31,16 @@ public class BlockHeatexBoiler extends BlockContainer implements IFluidIdentifia
 	public void onBlockRemoval(World world, int x, int y, int z) {
 		super.onBlockRemoval(world, x, y, z);
 		PipeNet.setNode(world, x, y, z, null);
+	}
+
+	@Override
+	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
+		if (player.isSneaking() && player.getCurrentEquippedItem() != null) return false;
+		if (!world.multiplayerWorld) {
+			TileEntityHeatexBoiler te = (TileEntityHeatexBoiler) world.getBlockTileEntity(x, y, z);
+			Minecraft.getTheMinecraft().displayGuiScreen(new GuiHeatexBoiler(player.inventory, te));
+		}
+		return true;
 	}
 
 	@Override

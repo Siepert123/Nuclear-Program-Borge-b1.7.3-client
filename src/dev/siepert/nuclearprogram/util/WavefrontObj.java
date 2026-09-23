@@ -88,6 +88,7 @@ public class WavefrontObj {
 				}
 				this.vbo.clear();
 			}
+			if (EXTENDED_LOGGING) System.out.println("Rendering " + this.model.getFilename() + " (VBO)");
 			this.vbo.addAll(this.model.compileVBO());
 		} else {
 			if (!this.groupLists.isEmpty()) {

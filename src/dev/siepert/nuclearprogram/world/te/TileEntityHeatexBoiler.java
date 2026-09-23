@@ -1,10 +1,12 @@
 package dev.siepert.nuclearprogram.world.te;
 
+import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
 import dev.siepert.nuclearprogram.world.fluid.Fluid;
 import dev.siepert.nuclearprogram.world.fluid.FluidTraitCoolable;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraftborge.loader.EnumFacing;
@@ -65,6 +67,19 @@ public class TileEntityHeatexBoiler extends TileEntity implements IFluidReceiver
 		if (update) this.onInventoryChanged();
 	}
 
+	public int getTankWaterScaled(int w) {
+		return Math.toIntExact((this.tankWater * w / (TANK_CAPACITY_WATER + 1)) + 1);
+	}
+	public int getTankSteamScaled(int w) {
+		return Math.toIntExact((this.tankSteam * w / (TANK_CAPACITY_STEAM + 1)) + 1);
+	}
+	public int getTankInScaled(int h) {
+		return Math.toIntExact((this.tankCoolantIn * h / (TANK_CAPACITY_COOLANT+1))+1);
+	}
+	public int getTankOutScaled(int h) {
+		return Math.toIntExact((this.tankCoolantOut * h / (TANK_CAPACITY_COOLANT+1))+1);
+	}
+
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
@@ -122,5 +137,12 @@ public class TileEntityHeatexBoiler extends TileEntity implements IFluidReceiver
 	@Override
 	public int getPriority() {
 		return TileEntityProxy.ENGINE_PRIORITY;
+	}
+
+	public boolean canInteractWith(EntityPlayer player) {
+		return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) == this;
+	}
+	public String getInvName() {
+		return BlockInit.heatexBoiler.translateBlockName();
 	}
 }

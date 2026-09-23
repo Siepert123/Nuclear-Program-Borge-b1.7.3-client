@@ -1,10 +1,7 @@
 package dev.siepert.nuclearprogram.world.fluid;
 
 import dev.siepert.nuclearprogram.init.ItemInit;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.StringTranslate;
+import net.minecraft.src.*;
 import net.minecraftborge.loader.Icon;
 import net.minecraftborge.loader.IconRegister;
 
@@ -88,6 +85,11 @@ public class Fluid {
 
 	public void registerIcons(IconRegister register) {
 		this.fluidTexture = register.getTexture("fluid/" + this.getRegistryName(), 16, 16);
+	}
+	private Integer tex;
+	public int getStandaloneTexture(RenderEngine engine) {
+		if (this.tex == null) this.tex = engine.getTexture("assets/terrain/fluid/" + this.getRegistryName() + ".png");
+		return this.tex;
 	}
 
 	public static ItemStack createItemRepresentation(Fluid fluid, long amount, byte pressure) {
