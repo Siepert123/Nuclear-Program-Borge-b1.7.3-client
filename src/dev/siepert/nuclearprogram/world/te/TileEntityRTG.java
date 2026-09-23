@@ -108,6 +108,7 @@ public class TileEntityRTG extends TileEntity implements IInventory {
 					this.inventory[slot] = null;
 				}
 			}
+			this.onInventoryChanged();
 			return stack;
 		} else {
 			return null;
@@ -116,6 +117,7 @@ public class TileEntityRTG extends TileEntity implements IInventory {
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack) {
 		this.inventory[slot] = stack;
+		this.onInventoryChanged();
 	}
 	@Override
 	public String getInvName() {

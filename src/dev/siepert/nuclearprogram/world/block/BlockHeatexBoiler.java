@@ -14,6 +14,8 @@ import java.util.List;
 public class BlockHeatexBoiler extends BlockContainer implements IFluidIdentifiable, IOverlayInfo {
 	public BlockHeatexBoiler(int blockID, Material material) {
 		super(blockID, material);
+
+		BlockFluidPipe.enableConnection(blockID);
 	}
 
 	@Override

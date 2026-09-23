@@ -52,6 +52,8 @@ public class TileEntityInit {
 
 		register(TileEntityRTG.class, "rtg", null);
 		register(TileEntityHeatexBoiler.class, "heatexBoiler", null);
+		register(TileEntityTurbineSimple.class, "simpleTurbine", null);
+		register(TileEntityCondenserSimple.class, "simpleCondenser", null);
 
 		TileEntity.addMapping(TileEntityRBMKColumn.class, NuclearProgram.path("rbmk/blank"));
 		TileEntity.addMapping(TileEntityRBMKBoiler.class, NuclearProgram.path("rbmk/boiler"));

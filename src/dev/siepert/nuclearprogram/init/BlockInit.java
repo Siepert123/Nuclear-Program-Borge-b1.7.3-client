@@ -99,6 +99,8 @@ public class BlockInit {
 
 	public static BlockRTG rtg;
 	public static BlockHeatexBoiler heatexBoiler;
+	public static BlockTurbineSimple simpleTurbine;
+	public static BlockCondenserSimple simpleCondenser;
 
 	public static BlockRBMKColumn rbmkBlank;
 	public static BlockRBMKColumn rbmkBoiler;
@@ -490,6 +492,18 @@ public class BlockInit {
 				.setHardness(BlockProps.IRON_HARDNESS)
 				.setResistance(BlockProps.IRON_RESISTANCE)
 				.setStepSound(soundMetal2Footstep)
+		);
+		simpleTurbine = helper.register("simpleTurbine", id -> new BlockTurbineSimple(id, Material.iron)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(Block.soundMetalFootstep)
+		);
+		simpleCondenser = helper.register("simpleCondenser", id -> new BlockCondenserSimple(id, Material.iron)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(Block.soundMetalFootstep)
 		);
 
 		rbmkBlank = helper.register("rbmkBlank", id -> new BlockRBMKColumn(id, TileEntityRBMKColumn::new));

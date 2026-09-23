@@ -93,6 +93,11 @@ public class TileEntityHeatexBoiler extends TileEntity implements IFluidReceiver
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
+		this.fluidType = nbt.getInteger("fluidType");
+		this.tankCoolantIn = nbt.getLong("tankCoolantIn");
+		this.tankCoolantOut = nbt.getLong("tankCoolantOut");
+		this.tankWater = nbt.getLong("tankWater");
+		this.tankSteam = nbt.getLong("tankSteam");
 	}
 
 	@Override

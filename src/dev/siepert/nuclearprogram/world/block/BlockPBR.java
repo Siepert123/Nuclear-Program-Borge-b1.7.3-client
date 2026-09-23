@@ -1,11 +1,14 @@
 package dev.siepert.nuclearprogram.world.block;
 
+import dev.siepert.nuclearprogram.gui.GuiPBR;
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.pipenet.PipeNet;
 import dev.siepert.nuclearprogram.pipenet.node.PNNMultiblockProxy;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockPBR;
 import dev.siepert.nuclearprogram.world.te.TileEntityPBR;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
+import net.minecraft.client.Minecraft;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Material;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
@@ -60,6 +63,17 @@ public class BlockPBR extends BlockMulti {
 	public void onBlockRemoval(World world, int x, int y, int z) {
 		super.onBlockRemoval(world, x, y, z);
 		PipeNet.setNode(world, x, y, z, null);
+	}
+
+	private final int[] pos = new int[3];
+	@Override
+	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
+		if (player.isSneaking() && player.getCurrentEquippedItem() != null) return false;
+		if (!world.multiplayerWorld && this.findCore(world, x, y, z, this.pos)) {
+			TileEntityPBR te = (TileEntityPBR) world.getBlockTileEntity(this.pos[0], this.pos[1], this.pos[2]);
+			Minecraft.getTheMinecraft().displayGuiScreen(new GuiPBR(player.inventory, te));
+		}
+		return true;
 	}
 
 	@Override

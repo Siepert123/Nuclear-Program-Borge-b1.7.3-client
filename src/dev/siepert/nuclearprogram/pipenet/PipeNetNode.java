@@ -127,6 +127,7 @@ public abstract class PipeNetNode {
 	 * @return The amount of fluid left after distributing the fluid.
 	 */
 	public final long pushFluid(int fluidType, long amount, int bar) {
+		if (amount <= 0L) return 0L;
 		if (this.isReceiving()) {
 			return this.asReceiving().addFluid(fluidType, amount, bar);
 		} else if (this.fluidType == fluidType) {

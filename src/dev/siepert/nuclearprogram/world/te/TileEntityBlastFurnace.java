@@ -195,6 +195,7 @@ public class TileEntityBlastFurnace extends TileEntityMachineBase implements IIn
 					this.inventory[slot] = null;
 				}
 			}
+			this.onInventoryChanged();
 			return stack;
 		} else {
 			return null;
@@ -203,6 +204,7 @@ public class TileEntityBlastFurnace extends TileEntityMachineBase implements IIn
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack) {
 		this.inventory[slot] = stack;
+		this.onInventoryChanged();
 	}
 	@Override
 	public String getInvName() {
