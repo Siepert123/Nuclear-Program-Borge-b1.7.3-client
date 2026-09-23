@@ -1,6 +1,5 @@
 package dev.siepert.nuclearprogram.world.item;
 
-import dev.siepert.nuclearprogram.world.reactor.FuelPebbleStats;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraftborge.loader.Icon;
@@ -9,14 +8,16 @@ import net.minecraftborge.loader.IconRegister;
 import java.util.Collection;
 import java.util.List;
 
-public class ItemFuelPebble extends Item {
+public class ItemFuelPebbleSource extends Item {
 	public Icon itemTextureDepleted;
 
-	public final FuelPebbleStats fuelStats;
+	public final int flux;
+	public final int lifetime;
 
-	public ItemFuelPebble(int itemID, FuelPebbleStats fuelStats) {
+	public ItemFuelPebbleSource(int itemID, int flux, int lifetime) {
 		super(itemID);
-		this.fuelStats = fuelStats;
+		this.flux = flux;
+		this.lifetime = lifetime;
 	}
 
 	@Override
@@ -37,16 +38,9 @@ public class ItemFuelPebble extends Item {
 	}
 
 	@Override
-	public Icon getTextureFromDamage(int damage) {
-		return damage != 0 ? this.itemTextureDepleted : this.itemTexture;
-	}
-
-	@Override
 	public void getTooltip(ItemStack stack, List<String> tooltip, boolean isAdvanced) {
 		if (stack.getItemDamage() == 0) {
-			tooltip.add("Reactivity curve:");
-			tooltip.add("  " + this.fuelStats.reactivity.getDisplaySpecification());
-			tooltip.add("Heat per flux: " + this.fuelStats.heatPerFlux + "TF");
+			tooltip.add("Adds " + this.flux + " base flux to the reactor");
 		}
 	}
 }

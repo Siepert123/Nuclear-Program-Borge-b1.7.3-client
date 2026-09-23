@@ -16,7 +16,7 @@ public class RenderBlockPBR extends RenderBlockMulti {
 
 		mc.renderEngine.bindTexture(mc.renderEngine.getTexture(OBJInit.pebble_bed_reactor_tex));
 		GL11.glPushMatrix();
-		final float scale = 1.0F / 3.5F;
+		final float scale = 1.0F / 3.0F;
 		GL11.glTranslatef(0.0F, -0.5F, 0.0F);
 		GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
 		GL11.glScalef(scale, scale, scale);

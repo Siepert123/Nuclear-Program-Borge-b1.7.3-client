@@ -2,6 +2,9 @@ package dev.siepert.nuclearprogram.init;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.world.item.*;
+import dev.siepert.nuclearprogram.world.reactor.FuelPebbleStats;
+import dev.siepert.nuclearprogram.world.reactor.curve.ReactivityCurveLog10;
+import dev.siepert.nuclearprogram.world.reactor.curve.ReactivityCurveSqrt;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemFood;
 import net.minecraft.src.ItemSeeds;
@@ -81,6 +84,12 @@ public class ItemInit {
 	public static ItemFuelRod fuelRod;
 	public static Item fuelRodArrayEmpty;
 	public static ItemFuelRod fuelRodArray;
+
+	public static ItemFuelPebbleSource pebbleSourceRa226Be;
+	public static ItemFuelPebble pebbleFuelNU;
+	public static ItemFuelPebble pebbleFuelMEU;
+	public static ItemFuelPebble pebbleFuelHEU235;
+	public static ItemFuelPebble pebbleFuelMEP239;
 
 	public static Item fuelRodRbmkEmpty;
 
@@ -167,6 +176,20 @@ public class ItemInit {
 		fuelRod = helper.register("fuelRod", ItemFuelRod::new);
 		fuelRodArrayEmpty = helper.register("fuelRodArrayEmpty", Item::new);
 		fuelRodArray = helper.register("fuelRodArray", ItemFuelRod::new);
+
+		pebbleSourceRa226Be = helper.register("pebbleSourceRa226Be", id -> new ItemFuelPebbleSource(id, 20, 20*60));
+		pebbleFuelNU = helper.register("pebbleFuelNU", id -> new ItemFuelPebble(id,
+				new FuelPebbleStats(0.2F, new ReactivityCurveLog10(1.0F), 4096)
+		));
+		pebbleFuelMEU = helper.register("pebbleFuelMEU", id -> new ItemFuelPebble(id,
+				new FuelPebbleStats(0.5F, new ReactivityCurveSqrt(1.0F, 1.0F), 4096*8)
+		));
+		pebbleFuelHEU235 = helper.register("pebbleFuelHEU235", id -> new ItemFuelPebble(id,
+				new FuelPebbleStats(1.0F, new ReactivityCurveSqrt(1.0F, 2.0F), 4096*4)
+		));
+		pebbleFuelMEP239 = helper.register("pebbleFuelMEP239", id -> new ItemFuelPebble(id,
+				new FuelPebbleStats(1.0F, new ReactivityCurveSqrt(2.0F, 1.0F), 4096*8)
+		));
 
 		fuelRodRbmkEmpty = helper.register("fuelRodRbmkEmpty", ItemFuelRodRBMK::new);
 
