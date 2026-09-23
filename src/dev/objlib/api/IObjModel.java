@@ -28,5 +28,7 @@ public interface IObjModel {
 	void tessellateAllExcept(Tessellator tes, String... groups);
 	void tessellateAllExcept(Tessellator tes, float offsetU, float offsetV, float scaleU, float scaleV, String... groups);
 
+	List<IVBOBufferData> compileVBO();
+
 	List<String> collectGroupNames();
 }
