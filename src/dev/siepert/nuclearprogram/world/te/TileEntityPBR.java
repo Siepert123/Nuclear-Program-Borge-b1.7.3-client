@@ -115,8 +115,8 @@ public class TileEntityPBR extends TileEntityMachineBase implements IInventory, 
 			}
 
 			// Cool down core
-			if (this.heat >= 100) {
-				int transfer = Math.min(Math.min(Math.toIntExact(this.tankCO2), Math.toIntExact(CAPACITY - this.tankCO2Hot)), this.heat / 100);
+			if (this.heat >= 200) {
+				int transfer = Math.min(Math.min(Math.toIntExact(this.tankCO2), Math.toIntExact(CAPACITY - this.tankCO2Hot)), this.heat / 200);
 				if (transfer > 0) {
 					update = true;
 					this.tankCO2 -= transfer;

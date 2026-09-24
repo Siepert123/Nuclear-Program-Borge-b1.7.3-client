@@ -36,6 +36,10 @@ public class ItemFuelPebbleSource extends Item {
 		this.itemTexture = register.getTexture(this.getSimpleName(), 16, 16);
 		this.itemTextureDepleted = register.getTexture(this.getSimpleName() + "_depleted", 16, 16);
 	}
+	@Override
+	public Icon getTextureFromDamage(int damage) {
+		return damage != 0 ? this.itemTextureDepleted : this.itemTexture;
+	}
 
 	@Override
 	public void getTooltip(ItemStack stack, List<String> tooltip, boolean isAdvanced) {

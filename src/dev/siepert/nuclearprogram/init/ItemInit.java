@@ -179,16 +179,16 @@ public class ItemInit {
 
 		pebbleSourceRa226Be = helper.register("pebbleSourceRa226Be", id -> new ItemFuelPebbleSource(id, 20, 20*60));
 		pebbleFuelNU = helper.register("pebbleFuelNU", id -> new ItemFuelPebble(id,
-				new FuelPebbleStats(0.2F, new ReactivityCurveLog10(1.0F), 4096)
+				new FuelPebbleStats(1.0F, new ReactivityCurveLog10(1.0F), 4096*128)
 		));
 		pebbleFuelMEU = helper.register("pebbleFuelMEU", id -> new ItemFuelPebble(id,
-				new FuelPebbleStats(0.5F, new ReactivityCurveSqrt(1.0F, 1.0F), 4096*8)
+				new FuelPebbleStats(2.0F, new ReactivityCurveSqrt(1.0F, 1.0F), 4096*256)
 		));
 		pebbleFuelHEU235 = helper.register("pebbleFuelHEU235", id -> new ItemFuelPebble(id,
-				new FuelPebbleStats(1.0F, new ReactivityCurveSqrt(1.0F, 2.0F), 4096*4)
+				new FuelPebbleStats(4.0F, new ReactivityCurveSqrt(1.0F, 2.0F), 4096*256)
 		));
 		pebbleFuelMEP239 = helper.register("pebbleFuelMEP239", id -> new ItemFuelPebble(id,
-				new FuelPebbleStats(1.0F, new ReactivityCurveSqrt(2.0F, 1.0F), 4096*8)
+				new FuelPebbleStats(4.0F, new ReactivityCurveSqrt(2.0F, 1.0F), 4096*256)
 		));
 
 		fuelRodRbmkEmpty = helper.register("fuelRodRbmkEmpty", ItemFuelRodRBMK::new);
