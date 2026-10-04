@@ -35,6 +35,9 @@ public class TileEntityInit {
 
 		register(TileEntityDrum.class, "drum", null);
 
+		// Basic processing
+		register(TileEntityManufactory.class, "manufactory", new RenderManufactory());
+
 		// Oil machines
 		register(TileEntityDerrick.class, "derrick", RenderDerrick.INSTANCE);
 		register(TileEntityGasFlare.class, "gasFlare", RenderGasFlare.INSTANCE);

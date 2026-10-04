@@ -81,6 +81,8 @@ public class BlockInit {
 
 	public static BlockDrum drum;
 
+	public static BlockManufactory manufactory;
+
 	public static BlockDerrick derrick;
 	public static BlockDerrickPipe derrickPipe;
 	public static BlockGasFlare gasFlare;
@@ -399,6 +401,13 @@ public class BlockInit {
 		creativeSupply = helper.register("creativeSupply", BlockCreativeSupply::new);
 
 		drum = helper.register("drum", id -> new BlockDrum(id, Material.iron)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(soundMetal2Footstep)
+		);
+
+		manufactory = helper.register("manufactory", id -> new BlockManufactory(id, NPMaterials.multiblock)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(BlockProps.IRON_HARDNESS)
 				.setResistance(BlockProps.IRON_RESISTANCE)

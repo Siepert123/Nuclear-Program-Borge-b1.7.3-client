@@ -128,7 +128,7 @@ public class TileEntityHeatexBoiler extends TileEntity implements IFluidReceiver
 			}
 		}
 		if (fluidType == FluidInit.water_Id) {
-			long remain = amount = (TANK_CAPACITY_WATER - this.tankWater);
+			long remain = amount - (TANK_CAPACITY_WATER - this.tankWater);
 			if (remain <= 0L) {
 				this.tankWater += amount;
 				return 0L;

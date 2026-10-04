@@ -7,10 +7,12 @@ import net.minecraft.src.*;
 import net.minecraftborge.loader.ContainerUtil;
 import net.minecraftborge.loader.EnumFacing;
 import net.minecraftborge.loader.Icon;
+import net.minecraftborge.loader.capability.IItemHandlerModifiable;
 import net.minecraftborge.loader.tag.ItemTags;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 // Based off of NTM's BlockDummyable.
 public abstract class BlockMulti extends BlockContainer {
@@ -250,10 +252,35 @@ public abstract class BlockMulti extends BlockContainer {
 			int[] core = new int[3];
 			if (this.findCore(world, x, y, z, core)) {
 				TileEntity te = world.getBlockTileEntity(core[0], core[1], core[2]);
-				if (te instanceof IInventory && !te.isInvalid()) {
-					IInventory inventory = (IInventory) te;
-					ContainerUtil.dropContents(world, x, y, z, inventory, world.rand);
-					te.invalidate();
+				if (!te.isInvalid()) {
+					if (te instanceof IInventory) {
+						IInventory inventory = (IInventory) te;
+						ContainerUtil.dropContents(world, x, y, z, inventory, world.rand);
+						te.invalidate();
+					} else if (te instanceof IItemHandlerModifiable) {
+						IItemHandlerModifiable inventory = (IItemHandlerModifiable) te;
+						Random rand = new Random();
+						for (int i = 0; i < inventory.getSlots(); i++) {
+							ItemStack stack = inventory.getStackInSlot(i);
+							if (stack != null) {
+								double ix = x + rand.nextFloat() * 0.8F + 0.1F;
+								double iy = y + rand.nextFloat() * 0.8F + 0.1F;
+								double iz = z + rand.nextFloat() * 0.8F + 0.1F;
+
+								while (stack.stackSize > 0) {
+									int size = Math.min(stack.stackSize, rand.nextInt(21) + 10);
+									stack.stackSize -= size;
+
+									Entity entity = stack.getItem().createDroppedEntity(world, ix, iy, iz, new ItemStack(stack.itemID, size, stack.getItemDamage()));
+									entity.motionX = rand.nextGaussian() * 0.05F;
+									entity.motionY = rand.nextGaussian() * 0.05F + 0.2F;
+									entity.motionZ = rand.nextGaussian() * 0.05F;
+									world.entityJoinedWorld(entity);
+								}
+							}
+						}
+						te.invalidate();
+					}
 				}
 				world.setBlockWithNotify(core[0], core[1], core[2], 0);
 			}
