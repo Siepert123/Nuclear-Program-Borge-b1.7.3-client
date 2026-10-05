@@ -21,6 +21,10 @@ public class OBJInit {
 	public static WavefrontObj blast_furnace = null;
 	public static final String blast_furnace_tex = get("blast_furnace");
 
+	// Basic processing
+	public static WavefrontObj manufactory = null;
+	public static final String manufactory_tex = get("manufactory");
+
 	// Oil machines
 	public static WavefrontObj oil_derrick = null;
 	public static final String oil_derrick_tex = get("oil_derrick");
@@ -53,6 +57,9 @@ public class OBJInit {
 		// Transmission
 		transmission_tower = get(factory, "transmission_tower");
 
+		// Basic processing
+		manufactory = get(factory, "manufactory");
+
 		// Early game
 		coke_oven = get(factory, "coke_oven");
 		air_stove = get(factory, "air_stove");
@@ -80,6 +87,9 @@ public class OBJInit {
 		// Transmission
 		transmission_tower.rerender();
 
+		// Basic processing
+		manufactory.rerender();
+
 		// Early game
 		coke_oven.rerender();
 		air_stove.rerender();
@@ -102,6 +112,7 @@ public class OBJInit {
 	}
 
 	private static WavefrontObj get(IObjModelFactory factory, String path) {
+		System.out.println("Loading OBJ data for " + path + " from disc");
 		return new WavefrontObj(factory.create("assets/obj/" + NuclearProgram.MODID + "/" + path + ".obj"));
 	}
 	private static String get(String path) {

@@ -25,4 +25,8 @@ public abstract class TileEntityMachineBase extends TileEntity {
 	public double getMaxRenderDistanceSq() {
 		return Double.POSITIVE_INFINITY;
 	}
+
+	public void setRecipeID(int recipeID) {
+		System.err.println("Tried setting recipe on incompatible machine. This is not allowed. Please do not do this again.");
+	}
 }

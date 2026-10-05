@@ -2,9 +2,12 @@ package dev.siepert.nuclearprogram.world.block;
 
 import dev.siepert.nuclearprogram.cablenet.CableNet;
 import dev.siepert.nuclearprogram.cablenet.node.CNNMultiblockProxy;
+import dev.siepert.nuclearprogram.gui.GuiManufactory;
 import dev.siepert.nuclearprogram.world.block.render.RenderBlockManufactory;
 import dev.siepert.nuclearprogram.world.te.TileEntityManufactory;
 import dev.siepert.nuclearprogram.world.te.TileEntityProxy;
+import net.minecraft.client.Minecraft;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Material;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
@@ -64,6 +67,20 @@ public class BlockManufactory extends BlockMulti {
 		if (meta >= 12) return new TileEntityManufactory();
 		if (meta >= 6) return TileEntityProxy.create(false, true);
 		return null;
+	}
+
+	private final int[] pos = new int[3];
+	@Override
+	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
+		if (player.isSneaking() && player.getCurrentEquippedItem() != null) return false;
+		if (this.findCore(world, x, y, z, this.pos)) {
+			if (!world.multiplayerWorld) {
+				TileEntityManufactory te = (TileEntityManufactory) world.getBlockTileEntity(this.pos[0], this.pos[1], this.pos[2]);
+				Minecraft.getTheMinecraft().displayGuiScreen(new GuiManufactory(player.inventory, te));
+			}
+			return true;
+		}
+		return false;
 	}
 
 	@Override

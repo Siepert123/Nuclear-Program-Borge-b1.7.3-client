@@ -13,6 +13,7 @@ import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
 import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
 import dev.siepert.nuclearprogram.recipe.RTGFuelRecipes;
 import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
+import dev.siepert.nuclearprogram.recipe.template.RecipesManufactory;
 import dev.siepert.nuclearprogram.texturefx.TextureYanoizedFX;
 import dev.siepert.nuclearprogram.util.SingletonWorld;
 import dev.siepert.nuclearprogram.world.block.BlockMetal;
@@ -76,6 +77,9 @@ public class NuclearProgram implements IModLifecycleListener {
 
 		Block.tallGrass.addSeedToDrop(ItemInit.hempSeeds);
 		Block.tallGrass.addSeedToDrop(Item.seeds);
+
+		System.out.println("Initializing Nuclear Program recipes...");
+		RecipesManufactory.INSTANCE.initialize();
 	}
 
 	@Override
