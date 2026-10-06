@@ -2,6 +2,9 @@ package dev.siepert.nuclearprogram.recipe.template;
 
 import dev.siepert.nuclearprogram.recipe.IngredientSized;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.StringTranslate;
+
+import java.util.List;
 
 public class MachineRecipesManager<R extends RecipeGeneric, T extends RecipesGeneric<R>> {
 	public final T recipes;
@@ -54,5 +57,12 @@ public class MachineRecipesManager<R extends RecipeGeneric, T extends RecipesGen
 	public R getRecipe(int index) {
 		if (index < 0 || index >= this.recipes.recipes.size()) return null;
 		return this.recipes.recipes.get(index);
+	}
+	public String getLocalizedName(RecipeGeneric recipe) {
+		return StringTranslate.getInstance().translateNamedKey("recipe." + this.recipes.getName() + "." + recipe.name);
+	}
+	public void addAdditionalData(RecipeGeneric recipe, List<String> tooltip) {
+		// noinspection unchecked
+		this.recipes.addAdditionalData((R) recipe, tooltip);
 	}
 }

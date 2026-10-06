@@ -484,7 +484,14 @@ public class RecipeInit {
 				.addIngredient(Ingredient.of(Block.brick.blockID), 16)
 				.build());
 
-		recipes.addRecipe("hbm/valve", WorkbenchRecipe.builder()
+		recipes.addRecipe(NuclearProgram.path("manufactory"), WorkbenchRecipe.builder()
+				.setResult(new ItemStack(BlockInit.manufactory))
+				.addIngredient(Ingredient.of(ItemInit.plateSteel.shiftedIndex), 16)
+				.addIngredient(Ingredient.of(Item.ingotIron.shiftedIndex), 8)
+				.setTier(BlockWorkbench.STEEL)
+				.build());
+
+		recipes.addRecipe("valve", WorkbenchRecipe.builder()
 				.setResult(new ItemStack(ItemInit.valve, 1))
 				.addIngredient(Ingredient.of("ingotSteel"), 4)
 				.build());

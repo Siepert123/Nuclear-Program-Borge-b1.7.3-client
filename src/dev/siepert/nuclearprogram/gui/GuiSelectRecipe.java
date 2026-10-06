@@ -2,12 +2,15 @@ package dev.siepert.nuclearprogram.gui;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.init.ItemInit;
+import dev.siepert.nuclearprogram.recipe.IngredientSized;
 import dev.siepert.nuclearprogram.recipe.template.MachineRecipesManager;
 import dev.siepert.nuclearprogram.recipe.template.RecipeGeneric;
+import dev.siepert.nuclearprogram.util.NumFormat;
 import dev.siepert.nuclearprogram.util.collect.IntList;
 import dev.siepert.nuclearprogram.util.collect.SizedIntArrayList;
 import dev.siepert.nuclearprogram.util.math.MouseArea;
 import dev.siepert.nuclearprogram.world.fluid.Fluid;
+import dev.siepert.nuclearprogram.world.fluid.FluidStack;
 import dev.siepert.nuclearprogram.world.te.TileEntityMachineBase;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.Icon;
@@ -15,7 +18,9 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -79,6 +84,8 @@ public class GuiSelectRecipe extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTick) {
+		this.drawDefaultBackground();
+
 		super.drawScreen(mouseX, mouseY, partialTick);
 
 		int textureID = this.mc.renderEngine.getTexture(TEXTURE);
@@ -105,10 +112,12 @@ public class GuiSelectRecipe extends GuiScreen {
 		RenderHelper.enableStandardItemLighting();
 		GL11.glPopMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		GL11.glPushAttrib(GL11.GL_DEPTH_BUFFER_BIT);
 		for (int i = this.getStartIdx(); i < Math.min(options.size(), this.getStartIdx() + COLUMNS*ROWS); i++) {
 			ItemStack icon = this.manager.getRecipe(options.get(i)).icon;
 			itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, icon, x+5+(i%COLUMNS)*18, y+13+(i/COLUMNS)*18);
 		}
+		GL11.glPopAttrib();
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		RenderHelper.disableStandardItemLighting();
 
@@ -122,14 +131,56 @@ public class GuiSelectRecipe extends GuiScreen {
 			for (int i = 0; i < recipeAreas.length; i++) {
 				if (recipeAreas[i].isInArea(mx, my)) {
 					if (this.getStartIdx()+i < options.size()) {
+						GL11.glDisable(GL11.GL_DEPTH_TEST);
 						RecipeGeneric recipe = this.manager.getRecipe(options.get(this.getStartIdx()+i));
 						drawTooltipWithGradientBackdrop(this, this.fontRenderer, mouseX + 12, mouseY - 12,
-								recipe.name, Collections.emptyList());
+								this.manager.getLocalizedName(recipe), this.collectRecipeTooltips(recipe),
+								0xFFEFBF04, -1
+						);
+						GL11.glEnable(GL11.GL_DEPTH_TEST);
 					}
 					break;
 				}
 			}
 		}
+	}
+
+	private final List<String> tooltip = new ArrayList<>();
+	private List<String> collectRecipeTooltips(RecipeGeneric recipe) {
+		StringTranslate translate = StringTranslate.getInstance();
+		this.tooltip.clear();
+		if (!recipe.itemsIn.isEmpty() || !recipe.fluidsIn.isEmpty()) {
+			this.tooltip.add("Inputs:");
+			for (IngredientSized in : recipe.itemsIn) {
+				this.tooltip.add(" " + in.size + "x " + translate.translateNamedKey(in.getDisplayItems().get((int) ((System.currentTimeMillis() / 500) % in.getDisplayItems().size())).getItemName()));
+			}
+			for (FluidStack in : recipe.fluidsIn) {
+				this.tooltip.add(" " + in.amount + "mB " + Fluid.getLocalizedName(Fluid.fluidsList[in.fluidType]) + " at " + in.bar + " bar");
+			}
+		}
+		if (!recipe.itemsOut.isEmpty() || !recipe.fluidsOut.isEmpty()) {
+			this.tooltip.add("Outputs:");
+			for (ItemStack out : recipe.itemsOut) {
+				this.tooltip.add(" " + out.stackSize + "x " + translate.translateNamedKey(out.getItemName()));
+			}
+			for (FluidStack out : recipe.fluidsOut) {
+				this.tooltip.add(" " + out.amount + "mB " + Fluid.getLocalizedName(Fluid.fluidsList[out.fluidType]) + " at " + out.bar + " bar");
+			}
+		}
+		boolean energy = this.manager.recipes.includesEnergy();
+		boolean time = this.manager.recipes.includesTime();
+		if (energy || time) {
+			this.tooltip.add("");
+			if (energy && time) {
+				this.tooltip.add((recipe.recipeTicks * 0.05F) + "s at " + NumFormat.format(recipe.energyCost * 20) + "RF/s");
+			} else if (energy) {
+				this.tooltip.add(NumFormat.format(recipe.energyCost * 20) + "RF/s");
+			} else {
+				this.tooltip.add((recipe.recipeTicks * 0.05F) + "s");
+			}
+		}
+		this.manager.addAdditionalData(recipe, this.tooltip);
+		return this.tooltip;
 	}
 
 	@Override

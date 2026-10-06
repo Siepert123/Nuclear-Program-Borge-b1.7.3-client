@@ -41,6 +41,11 @@ public class RecipesManufactory extends RecipesGeneric<RecipeGeneric> {
 		this.validate();
 	}
 
+	@Override
+	public String getName() {
+		return "manufactory";
+	}
+
 	private void validate() {
 		for (RecipeGeneric recipe : this.recipes) {
 			if (recipe.itemsOut.size() != 1) throw new IllegalStateException("Recipe must have exactly one output item!");

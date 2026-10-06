@@ -106,6 +106,7 @@ tile.nuclear_program/animationTest.name=Animation Test
 tile.nuclear_program/extractionTest.name=Debug Bedrock Resource Deposit Extractor
 tile.nuclear_program/creativeSupply.name=Creative Supply
 tile.nuclear_program/drum.name=Fluid Drum
+tile.nuclear_program/manufactory.name=Manufactory
 tile.nuclear_program/derrick.name=Derrick
 tile.nuclear_program/derrickPipe.name=Derrick Pipe
 tile.nuclear_program/gasFlare.name=Gas Flare
@@ -242,3 +243,7 @@ achievement.nuclear_program/fallout=uhh
 achievement.nuclear_program/fallout.desc=idk what is this doing here :joy:
 achievement.nuclear_program/bloomery=Size Matters
 achievement.nuclear_program/bloomery.desc=Craft a Bloomery to finally get some juicy steel
+
+recipe.manufactory.test.name=Test Recipe
+recipe.manufactory.test2.name=Test Recipe 2: Electric Boogaloo
+recipe.manufactory.geeked.name=When you realize you hb A actual geek

@@ -24,4 +24,16 @@ public abstract class RecipesGeneric<T extends RecipeGeneric> {
 	public T getRecipeOrThrow(String name) {
 		return Objects.requireNonNull(this.getRecipe(name), "recipe");
 	}
+
+	public abstract String getName();
+
+	public boolean includesEnergy() {
+		return true;
+	}
+	public boolean includesTime() {
+		return true;
+	}
+	public void addAdditionalData(T recipe, List<String> tooltip) {
+
+	}
 }

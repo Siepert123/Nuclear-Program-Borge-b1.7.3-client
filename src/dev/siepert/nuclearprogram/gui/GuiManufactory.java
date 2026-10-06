@@ -3,11 +3,13 @@ package dev.siepert.nuclearprogram.gui;
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.util.NumFormat;
 import dev.siepert.nuclearprogram.world.te.TileEntityManufactory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import java.util.Collections;
+import java.util.List;
 
 public class GuiManufactory extends GuiContainer {
 	private static final RenderItem itemRenderer = new RenderItem();
@@ -43,20 +45,39 @@ public class GuiManufactory extends GuiContainer {
 
 		this.fontRenderer.drawString(this.te.getInvName(), x + (this.xSize / 2) - (this.fontRenderer.getStringWidth(this.te.getInvName()) / 2), y + 6, 0x404040);
 		this.fontRenderer.drawString("Inventory", x + 8, y + this.ySize - 96 + 2, 0x404040);
-	}
-	@Override
-	protected void drawGuiContainerForegroundLayer() {
+
 		if (this.te.recipe != null) {
+			this.mc.renderEngine.bindTerrainTexture();
+			GL11.glPushAttrib(GL11.GL_DEPTH_BUFFER_BIT);
 			GL11.glPushMatrix();
 			GL11.glRotatef(120.0F, 1.0F, 0.0F, 0.0F);
 			RenderHelper.enableStandardItemLighting();
 			GL11.glPopMatrix();
 			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-			itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, this.te.recipe.icon, 8, 35);
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GL11.glEnable(GL11.GL_BLEND);
+			itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, this.te.recipe.icon, x+8, y+35);
+
+			float a = (MathHelper.sin((Minecraft.getTicksRan() + partialTick) * 0.1F)+1.0F) * 0.2F + 0.2F;
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, a);
+
+			itemRenderer.field_27004_a = false;
+			for (int i = 0; i < this.te.recipe.itemsIn.size(); i++) {
+				List<ItemStack> displays = this.te.recipe.itemsIn.get(i).getDisplayItems();
+				ItemStack display = displays.get((int) ((System.currentTimeMillis() / 500) % displays.size()));
+				itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, display, x + 35 + (i%3)*18, y + 17 + (i/3)*18);
+			}
+			itemRenderer.field_27004_a = true;
+
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 			RenderHelper.disableStandardItemLighting();
+			GL11.glPopAttrib();
 		}
-
+	}
+	@Override
+	protected void drawGuiContainerForegroundLayer() {
 		if (this.inventory.getItemStack() == null) {
 			StringTranslate translate = StringTranslate.getInstance();
 			int x = (this.width - this.xSize) / 2;
