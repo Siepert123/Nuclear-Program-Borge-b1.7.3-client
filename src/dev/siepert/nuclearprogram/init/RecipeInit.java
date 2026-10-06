@@ -247,7 +247,7 @@ public class RecipeInit {
 		recipes.addShapedRecipe(new ItemStack(ItemInit.motor, 1),
 				" X ", "#R#", "#S#",
 				'#', IngredientInit.plateIron,
-				'X', IngredientInit.ingotIron,
+				'X', IngredientInit.wireSteel,
 				'R', ItemInit.rotor,
 				'S', ItemInit.stator
 		);
@@ -494,14 +494,28 @@ public class RecipeInit {
 
 		recipes.addRecipe(NuclearProgram.path("manufactory"), WorkbenchRecipe.builder()
 				.setResult(new ItemStack(BlockInit.manufactory))
-				.addIngredient(Ingredient.of(ItemInit.plateSteel.shiftedIndex), 16)
-				.addIngredient(Ingredient.of(Item.ingotIron.shiftedIndex), 8)
+				.addIngredient(IngredientInit.plateSteel, 16)
+				.addIngredient(IngredientInit.ingotIron, 8)
+				.addIngredient(IngredientInit.ingotCopper, 8)
+				.addIngredient(Ingredient.of(ItemInit.motor.shiftedIndex), 2)
 				.setTier(BlockWorkbench.STEEL)
 				.build());
 
 		recipes.addRecipe("valve", WorkbenchRecipe.builder()
 				.setResult(new ItemStack(ItemInit.valve, 1))
-				.addIngredient(Ingredient.of("ingotSteel"), 4)
+				.addIngredient(IngredientInit.ingotSteel, 4)
+				.build());
+		recipes.addRecipe("stator", WorkbenchRecipe.builder()
+				.setResult(new ItemStack(ItemInit.stator, 1))
+				.addIngredient(IngredientInit.wireCopper, 16)
+				.addIngredient(IngredientInit.ingotIron, 2)
+				.setTier(BlockWorkbench.STEEL)
+				.build());
+		recipes.addRecipe("rotor", WorkbenchRecipe.builder()
+				.setResult(new ItemStack(ItemInit.rotor, 1))
+				.addIngredient(IngredientInit.wireCopper, 8)
+				.addIngredient(IngredientInit.ingotIron, 2)
+				.setTier(BlockWorkbench.STEEL)
 				.build());
 	}
 

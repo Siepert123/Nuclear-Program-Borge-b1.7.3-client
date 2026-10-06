@@ -68,6 +68,12 @@ public class TagInit {
 		ItemTags.tag("plateTitanium", ItemInit.plateTitanium);
 		ItemTags.tag("plateTungsten", ItemInit.plateTungsten);
 		ItemTags.tag("plateSteel", ItemInit.plateSteel);
+
+		ItemTags.tag("wireGold", ItemInit.wireGold);
+		ItemTags.tag("wireCopper", ItemInit.wireCopper);
+		ItemTags.tag("wireTungsten", ItemInit.wireTungsten);
+		ItemTags.tag("wireSteel", ItemInit.wireSteel);
+		ItemTags.tag("wireElectrum", ItemInit.wireElectrum);
 	}
 
 	public static void registerVanillaTags() {

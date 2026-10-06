@@ -33,4 +33,10 @@ public class IngredientInit {
 	public static final Ingredient plateTitanium = Ingredient.of("plateTitanium");
 	public static final Ingredient plateTungsten = Ingredient.of("plateTungsten");
 	public static final Ingredient plateSteel = Ingredient.of("plateSteel");
+
+	public static final Ingredient wireGold = Ingredient.of("wireGold");
+	public static final Ingredient wireCopper = Ingredient.of("wireCopper");
+	public static final Ingredient wireTungsten = Ingredient.of("wireTungsten");
+	public static final Ingredient wireSteel = Ingredient.of("wireSteel");
+	public static final Ingredient wireElectrum = Ingredient.of("wireElectrum");
 }

@@ -58,6 +58,12 @@ public class ItemInit {
 	public static Item plateTungsten;
 	public static Item plateSteel;
 
+	public static Item wireGold;
+	public static Item wireCopper;
+	public static Item wireTungsten;
+	public static Item wireSteel;
+	public static Item wireElectrum;
+
 	public static Item ballFireclay;
 	public static Item firebrick;
 	public static ItemConsumableSeeds potato;
@@ -146,6 +152,12 @@ public class ItemInit {
 		plateTitanium = helper.register("plateTitanium");
 		plateTungsten = helper.register("plateTungsten");
 		plateSteel = helper.register("plateSteel");
+
+		wireGold = helper.register("wireGold");
+		wireCopper = helper.register("wireCopper");
+		wireTungsten = helper.register("wireTungsten");
+		wireSteel = helper.register("wireSteel");
+		wireElectrum = helper.register("wireElectrum");
 
 		ballFireclay = helper.register("ballFireclay");
 		firebrick = helper.register("firebrick");
