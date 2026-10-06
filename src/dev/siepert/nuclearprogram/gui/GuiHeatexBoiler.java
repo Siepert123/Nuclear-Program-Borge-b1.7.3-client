@@ -68,7 +68,7 @@ public class GuiHeatexBoiler extends GuiContainer {
 			int mx = this.mouseX - x;
 			int my = this.mouseY - y;
 
-			if (mx >= 43 && my >= 41 && mx < 43 + 108 && my < 41 + 18) {
+			if (mx >= 34 && my >= 41 && mx < 34 + 108 && my < 41 + 18) {
 				String amount = this.te.tankWater + "/" + TileEntityHeatexBoiler.TANK_CAPACITY_WATER + "mB";
 				drawTooltipWithGradientBackdrop(this, this.fontRenderer, mx + 12, my - 12,
 						translate.translateNamedKey(FluidInit.water.getUnlocalizedName()), Collections.singletonList(amount),
@@ -76,7 +76,7 @@ public class GuiHeatexBoiler extends GuiContainer {
 						0xC0000000, Fluid.colorLookup[FluidInit.water_Id] | 0xC0000000
 				);
 			}
-			if (mx >= 43 && my >= 13 && mx < 43 + 108 && my < 13 + 18) {
+			if (mx >= 34 && my >= 13 && mx < 34 + 108 && my < 13 + 18) {
 				String amount = this.te.tankSteam + "/" + TileEntityHeatexBoiler.TANK_CAPACITY_STEAM + "mB";
 				drawTooltipWithGradientBackdrop(this, this.fontRenderer, mx + 12, my - 12,
 						translate.translateNamedKey(FluidInit.steam.getUnlocalizedName()), Collections.singletonList(amount),

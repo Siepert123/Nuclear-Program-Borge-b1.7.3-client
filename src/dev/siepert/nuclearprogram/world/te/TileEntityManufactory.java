@@ -54,7 +54,9 @@ public class TileEntityManufactory extends TileEntityMachineBase implements IInv
 
 	private boolean hasOutputSpace() {
 		if (this.inventory[9] == null) return true;
-		return false;
+		if (this.recipe == null) return false;
+		if (this.inventory[9].stackSize + this.recipe.itemsOut.get(0).stackSize > this.inventory[9].getMaxStackSize()) return false;
+		return this.inventory[9].isItemEqual(this.recipe.itemsOut.get(0));
 	}
 	public int getEnergyScaled(int h) {
 		return Math.toIntExact((this.energy * h / (MAX_ENERGY + 1)) + 1);
@@ -68,6 +70,10 @@ public class TileEntityManufactory extends TileEntityMachineBase implements IInv
 	public void setRecipeID(int recipeID) {
 		this.recipe = MANAGER.getRecipe(recipeID);
 		this.onInventoryChanged();
+	}
+	@Override
+	public MachineRecipesManager<?, ?> getRecipesManager() {
+		return MANAGER;
 	}
 
 	@Override
@@ -90,7 +96,6 @@ public class TileEntityManufactory extends TileEntityMachineBase implements IInv
 		}
 		nbt.setTag("Inventory", items);
 	}
-
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
@@ -120,7 +125,6 @@ public class TileEntityManufactory extends TileEntityMachineBase implements IInv
 	public int getSlots() {
 		return this.inventory.length;
 	}
-
 	@Override
 	public int getSizeInventory() {
 		return this.getSlots();

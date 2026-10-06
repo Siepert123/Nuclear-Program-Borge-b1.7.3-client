@@ -32,6 +32,21 @@ public class TileEntityHeatexBoiler extends TileEntity implements IFluidReceiver
 		boolean update = false;
 
 		if (!this.worldObj.multiplayerWorld) {
+			if (this.tankCoolantOut > 0L || this.tankSteam > 0L) {
+				for (EnumFacing side : EnumFacing.VALUES) {
+					PipeNetNode node = PipeNet.getNode(this.worldObj,
+							this.xCoord + side.getOffsetX(),
+							this.yCoord + side.getOffsetY(),
+							this.zCoord + side.getOffsetZ()
+					);
+					if (node != null) {
+						update = true;
+						this.tankCoolantOut = node.pushFluid(this.fluidTypeOut, this.tankCoolantOut);
+						this.tankSteam = node.pushFluid(FluidInit.steam_Id, this.tankSteam);
+					}
+				}
+			}
+
 			if (this.tankCoolantIn > 0L && this.tankWater > 0L && this.fluidTypeOut != 0) {
 				long conversion = Math.min(TANK_CAPACITY_COOLANT - this.tankCoolantOut, this.tankCoolantIn);
 				FluidTraitCoolable recipe = Fluid.traitCoolable[this.fluidType];
@@ -44,21 +59,6 @@ public class TileEntityHeatexBoiler extends TileEntity implements IFluidReceiver
 					if (boiled > 0L) {
 						this.tankSteam += boiled * 128L;
 						this.tankWater -= boiled;
-					}
-				}
-			}
-
-			if (this.tankCoolantOut > 0L || this.tankSteam > 0L) {
-				for (EnumFacing side : EnumFacing.VALUES) {
-					PipeNetNode node = PipeNet.getNode(this.worldObj,
-							this.xCoord + side.getOffsetX(),
-							this.yCoord + side.getOffsetY(),
-							this.zCoord + side.getOffsetZ()
-					);
-					if (node != null) {
-						update = true;
-						this.tankCoolantOut = node.pushFluid(this.fluidTypeOut, this.tankCoolantOut);
-						this.tankSteam = node.pushFluid(FluidInit.steam_Id, this.tankSteam);
 					}
 				}
 			}

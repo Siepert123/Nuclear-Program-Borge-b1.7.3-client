@@ -1,5 +1,6 @@
 package dev.siepert.nuclearprogram.world.te;
 
+import dev.siepert.nuclearprogram.recipe.template.MachineRecipesManager;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 
@@ -28,5 +29,8 @@ public abstract class TileEntityMachineBase extends TileEntity {
 
 	public void setRecipeID(int recipeID) {
 		System.err.println("Tried setting recipe on incompatible machine. This is not allowed. Please do not do this again.");
+	}
+	public MachineRecipesManager<?, ?> getRecipesManager() {
+		return null;
 	}
 }

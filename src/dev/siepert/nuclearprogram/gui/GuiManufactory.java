@@ -3,14 +3,14 @@ package dev.siepert.nuclearprogram.gui;
 import dev.siepert.nuclearprogram.NuclearProgram;
 import dev.siepert.nuclearprogram.util.NumFormat;
 import dev.siepert.nuclearprogram.world.te.TileEntityManufactory;
-import net.minecraft.src.GuiContainer;
-import net.minecraft.src.InventoryPlayer;
-import net.minecraft.src.StringTranslate;
+import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import java.util.Collections;
 
 public class GuiManufactory extends GuiContainer {
+	private static final RenderItem itemRenderer = new RenderItem();
 	public static final String TEXTURE = "assets/gui/" + NuclearProgram.path("manufactory.png");
 
 	private final TileEntityManufactory te;
@@ -46,6 +46,17 @@ public class GuiManufactory extends GuiContainer {
 	}
 	@Override
 	protected void drawGuiContainerForegroundLayer() {
+		if (this.te.recipe != null) {
+			GL11.glPushMatrix();
+			GL11.glRotatef(120.0F, 1.0F, 0.0F, 0.0F);
+			RenderHelper.enableStandardItemLighting();
+			GL11.glPopMatrix();
+			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+			itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, this.te.recipe.icon, 8, 35);
+			GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+			RenderHelper.disableStandardItemLighting();
+		}
+
 		if (this.inventory.getItemStack() == null) {
 			StringTranslate translate = StringTranslate.getInstance();
 			int x = (this.width - this.xSize) / 2;
@@ -80,7 +91,8 @@ public class GuiManufactory extends GuiContainer {
 		int my = mouseY - y;
 
 		if (mx >= 7 && my >= 34 && mx < 7+18 && my < 34+18) {
-			this.te.setRecipeID(0);
+			this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
+			this.mc.displayGuiScreen(new GuiSelectRecipe(this, this.te));
 		}
 	}
 }
