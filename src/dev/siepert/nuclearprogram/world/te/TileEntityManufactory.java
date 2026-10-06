@@ -22,6 +22,9 @@ public class TileEntityManufactory extends TileEntityMachineBase implements IInv
 	public RecipeGeneric recipe;
 	public int progress = 0;
 
+	public int animation = 0;
+	public int animationOld = 0;
+
 	public TileEntityManufactory() {
 
 	}
@@ -30,12 +33,14 @@ public class TileEntityManufactory extends TileEntityMachineBase implements IInv
 	public void updateEntity() {
 		boolean update = false;
 
+		this.animationOld = this.animation;
 		if (!this.worldObj.multiplayerWorld) {
 			if (MANAGER.matches(this.recipe, this.energy, this.inventory) && this.hasOutputSpace()) {
 				if (this.progress > 0 || this.energy >= Math.min(this.recipe.recipeTicks, 10) * this.recipe.energyCost) {
 					update = true;
 					this.energy -= this.recipe.energyCost;
 					this.progress++;
+					this.animation++;
 					if (this.progress >= this.recipe.recipeTicks) {
 						this.progress = 0;
 						if (this.inventory[9] == null) this.inventory[9] = this.recipe.itemsOut.get(0).copy();

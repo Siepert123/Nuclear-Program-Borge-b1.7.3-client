@@ -21,7 +21,7 @@ public class RecipeInit {
 		//region Compacting recipes
 		recipes.addShapedRecipe(new ItemStack(BlockInit.blockMetal, 1, BlockMetal.COPPER),
 				"###", "#X#", "###",
-				'#', Ingredient.of("ingotCopper"),
+				'#', IngredientInit.ingotCopper,
 				'X', ItemInit.ingotCopper
 		);
 		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotCopper, 9),
@@ -30,7 +30,7 @@ public class RecipeInit {
 		);
 		recipes.addShapedRecipe(new ItemStack(BlockInit.blockMetal, 1, BlockMetal.ALUMINIUM),
 				"###", "#X#", "###",
-				'#', Ingredient.of("ingotAluminium"),
+				'#', IngredientInit.ingotAluminium,
 				'X', ItemInit.ingotAluminium
 		);
 		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotAluminium, 9),
@@ -39,7 +39,7 @@ public class RecipeInit {
 		);
 		recipes.addShapedRecipe(new ItemStack(BlockInit.blockMetal, 1, BlockMetal.LEAD),
 				"###", "#X#", "###",
-				'#', Ingredient.of("ingotLead"),
+				'#', IngredientInit.ingotLead,
 				'X', ItemInit.ingotLead
 		);
 		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotLead, 9),
@@ -48,7 +48,7 @@ public class RecipeInit {
 		);
 		recipes.addShapedRecipe(new ItemStack(BlockInit.blockMetal, 1, BlockMetal.TITANIUM),
 				"###", "#X#", "###",
-				'#', Ingredient.of("ingotTitanium"),
+				'#', IngredientInit.ingotTitanium,
 				'X', ItemInit.ingotTitanium
 		);
 		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotTitanium, 9),
@@ -57,7 +57,7 @@ public class RecipeInit {
 		);
 		recipes.addShapedRecipe(new ItemStack(BlockInit.blockMetal, 1, BlockMetal.TUNGSTEN),
 				"###", "#X#", "###",
-				'#', Ingredient.of("ingotTungsten"),
+				'#', IngredientInit.ingotTungsten,
 				'X', ItemInit.ingotTungsten
 		);
 		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotTungsten, 9),
@@ -66,7 +66,7 @@ public class RecipeInit {
 		);
 		recipes.addShapedRecipe(new ItemStack(BlockInit.blockMetal, 1, BlockMetal.STEEL),
 				"###", "#X#", "###",
-				'#', Ingredient.of("ingotSteel"),
+				'#', IngredientInit.ingotSteel,
 				'X', ItemInit.ingotSteel
 		);
 		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotSteel, 9),
@@ -75,7 +75,7 @@ public class RecipeInit {
 		);
 		recipes.addShapedRecipe(new ItemStack(BlockInit.blockMetal, 1, BlockMetal.ELECTRUM),
 				"###", "#X#", "###",
-				'#', Ingredient.of("ingotElectrum"),
+				'#', IngredientInit.ingotElectrum,
 				'X', ItemInit.ingotElectrum
 		);
 		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotElectrum, 9),
@@ -84,7 +84,7 @@ public class RecipeInit {
 		);
 		recipes.addShapedRecipe(new ItemStack(BlockInit.blockMetal, 1, BlockMetal.KAUPIUM),
 				"###", "#X#", "###",
-				'#', Ingredient.of("ingotKaupium"),
+				'#', IngredientInit.ingotKaupium,
 				'X', ItemInit.ingotKaupium
 		);
 		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotKaupium, 9),
@@ -93,7 +93,7 @@ public class RecipeInit {
 		);
 		recipes.addShapedRecipe(new ItemStack(BlockInit.blockMetal, 1, BlockMetal.YANOIZED_KAUPIUM),
 				"###", "#X#", "###",
-				'#', Ingredient.of("ingotYanoizedKaupium"),
+				'#', IngredientInit.ingotYanoizedKaupium,
 				'X', ItemInit.ingotYanoizedKaupium
 		);
 		recipes.addShapedRecipe(new ItemStack(ItemInit.ingotYanoizedKaupium, 9),
@@ -165,13 +165,13 @@ public class RecipeInit {
 
 		recipes.addShapedRecipe(new ItemStack(BlockInit.workbench, 1, BlockWorkbench.IRON),
 				"#X#", "#C#", "###",
-				'#', Ingredient.of("ingotIron"),
+				'#', IngredientInit.ingotIron,
 				'X', Ingredient.of("blockIron"),
 				'C', Block.workbench
 		);
 		recipes.addShapedRecipe(new ItemStack(BlockInit.workbench, 1, BlockWorkbench.STEEL),
 				"#X#", "#C#", "###",
-				'#', Ingredient.of("ingotSteel"),
+				'#', IngredientInit.ingotSteel,
 				'X', Ingredient.of("blockSteel"),
 				'C', Ingredient.of(BlockInit.workbench.blockID, BlockWorkbench.IRON)
 		);
@@ -183,12 +183,12 @@ public class RecipeInit {
 		recipes.addShapedRecipe(new ItemStack(BlockInit.bloomeryPipe, 1),
 				"#X#", "#X#", "#X#",
 				'#', Block.brick,
-				'X', Ingredient.of("plateCopper")
+				'X', IngredientInit.plateCopper
 		);
 
 		recipes.addShapedRecipe(new ItemStack(BlockInit.hatch, 1),
 				" X ", "###", " X ",
-				'#', Ingredient.of("ingotSteel"),
+				'#', IngredientInit.ingotSteel,
 				'X', ItemInit.valve
 		);
 
@@ -244,6 +244,14 @@ public class RecipeInit {
 				'X', Item.bread
 		);
 
+		recipes.addShapedRecipe(new ItemStack(ItemInit.motor, 1),
+				" X ", "#R#", "#S#",
+				'#', IngredientInit.plateIron,
+				'X', IngredientInit.ingotIron,
+				'R', ItemInit.rotor,
+				'S', ItemInit.stator
+		);
+
 		recipes.addShapedRecipe(new ItemStack(ItemInit.hammer, 1),
 				"## ", "##X", "## ",
 				'#', IngredientInit.ingotIron,
@@ -257,13 +265,13 @@ public class RecipeInit {
 		recipes.addShapedRecipe(new ItemStack(ItemInit.screwdriver, 1),
 				"  X", "D# ", "#D ",
 				'#', IngredientInit.ingotIron,
-				'X', Ingredient.of("plateIron"),
+				'X', IngredientInit.plateIron,
 				'D', Ingredient.of("dyeAny")
 		);
 
 		recipes.addShapedRecipe(new ItemStack(ItemInit.fuelRodEmpty, 2),
 				"#", "#", "#",
-				'#', Ingredient.of("plateLead")
+				'#', IngredientInit.plateLead
 		);
 		recipes.addShapedRecipe(new ItemStack(ItemInit.fuelRodEmpty, 4),
 				"#",
@@ -276,7 +284,7 @@ public class RecipeInit {
 
 		recipes.addShapedRecipe(new ItemStack(ItemInit.fluidIdentifier, 1, 0),
 				"D", "#",
-				'#', Ingredient.of("plateIron"),
+				'#', IngredientInit.plateIron,
 				'D', Ingredient.of("dyeAny")
 		);
 

@@ -74,6 +74,9 @@ public class ItemInit {
 	public static ItemFood uraniumSandwich;
 
 	public static Item valve;
+	public static Item stator;
+	public static Item rotor;
+	public static Item motor;
 
 	public static ItemCraftingTool hammer;
 	public static ItemCraftingTool cutters;
@@ -160,6 +163,9 @@ public class ItemInit {
 		uraniumSandwich = helper.register("uraniumSandwich", id -> new ItemFood(id, 1000, false));
 
 		valve = helper.register("valve");
+		stator = helper.register("stator");
+		rotor = helper.register("rotor");
+		motor = helper.register("motor");
 
 		hammer = helper.register("hammer", id -> new ItemCraftingTool(id)
 				.setMaxDamage(256)

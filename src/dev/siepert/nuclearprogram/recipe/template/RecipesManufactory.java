@@ -37,6 +37,13 @@ public class RecipesManufactory extends RecipesGeneric<RecipeGeneric> {
 						new ItemStack(BlockInit.cableElectrum, 8)
 				).setIconToFirstOutput()
 		);
+		this.add(new RecipeGeneric("poop").setRecipeTicks(1000).setEnergyCost(1000)
+				.setInputItems(
+						new IngredientSized(Ingredient.of(Block.gravel.blockID))
+				).setOutputItems(
+						new ItemStack(Item.diamond, 1)
+				).setIconToFirstOutput()
+		);
 
 		this.validate();
 	}

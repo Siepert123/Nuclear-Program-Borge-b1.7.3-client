@@ -77,9 +77,6 @@ public class NuclearProgram implements IModLifecycleListener {
 
 		Block.tallGrass.addSeedToDrop(ItemInit.hempSeeds);
 		Block.tallGrass.addSeedToDrop(Item.seeds);
-
-		System.out.println("Initializing Nuclear Program recipes...");
-		RecipesManufactory.INSTANCE.initialize();
 	}
 
 	@Override
@@ -108,6 +105,8 @@ public class NuclearProgram implements IModLifecycleListener {
 		RecipeInit.builderFurnace(BuilderFurnaceRecipes.smelting());
 		RecipeInit.bloomery(BloomeryRecipes.blooming());
 		RecipeInit.rtgFuel(RTGFuelRecipes.instance());
+
+		RecipesManufactory.INSTANCE.initialize();
 	}
 
 	@EventHandler

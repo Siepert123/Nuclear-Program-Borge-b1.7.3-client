@@ -24,4 +24,13 @@ public class IngredientInit {
 	public static final Ingredient ingotThorium = Ingredient.of("ingotThorium");
 	public static final Ingredient ingotKaupium = Ingredient.of("ingotKaupium");
 	public static final Ingredient ingotYanoizedKaupium = Ingredient.of("ingotYanoizedKaupium");
+
+	public static final Ingredient plateIron = Ingredient.of("plateIron");
+	public static final Ingredient plateGold = Ingredient.of("plateGold");
+	public static final Ingredient plateCopper = Ingredient.of("plateCopper");
+	public static final Ingredient plateAluminium = Ingredient.of("plateAluminium");
+	public static final Ingredient plateLead = Ingredient.of("plateLead");
+	public static final Ingredient plateTitanium = Ingredient.of("plateTitanium");
+	public static final Ingredient plateTungsten = Ingredient.of("plateTungsten");
+	public static final Ingredient plateSteel = Ingredient.of("plateSteel");
 }

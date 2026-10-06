@@ -6,6 +6,8 @@ import dev.siepert.nuclearprogram.util.WavefrontObj;
 import net.minecraft.src.RenderHelper;
 
 public class OBJInit {
+	public static final String dynamic_tex = null;
+
 	public static WavefrontObj animation_test = null;
 	public static final String animation_test_tex = get("animation_test");
 
