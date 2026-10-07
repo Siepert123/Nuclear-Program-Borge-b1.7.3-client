@@ -160,6 +160,7 @@ item.nuclear_program/plateLead.name=Lead Plate
 item.nuclear_program/plateTitanium.name=Titanium Plate
 item.nuclear_program/plateTungsten.name=Tungsten Plate
 item.nuclear_program/plateSteel.name=Steel Plate
+item.nuclear_program/plateElectrum.name=Electrum Plate
 item.nuclear_program/wireGold.name=Gold Wire
 item.nuclear_program/wireCopper.name=Copper Wire
 item.nuclear_program/wireTungsten.name=Tungsten Wire

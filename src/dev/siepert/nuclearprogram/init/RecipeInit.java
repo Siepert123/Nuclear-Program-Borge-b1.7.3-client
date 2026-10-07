@@ -228,6 +228,31 @@ public class RecipeInit {
 				ItemInit.hammer,
 				IngredientInit.ingotSteel
 		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.plateElectrum, 1),
+				ItemInit.hammer,
+				IngredientInit.ingotElectrum
+		);
+
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.wireGold, 4),
+				ItemInit.cutters,
+				IngredientInit.plateGold
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.wireCopper, 4),
+				ItemInit.cutters,
+				IngredientInit.plateCopper
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.wireTungsten, 4),
+				ItemInit.cutters,
+				IngredientInit.plateTungsten
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.wireSteel, 4),
+				ItemInit.cutters,
+				IngredientInit.plateSteel
+		);
+		recipes.addShapelessRecipe(new ItemStack(ItemInit.wireElectrum, 4),
+				ItemInit.cutters,
+				IngredientInit.plateElectrum
+		);
 
 		recipes.addShapelessRecipe(new ItemStack(ItemInit.ballFireclay, 4),
 				Item.clay, Item.clay, Item.clay,

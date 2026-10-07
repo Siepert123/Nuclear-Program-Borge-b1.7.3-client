@@ -68,6 +68,7 @@ public class TagInit {
 		ItemTags.tag("plateTitanium", ItemInit.plateTitanium);
 		ItemTags.tag("plateTungsten", ItemInit.plateTungsten);
 		ItemTags.tag("plateSteel", ItemInit.plateSteel);
+		ItemTags.tag("plateElectrum", ItemInit.plateElectrum);
 
 		ItemTags.tag("wireGold", ItemInit.wireGold);
 		ItemTags.tag("wireCopper", ItemInit.wireCopper);
@@ -78,6 +79,7 @@ public class TagInit {
 
 	public static void registerVanillaTags() {
 		if (ItemTags.getTagged("dyeAny").stream().noneMatch(stack -> stack.itemID == Item.dyePowder.shiftedIndex)) {
+			System.err.println("Vanilla dyes are improperly tagged; fixing...");
 			for (int i = 0; i < 16; i++) ItemTags.tag("dyeAny", new ItemStack(Item.dyePowder, 1, i));
 		}
 
