@@ -1,6 +1,8 @@
 package dev.siepert.nuclearprogram.recipe.template;
 
 import dev.siepert.nuclearprogram.init.BlockInit;
+import dev.siepert.nuclearprogram.init.IngredientInit;
+import dev.siepert.nuclearprogram.init.ItemInit;
 import dev.siepert.nuclearprogram.recipe.IngredientSized;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
@@ -12,6 +14,16 @@ public class RecipesManufactory extends RecipesGeneric<RecipeGeneric> {
 
 	@Override
 	public void initialize() {
+		this.add(new RecipeGeneric("motor").setRecipeTicks(100).setEnergyCost(100)
+				.setInputItems(
+						new IngredientSized(Ingredient.of(ItemInit.stator.shiftedIndex)),
+						new IngredientSized(Ingredient.of(ItemInit.rotor.shiftedIndex)),
+						new IngredientSized(IngredientInit.plateSteel, 2)
+				).setOutputItems(
+						new ItemStack(ItemInit.motor)
+				).setIconToFirstOutput()
+		);
+
 		this.add(new RecipeGeneric("test").setRecipeTicks(100).setEnergyCost(100)
 				.setInputItems(
 						new IngredientSized(Ingredient.of("ingotIron"), 16),

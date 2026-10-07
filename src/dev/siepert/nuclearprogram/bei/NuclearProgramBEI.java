@@ -12,6 +12,8 @@ import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.init.ItemInit;
 import dev.siepert.nuclearprogram.recipe.*;
 import dev.siepert.nuclearprogram.recipe.crafting.CraftingRecycleFuelRod;
+import dev.siepert.nuclearprogram.recipe.template.RecipeGeneric;
+import dev.siepert.nuclearprogram.recipe.template.RecipesManufactory;
 import net.minecraft.src.*;
 import net.minecraftborge.loader.Ingredient;
 
@@ -33,6 +35,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		registration.registerCategory(NPRecipeCategories.WORKBENCH, new RecipeCategoryWorkbench());
 		registration.registerCategory(NPRecipeCategories.BLOOMERY, new RecipeCategoryBloomery());
 		registration.registerCategory(NPRecipeCategories.BLAST_FURNACE, new RecipeCategoryBlastFurnace());
+		registration.registerCategory(NPRecipeCategories.MANUFACTORY, new RecipeCategoryManufactory());
 		registration.registerCategory(NPRecipeCategories.GAS_CENTRIFUGE, new RecipeCategoryGasCentrifuge());
 		registration.registerCategory(NPRecipeCategories.RTG_FUEL, new RecipeCategoryRTGFuel());
 	}
@@ -101,6 +104,12 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		blastingRecipes.add(new RecipeBlastFurnace(Ingredient.of("ingotIron"), new ItemStack(ItemInit.ingotSteel, 1), null));
 		registration.addRecipes(blastFurnace, blastingRecipes);
 		System.out.println(blastingRecipes.size() + " blasting recipes");
+
+		// Manufacturing category
+		IRecipeCategory<RecipeGeneric> manufactory = registration.getCategoryByUID(NPRecipeCategories.MANUFACTORY);
+		List<RecipeGeneric> manufacturingRecipes = RecipesManufactory.INSTANCE.recipes;
+		registration.addRecipes(manufactory, manufacturingRecipes);
+		System.out.println(manufacturingRecipes.size() + " manufacturing recipes");
 
 		// Gas Centrifuging category
 		IRecipeCategory<RecipeGasCentrifuge> gasCentrifuge = registration.getCategoryByUID(NPRecipeCategories.GAS_CENTRIFUGE);
