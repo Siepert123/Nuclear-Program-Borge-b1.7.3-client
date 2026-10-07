@@ -6,6 +6,7 @@ import dev.siepert.nuclearprogram.gui.GuiManufactory;
 import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.recipe.IngredientSized;
 import dev.siepert.nuclearprogram.recipe.template.RecipeGeneric;
+import dev.siepert.nuclearprogram.util.NumFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.ItemStack;
@@ -65,7 +66,8 @@ public class RecipeCategoryManufactory implements IRecipeCategory<RecipeGeneric>
 	}
 	@Override
 	public void drawTexts(Minecraft mc, FontRenderer font, int x, int y, double mouseX, double mouseY, RecipeGeneric recipe, float pt) {
-
+		font.drawString(recipe.recipeTicks + " ticks", x+56, y+1, 0xFF444444);
+		font.drawString(NumFormat.format(recipe.energyCost) + "RF/t", x+56, y+10, 0xFF444444);
 	}
 
 	public void drawTexturedModalRect(Tessellator tes, int x, int y, int srcX, int srcY, int w, int h) {

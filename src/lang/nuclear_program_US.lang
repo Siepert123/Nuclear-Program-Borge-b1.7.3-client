@@ -253,6 +253,8 @@ achievement.nuclear_program/fallout.desc=idk what is this doing here :joy:
 achievement.nuclear_program/bloomery=Size Matters
 achievement.nuclear_program/bloomery.desc=Craft a Bloomery to finally get some juicy steel
 
+recipe.manufactory.motor.name=Motor
 recipe.manufactory.test.name=Test Recipe
 recipe.manufactory.test2.name=Test Recipe 2: Electric Boogaloo
 recipe.manufactory.geeked.name=When you realize you hb A actual geek
+recipe.manufactory.poop.name=poop in a kettle

@@ -186,6 +186,12 @@ public class RecipeInit {
 				'X', IngredientInit.plateCopper
 		);
 
+		recipes.addShapedRecipe(new ItemStack(BlockInit.cableElectrum, 16),
+				"X#X", "###", "X#X",
+				'#', IngredientInit.wireElectrum,
+				'X', Ingredient.of("wool")
+		);
+
 		recipes.addShapedRecipe(new ItemStack(BlockInit.hatch, 1),
 				" X ", "###", " X ",
 				'#', IngredientInit.ingotSteel,
@@ -523,6 +529,7 @@ public class RecipeInit {
 				.addIngredient(IngredientInit.ingotIron, 8)
 				.addIngredient(IngredientInit.ingotCopper, 8)
 				.addIngredient(Ingredient.of(ItemInit.motor.shiftedIndex), 2)
+				.addIngredient(IngredientInit.wireElectrum, 8)
 				.setTier(BlockWorkbench.STEEL)
 				.build());
 
@@ -540,6 +547,19 @@ public class RecipeInit {
 				.setResult(new ItemStack(ItemInit.rotor, 1))
 				.addIngredient(IngredientInit.wireCopper, 8)
 				.addIngredient(IngredientInit.ingotIron, 2)
+				.setTier(BlockWorkbench.STEEL)
+				.build());
+
+		recipes.addRecipe("ductCopper", WorkbenchRecipe.builder()
+				.setResult(new ItemStack(BlockInit.fluidPipeCopper, 1))
+				.addIngredient(IngredientInit.plateCopper, 1)
+				.setTier(BlockWorkbench.IRON)
+				.build());
+
+		recipes.addRecipe("temporaryElectrum", WorkbenchRecipe.builder()
+				.setResult(new ItemStack(ItemInit.ingotElectrum, 4))
+				.addIngredient(IngredientInit.ingotGold, 1)
+				.addIngredient(IngredientInit.ingotCopper, 3)
 				.setTier(BlockWorkbench.STEEL)
 				.build());
 	}
