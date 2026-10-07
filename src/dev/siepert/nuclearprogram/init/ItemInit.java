@@ -84,6 +84,7 @@ public class ItemInit {
 	public static Item stator;
 	public static Item rotor;
 	public static Item motor;
+	public static Item heatsink;
 
 	public static ItemCraftingTool hammer;
 	public static ItemCraftingTool cutters;
@@ -180,6 +181,7 @@ public class ItemInit {
 		stator = helper.register("stator");
 		rotor = helper.register("rotor");
 		motor = helper.register("motor");
+		heatsink = helper.register("heatsink");
 
 		hammer = helper.register("hammer", id -> new ItemCraftingTool(id)
 				.setMaxDamage(256)

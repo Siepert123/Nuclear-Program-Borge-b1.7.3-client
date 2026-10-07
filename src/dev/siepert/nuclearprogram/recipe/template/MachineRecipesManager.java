@@ -1,6 +1,9 @@
 package dev.siepert.nuclearprogram.recipe.template;
 
 import dev.siepert.nuclearprogram.recipe.IngredientSized;
+import dev.siepert.nuclearprogram.util.NumFormat;
+import dev.siepert.nuclearprogram.world.fluid.Fluid;
+import dev.siepert.nuclearprogram.world.fluid.FluidStack;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.StringTranslate;
 
@@ -64,5 +67,42 @@ public class MachineRecipesManager<R extends RecipeGeneric, T extends RecipesGen
 	public void addAdditionalData(RecipeGeneric recipe, List<String> tooltip) {
 		// noinspection unchecked
 		this.recipes.addAdditionalData((R) recipe, tooltip);
+	}
+
+	public List<String> collectRecipeTooltips(RecipeGeneric recipe, List<String> tooltip) {
+		StringTranslate translate = StringTranslate.getInstance();
+		tooltip.clear();
+		if (!recipe.itemsIn.isEmpty() || !recipe.fluidsIn.isEmpty()) {
+			tooltip.add("Inputs:");
+			for (IngredientSized in : recipe.itemsIn) {
+				tooltip.add(" " + in.size + "x " + translate.translateNamedKey(in.getDisplayItems().get((int) ((System.currentTimeMillis() / 500) % in.getDisplayItems().size())).getItemName()));
+			}
+			for (FluidStack in : recipe.fluidsIn) {
+				tooltip.add(" " + in.amount + "mB " + Fluid.getLocalizedName(Fluid.fluidsList[in.fluidType]) + " at " + in.bar + " bar");
+			}
+		}
+		if (!recipe.itemsOut.isEmpty() || !recipe.fluidsOut.isEmpty()) {
+			tooltip.add("Outputs:");
+			for (ItemStack out : recipe.itemsOut) {
+				tooltip.add(" " + out.stackSize + "x " + translate.translateNamedKey(out.getItemName()));
+			}
+			for (FluidStack out : recipe.fluidsOut) {
+				tooltip.add(" " + out.amount + "mB " + Fluid.getLocalizedName(Fluid.fluidsList[out.fluidType]) + " at " + out.bar + " bar");
+			}
+		}
+		boolean energy = this.recipes.includesEnergy();
+		boolean time = this.recipes.includesTime();
+		if (energy || time) {
+			tooltip.add("");
+			if (energy && time) {
+				tooltip.add((recipe.recipeTicks * 0.05F) + "s at " + NumFormat.format(recipe.energyCost * 20) + "RF/s");
+			} else if (energy) {
+				tooltip.add(NumFormat.format(recipe.energyCost * 20) + "RF/s");
+			} else {
+				tooltip.add((recipe.recipeTicks * 0.05F) + "s");
+			}
+		}
+		this.addAdditionalData(recipe, tooltip);
+		return tooltip;
 	}
 }

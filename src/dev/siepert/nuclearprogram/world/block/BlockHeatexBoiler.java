@@ -8,10 +8,15 @@ import dev.siepert.nuclearprogram.world.fluid.Fluid;
 import dev.siepert.nuclearprogram.world.te.TileEntityHeatexBoiler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
+import net.minecraftborge.loader.Icon;
+import net.minecraftborge.loader.IconRegister;
+import net.minecraftborge.loader.Side;
 
 import java.util.List;
 
-public class BlockHeatexBoiler extends BlockContainer implements IFluidIdentifiable, IOverlayInfo {
+public class BlockHeatexBoiler extends BlockContainer implements IFluidIdentifiable {
+	public Icon blockTextureTop, blockTextureBottom;
+
 	public BlockHeatexBoiler(int blockID, Material material) {
 		super(blockID, material);
 
@@ -46,6 +51,20 @@ public class BlockHeatexBoiler extends BlockContainer implements IFluidIdentifia
 	}
 
 	@Override
+	public void registerIcons(IconRegister register) {
+		super.registerIcons(register);
+		this.blockTextureTop = register.getTexture(this.getSimpleName() + "_top", 16, 16);
+		this.blockTextureBottom = register.getTexture(this.getSimpleName() + "_bottom", 16, 16);
+	}
+
+	@Override
+	public Icon getBlockIconFromSide(int side) {
+		if (side == Side.UP) return this.blockTextureTop;
+		if (side == Side.DOWN) return this.blockTextureBottom;
+		return this.blockTexture;
+	}
+
+	@Override
 	public void setFluidID(World world, int x, int y, int z, int fluidID) {
 		if (Fluid.traitCoolable[fluidID] != null) {
 			TileEntityHeatexBoiler te = (TileEntityHeatexBoiler) world.getBlockTileEntity(x, y, z);
@@ -53,18 +72,5 @@ public class BlockHeatexBoiler extends BlockContainer implements IFluidIdentifia
 			te.fluidTypeOut = Fluid.traitCoolable[fluidID].coolsTo;
 			te.onInventoryChanged();
 		}
-	}
-
-	@Override
-	public void addInformation(World world, int x, int y, int z, List<String> information, IntList colors) {
-		TileEntityHeatexBoiler te = (TileEntityHeatexBoiler) world.getBlockTileEntity(x, y, z);
-		information.add("-> " + Fluid.getLocalizedName(Fluid.fluidsList[te.fluidType]) + " " + te.tankCoolantIn + "mB");
-		colors.add(0xFFFFFF);
-		information.add("<- " + Fluid.getLocalizedName(Fluid.fluidsList[te.fluidTypeOut]) + " " + te.tankCoolantOut + "mB");
-		colors.add(0xFFFFFF);
-		information.add("-> Water " + te.tankWater + "mB");
-		colors.add(0xFFFFFF);
-		information.add("<- Steam " + te.tankSteam + "mB");
-		colors.add(0xFFFFFF);
 	}
 }

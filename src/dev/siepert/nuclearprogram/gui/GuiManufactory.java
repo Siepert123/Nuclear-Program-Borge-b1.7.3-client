@@ -1,6 +1,8 @@
 package dev.siepert.nuclearprogram.gui;
 
 import dev.siepert.nuclearprogram.NuclearProgram;
+import dev.siepert.nuclearprogram.recipe.template.MachineRecipesManager;
+import dev.siepert.nuclearprogram.recipe.template.RecipeGeneric;
 import dev.siepert.nuclearprogram.util.NumFormat;
 import dev.siepert.nuclearprogram.world.te.TileEntityManufactory;
 import net.minecraft.client.Minecraft;
@@ -8,6 +10,7 @@ import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +18,7 @@ public class GuiManufactory extends GuiContainer {
 	private static final RenderItem itemRenderer = new RenderItem();
 	public static final String TEXTURE = "assets/gui/" + NuclearProgram.path("manufactory.png");
 
+	private final List<String> tooltip = new ArrayList<>();
 	private final TileEntityManufactory te;
 	private final InventoryPlayer inventory;
 	private int mouseX, mouseY;
@@ -91,6 +95,20 @@ public class GuiManufactory extends GuiContainer {
 						-1, -1,
 						0xC0FF0000, 0xC07F0000
 				);
+			}
+			if (mx >= 7 && my >= 34 && mx < 7+18 && my < 34+18) {
+				if (this.te.recipe != null) {
+					RecipeGeneric recipe = this.te.recipe;
+					MachineRecipesManager<?, ?> manager = this.te.getRecipesManager();
+					drawTooltipWithGradientBackdrop(this, this.fontRenderer, mx + 12, my - 12,
+							manager.getLocalizedName(this.te.recipe), manager.collectRecipeTooltips(recipe, this.tooltip),
+							0xFFEFBF04, -1
+					);
+				} else {
+					drawTooltipWithGradientBackdrop(this, this.fontRenderer, mx + 12, my - 12,
+							"Select recipe...", Collections.emptyList()
+					);
+				}
 			}
 		}
 	}

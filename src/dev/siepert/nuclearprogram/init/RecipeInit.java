@@ -180,6 +180,11 @@ public class RecipeInit {
 				'#', Ingredient.of("stone"),
 				'X', Ingredient.of(Block.stairSingle.blockID, 0)
 		);
+		recipes.addShapedRecipe(new ItemStack(BlockInit.hatch, 1),
+				" X ", "###", " X ",
+				'#', IngredientInit.ingotSteel,
+				'X', ItemInit.valve
+		);
 		recipes.addShapedRecipe(new ItemStack(BlockInit.bloomeryPipe, 1),
 				"#X#", "#X#", "#X#",
 				'#', Block.brick,
@@ -189,13 +194,14 @@ public class RecipeInit {
 		recipes.addShapedRecipe(new ItemStack(BlockInit.cableElectrum, 16),
 				"X#X", "###", "X#X",
 				'#', IngredientInit.wireElectrum,
-				'X', Ingredient.of("wool")
+				'X', Ingredient.of("cloth")
 		);
 
-		recipes.addShapedRecipe(new ItemStack(BlockInit.hatch, 1),
-				" X ", "###", " X ",
+		recipes.addShapedRecipe(new ItemStack(BlockInit.simpleCondenser, 1),
+				"#X#", "#C#", "#X#",
 				'#', IngredientInit.ingotSteel,
-				'X', ItemInit.valve
+				'X', ItemInit.heatsink,
+				'C', BlockInit.fluidPipeCopper
 		);
 
 		//endregion
@@ -281,6 +287,11 @@ public class RecipeInit {
 				'X', IngredientInit.wireSteel,
 				'R', ItemInit.rotor,
 				'S', ItemInit.stator
+		);
+		recipes.addShapedRecipe(new ItemStack(ItemInit.heatsink, 4),
+				"XXX", "XXX", "###",
+				'#', IngredientInit.ingotAluminium,
+				'X', IngredientInit.plateAluminium
 		);
 
 		recipes.addShapedRecipe(new ItemStack(ItemInit.hammer, 1),

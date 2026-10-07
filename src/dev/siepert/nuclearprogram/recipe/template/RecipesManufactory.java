@@ -4,8 +4,6 @@ import dev.siepert.nuclearprogram.init.BlockInit;
 import dev.siepert.nuclearprogram.init.IngredientInit;
 import dev.siepert.nuclearprogram.init.ItemInit;
 import dev.siepert.nuclearprogram.recipe.IngredientSized;
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraftborge.loader.Ingredient;
 
@@ -23,37 +21,13 @@ public class RecipesManufactory extends RecipesGeneric<RecipeGeneric> {
 						new ItemStack(ItemInit.motor)
 				).setIconToFirstOutput()
 		);
-
-		this.add(new RecipeGeneric("test").setRecipeTicks(100).setEnergyCost(100)
+		this.add(new RecipeGeneric("heatex_boiler").setRecipeTicks(200).setEnergyCost(250)
 				.setInputItems(
-						new IngredientSized(Ingredient.of("ingotIron"), 16),
-						new IngredientSized(Ingredient.of("plateCopper"), 8)
+						new IngredientSized(IngredientInit.plateCopper, 16),
+						new IngredientSized(Ingredient.of(BlockInit.fluidPipeCopper.blockID), 3),
+						new IngredientSized(IngredientInit.ingotSteel, 8)
 				).setOutputItems(
-						new ItemStack(BlockInit.simpleTurbine)
-				).setIconToFirstOutput()
-		);
-		this.add(new RecipeGeneric("test2").setRecipeTicks(100).setEnergyCost(100)
-				.setInputItems(
-						new IngredientSized(Ingredient.of("ingotCopper"), 16),
-						new IngredientSized(Ingredient.of("plateIron"), 8)
-				).setOutputItems(
-						new ItemStack(BlockInit.simpleCondenser)
-				).setIconToFirstOutput()
-		);
-		this.add(new RecipeGeneric("geeked").setRecipeTicks(100).setEnergyCost(100)
-				.setInputItems(
-						new IngredientSized(Ingredient.of(Block.dirt.blockID), 64),
-						new IngredientSized(Ingredient.of(Block.cobblestone.blockID), 64),
-						new IngredientSized(Ingredient.of(Item.stick.shiftedIndex), 64)
-				).setOutputItems(
-						new ItemStack(BlockInit.cableElectrum, 8)
-				).setIconToFirstOutput()
-		);
-		this.add(new RecipeGeneric("poop").setRecipeTicks(1000).setEnergyCost(1000)
-				.setInputItems(
-						new IngredientSized(Ingredient.of(Block.gravel.blockID))
-				).setOutputItems(
-						new ItemStack(Item.diamond, 1)
+						new ItemStack(BlockInit.heatexBoiler)
 				).setIconToFirstOutput()
 		);
 

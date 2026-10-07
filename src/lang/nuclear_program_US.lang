@@ -182,6 +182,7 @@ item.nuclear_program/valve.name=Valve Handle
 item.nuclear_program/stator.name=Stator
 item.nuclear_program/rotor.name=Rotor
 item.nuclear_program/motor.name=Motor
+item.nuclear_program/heatsink.name=Heatsink
 item.nuclear_program/hammer.name=Hammer
 item.nuclear_program/cutters.name=Wire Cutters
 item.nuclear_program/screwdriver.name=Screwdriver
@@ -254,7 +255,4 @@ achievement.nuclear_program/bloomery=Size Matters
 achievement.nuclear_program/bloomery.desc=Craft a Bloomery to finally get some juicy steel
 
 recipe.manufactory.motor.name=Motor
-recipe.manufactory.test.name=Test Recipe
-recipe.manufactory.test2.name=Test Recipe 2: Electric Boogaloo
-recipe.manufactory.geeked.name=When you realize you hb A actual geek
-recipe.manufactory.poop.name=poop in a kettle
+recipe.manufactory.heatex_boiler.name=HeatEx(TM) Boiler

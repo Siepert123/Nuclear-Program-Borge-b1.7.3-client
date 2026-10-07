@@ -134,7 +134,7 @@ public class GuiSelectRecipe extends GuiScreen {
 						GL11.glDisable(GL11.GL_DEPTH_TEST);
 						RecipeGeneric recipe = this.manager.getRecipe(options.get(this.getStartIdx()+i));
 						drawTooltipWithGradientBackdrop(this, this.fontRenderer, mouseX + 12, mouseY - 12,
-								this.manager.getLocalizedName(recipe), this.collectRecipeTooltips(recipe),
+								this.getLocalizedName(recipe), this.collectRecipeTooltips(recipe),
 								0xFFEFBF04, -1
 						);
 						GL11.glEnable(GL11.GL_DEPTH_TEST);
@@ -145,42 +145,13 @@ public class GuiSelectRecipe extends GuiScreen {
 		}
 	}
 
+	private String getLocalizedName(RecipeGeneric recipe) {
+		return this.manager.getLocalizedName(recipe);
+	}
+
 	private final List<String> tooltip = new ArrayList<>();
 	private List<String> collectRecipeTooltips(RecipeGeneric recipe) {
-		StringTranslate translate = StringTranslate.getInstance();
-		this.tooltip.clear();
-		if (!recipe.itemsIn.isEmpty() || !recipe.fluidsIn.isEmpty()) {
-			this.tooltip.add("Inputs:");
-			for (IngredientSized in : recipe.itemsIn) {
-				this.tooltip.add(" " + in.size + "x " + translate.translateNamedKey(in.getDisplayItems().get((int) ((System.currentTimeMillis() / 500) % in.getDisplayItems().size())).getItemName()));
-			}
-			for (FluidStack in : recipe.fluidsIn) {
-				this.tooltip.add(" " + in.amount + "mB " + Fluid.getLocalizedName(Fluid.fluidsList[in.fluidType]) + " at " + in.bar + " bar");
-			}
-		}
-		if (!recipe.itemsOut.isEmpty() || !recipe.fluidsOut.isEmpty()) {
-			this.tooltip.add("Outputs:");
-			for (ItemStack out : recipe.itemsOut) {
-				this.tooltip.add(" " + out.stackSize + "x " + translate.translateNamedKey(out.getItemName()));
-			}
-			for (FluidStack out : recipe.fluidsOut) {
-				this.tooltip.add(" " + out.amount + "mB " + Fluid.getLocalizedName(Fluid.fluidsList[out.fluidType]) + " at " + out.bar + " bar");
-			}
-		}
-		boolean energy = this.manager.recipes.includesEnergy();
-		boolean time = this.manager.recipes.includesTime();
-		if (energy || time) {
-			this.tooltip.add("");
-			if (energy && time) {
-				this.tooltip.add((recipe.recipeTicks * 0.05F) + "s at " + NumFormat.format(recipe.energyCost * 20) + "RF/s");
-			} else if (energy) {
-				this.tooltip.add(NumFormat.format(recipe.energyCost * 20) + "RF/s");
-			} else {
-				this.tooltip.add((recipe.recipeTicks * 0.05F) + "s");
-			}
-		}
-		this.manager.addAdditionalData(recipe, this.tooltip);
-		return this.tooltip;
+		return this.manager.collectRecipeTooltips(recipe, this.tooltip);
 	}
 
 	@Override
@@ -229,7 +200,7 @@ public class GuiSelectRecipe extends GuiScreen {
 				if (this.searching.length() < 16) {
 					this.selection = -1;
 					this.searching += character;
-					this.gatherRecipes(recipe -> recipe.name.toLowerCase().contains(this.searching.toLowerCase()));
+					this.gatherRecipes(recipe -> this.getLocalizedName(recipe).toLowerCase().contains(this.searching.toLowerCase()));
 				}
 			} else {
 				if (code == Keyboard.KEY_BACK && !this.searching.isEmpty()) {
@@ -238,7 +209,7 @@ public class GuiSelectRecipe extends GuiScreen {
 					if (this.searching.isEmpty()) {
 						this.gatherRecipes(recipe -> true);
 					} else {
-						this.gatherRecipes(recipe -> recipe.name.toLowerCase().contains(this.searching.toLowerCase()));
+						this.gatherRecipes(recipe -> this.getLocalizedName(recipe).toLowerCase().contains(this.searching.toLowerCase()));
 					}
 				}
 			}
