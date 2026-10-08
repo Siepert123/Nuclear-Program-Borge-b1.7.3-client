@@ -79,6 +79,7 @@ public class BlockInit {
 	public static BlockExtractionTest extractionTest;
 	public static BlockCreativeSupply creativeSupply;
 
+	public static BlockAccumulator accumulator;
 	public static BlockDrum drum;
 
 	public static BlockManufactory manufactory;
@@ -400,6 +401,12 @@ public class BlockInit {
 		);
 		creativeSupply = helper.register("creativeSupply", BlockCreativeSupply::new);
 
+		accumulator = helper.register("accumulator", id -> new BlockAccumulator(id, Material.iron)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(soundMetal2Footstep)
+		);
 		drum = helper.register("drum", id -> new BlockDrum(id, Material.iron)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(BlockProps.IRON_HARDNESS)
@@ -544,6 +551,7 @@ public class BlockInit {
 		Item.itemsList[slabConcreteDouble.blockID] = new ItemBlockStepConcrete(slabConcreteDouble);
 		Item.itemsList[slabConcreteColoredSingle.blockID] = new ItemBlockStepConcreteColored(slabConcreteColoredSingle);
 		Item.itemsList[slabConcreteColoredDouble.blockID] = new ItemBlockStepConcreteColored(slabConcreteColoredDouble);
+		Item.itemsList[accumulator.blockID] = new ItemBlockAccumulator(accumulator);
 		Item.itemsList[drum.blockID] = new ItemBlockDrum(drum);
 		Item.itemsList[rbmkBlank.blockID] = new ItemBlockRBMKColumn(rbmkBlank);
 		Item.itemsList[rbmkBoiler.blockID] = new ItemBlockRBMKColumn(rbmkBoiler);

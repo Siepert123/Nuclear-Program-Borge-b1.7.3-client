@@ -105,6 +105,7 @@ tile.nuclear_program/nukeCaseoh.name=Fat Man
 tile.nuclear_program/animationTest.name=Animation Test
 tile.nuclear_program/extractionTest.name=Debug Bedrock Resource Deposit Extractor
 tile.nuclear_program/creativeSupply.name=Creative Supply
+tile.nuclear_program/accumulator.name=Accumulator
 tile.nuclear_program/drum.name=Fluid Drum
 tile.nuclear_program/manufactory.name=Manufactory
 tile.nuclear_program/derrick.name=Derrick

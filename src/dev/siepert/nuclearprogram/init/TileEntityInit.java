@@ -33,6 +33,7 @@ public class TileEntityInit {
 		register(TileEntityAnimationTest.class, "animationTest", RenderAnimationTest.INSTANCE);
 		register(TileEntityCreativeSupply.class, "creativeSupply", null);
 
+		register(TileEntityAccumulator.class, "accumulator", null);
 		register(TileEntityDrum.class, "drum", null);
 
 		// Basic processing
