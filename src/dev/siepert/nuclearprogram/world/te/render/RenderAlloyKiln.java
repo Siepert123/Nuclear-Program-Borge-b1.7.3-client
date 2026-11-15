@@ -22,7 +22,7 @@ public class RenderAlloyKiln extends RenderMachineBase<TileEntityAlloyKiln> {
 		GL11.glRotatef(BlockMulti.getRotation(te.getBlockMetadata()) + 180.0F, 0.0F, 1.0F, 0.0F);
 		OBJInit.alloy_kiln.callList("Kiln");
 		GL11.glDisable(GL11.GL_LIGHTING);
-		float b = 1.0F;
+		float b = te.isBurning() ? 1.0F : 0.0F;
 		GL11.glColor3f(b, b, b);
 		OBJInit.alloy_kiln.callList("Fire");
 		GL11.glEnable(GL11.GL_LIGHTING);

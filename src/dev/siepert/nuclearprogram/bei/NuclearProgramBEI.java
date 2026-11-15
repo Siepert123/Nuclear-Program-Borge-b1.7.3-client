@@ -34,6 +34,7 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		registration.registerCategory(NPRecipeCategories.SMELTING_BUILDER, new RecipeCategoryFurnaceBuilder());
 		registration.registerCategory(NPRecipeCategories.WORKBENCH, new RecipeCategoryWorkbench());
 		registration.registerCategory(NPRecipeCategories.BLOOMERY, new RecipeCategoryBloomery());
+		registration.registerCategory(NPRecipeCategories.ALLOY_KILN, new RecipeCategoryAlloyKiln());
 		registration.registerCategory(NPRecipeCategories.BLAST_FURNACE, new RecipeCategoryBlastFurnace());
 		registration.registerCategory(NPRecipeCategories.MANUFACTORY, new RecipeCategoryManufactory());
 		registration.registerCategory(NPRecipeCategories.GAS_CENTRIFUGE, new RecipeCategoryGasCentrifuge());
@@ -96,6 +97,24 @@ public class NuclearProgramBEI implements IRecipesPlugin {
 		}
 		registration.addRecipes(bloomery, bloomingRecipes);
 		System.out.println(bloomingRecipes.size() + " blooming recipes" + (skip != 0 ? " (" + skip + " skipped)" : ""));
+
+		// Alloying in Kiln category
+		AlloyingRecipes alloying = AlloyingRecipes.alloying();
+		IRecipeCategory<RecipeAlloyKiln> alloyKiln = registration.getCategoryByUID(NPRecipeCategories.ALLOY_KILN);
+		List<RecipeAlloyKiln> alloyingRecipes = new ArrayList<>();
+		skip = 0;
+		for (Map.Entry<Long, AlloyingRecipes.Result> entry : alloying.getAlloyingList().entrySet()) {
+			ItemStack in1 = unpack((int) (entry.getKey() & 0xFFFFFFFFL));
+			ItemStack in2 = unpack((int) ((entry.getKey() >>> 32) & 0xFFFFFFFFL));
+			ItemStack result = entry.getValue().item;
+			if (in1 == null || in2 == null || result == null) {
+				skip++;
+				continue;
+			}
+			alloyingRecipes.add(new RecipeAlloyKiln(in1, in2, result, entry.getValue().recipeTime));
+		}
+		registration.addRecipes(alloyKiln, alloyingRecipes);
+		System.out.println(alloyingRecipes.size() + " alloying recipes" + (skip != 0 ? " (" + skip + " skipped)" : ""));
 
 		// Blasting category
 		IRecipeCategory<RecipeBlastFurnace> blastFurnace = registration.getCategoryByUID(NPRecipeCategories.BLAST_FURNACE);

@@ -585,6 +585,9 @@ public class RecipeInit {
 		recipes.addSmelting(ItemInit.resourceBrickMalachite.shiftedIndex, 0, new ItemStack(ItemInit.ingotCopper), null, 500);
 		recipes.addSmelting(ItemInit.resourceBrickBauxite.shiftedIndex, 0, new ItemStack(ItemInit.ingotAluminium), null, 500);
 	}
+	public static void alloying(AlloyingRecipes recipes) {
+		recipes.addAlloying(ItemInit.ingotCopper.shiftedIndex, Item.ingotGold.shiftedIndex, new ItemStack(ItemInit.ingotElectrum, 2));
+	}
 
 	public static void rtgFuel(RTGFuelRecipes recipes) {
 		recipes.addRecipe(ItemInit.fuelRod, ItemFuelRod.NATURAL_URANIUM, 200, 10, ItemInit.fuelRod.create(ItemFuelRod.LEAD));

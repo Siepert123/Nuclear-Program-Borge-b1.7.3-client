@@ -9,10 +9,7 @@ import dev.siepert.nuclearprogram.gui.NuclearProgramRemoteGUI;
 import dev.siepert.nuclearprogram.init.*;
 import dev.siepert.nuclearprogram.network.NuclearProgramNetHandler;
 import dev.siepert.nuclearprogram.pipenet.PipeNetNode;
-import dev.siepert.nuclearprogram.recipe.BloomeryRecipes;
-import dev.siepert.nuclearprogram.recipe.BuilderFurnaceRecipes;
-import dev.siepert.nuclearprogram.recipe.RTGFuelRecipes;
-import dev.siepert.nuclearprogram.recipe.WorkbenchRecipes;
+import dev.siepert.nuclearprogram.recipe.*;
 import dev.siepert.nuclearprogram.recipe.template.RecipesManufactory;
 import dev.siepert.nuclearprogram.texturefx.TextureYanoizedFX;
 import dev.siepert.nuclearprogram.util.SingletonWorld;
@@ -104,6 +101,7 @@ public class NuclearProgram implements IModLifecycleListener {
 		RecipeInit.workbench(WorkbenchRecipes.crafting());
 		RecipeInit.builderFurnace(BuilderFurnaceRecipes.smelting());
 		RecipeInit.bloomery(BloomeryRecipes.blooming());
+		RecipeInit.alloying(AlloyingRecipes.alloying());
 		RecipeInit.rtgFuel(RTGFuelRecipes.instance());
 
 		RecipesManufactory.INSTANCE.initialize();

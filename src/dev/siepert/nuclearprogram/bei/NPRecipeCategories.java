@@ -7,6 +7,7 @@ public final class NPRecipeCategories {
 	public static final String SMELTING_BUILDER = NuclearProgram.path("smeltingBuilder");
 	public static final String WORKBENCH = NuclearProgram.path("workbench");
 	public static final String BLOOMERY = NuclearProgram.path("bloomery");
+	public static final String ALLOY_KILN = NuclearProgram.path("alloyKiln");
 	public static final String BLAST_FURNACE = NuclearProgram.path("blastFurnace");
 	public static final String MANUFACTORY = NuclearProgram.path("manufactory");
 	public static final String GAS_CENTRIFUGE = NuclearProgram.path("gasCentrifuge");
