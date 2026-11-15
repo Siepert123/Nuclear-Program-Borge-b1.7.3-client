@@ -18,10 +18,14 @@ public class OBJInit {
 	// Early game
 	public static WavefrontObj coke_oven = null;
 	public static final String coke_oven_tex = get("coke_oven");
+	public static WavefrontObj bellows = null;
+	public static final String bellows_tex = get("bellows");
 	public static WavefrontObj air_stove = null;
 	public static final String air_stove_tex = get("air_stove");
 	public static WavefrontObj blast_furnace = null;
 	public static final String blast_furnace_tex = get("blast_furnace");
+	public static WavefrontObj alloy_kiln = null;
+	public static final String alloy_kiln_tex = get("alloy_kiln");
 
 	// Basic processing
 	public static WavefrontObj manufactory = null;
@@ -64,8 +68,10 @@ public class OBJInit {
 
 		// Early game
 		coke_oven = get(factory, "coke_oven");
+		bellows = get(factory, "bellows");
 		air_stove = get(factory, "air_stove");
 		blast_furnace = get(factory, "blast_furnace");
+		alloy_kiln = get(factory, "alloy_kiln");
 
 		// Oil machines
 		oil_derrick = get(factory, "oil_derrick");
@@ -94,8 +100,10 @@ public class OBJInit {
 
 		// Early game
 		coke_oven.rerender();
+		bellows.rerender();
 		air_stove.rerender();
 		blast_furnace.rerender();
+		alloy_kiln.rerender();
 
 		// Oil machines
 		oil_derrick.rerender();

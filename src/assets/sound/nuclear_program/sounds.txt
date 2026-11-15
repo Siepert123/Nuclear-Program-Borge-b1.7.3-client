@@ -16,6 +16,7 @@ machine/hsrfs/open.ogg
 machine/misc/rodsElevate.ogg
 machine/misc/rodsLower.ogg
 machine/misc/rotate.ogg
+machine/bellows.ogg
 machine/boiler.ogg
 machine/welding.ogg
 

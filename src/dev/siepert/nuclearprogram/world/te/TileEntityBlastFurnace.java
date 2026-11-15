@@ -1,6 +1,5 @@
 package dev.siepert.nuclearprogram.world.te;
 
-import dev.siepert.nuclearprogram.Nothing;
 import dev.siepert.nuclearprogram.init.FluidInit;
 import dev.siepert.nuclearprogram.init.ItemInit;
 import dev.siepert.nuclearprogram.util.NPMth;

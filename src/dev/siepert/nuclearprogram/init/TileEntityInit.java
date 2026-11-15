@@ -23,8 +23,10 @@ public class TileEntityInit {
 
 		register(TileEntityBloomery.class, "bloomery", null);
 		register(TileEntityCokeOven.class, "cokeOven", RenderCokeOven.INSTANCE);
+		register(TileEntityBellows.class, "bellows", RenderBellows.INSTANCE);
 		register(TileEntityAirStove.class, "airStove", RenderAirStove.INSTANCE);
 		register(TileEntityBlastFurnace.class, "blastFurnace", RenderBlastFurnace.INSTANCE);
+		register(TileEntityAlloyKiln.class, "alloyKiln", RenderAlloyKiln.INSTANCE);
 
 		TileEntity.addMapping(TileEntityCableCoated.class, NuclearProgram.path("cableCoated"));
 		TileEntity.addMapping(TileEntityFluidPipeCoated.class, NuclearProgram.path("fluidPipeCoated"));

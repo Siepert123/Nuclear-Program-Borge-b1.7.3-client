@@ -59,8 +59,10 @@ public class BlockInit {
 	public static BlockBloomery bloomeryLit;
 	public static BlockBloomeryPipe bloomeryPipe;
 	public static BlockCokeOven cokeOven;
+	public static BlockBellows bellows;
 	public static BlockAirStove airStove;
 	public static BlockBlastFurnace blastFurnace;
+	public static BlockAlloyKiln alloyKiln;
 
 	public static BlockCable cableElectrum;
 	public static BlockCableCoated cableCoated;
@@ -311,6 +313,12 @@ public class BlockInit {
 				.setResistance(BlockProps.IRON_RESISTANCE)
 				.setStepSound(soundMetal2Footstep)
 		);
+		bellows = helper.register("bellows", id -> new BlockBellows(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(Block.soundWoodFootstep)
+		);
 		airStove = helper.register("airStove", id -> new BlockAirStove(id, NPMaterials.multiblock)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(BlockProps.IRON_HARDNESS)
@@ -318,6 +326,12 @@ public class BlockInit {
 				.setStepSound(soundMetal2Footstep)
 		);
 		blastFurnace = helper.register("blastFurnace", id -> new BlockBlastFurnace(id, NPMaterials.multiblock)
+				.setHarvestLevel("pickaxe", 1)
+				.setHardness(BlockProps.IRON_HARDNESS)
+				.setResistance(BlockProps.IRON_RESISTANCE)
+				.setStepSound(Block.soundStoneFootstep)
+		);
+		alloyKiln = helper.register("alloyKiln", id -> new BlockAlloyKiln(id, NPMaterials.multiblock)
 				.setHarvestLevel("pickaxe", 1)
 				.setHardness(BlockProps.IRON_HARDNESS)
 				.setResistance(BlockProps.IRON_RESISTANCE)
